@@ -1,7 +1,9 @@
 import type { MarkdownInstance } from 'astro';
 import { format } from 'date-fns';
+import path from 'path';
 
 import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import { AppConfig } from '@/utils/AppConfig';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 import type { Tags } from '@/utils/Tag';
 
@@ -18,7 +20,7 @@ export const PostCard = (props: IPostCardProps) => (
       {props.instance.frontmatter.imgSrc && (
         <img
           className="h-full w-full object-cover object-center"
-          src={props.instance.frontmatter.imgSrc}
+          src={path.join(AppConfig.base, props.instance.frontmatter.imgSrc)}
           alt={props.instance.frontmatter.imgSrc}
           loading="lazy"
         />

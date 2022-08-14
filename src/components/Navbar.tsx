@@ -1,4 +1,7 @@
+import path from 'path';
 import type { ReactNode } from 'react';
+
+import { AppConfig } from '@/utils/AppConfig';
 
 type INavbarProps = {
   children: ReactNode;
@@ -27,6 +30,6 @@ type INavMenuItemProps = {
 
 export const NavMenuItem = (props: INavMenuItemProps) => (
   <li className="hover:text-white">
-    <a href={props.href}>{props.children}</a>
+    <a href={path.join(AppConfig.base, props.href)}>{props.children}</a>
   </li>
 );

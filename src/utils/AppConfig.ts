@@ -5,4 +5,5 @@ export const AppConfig = {
   author: 'Futa Hirakoba',
   locale_region: 'ja-jp',
   locale: 'ja',
+  base: '/draft-new-my-homepage',
 };

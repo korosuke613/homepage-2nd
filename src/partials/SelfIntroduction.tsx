@@ -1,6 +1,9 @@
+import path from 'path';
+
 import { GradientText } from '@/components/GradientText';
 import { Section } from '@/components/Section';
 import { SocialLink } from '@/components/SocialLink';
+import { AppConfig } from '@/utils/AppConfig';
 
 import { ExternalLink } from './ExternalLink';
 
@@ -64,7 +67,7 @@ export const SelfIntroduction = () => (
       <div className="shrink-0">
         <img
           className="h-72 w-72"
-          src="/assets/images/my_icon_2.png"
+          src={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
           alt="Avatar image"
           loading="lazy"
         />

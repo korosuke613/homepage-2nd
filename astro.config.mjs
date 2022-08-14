@@ -14,8 +14,8 @@ import { setupTags } from './src/utils/TagIntegration.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  // base: '.', // Set a path prefix.
-  site: 'https://korosuke613.github.io/',
+  base: '/draft-new-my-homepage', // Set a path prefix.
+  site: 'https://korosuke613.github.io',
   // Use to generate your sitemap and canonical URLs in your final build.
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro.
