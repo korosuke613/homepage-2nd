@@ -1,3 +1,7 @@
+import path from 'path';
+
+import { AppConfig } from '@/utils/AppConfig';
+
 type ISocialLinkProps = {
   url: string;
   alt: string;
@@ -11,6 +15,6 @@ export const SocialLink = (props: ISocialLinkProps) => (
     target="_blank"
     rel="noopener noreferrer"
   >
-    <img src={props.imgSrc} alt={props.alt} />
+    <img src={path.join(AppConfig.base, props.imgSrc)} alt={props.alt} />
   </a>
 );

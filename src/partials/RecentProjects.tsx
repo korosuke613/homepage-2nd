@@ -20,7 +20,7 @@ export const RecentProjects = (props: IRecentProjectsProps) => (
         </div>
 
         <div className="text-sm">
-          <a href="/projects">View all Projects →</a>
+          <a href="projects">View all Projects →</a>
         </div>
       </div>
     }

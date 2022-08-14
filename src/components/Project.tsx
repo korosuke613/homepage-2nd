@@ -1,4 +1,7 @@
+import path from 'path';
 import type { ReactNode } from 'react';
+
+import { AppConfig } from '@/utils/AppConfig';
 
 type IProjectProps = {
   img: {
@@ -34,7 +37,7 @@ const Project = (props: IProjectProps) => (
         <a href={props.link}>
           <img
             className="h-20 w-20 object-cover object-center sm:h-36 sm:w-36"
-            src={props.img.src}
+            src={path.join(AppConfig.base, props.img.src)}
             alt={props.img.src ? props.img.alt : '平木場のSNSアイコン'}
             loading="lazy"
           />

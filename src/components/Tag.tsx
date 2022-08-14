@@ -1,3 +1,7 @@
+import path from 'path';
+
+import { AppConfig } from '@/utils/AppConfig';
+
 type ITagProps = {
   name: string;
   color?: string;
@@ -6,7 +10,14 @@ type ITagProps = {
 
 export const Tag = (props: ITagProps) => {
   return (
-    <a href={`/${props.contentCategory.toLowerCase()}/tag/${props.name}`}>
+    <a
+      href={path.join(
+        AppConfig.base,
+        props.contentCategory.toLowerCase(),
+        'tag',
+        props.name
+      )}
+    >
       <div
         className={`rounded-md px-1.5 py-0.5 text-xs font-semibold ${props.color}`}
       >
