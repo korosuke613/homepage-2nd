@@ -1,54 +1,60 @@
 ---
-import { MarkdownInstance } from 'astro';
+import type { MarkdownInstance } from 'astro';
 
 import {
   NewerOlderPagination,
   PaginationHeader,
 } from '@/components/Pagenation';
-
-import { Section } from '@/components/Section';
-import Base from '@/templates/Base.astro';
-import { AppConfig } from '@/utils/AppConfig';
 import { PostGallery } from '@/components/PostGallery';
-import { IProjectFrontmatter, ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
+import { Section } from '@/components/Section';
 import { Tag } from '@/components/Tag';
-import {readTags} from '@/utils/Tag'
-import {getSectionTitle} from "@/components/Title"
+import { getSectionTitle } from '@/components/Title';
+import Base from '@/templates/Base.astro';
+import type {
+  IProjectFrontmatter,
+  ProjectFrontmatterPage,
+} from '@/types/IProjectFrontmatter';
+import { AppConfig } from '@/utils/AppConfig';
+import { readTags } from '@/utils/Tag';
 
 interface Props {
   page: ProjectFrontmatterPage;
-  preTitle?: string|number; 
+  preTitle?: string | number;
   contentCategory: string;
   contentDescription: string;
-  contents: MarkdownInstance<IProjectFrontmatter>[]
+  contents: MarkdownInstance<IProjectFrontmatter>[];
 }
 
-const { page, preTitle, contentCategory, contentDescription } = Astro.props as Props;
+const { page, preTitle, contentCategory, contentDescription } =
+  Astro.props as Props;
 const titleSuffix = ` - ${AppConfig.site_name}`;
-const titleBase = preTitle ? `${preTitle} / ${contentCategory} p.${page.currentPage}` : `${contentCategory} p. ${page.currentPage}`;
+const titleBase = preTitle
+  ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
+  : `${contentCategory} p. ${page.currentPage}`;
 const title = titleBase + titleSuffix;
 const sectionTitle = getSectionTitle(preTitle, contentCategory);
 
 const tags = (await readTags())[contentCategory.toLowerCase()];
-if(tags === undefined){
-  throw new Error("readed tags is undefined");
+if (tags === undefined) {
+  throw new Error('readed tags is undefined');
 }
-
 ---
 
 <Base head={{ title, description: contentDescription }}>
   <Section>
     <PaginationHeader title={sectionTitle} description={contentDescription} />
     <div class="mt-4 flex flex-wrap justify-center gap-2">
-      {tags &&
+      {
+        tags &&
         Object.keys(tags).map((tagName) => (
           <Tag
             name={tagName}
             color={tags[tagName]}
             contentCategory={contentCategory}
           />
-        ))}
-      </div>
+        ))
+      }
+    </div>
   </Section>
 
   <Section>
