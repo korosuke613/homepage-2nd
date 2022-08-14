@@ -25,7 +25,11 @@ const RecentPosts = (props: IRecentPostsProps) => (
       </div>
     }
   >
-    <PostGallery postList={props.postList} tags={props.tags} />
+    <PostGallery
+      postList={props.postList}
+      tags={props.tags}
+      contentCategory="Posts"
+    />
   </Section>
 );
 

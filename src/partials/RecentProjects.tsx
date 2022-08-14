@@ -25,6 +25,10 @@ export const RecentProjects = (props: IRecentProjectsProps) => (
       </div>
     }
   >
-    <PostGallery postList={props.postList} tags={props.tags} />
+    <PostGallery
+      postList={props.postList}
+      tags={props.tags}
+      contentCategory={'Projects'}
+    />
   </Section>
 );

@@ -58,7 +58,11 @@ if (tags === undefined) {
   </Section>
 
   <Section>
-    <PostGallery postList={page.data} tags={tags} />
+    <PostGallery
+      postList={page.data}
+      tags={tags}
+      contentCategory={contentCategory}
+    />
   </Section>
 
   <Section>
