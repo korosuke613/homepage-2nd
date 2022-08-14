@@ -11,6 +11,7 @@ import { Tag } from './Tag';
 
 type IPostCardProps = {
   instance: MarkdownInstance<IProjectFrontmatter>;
+  contentCategory: string;
   tags: Tags;
 };
 
@@ -55,7 +56,7 @@ export const PostCard = (props: IPostCardProps) => (
                   key={tagName}
                   name={tagName}
                   color={props.tags[tagName]}
-                  contentCategory={'Posts'}
+                  contentCategory={props.contentCategory}
                 />
               ))}
           </div>

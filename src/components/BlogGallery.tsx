@@ -36,7 +36,7 @@ export const BlogGallery = (props: IRecentBlogsProps) => {
                     key={tagName}
                     name={tagName}
                     color={BlogTags[tagName]}
-                    contentCategory={'Posts'}
+                    contentCategory={'Blogs'}
                   />
                 ))}
               </div>
