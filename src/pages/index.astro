@@ -1,0 +1,31 @@
+---
+import { RecentPosts } from '@/partials/RecentPosts';
+import { RecentProjects } from '@/partials/RecentProjects';
+import { SelfIntroduction } from '@/partials/SelfIntroduction';
+import Base from '@/templates/Base.astro';
+import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import { AppConfig } from '@/utils/AppConfig';
+import { sortByDate } from '@/utils/Posts';
+import { readTags } from '@/utils/Tag';
+
+const tags = await readTags();
+
+const allPosts = await Astro.glob<IProjectFrontmatter>('./posts/*.md');
+const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
+const sortedPosts = sortByDate(nonDraftPosts);
+const lastThreePosts = sortedPosts.slice(0, 3);
+
+const allProjects = await Astro.glob<IProjectFrontmatter>('./projects/*.md');
+const nonDraftProjects = allProjects.filter((post) => !post.frontmatter.draft);
+const lastThreeProjects = nonDraftProjects.slice(0, 3);
+
+const { title } = AppConfig;
+const { description } = AppConfig;
+
+---
+
+<Base head={{ title, description }}>
+  <SelfIntroduction />
+  <RecentPosts postList={lastThreePosts} tags={tags.posts}/>
+  <RecentProjects postList={lastThreeProjects} tags={tags.projects}/>
+</Base>

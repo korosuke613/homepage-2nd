@@ -1,0 +1,21 @@
+---
+
+import { ContentPost } from '@/partials/ContentPost';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+
+export interface Props {
+  content: IProjectFrontmatter;
+}
+
+const { content } = Astro.props as Props;
+const title = `${content.title} - ${AppConfig.site_name}`;
+
+---
+
+<Base head={{ title, description: content.description }}>
+  <ContentPost frontmatter={content} contentCategory={"Posts"}>
+    <slot></slot>
+  </ContentPost>
+</Base>

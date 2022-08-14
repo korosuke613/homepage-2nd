@@ -1,0 +1,45 @@
+---
+import { Footer } from '@/partials/Footer';
+import { Navbar } from '@/partials/Navbar';
+import { AppConfig } from '@/utils/AppConfig';
+
+export interface Props {
+  head: {
+    title: string;
+    description: string;
+  };
+}
+
+const {
+  head: { title, description },
+} = Astro.props as Props;
+---
+
+<html lang='ja'>
+  <head>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-hogehoge"></script>
+    <script is:global>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'G-5WBFRSFM7T');
+    </script> -->
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>{title}</title>
+    <meta name='description' content={description} />
+    <meta name='author' content={AppConfig.author} />
+
+    <link rel='alternate' type='application/rss+xml' href='/rss.xml' />
+    <link rel='icon' type='image/x-icon' href='/favicon.ico' />
+  </head>
+
+  <body class='bg-slate-900 text-gray-100'>
+    <Navbar />
+
+    <slot></slot>
+
+    <Footer />
+  </body>
+</html>

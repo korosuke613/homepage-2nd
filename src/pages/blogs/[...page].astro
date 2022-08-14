@@ -1,0 +1,69 @@
+---
+import Blogs from '@/templates/Blogs.astro';
+import { ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
+import fs from "node:fs";
+import type {ZennJson} from "@/types/IZenn"
+import { BlogPage } from '@/types/IBlogPage';
+
+type GetStaticPaths = {
+  paginate: any;
+}; // Overrides `GetStaticPathsOptions` types from Astro
+
+type ZennData = {
+  id: string;
+  type: string;
+  ogpImageUrl: string;
+  title: string;
+  pubDate: string;
+}
+
+export const sortByDate = (articles: ZennJson["articles"]) => {
+  const arrayArticles: ZennData[] = Object.keys(articles).map((articleId)=>{
+    const article = articles[articleId]
+    if(article === undefined){
+      throw new Error()
+    }
+
+    return {
+      id: articleId,
+      type:"zenn",
+      ogpImageUrl: article.ogpImageUrl,
+      url: `https://zenn.dev/korosuke613/articles/${articleId}`,
+      title: article.title,
+      pubDate: article.pubDate
+    }
+  })
+
+  return arrayArticles.sort(
+    (a, b) =>
+      new Date(b.pubDate).valueOf() -
+      new Date(a.pubDate).valueOf()
+  );
+};
+
+
+export async function getStaticPaths({ paginate }: GetStaticPaths) {
+  const zennJsonFile = await fs.promises.readFile("./public/assets/zenn.json");
+  const zennJson: ZennJson = JSON.parse(zennJsonFile.toString())
+  const sortedZenns = sortByDate(zennJson.articles)
+
+  return paginate(sortedZenns, { pageSize: 9 });
+}
+
+interface Props {
+  page: BlogPage;
+  preTitle?: string|number; 
+}
+
+const { page, preTitle } = Astro.props as Props;
+
+---
+
+<Blogs 
+  page={page} 
+  contentCategory="Blogs" 
+  contentDescription="外部のブログ記事（自動更新）"
+  preTitle={preTitle}
+>
+
+</Blogs>

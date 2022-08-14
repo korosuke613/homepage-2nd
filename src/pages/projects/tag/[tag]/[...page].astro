@@ -1,0 +1,38 @@
+---
+import Project from '@/pages/projects/[...page].astro';
+
+import { sortByDate } from '@/utils/Posts';
+import { IProjectFrontmatter, ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
+import { generateTagsFromMarkdowns } from '@/utils/Tag';
+
+type GetStaticPaths = {
+  paginate: any;
+}; // Overrides `GetStaticPathsOptions` types from Astro
+
+export async function getNonDraftPosts(){
+  const allPosts = await Astro.glob<IProjectFrontmatter>('../../*.md');
+  const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
+  return nonDraftPosts;
+}
+
+export async function getStaticPaths({ paginate }: GetStaticPaths) {
+  const nonDraftPosts = await getNonDraftPosts();
+  const tags = Object.keys(generateTagsFromMarkdowns(nonDraftPosts))
+  const sortedPosts = sortByDate(nonDraftPosts);
+
+  return tags.map((tag) => {
+    const filteredPosts = sortedPosts.filter((post) => post.frontmatter.tags.includes(tag));
+    return paginate(filteredPosts, { params: { tag }, pageSize: 9 });
+  });
+}
+
+interface Props {
+  page: ProjectFrontmatterPage;
+}
+
+const { page } = Astro.props as Props;
+const { tag } = Astro.params;
+---
+
+<Project page={page} preTitle={tag}>
+</Project>
