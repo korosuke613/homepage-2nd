@@ -8,3 +8,12 @@ export type ZennJson = {
     };
   };
 };
+
+export type ZennData = {
+  id: string;
+  type: string;
+  ogpImageUrl: string;
+  title: string;
+  pubDate: string;
+  url: string;
+};
