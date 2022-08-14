@@ -1,43 +1,52 @@
 ---
+import { BlogGallery } from '@/components/BlogGallery';
 import {
   NewerOlderPagination,
   PaginationHeader,
 } from '@/components/Pagenation';
-
 import { Section } from '@/components/Section';
+import { Tag } from '@/components/Tag';
+import { getSectionTitle } from '@/components/Title';
 import Base from '@/templates/Base.astro';
+import type { BlogPage } from '@/types/IBlogPage';
 import { AppConfig } from '@/utils/AppConfig';
-import {getSectionTitle} from "@/components/Title"
-import { Tags } from '@/utils/Tag';
-import { BlogPage } from '@/types/IBlogPage';
-import {BlogGallery} from "@/components/BlogGallery";
+import { BlogTags } from '@/utils/Blog';
 
 interface Props {
   page: BlogPage;
-  preTitle?: string|number; 
+  preTitle?: string | number;
   contentCategory: string;
   contentDescription: string;
 }
 
-const { page, preTitle, contentCategory, contentDescription } = Astro.props as Props;
+const { page, preTitle, contentCategory, contentDescription } =
+  Astro.props as Props;
 const titleSuffix = ` - ${AppConfig.site_name}`;
-const titleBase = preTitle ? `${preTitle} / ${contentCategory} p.${page.currentPage}` : `${contentCategory} p. ${page.currentPage}`;
+const titleBase = preTitle
+  ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
+  : `${contentCategory} p. ${page.currentPage}`;
 const title = titleBase + titleSuffix;
 const sectionTitle = getSectionTitle(preTitle, contentCategory);
-
-const tags: Tags = {
-  "Zenn": "bg-sky-300 text-black"
-}
-
 ---
 
 <Base head={{ title, description: contentDescription }}>
   <Section>
     <PaginationHeader title={sectionTitle} description={contentDescription} />
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        Object.keys(BlogTags).map((tagName) => (
+          <Tag
+            name={tagName}
+            color={BlogTags[tagName]}
+            contentCategory={'Blogs'}
+          />
+        ))
+      }
+    </div>
   </Section>
 
   <Section>
-    <BlogGallery page={page} tags={tags}/>
+    <BlogGallery postList={page.data} />
   </Section>
 
   <Section>

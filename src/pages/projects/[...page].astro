@@ -1,14 +1,16 @@
 ---
 import Content from '@/templates/Content.astro';
+import type {
+  IProjectFrontmatter,
+  ProjectFrontmatterPage,
+} from '@/types/IProjectFrontmatter';
 import { sortByDate } from '@/utils/Posts';
-import { IProjectFrontmatter, ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
-
 
 type GetStaticPaths = {
   paginate: any;
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
-export async function getNonDraftPosts(){
+export async function getNonDraftPosts() {
   const allPosts = await Astro.glob<IProjectFrontmatter>('./*.md');
   const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
   return nonDraftPosts;
@@ -23,20 +25,17 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 
 interface Props {
   page: ProjectFrontmatterPage;
-  preTitle?: string|number; 
+  preTitle?: string | number;
 }
 
 const { page, preTitle } = Astro.props as Props;
 const nonDraftPosts = await getNonDraftPosts();
-
 ---
 
-<Content 
-  page={page} 
-  contentCategory="Projects" 
+<Content
+  page={page}
+  contentCategory="Projects"
   contentDescription="継続してやってることやプロジェクト的なものなど"
   preTitle={preTitle}
   contents={nonDraftPosts}
->
-
-</Content>
+/>

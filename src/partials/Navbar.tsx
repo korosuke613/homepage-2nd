@@ -13,8 +13,9 @@ const Navbar = () => (
       </a>
 
       <NavMenu>
-        <NavMenuItem href="posts">Posts</NavMenuItem>
         <NavMenuItem href="projects">Projects</NavMenuItem>
+        <NavMenuItem href="posts">Posts</NavMenuItem>
+        <NavMenuItem href="blogs">Blogs</NavMenuItem>
         <NavMenuItem href="https://github.com/korosuke613">GitHub</NavMenuItem>
         <NavMenuItem href="https://twitter.com/shitimi_613">
           Twitter

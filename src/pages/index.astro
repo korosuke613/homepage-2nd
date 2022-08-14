@@ -1,4 +1,5 @@
 ---
+import { RecentBlogs } from '@/partials/RecentBlogs';
 import { RecentPosts } from '@/partials/RecentPosts';
 import { RecentProjects } from '@/partials/RecentProjects';
 import { SelfIntroduction } from '@/partials/SelfIntroduction';
@@ -7,6 +8,7 @@ import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { sortByDate } from '@/utils/Posts';
 import { readTags } from '@/utils/Tag';
+import { getSortedZennData } from '@/utils/Zenn';
 
 const tags = await readTags();
 
@@ -19,13 +21,16 @@ const allProjects = await Astro.glob<IProjectFrontmatter>('./projects/*.md');
 const nonDraftProjects = allProjects.filter((post) => !post.frontmatter.draft);
 const lastThreeProjects = nonDraftProjects.slice(0, 3);
 
+const allZenn = await getSortedZennData();
+const lastThreeBlogs = allZenn.slice(0, 3);
+
 const { title } = AppConfig;
 const { description } = AppConfig;
-
 ---
 
 <Base head={{ title, description }}>
   <SelfIntroduction />
-  <RecentPosts postList={lastThreePosts} tags={tags.posts}/>
-  <RecentProjects postList={lastThreeProjects} tags={tags.projects}/>
+  <RecentProjects postList={lastThreeProjects} tags={tags.projects} />
+  <RecentPosts postList={lastThreePosts} tags={tags.posts} />
+  <RecentBlogs postList={lastThreeBlogs} />
 </Base>

@@ -1,6 +1,7 @@
 ---
 import Blogs from '@/templates/Blogs.astro';
 import type { BlogPage } from '@/types/IBlogPage';
+import { BlogTags } from '@/utils/Blog';
 import { getSortedZennData } from '@/utils/Zenn';
 
 type GetStaticPaths = {
@@ -10,7 +11,12 @@ type GetStaticPaths = {
 export async function getStaticPaths({ paginate }: GetStaticPaths) {
   const sortedZenns = await getSortedZennData();
 
-  return paginate(sortedZenns, { pageSize: 9 });
+  return Object.keys(BlogTags).map((tagName) => {
+    const filteredPosts = sortedZenns.filter(
+      (post) => post.type === tagName.toLowerCase()
+    );
+    return paginate(filteredPosts, { params: { tag: tagName }, pageSize: 9 });
+  });
 }
 
 interface Props {
