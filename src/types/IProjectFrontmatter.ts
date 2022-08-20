@@ -4,6 +4,7 @@ export interface IProjectFrontmatter {
   title: string;
   description: string;
   pubDate: string;
+  order?: number;
   imgSrc: string;
   imgAlt: string;
   tags: string[];
