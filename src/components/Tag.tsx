@@ -20,7 +20,7 @@ export const Tag = (props: ITagProps) => {
       )}
     >
       <div
-        className={`rounded-md px-1.5 py-0.5 text-xs font-semibold ${props.color}`}
+        className={`contents_tag rounded-md px-1.5 py-0.5 text-xs font-semibold ${props.color}`}
       >
         {props.name}
       </div>
