@@ -17,6 +17,7 @@
     "typescriptreact",
     "astro"
   ],
+  "eslint.workingDirectories": [".", "./tools"],
   "jest.autoRun": {
     "watch": true, // Start the jest with the watch flag
     "onSave": "test-src-file", // Trigger test run for the given test or source file upon save
@@ -31,5 +32,5 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zsh"
 }
