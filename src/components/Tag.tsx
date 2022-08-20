@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { AppConfig } from '@/utils/AppConfig';
+import { escapeTag } from '@/utils/Tag';
 
 type ITagProps = {
   name: string;
@@ -15,7 +16,7 @@ export const Tag = (props: ITagProps) => {
         AppConfig.base,
         props.contentCategory.toLowerCase(),
         'tag',
-        props.name
+        escapeTag(props.name)
       )}
     >
       <div

@@ -1,13 +1,12 @@
 import { format } from 'date-fns';
 
-import type { ZennData } from '@/types/IZenn';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 import type { Tags } from '@/utils/Tag';
 
 import { Tag } from './Tag';
 
 type IBlogCardForTopProps = {
-  zennData: ZennData;
+  zennData: BlogData;
   tags: Tags;
 };
 

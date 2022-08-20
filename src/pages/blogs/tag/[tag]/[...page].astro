@@ -1,35 +1,47 @@
 ---
 import Blogs from '@/templates/Blogs.astro';
 import type { BlogPage } from '@/types/IBlogPage';
-import { BlogTags } from '@/utils/Blog';
-import { getSortedZennData } from '@/utils/Zenn';
+import { getSortedBlogData } from '@/utils/Blog';
+import { escapeTag, readTags } from '@/utils/Tag';
 
 type GetStaticPaths = {
   paginate: any;
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getStaticPaths({ paginate }: GetStaticPaths) {
-  const sortedZenns = await getSortedZennData();
+  const sorteBlogs = await getSortedBlogData();
 
-  return Object.keys(BlogTags).map((tagName) => {
-    const filteredPosts = sortedZenns.filter(
-      (post) => post.type === tagName.toLowerCase()
+  const tags = (await readTags()).blogs;
+  if (tags === undefined) {
+    throw new Error('readed tags is undefined');
+  }
+
+  return Object.keys(tags).map((tagName) => {
+    const filteredPosts = sorteBlogs.filter(
+      (post) =>
+        post.type === tagName.toLowerCase() || post.category.includes(tagName)
     );
-    return paginate(filteredPosts, { params: { tag: tagName }, pageSize: 9 });
+    const escapeTagName = escapeTag(tagName);
+    return paginate(filteredPosts, {
+      params: { tag: escapeTagName },
+      pageSize: 9,
+    });
   });
 }
 
 interface Props {
   page: BlogPage;
-  preTitle?: string | number;
 }
 
-const { page, preTitle } = Astro.props as Props;
+const { page } = Astro.props as Props;
+const { tag } = Astro.params;
+
+const originTag = (tag as string).replace('_', '/');
 ---
 
 <Blogs
   page={page}
   contentCategory="Blogs"
   contentDescription="外部のブログ記事（自動更新）"
-  preTitle={preTitle}
+  preTitle={originTag}
 />

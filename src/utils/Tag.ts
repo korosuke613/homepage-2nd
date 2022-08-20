@@ -101,5 +101,10 @@ export const readTags = async () => {
     [key: string]: Tags;
     posts: Tags;
     projects: Tags;
+    blogs: Tags;
   };
+};
+
+export const escapeTag = (name: string) => {
+  return name.replaceAll('/', '_');
 };

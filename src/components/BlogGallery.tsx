@@ -2,12 +2,16 @@ import { format } from 'date-fns';
 
 import { ExternalLink } from '@/partials/ExternalLink';
 import type { IRecentBlogsProps } from '@/partials/RecentBlogs';
-import { BlogTags } from '@/utils/Blog';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 
 import { Tag } from './Tag';
 
 export const BlogGallery = (props: IRecentBlogsProps) => {
+  if (props.tags === undefined) {
+    throw new Error('Tags are required');
+  }
+  const { tags } = props;
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {props.postList.map((elt) => (
@@ -31,14 +35,22 @@ export const BlogGallery = (props: IRecentBlogsProps) => {
                 noClass={true}
               />
               <div className="mt-1 flex flex-wrap gap-2">
-                {Object.keys(BlogTags).map((tagName) => (
-                  <Tag
-                    key={tagName}
-                    name={tagName}
-                    color={BlogTags[tagName]}
-                    contentCategory={'Blogs'}
-                  />
-                ))}
+                {Object.keys(tags).map((tagName) => {
+                  if (tags?.[tagName] === undefined) {
+                    throw new Error("Tags don't match");
+                  }
+                  if (!elt.category.includes(tagName)) {
+                    return <></>;
+                  }
+                  return (
+                    <Tag
+                      key={tagName}
+                      name={tagName}
+                      color={tags[tagName]}
+                      contentCategory={'Blogs'}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

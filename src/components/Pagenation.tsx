@@ -1,11 +1,11 @@
+import type { Page } from 'astro';
 import path from 'path';
 import type { ReactNode } from 'react';
 
-import type { ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 type INewerOlderPaginationProps = {
-  page: ProjectFrontmatterPage;
+  page: Page;
 };
 
 export const NewerOlderPagination = (props: INewerOlderPaginationProps) => (

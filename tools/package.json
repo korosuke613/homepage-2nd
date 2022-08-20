@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .ts ."
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "fast-xml-parser": "^4.0.9",
     "jsdom": "^20.0.0",
     "rss-parser": "^3.12.0"
   }

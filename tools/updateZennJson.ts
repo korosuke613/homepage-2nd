@@ -37,7 +37,8 @@ const updateZennJson = (
   const updatedAt = new Date(updatedAtString);
 
   rss.forEach((r) => {
-    const id = r.link.split("/").pop()!;
+    const id = r.link.split("/").pop();
+
     zennJson.articles[id] = {
       title: r.title,
       ogpImageUrl: r.enclosure.url,

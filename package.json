@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "clean": "rimraf dist",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx,.astro .",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx, . && eslint --ext .astro .",
     "build-types": "tsc --noEmit --pretty"
   },
   "devDependencies": {
