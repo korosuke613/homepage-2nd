@@ -1,0 +1,42 @@
+---
+import Blogs from '@/templates/Blogs.astro';
+import type { BlogPage } from '@/types/IBlogPage';
+import { getSortedBlogData } from '@/utils/Blog';
+import { readYears } from '@/utils/Year';
+
+type GetStaticPaths = {
+  paginate: any;
+}; // Overrides `GetStaticPathsOptions` types from Astro
+
+export async function getStaticPaths({ paginate }: GetStaticPaths) {
+  const sortedBlogs = await getSortedBlogData();
+
+  const years = await readYears();
+
+  return years.blogs.map((year) => {
+    const filteredPosts = sortedBlogs.filter((post) => {
+      const publishYear = new Date(post.pubDate).getFullYear();
+      return publishYear === year;
+    });
+
+    return paginate(filteredPosts, {
+      params: { year: year.toString() },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: BlogPage;
+}
+
+const { page } = Astro.props as Props;
+const { year } = Astro.params;
+---
+
+<Blogs
+  page={page}
+  contentCategory="Blogs"
+  contentDescription="外部のブログ記事（自動更新）"
+  preTitle={year}
+/>

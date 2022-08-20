@@ -7,10 +7,12 @@ import {
 import { Section } from '@/components/Section';
 import { Tag } from '@/components/Tag';
 import { getSectionTitle } from '@/components/Title';
+import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
 import type { BlogPage } from '@/types/IBlogPage';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
+import { readYears } from '@/utils/Year';
 
 interface Props {
   page: BlogPage;
@@ -32,6 +34,11 @@ const tags = (await readTags()).blogs;
 if (tags === undefined) {
   throw new Error('readed tags is undefined');
 }
+
+const years = (await readYears()).blogs;
+if (years === undefined) {
+  throw new Error('readed years is undefined');
+}
 ---
 
 <Base head={{ title, description: contentDescription }}>
@@ -41,6 +48,13 @@ if (tags === undefined) {
       {
         Object.keys(tags).map((tagName) => (
           <Tag name={tagName} color={tags[tagName]} contentCategory={'Blogs'} />
+        ))
+      }
+    </div>
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        years.map((year) => (
+          <Year year={year.toString()} contentCategory={'Blogs'} />
         ))
       }
     </div>
