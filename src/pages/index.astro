@@ -7,7 +7,7 @@ import Base from '@/templates/Base.astro';
 import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { getSortedBlogData } from '@/utils/Blog';
-import { sortByDate } from '@/utils/Posts';
+import { sortByDate, sortByOrder } from '@/utils/Posts';
 import { readTags } from '@/utils/Tag';
 
 const tags = await readTags();
@@ -19,7 +19,8 @@ const lastThreePosts = sortedPosts.slice(0, 3);
 
 const allProjects = await Astro.glob<IProjectFrontmatter>('./projects/*.md');
 const nonDraftProjects = allProjects.filter((post) => !post.frontmatter.draft);
-const lastThreeProjects = nonDraftProjects.slice(0, 3);
+const sortedProjects = sortByOrder(nonDraftProjects);
+const lastThreeProjects = sortedProjects.slice(0, 3);
 
 const allBlogs = await getSortedBlogData();
 const lastThreeBlogs = allBlogs.slice(0, 3);
