@@ -1,4 +1,6 @@
 ---
+import path from 'path';
+
 import { Footer } from '@/partials/Footer';
 import { Navbar } from '@/partials/Navbar';
 import { AppConfig } from '@/utils/AppConfig';
@@ -13,6 +15,9 @@ export interface Props {
 const {
   head: { title, description },
 } = Astro.props as Props;
+
+const rssLink = path.join(AppConfig.base, 'rss.xml');
+const faviconLink = path.join(AppConfig.base, 'favicon.ico');
 ---
 
 <html lang="ja">
@@ -31,8 +36,8 @@ const {
     <meta name="description" content={description} />
     <meta name="author" content={AppConfig.author} />
 
-    <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" href={rssLink} />
+    <link rel="icon" type="image/x-icon" href={faviconLink} />
   </head>
 
   <body class="bg-slate-900 text-gray-100">
