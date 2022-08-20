@@ -74,9 +74,9 @@ export default function getStringInfo(originStr: string): StringInfo {
 }
 
 export const transformTitleForContentCard = (title: string) => {
-  // 以下の文章量がタイトルの限界。幅157
+  // 以下の文章量がタイトルの限界。幅125
   // 'あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。またそのなかでいっしょになっ'
-  const MAX_WIDTH = 157;
+  const MAX_WIDTH = 125;
   const REPLACE_STRING = '...';
 
   const titleInfo = getStringInfo(title);

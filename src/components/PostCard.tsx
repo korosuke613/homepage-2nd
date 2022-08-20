@@ -17,7 +17,7 @@ type IPostCardProps = {
 
 export const PostCard = (props: IPostCardProps) => (
   <div className="relative overflow-hidden rounded-md bg-slate-800">
-    <div className="aspect-w-3 aspect-h-2">
+    <div className="aspect-w-16 aspect-h-9">
       {props.instance.frontmatter.imgSrc && (
         <img
           className="h-full w-full object-cover object-center"

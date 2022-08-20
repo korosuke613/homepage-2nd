@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 
 import { ExternalLink } from '@/partials/ExternalLink';
 import type { IRecentBlogsProps } from '@/partials/RecentBlogs';
+import { CardClass } from '@/utils/Css';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 
 import { Tag } from './Tag';
@@ -15,8 +16,18 @@ export const BlogGallery = (props: IRecentBlogsProps) => {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {props.postList.map((elt) => (
-        <div className="rounded-md bg-slate-800 bg-gradient-to-br from-violet-900 backdrop-blur-lg">
-          <ExternalLink title={<img src={elt.ogpImageUrl} />} url={elt.url} />
+        <div className="overflow-hidden rounded-md bg-slate-800 bg-gradient-to-br from-violet-900 backdrop-blur-lg">
+          <div style={CardClass}>
+            <ExternalLink
+              title={
+                <img
+                  className="h-full w-full object-cover object-center"
+                  src={elt.ogpImageUrl}
+                />
+              }
+              url={elt.url}
+            />
+          </div>
           <div className="inset-0 flex flex-col justify-center">
             <div className="py-1.5 px-3">
               <ExternalLink
