@@ -18,14 +18,16 @@ export const ContentPost = (props: IContentPostProps) => {
 
   return (
     <Section>
-      <ContentHeader
-        content={props.frontmatter}
-        author={AppConfig.author}
-        tags={tags}
-        contentCategory={props.contentCategory}
-      />
+      <div id="contents">
+        <ContentHeader
+          content={props.frontmatter}
+          author={AppConfig.author}
+          tags={tags}
+          contentCategory={props.contentCategory}
+        />
 
-      <Content content={props.frontmatter}>{props.children}</Content>
+        <Content content={props.frontmatter}>{props.children}</Content>
+      </div>
     </Section>
   );
 };
