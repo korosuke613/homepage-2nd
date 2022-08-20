@@ -94,9 +94,10 @@ const generateTags = (tagNames) => {
   return tags;
 };
 
-const getTags = async (pattern) => {
+const getMarkdownData = async (pattern) => {
   const mdPaths = glob.sync(pattern);
   let tagNames = [];
+  const years = [];
   for (const mdPath of mdPaths) {
     const rawFile = await fs.promises.readFile(mdPath, 'utf-8');
     const parser = await unified()
@@ -121,13 +122,20 @@ const getTags = async (pattern) => {
       continue;
     }
     tagNames = tagNames.concat(md.data.frontMatter.tags);
+
+    const year = new Date(md.data.frontMatter.pubDate).getFullYear();
+    years.push(year);
   }
 
   const uniqTagNames = Array.from(new Set(tagNames));
-  return generateTags(uniqTagNames);
+  const uniqYears = Array.from(new Set(years));
+  return {
+    tags: generateTags(uniqTagNames),
+    years: uniqYears,
+  };
 };
 
-const getTagsForBlog = async () => {
+const getBlogData = async () => {
   const rawHatenaBlogJson = await fs.promises.readFile(
     './public/assets/hatena_blog.json',
     'utf-8'
@@ -138,44 +146,74 @@ const getTagsForBlog = async () => {
    */
   const hatenaBlogJson = JSON.parse(rawHatenaBlogJson);
 
+  const rawZennJson = await fs.promises.readFile(
+    './public/assets/zenn.json',
+    'utf-8'
+  );
+
+  /**
+   * @type { import("../types/IZenn").ZennJson; }
+   */
+  const zennJson = JSON.parse(rawZennJson);
+
+  const articles = { ...hatenaBlogJson.articles, ...zennJson.articles };
   /** @type {string[]} */
   let tagNames = [];
-  Object.keys(hatenaBlogJson.articles).forEach((a) => {
-    tagNames = tagNames.concat(hatenaBlogJson.articles[a].category);
+  const years = [];
+  Object.keys(articles).forEach((a) => {
+    if (articles[a].category !== undefined) {
+      tagNames = tagNames.concat(articles[a].category);
+    }
+    const year = new Date(articles[a].pubDate).getFullYear();
+    years.push(year);
   });
 
   const uniqTagNames = Array.from(new Set(tagNames));
+  const uniqYears = Array.from(new Set(years));
 
   const tags = generateTags(uniqTagNames);
   tags.Zenn = 'bg-sky-400 text-neutral-900';
   tags.Hatena = 'bg-rose-400 text-neutral-900';
 
-  return tags;
+  return { tags, years: uniqYears };
 };
 
-function setupTags() {
+const setupData = async () => {
+  const posts = await getMarkdownData('./src/pages/posts/**.md');
+  const projects = await getMarkdownData('./src/pages/projects/**.md');
+  const blogs = await getBlogData();
+
+  if (!fs.existsSync('./build')) {
+    await fs.promises.mkdir('./build');
+  }
+  await fs.promises.writeFile(
+    './build/tags.json',
+    JSON.stringify(
+      { posts: posts.tags, projects: projects.tags, blogs: blogs.tags },
+      null,
+      2
+    )
+  );
+
+  await fs.promises.writeFile(
+    './build/years.json',
+    JSON.stringify(
+      { posts: posts.years, projects: projects.years, blogs: blogs.years },
+      null,
+      2
+    )
+  );
+};
+
+function setupKorosuke() {
   /**
    * @type { import("astro").AstroIntegration;}
    */
   const integration = {
-    name: 'setupTags',
+    name: 'setupKorosuke',
     hooks: {
       'astro:config:setup': async () => {
-        const postTags = await getTags('./src/pages/posts/**.md');
-        const projectTags = await getTags('./src/pages/projects/**.md');
-        const blogTags = await getTagsForBlog();
-
-        if (!fs.existsSync('./build')) {
-          await fs.promises.mkdir('./build');
-        }
-        await fs.promises.writeFile(
-          './build/tags.json',
-          JSON.stringify(
-            { posts: postTags, projects: projectTags, blogs: blogTags },
-            null,
-            2
-          )
-        );
+        await setupData();
       },
     },
   };
@@ -183,4 +221,4 @@ function setupTags() {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { setupTags };
+export { setupKorosuke };

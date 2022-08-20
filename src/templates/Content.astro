@@ -9,6 +9,7 @@ import { PostGallery } from '@/components/PostGallery';
 import { Section } from '@/components/Section';
 import { Tag } from '@/components/Tag';
 import { getSectionTitle } from '@/components/Title';
+import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
 import type {
   IProjectFrontmatter,
@@ -16,6 +17,7 @@ import type {
 } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
+import { readYears } from '@/utils/Year';
 
 interface Props {
   page: ProjectFrontmatterPage;
@@ -38,6 +40,11 @@ const tags = (await readTags())[contentCategory.toLowerCase()];
 if (tags === undefined) {
   throw new Error('readed tags is undefined');
 }
+
+const years = (await readYears())[contentCategory.toLowerCase()];
+if (years === undefined) {
+  throw new Error('readed years is undefined');
+}
 ---
 
 <Base head={{ title, description: contentDescription }}>
@@ -52,6 +59,13 @@ if (tags === undefined) {
             color={tags[tagName]}
             contentCategory={contentCategory}
           />
+        ))
+      }
+    </div>
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        years.map((year) => (
+          <Year year={year.toString()} contentCategory={contentCategory} />
         ))
       }
     </div>

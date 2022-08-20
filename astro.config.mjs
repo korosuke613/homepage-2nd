@@ -10,7 +10,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 
 import partytown from '@astrojs/partytown';
 // eslint-disable-next-line import/extensions
-import { setupTags } from './src/utils/TagIntegration.mjs';
+import { setupKorosuke } from './src/utils/Integration.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -46,6 +46,6 @@ export default defineConfig({
     image(),
     compress(),
     partytown(),
-    setupTags(),
+    setupKorosuke(),
   ],
 });

@@ -1,0 +1,47 @@
+---
+import Post from '@/pages/posts/[...page].astro';
+import type {
+  IProjectFrontmatter,
+  ProjectFrontmatterPage,
+} from '@/types/IProjectFrontmatter';
+import { sortByDate } from '@/utils/Posts';
+import { readYears } from '@/utils/Year';
+
+type GetStaticPaths = {
+  paginate: any;
+}; // Overrides `GetStaticPathsOptions` types from Astro
+
+export async function getNonDraftPosts() {
+  const allPosts = await Astro.glob<IProjectFrontmatter>('../../*.md');
+  const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
+  return nonDraftPosts;
+}
+
+export async function getStaticPaths({ paginate }: GetStaticPaths) {
+  const nonDraftPosts = await getNonDraftPosts();
+  const sortedPosts = sortByDate(nonDraftPosts);
+
+  const years = await readYears();
+
+  return years.posts.map((year) => {
+    const filteredPosts = sortedPosts.filter((post) => {
+      const publishYear = new Date(post.frontmatter.pubDate).getFullYear();
+      return publishYear === year;
+    });
+
+    return paginate(filteredPosts, {
+      params: { year: year.toString() },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: ProjectFrontmatterPage;
+}
+
+const { page } = Astro.props as Props;
+const { year } = Astro.params;
+---
+
+<Post page={page} preTitle={year} />
