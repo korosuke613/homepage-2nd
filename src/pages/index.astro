@@ -6,9 +6,9 @@ import { SelfIntroduction } from '@/partials/SelfIntroduction';
 import Base from '@/templates/Base.astro';
 import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
+import { getSortedBlogData } from '@/utils/Blog';
 import { sortByDate } from '@/utils/Posts';
 import { readTags } from '@/utils/Tag';
-import { getSortedZennData } from '@/utils/Zenn';
 
 const tags = await readTags();
 
@@ -21,8 +21,8 @@ const allProjects = await Astro.glob<IProjectFrontmatter>('./projects/*.md');
 const nonDraftProjects = allProjects.filter((post) => !post.frontmatter.draft);
 const lastThreeProjects = nonDraftProjects.slice(0, 3);
 
-const allZenn = await getSortedZennData();
-const lastThreeBlogs = allZenn.slice(0, 3);
+const allBlogs = await getSortedBlogData();
+const lastThreeBlogs = allBlogs.slice(0, 3);
 
 const { title } = AppConfig;
 const { description } = AppConfig;

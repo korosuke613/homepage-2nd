@@ -1,13 +1,14 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 import fs from 'node:fs';
-import {unified} from 'unified'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkGfm from 'remark-gfm'
-import remarkRehype from 'remark-rehype'
-import rehypeStringify from 'rehype-stringify'
-import remarkParse from 'remark-parse'
-import remarkExtractFrontmatter from 'remark-extract-frontmatter'
-import yaml from 'yaml'
-import glob from "glob"
+import { unified } from 'unified';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkExtractFrontmatter from 'remark-extract-frontmatter';
+import yaml from 'yaml';
+import glob from 'glob';
 
 export const ColorTags = {
   SLATE: 'SLATE',
@@ -60,8 +61,8 @@ export const colorToClassMap = {
 };
 
 /**
- * 
- * @param {Values<typeof ColorTags>[]} colors 
+ *
+ * @param {Values<typeof ColorTags>[]} colors
  * @returns {string}
  */
 const pickColor = (colors) => {
@@ -75,7 +76,9 @@ const pickColor = (colors) => {
 const generateTags = (tagNames) => {
   const allColors = Object.values(ColorTags);
 
-  /** @type {import { Tags } from "./src/utils/Tag.ts";} */
+  /**
+   * @type { import("../utils/Tag").Tags; }
+   */
   const tags = {};
 
   // tagに一意のColorTagsを設定する
@@ -92,37 +95,63 @@ const generateTags = (tagNames) => {
 };
 
 const getTags = async (pattern) => {
-  let mdPaths = glob.sync(pattern)
+  const mdPaths = glob.sync(pattern);
   let tagNames = [];
-  for(const mdPath of mdPaths){
-    const rawFile = await fs.promises.readFile(
-      mdPath,
-      'utf-8'
-    );
+  for (const mdPath of mdPaths) {
+    const rawFile = await fs.promises.readFile(mdPath, 'utf-8');
     const parser = await unified()
-    .use(remarkParse)
-    .use(remarkFrontmatter, [{
-      type: 'yaml',
-      marker: '-',
-      anywhere: false  // ファイルの冒頭に Front Matter がある前提で探索する
-    }])    
-    .use(remarkExtractFrontmatter, {
-      yaml: yaml.parse,
-      name: 'frontMatter'  // result.data 配下のキー名を決める
-    })
-    .use(remarkRehype)
-    .use(rehypeStringify);
+      .use(remarkParse)
+      .use(remarkFrontmatter, [
+        {
+          type: 'yaml',
+          marker: '-',
+          anywhere: false, // ファイルの冒頭に Front Matter がある前提で探索する
+        },
+      ])
+      .use(remarkExtractFrontmatter, {
+        yaml: yaml.parse,
+        name: 'frontMatter', // result.data 配下のキー名を決める
+      })
+      .use(remarkRehype)
+      .use(rehypeStringify);
 
-    const md = await parser.process(rawFile)
-    if(md.data.frontMatter.draft === true){
+    const md = await parser.process(rawFile);
+    if (md.data.frontMatter.draft === true) {
+      // eslint-disable-next-line no-continue
       continue;
     }
-    tagNames = tagNames.concat(md.data.frontMatter.tags)
+    tagNames = tagNames.concat(md.data.frontMatter.tags);
   }
 
-  const uniqTagNames = Array.from(new Set(tagNames))
-  return generateTags(uniqTagNames)
-}
+  const uniqTagNames = Array.from(new Set(tagNames));
+  return generateTags(uniqTagNames);
+};
+
+const getTagsForBlog = async () => {
+  const rawHatenaBlogJson = await fs.promises.readFile(
+    './public/assets/hatena_blog.json',
+    'utf-8'
+  );
+
+  /**
+   * @type { import("../types/IHatena").HatenaJson; }
+   */
+  const hatenaBlogJson = JSON.parse(rawHatenaBlogJson);
+
+  /** @type {string[]} */
+  let tagNames = [];
+  Object.keys(hatenaBlogJson.articles).forEach((a) => {
+    tagNames = tagNames.concat(hatenaBlogJson.articles[a].category);
+  });
+
+  const uniqTagNames = Array.from(new Set(tagNames));
+
+  const tags = generateTags(uniqTagNames);
+  tags.Zenn = 'bg-sky-400 text-neutral-900';
+  tags.Hatena = 'bg-rose-400 text-neutral-900';
+
+  return tags;
+};
 
 function setupTags() {
   /**
@@ -132,13 +161,21 @@ function setupTags() {
     name: 'setupTags',
     hooks: {
       'astro:config:setup': async () => {
-        const postTags = await getTags("./src/pages/posts/**.md");
-        const projectTags = await getTags("./src/pages/projects/**.md");
+        const postTags = await getTags('./src/pages/posts/**.md');
+        const projectTags = await getTags('./src/pages/projects/**.md');
+        const blogTags = await getTagsForBlog();
 
-        if(! fs.existsSync("./build")){
-          await fs.promises.mkdir("./build");
+        if (!fs.existsSync('./build')) {
+          await fs.promises.mkdir('./build');
         }
-        await fs.promises.writeFile("./build/tags.json", JSON.stringify({posts: postTags, projects: projectTags}, null, 2));
+        await fs.promises.writeFile(
+          './build/tags.json',
+          JSON.stringify(
+            { posts: postTags, projects: projectTags, blogs: blogTags },
+            null,
+            2
+          )
+        );
       },
     },
   };

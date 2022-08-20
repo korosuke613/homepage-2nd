@@ -1,16 +1,16 @@
 ---
 import Blogs from '@/templates/Blogs.astro';
 import type { BlogPage } from '@/types/IBlogPage';
-import { getSortedZennData } from '@/utils/Zenn';
+import { getSortedBlogData } from '@/utils/Blog';
 
 type GetStaticPaths = {
   paginate: any;
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getStaticPaths({ paginate }: GetStaticPaths) {
-  const sortedZenns = await getSortedZennData();
+  const sortedBlogs = await getSortedBlogData();
 
-  return paginate(sortedZenns, { pageSize: 9 });
+  return paginate(sortedBlogs, { pageSize: 9 });
 }
 
 interface Props {

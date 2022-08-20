@@ -1,5 +1,7 @@
 import type { Page } from 'astro';
 
+import type { BlogData } from './IZenn';
+
 export interface IBlog {
   id: string;
   type: string;
@@ -10,4 +12,4 @@ export interface IBlog {
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-export declare type BlogPage = Page<IBlog>;
+export declare type BlogPage = Page<BlogData>;

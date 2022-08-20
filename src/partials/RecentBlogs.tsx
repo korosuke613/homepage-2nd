@@ -1,11 +1,13 @@
 import { GradientText } from '@/components/GradientText';
 import { Section } from '@/components/Section';
-import type { ZennData } from '@/types/IZenn';
+import type { BlogData } from '@/types/IZenn';
+import type { Tags } from '@/utils/Tag';
 
 import { ExternalLink } from './ExternalLink';
 
 export type IRecentBlogsProps = {
-  postList: ZennData[];
+  tags?: Tags;
+  postList: BlogData[];
 };
 
 export const RecentBlogs = (props: IRecentBlogsProps) => (

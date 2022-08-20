@@ -10,7 +10,7 @@ import { getSectionTitle } from '@/components/Title';
 import Base from '@/templates/Base.astro';
 import type { BlogPage } from '@/types/IBlogPage';
 import { AppConfig } from '@/utils/AppConfig';
-import { BlogTags } from '@/utils/Blog';
+import { readTags } from '@/utils/Tag';
 
 interface Props {
   page: BlogPage;
@@ -27,6 +27,11 @@ const titleBase = preTitle
   : `${contentCategory} p. ${page.currentPage}`;
 const title = titleBase + titleSuffix;
 const sectionTitle = getSectionTitle(preTitle, contentCategory);
+
+const tags = (await readTags()).blogs;
+if (tags === undefined) {
+  throw new Error('readed tags is undefined');
+}
 ---
 
 <Base head={{ title, description: contentDescription }}>
@@ -34,19 +39,15 @@ const sectionTitle = getSectionTitle(preTitle, contentCategory);
     <PaginationHeader title={sectionTitle} description={contentDescription} />
     <div class="mt-4 flex flex-wrap justify-center gap-2">
       {
-        Object.keys(BlogTags).map((tagName) => (
-          <Tag
-            name={tagName}
-            color={BlogTags[tagName]}
-            contentCategory={'Blogs'}
-          />
+        Object.keys(tags).map((tagName) => (
+          <Tag name={tagName} color={tags[tagName]} contentCategory={'Blogs'} />
         ))
       }
     </div>
   </Section>
 
   <Section>
-    <BlogGallery postList={page.data} />
+    <BlogGallery postList={page.data} tags={tags} />
   </Section>
 
   <Section>
