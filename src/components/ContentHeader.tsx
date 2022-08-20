@@ -14,7 +14,7 @@ type IContentHeaderProps = {
 
 export const ContentHeader = (props: IContentHeaderProps) => (
   <>
-    <h1 className="text-center text-3xl font-bold">
+    <h1 id="contents_header" className="text-center text-3xl font-bold">
       {props.content.title.replace('\\n', '')}
     </h1>
 

@@ -22,7 +22,10 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
           />
         </div>
       )}
-      <div className="prose prose-invert mt-8 prose-img:rounded-lg">
+      <div
+        id="contents_data"
+        className="prose prose-invert mt-8 prose-img:rounded-lg"
+      >
         {props.children}
       </div>
     </div>
