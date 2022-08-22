@@ -1,7 +1,9 @@
 import fs from 'node:fs';
+import path from 'path';
 
 import type { HatenaJson } from '@/types/IHatena';
 import type { BlogData, ZennJson } from '@/types/IZenn';
+import { AppConfig } from '@/utils/AppConfig';
 
 export const createZennData = (articles: ZennJson['articles']) => {
   const arrayArticles: BlogData[] = Object.keys(articles).map((articleId) => {
@@ -62,3 +64,7 @@ export const getSortedBlogData = async () => {
 
   return sortedBlogData;
 };
+
+export function generateImagePath(...paths: string[]) {
+  return path.join(AppConfig.base, 'assets', 'images', ...paths);
+}
