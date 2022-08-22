@@ -1,6 +1,8 @@
 import path from 'path';
 import type { ReactNode } from 'react';
 
+import type { IExternalLinkProps } from '@/partials/ExternalLink';
+import { ExternalLink } from '@/partials/ExternalLink';
 import { AppConfig } from '@/utils/AppConfig';
 
 type INavbarProps = {
@@ -31,5 +33,15 @@ type INavMenuItemProps = {
 export const NavMenuItem = (props: INavMenuItemProps) => (
   <li className="hover:text-white">
     <a href={path.join(AppConfig.base, props.href)}>{props.children}</a>
+  </li>
+);
+
+export const NavMenuExternalLink = (props: IExternalLinkProps) => (
+  <li className="hover:text-white">
+    <ExternalLink
+      title={props.title}
+      url={props.url}
+      noClass={true}
+    ></ExternalLink>
   </li>
 );

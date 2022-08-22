@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-type IExternalLinkProps = {
+export type IExternalLinkProps = {
   title: ReactNode;
   url: string;
   noClass?: boolean;
