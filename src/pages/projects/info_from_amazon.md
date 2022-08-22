@@ -1,6 +1,6 @@
 ---
 layout: '@/templates/BasePost.astro'
-title: 'korosuke613/book-info-from-amazon'
+title: 'book-info-from-amazon'
 description: ''
 pubDate: 2017-06-13T00:00:00Z
 imgSrc: '/assets/images/cover/info_from_amazon.webp'
