@@ -3,7 +3,12 @@ import { DocSearch } from '@docsearch/react';
 import path from 'path';
 
 import { Logo } from '@/components/Logo';
-import { NavbarTwoColumns, NavMenu, NavMenuItem } from '@/components/Navbar';
+import {
+  NavbarTwoColumns,
+  NavMenu,
+  NavMenuExternalLink,
+  NavMenuItem,
+} from '@/components/Navbar';
 import { Section } from '@/components/Section';
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -21,10 +26,12 @@ export interface Props {}
         <NavMenuItem href="projects">Projects</NavMenuItem>
         <NavMenuItem href="posts">Posts</NavMenuItem>
         <NavMenuItem href="blogs">Blogs</NavMenuItem>
-        <NavMenuItem href="https://github.com/korosuke613">GitHub</NavMenuItem>
-        <NavMenuItem href="https://twitter.com/shitimi_613"
-          >Twitter
-        </NavMenuItem>
+        <NavMenuExternalLink title="GitHub" url="https://github.com/korosuke613"
+        />
+        <NavMenuExternalLink
+          title="Twitter"
+          url="https://twitter.com/shitimi_613"
+        />
       </NavMenu>
 
       <DocSearch
