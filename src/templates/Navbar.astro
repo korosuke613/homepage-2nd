@@ -1,0 +1,38 @@
+---
+import { DocSearch } from '@docsearch/react';
+import path from 'path';
+
+import { Logo } from '@/components/Logo';
+import { NavbarTwoColumns, NavMenu, NavMenuItem } from '@/components/Navbar';
+import { Section } from '@/components/Section';
+import { AppConfig } from '@/utils/AppConfig';
+
+export interface Props {}
+---
+
+<Section>
+  <NavbarTwoColumns>
+    <a href={path.join(AppConfig.base, '/')}>
+      <Logo icon={'💪'} name="korosuke613" />
+    </a>
+
+    <div class="flex items-center gap-x-0 font-medium text-gray-200">
+      <NavMenu>
+        <NavMenuItem href="projects">Projects</NavMenuItem>
+        <NavMenuItem href="posts">Posts</NavMenuItem>
+        <NavMenuItem href="blogs">Blogs</NavMenuItem>
+        <NavMenuItem href="https://github.com/korosuke613">GitHub</NavMenuItem>
+        <NavMenuItem href="https://twitter.com/shitimi_613"
+          >Twitter
+        </NavMenuItem>
+      </NavMenu>
+
+      <DocSearch
+        appId="YLT78H3I8T"
+        indexName="draft_my_homepage"
+        apiKey="ecd092a52e0fdaf9b5cc50f059bba8ea"
+        client:only="react"
+      />
+    </div>
+  </NavbarTwoColumns>
+</Section>

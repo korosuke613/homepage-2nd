@@ -55,6 +55,8 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.3.4",
+    "@docsearch/css": "^3.2.1",
+    "@docsearch/react": "^3.2.1",
     "astro-imagetools": "^0.6.10",
     "date-fns": "^2.28.0",
     "eastasianwidth": "^0.2.0",

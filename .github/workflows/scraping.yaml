@@ -1,0 +1,22 @@
+name: Scraping by Algolia
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: "scraping"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Scraping
+        run: |
+          docker run -it \
+            --env "CONFIG=$(cat ./algolia.json | jq -r tostring)" \
+            --env "APPLICATION_ID=${{ secrets.ALGOLIA_APPLICATION_ID }}" \
+            --env "API_KEY=${{ secrets.ALGOLIA_API_KEY }}" \
+            algolia/docsearch-scraper
