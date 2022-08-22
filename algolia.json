@@ -1,0 +1,30 @@
+{
+  "index_name": "draft_my_homepage",
+  "start_urls": [
+    {
+      "url": "https://korosuke613.github.io/draft-new-my-homepage/posts",
+      "selectors_key": "default"
+    },
+    {
+      "url": "https://korosuke613.github.io/draft-new-my-homepage/projects",
+      "selectors_key": "default"
+    },
+    {
+      "url": "https://korosuke613.github.io/draft-new-my-homepage/blogs",
+      "selectors_key": "blogs"
+    }
+  ],
+  "stop_urls": ["/*/tag", "/*/year"],
+  "selectors": {
+    "default": {
+      "lvl0": "#contents_header",
+      "lvl1": "#contents div.contents_tag",
+      "lvl2": "#contents img",
+      "text": "#contents_data li, #contents_data p"
+    },
+    "blogs": {
+      "lvl0": "h1",
+      "text": "span.font-semibold"
+    }
+  }
+}
