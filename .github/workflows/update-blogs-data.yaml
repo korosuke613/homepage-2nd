@@ -1,0 +1,74 @@
+name: Update blogs data
+
+on:
+  schedule:
+    - cron: '18 23 * * *' # 毎日朝 8 時 18 分（JST）
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: "update-blogs-data"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix: 
+        working_dir: ["./tools"]
+    defaults:
+      run:
+        working-directory: ${{ matrix.working_dir }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+          cache-dependency-path: '${{ matrix.working_dir }}/package-lock.json'
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update zenn.json
+        run: |
+          npx ts-node updateZennJson.ts
+
+      - name: Update hatena_blog.json
+        run: |
+          npx ts-node updateHatenaBlogJson.ts
+
+      - name: Check files changed
+        run: |
+          if [[ $(git status ./public/assets/ --porcelain) -ne 0 ]]; then
+            echo "changed file"
+            echo "is_files_changed=true" >> GITHUB_ENV
+            git diff
+          fi
+      
+      - name: Commit files
+        if: env.is_files_changed == true
+        run: |
+          git config user.email='41898282+github-actions[bot]@users.noreply.github.com' 
+          git config user.name='github-actions[bot]'
+          git add ./public/assets/ 
+          git switch -c "update-blogs/$(date +%Y%m%d-%H%M%S)"
+          git commit -m "chore: update blogs data"
+          git push origin HEAD
+          gh pr create --title "chore: update blogs data"
+
+      - name: Create job summary
+        if: env.is_files_changed == true
+        run: |
+          gh pr view --json number,title,url --template \
+          '# Create {{printf "#%v" .number}} {{.title}}
+          {{.url}}
+          '
+
+      - name: Setting auto merge
+        if: env.is_files_changed == true
+        run: gh pr merge --auto
+
