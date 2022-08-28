@@ -7,7 +7,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 concurrency:
@@ -43,25 +43,31 @@ jobs:
 
       - name: Check files changed
         run: |
-          if [[ $(git status ../public/assets/ --porcelain) -ne 0 ]]; then
+          if [[ -n "$(git status ../public/assets/ --porcelain)" ]]; then
             echo "changed file"
-            echo "is_files_changed=true" >> GITHUB_ENV
+            echo "is_files_changed=true" >> $GITHUB_ENV
             git diff
+            echo "commit_datetime=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
           fi
       
       - name: Commit files
-        if: env.is_files_changed == true
+        if: env.is_files_changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.email='41898282+github-actions[bot]@users.noreply.github.com' 
-          git config user.name='github-actions[bot]'
+          set -x
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com' 
+          git config --global user.name 'github-actions[bot]'
           git add ../public/assets/
-          git switch -c "update-blogs/$(date +%Y%m%d-%H%M%S)"
-          git commit -m "chore: update blogs data"
+          git switch -c "update-blogs/${{ env.commit_datetime }}"
+          git commit -m "chore: update blogs data (${{ env.commit_datetime }})"
           git push origin HEAD
-          gh pr create --title "chore: update blogs data"
+          gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --body ""
 
       - name: Create job summary
-        if: env.is_files_changed == true
+        if: env.is_files_changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr view --json number,title,url --template \
           '# Create {{printf "#%v" .number}} {{.title}}
@@ -69,6 +75,8 @@ jobs:
           '
 
       - name: Setting auto merge
-        if: env.is_files_changed == true
-        run: gh pr merge --auto
+        if: env.is_files_changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --merge --auto
 
