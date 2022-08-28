@@ -10,6 +10,10 @@
       "selectors_key": "default"
     },
     {
+      "url": "https://korosuke613.github.io/draft-new-my-homepage/dormitory_introduction",
+      "selectors_key": "default"
+    },
+    {
       "url": "https://korosuke613.github.io/draft-new-my-homepage/blogs",
       "selectors_key": "blogs"
     }
