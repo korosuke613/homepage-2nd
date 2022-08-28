@@ -5,6 +5,8 @@ import type {
   ProjectFrontmatterPage,
 } from '@/types/IProjectFrontmatter';
 import { sortByDate } from '@/utils/Posts';
+import type { StaticPost } from '@/utils/StaticPages';
+import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { generateTagsFromMarkdowns } from '@/utils/Tag';
 
 type GetStaticPaths = {
@@ -12,7 +14,11 @@ type GetStaticPaths = {
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getNonDraftPosts() {
-  const allPosts = await Astro.glob<IProjectFrontmatter>('../../*.md');
+  const allPosts: StaticPost[] = await Astro.glob<IProjectFrontmatter>(
+    '../../*.md'
+  );
+  allPosts.push(DormitoryIntroduction);
+
   const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
   return nonDraftPosts;
 }

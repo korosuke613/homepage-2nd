@@ -1,6 +1,4 @@
 ---
-import type { MarkdownInstance } from 'astro';
-
 import {
   NewerOlderPagination,
   PaginationHeader,
@@ -11,11 +9,9 @@ import { Tag } from '@/components/Tag';
 import { getSectionTitle } from '@/components/Title';
 import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
-import type {
-  IProjectFrontmatter,
-  ProjectFrontmatterPage,
-} from '@/types/IProjectFrontmatter';
+import type { ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
+import type { StaticPost } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 import { readYears } from '@/utils/Year';
 
@@ -24,7 +20,7 @@ interface Props {
   preTitle?: string | number;
   contentCategory: string;
   contentDescription: string;
-  contents: MarkdownInstance<IProjectFrontmatter>[];
+  contents: StaticPost[];
 }
 
 const { page, preTitle, contentCategory, contentDescription } =

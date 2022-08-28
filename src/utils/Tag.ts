@@ -1,8 +1,7 @@
-import type { MarkdownInstance } from 'astro';
 import fs from 'fs';
 
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
 import type { Values } from '@/types/Values';
+import type { StaticPost } from '@/utils/StaticPages';
 
 export type Tags = {
   [key: string]: string;
@@ -84,9 +83,7 @@ export const generateTags = (tagNames: string[]) => {
   return tags;
 };
 
-export const generateTagsFromMarkdowns = (
-  markdowns: MarkdownInstance<IProjectFrontmatter>[]
-) => {
+export const generateTagsFromMarkdowns = (markdowns: StaticPost[]) => {
   const allTagNames = markdowns
     .map((md) => {
       return md.frontmatter.tags;

@@ -1,8 +1,8 @@
-import type { MarkdownInstance } from 'astro';
-
 import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
 
-export const sortByDate = (posts: MarkdownInstance<IProjectFrontmatter>[]) => {
+export const sortByDate = (
+  posts: Array<{ frontmatter: IProjectFrontmatter }>
+) => {
   return posts.sort(
     (a, b) =>
       new Date(b.frontmatter.pubDate).valueOf() -
@@ -10,7 +10,9 @@ export const sortByDate = (posts: MarkdownInstance<IProjectFrontmatter>[]) => {
   );
 };
 
-export const sortByOrder = (posts: MarkdownInstance<IProjectFrontmatter>[]) => {
+export const sortByOrder = (
+  posts: Array<{ frontmatter: IProjectFrontmatter }>
+) => {
   return posts.sort((a, b) => {
     let aDate = new Date(a.frontmatter.pubDate).valueOf();
     let bDate = new Date(b.frontmatter.pubDate).valueOf();

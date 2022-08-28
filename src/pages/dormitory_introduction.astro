@@ -1,0 +1,360 @@
+---
+import path from 'path';
+
+import { ImageAndDescription } from '@/components/Columns';
+import { Panel } from '@/components/Panel';
+import { ContentPost } from '@/partials/ContentPost';
+import { ExternalLink } from '@/partials/ExternalLink';
+import Base from '@/templates/Base.astro';
+import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import { AppConfig } from '@/utils/AppConfig';
+import { generateImagePath } from '@/utils/Blog';
+import { DormitoryIntroduction } from '@/utils/StaticPages';
+
+export interface Props {
+  content: IProjectFrontmatter;
+}
+
+const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_name}`;
+---
+
+<Base
+  head={{ title, description: DormitoryIntroduction.frontmatter.description }}
+>
+  <ContentPost
+    frontmatter={DormitoryIntroduction.frontmatter}
+    contentCategory={'Projects'}
+  >
+    <p>
+      宮崎大学の寮の1つ、国際交流宿舎を紹介するページです。宮崎大学の国際交流宿舎ってどうかなと思っている高校生の皆さんの参考になればと思います。
+    </p>
+
+    <p>
+      現寮生・元寮生向けのページは<a
+        href={path.join(AppConfig.base, 'projects', 'dormitory')}
+        >こちら
+      </a>。
+    </p>
+
+    <Panel header="！注意！">
+      このページは宮崎大学とは一切関係ありません。一寮生だった私から見た国際寮を紹介するページになります。<br
+      />
+      このページは2017年当時の情報を元に作られています。内容は変わっている可能性があります。
+    </Panel>
+
+    <h2>概要</h2>
+    <p>
+      宮崎大学国際交流宿舎(以下国寮)は宮崎大学木花キャンパスにある学生寮です。寮の自治も寮生が行っています。
+    </p>
+
+    <p>
+      大きな特徴は、日本人と外国人留学生が住んでいるということです。隣の部屋に外国人が住んでいることは国寮において全く珍しいことではありません。捕食室や談話室といった共用スペースもあるので、外国人留学生とのコミュニケーションも積極的に行えます。
+    </p>
+
+    <h2>国寮のいいところ 🌏</h2>
+
+    <Panel header="☆友達ができやすい！">
+      各階でつながりがあるだけでなく、月一でイベント(任意参加)もおこなっているので、大学で友達ができるか不安な人も安心です。
+    </Panel>
+
+    <Panel header="☆いろんな分野の人がいる！">
+      現在、教育学部・地域創生学部・農学部・工学部・医学部と、全ての学部の学生がいます。自分の得意でない分野の話を他の寮生から聞くことができるので、知見を広げることができます。
+    </Panel>
+
+    <Panel header="☆外国人留学生と交流しやすい！">
+      外国の文化に興味がある、普段から英会話をしたいなどを考えている人にはとてもオススメです。寮生の約
+    </Panel>
+
+    <h2>居室 🏠</h2>
+    <p>
+      実際に国寮生が住んでいる居室について紹介します。
+      １人部屋で、トイレと洗面所が備え付けとなります。また、備品として、机・棚・クローゼット・ベッドがあります。
+    </p>
+
+    <div class="grid grid-cols-3 gap-6">
+      <img
+        alt="細長い通路の奥に6畳ほどの部屋"
+        src={generateImagePath('dormitory', 'room1.webp')}
+      />
+      <img
+        alt="机、本棚、クローゼット、ベッドが並んでいる。部屋の1/3を埋めている"
+        src={generateImagePath('dormitory', 'room2.webp')}
+      />
+      <img
+        alt="トイレと洗面台、鏡"
+        src={generateImagePath('dormitory', 'toile.webp')}
+      />
+    </div>
+
+    <h2>共用スペース 💃</h2>
+    <p>
+      国寮の共用スペースについて紹介します。ここで紹介する設備は各階に一つずつあります。
+    </p>
+
+    <h3>補食室 🍙</h3>
+
+    <ImageAndDescription
+      alt="部屋の3倍ほど広い部屋に8人掛けの机と椅子がある"
+      imageName={['dormitory', 'hosyoku.webp']}
+    >
+      <p>補食室はご飯を食べたり個人の料理用品を置いたりするスペースです。</p>
+      <p>また、各階のゴミもここに捨てます。</p>
+      <p>小さなベランダもあります。奥にはキッチンがあります。</p>
+    </ImageAndDescription>
+
+    <h3>キッチン 🍳</h3>
+
+    <ImageAndDescription
+      alt="コンロ、冷蔵庫等が壁際にあり、真ん中に高脚机がある"
+      imageName={['dormitory', 'kitchen.webp']}
+    >
+      <p>
+        キッチンは見ての通り料理をするスペースです。いつでも使うことができます。
+      </p>
+      <ul>
+        <li>設備</li>
+        <li>流し台</li>
+        <li>IHコンロ2台</li>
+        <li>電子レンジ2台</li>
+        <li>冷蔵庫3台</li>
+      </ul>
+    </ImageAndDescription>
+
+    <h3>談話室 📺</h3>
+
+    <ImageAndDescription
+      alt="本棚二つの上にテレビ。腰掛け椅子の前に細長机、冷蔵庫"
+      imageName={['dormitory', 'danwa.webp']}
+    >
+      <p>
+        談話室は自由な部屋です。階によって特色があり、例えば7階だったら写真のようなシンプルな部屋になっています。他の例をあげると、8階はゲーム機等があり、みんなで遊ぶ部屋となっています。
+      </p>
+    </ImageAndDescription>
+
+    <h3>洗濯室 👔</h3>
+
+    <ImageAndDescription
+      alt="洗濯機の上に乾燥機が乗っている。それが3台並んでいる"
+      imageName={['dormitory', 'sentaku.webp']}
+    >
+      <p>
+        洗濯室には、洗濯機3台、乾燥機3台があります。空いている台はいつでも使うことができます。洗剤は個人で用意してください。
+      </p>
+    </ImageAndDescription>
+
+    <h3>お風呂場 🛁</h3>
+
+    <div class="grid grid-cols-3 gap-6">
+      <img
+        alt="人1.5人分くらいの幅の廊下。個室ごとに扉がついている。"
+        src={generateImagePath('dormitory', 'huroba.webp')}
+      />
+      <img
+        alt="シャワー室の部屋。シャワーと脱衣所は分かれている"
+        src={generateImagePath('dormitory', 'shower.webp')}
+      />
+      <img
+        alt="浴室の部屋。浴室と脱衣所は分かれている"
+        src={generateImagePath('dormitory', 'bath.webp')}
+      />
+    </div>
+
+    <p>
+      お風呂場は大浴場はなく、全て個室となっています。シャワー室が3部屋、浴室が2部屋あります。いつでも使えます。
+    </p>
+
+    <h3>踊り場 🕺</h3>
+    <div class="grid grid-cols-2 gap-6">
+      <img
+        alt="廊下の真ん中にエレベータ"
+        src={generateImagePath('dormitory', 'elevetor.webp')}
+      />
+      <img
+        alt="廊下の真ん中にホワイトボード。部屋と部屋の間にある"
+        src={generateImagePath('dormitory', 'whiteboard.webp')}
+      />
+    </div>
+
+    <p>各階の踊り場にはエレベータとホワイトボードが設置されています。</p>
+    <p>ホワイトボードには各階で共有したいことが書かれます。</p>
+
+    <h3>エレベータ 📦</h3>
+
+    <ImageAndDescription
+      alt="エレベータの中。奥に鏡がついている。手すりがついている"
+      imageName={['dormitory', 'elevetor2.webp']}
+    >
+      <p>エレベータが一台設置されています。縦に長いです。鏡がついています。</p>
+    </ImageAndDescription>
+
+    <h3>玄関 🚪</h3>
+
+    <div class="grid grid-cols-2 gap-6">
+      <img
+        alt="外から見た玄関。奥にエレベータと階段が並んでいる"
+        src={generateImagePath('dormitory', 'genkan.webp')}
+      />
+      <img
+        alt="エレベータ側から見た玄関。扉が重そう"
+        src={generateImagePath('dormitory', 'genkan2.webp')}
+      />
+    </div>
+
+    <p>玄関です。入って左に個人のポスト、右に靴入れがあります。</p>
+    <p>外から入るには支給されるカードキーが必要です。</p>
+
+    <h2>周辺施設 🏬</h2>
+
+    <img alt="" src={generateImagePath('dormitory', 'map.webp')} />
+    <p>寮から徒歩5分圏内の地図です。</p>
+
+    <ul>
+      <li>駐輪場・駐車場🚗</li>
+      <li>マックスバリュー(スーパー)🗼</li>
+      <li>ジョイフル(ファミレス)🍴</li>
+      <li>郵便局🏣</li>
+      <li>セブンイレブン(コンビニ)🏪</li>
+    </ul>
+
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <img
+          alt="駐車場の画像。砂利の上に適当に車が止まっている"
+          src={generateImagePath('dormitory', 'parking.webp')}
+        />
+        <p>駐車場</p>
+      </div>
+      <div>
+        <img
+          alt="駐輪場の画像。自転車がたくさん止まっており、置き場には屋根がついている"
+          src={generateImagePath('dormitory', 'parking2.webp')}
+        />
+        <p>駐輪場</p>
+      </div>
+    </div>
+
+    <h2>男子寮👨・女子寮👩との違い</h2>
+    <p>
+      日本人学生向けには他にも男子寮・女子寮があります。以下は男子寮・女子寮と国際交流宿舎の違いの一部です。
+    </p>
+
+    <table>
+      <thead>
+        <th></th>
+        <th>国寮</th>
+        <th>男寮・女寮</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>収容定員</td>
+          <td>165人(男100/女65)</td>
+          <td>100人</td>
+        </tr>
+        <tr>
+          <td>階数</td>
+          <td>8階</td>
+          <td>5階</td>
+        </tr>
+        <tr>
+          <td>居室面積</td>
+          <td>9平方m(約5.5畳)</td>
+          <td>11平方m(約6.7畳)</td>
+        </tr>
+        <tr>
+          <td>トイレ・洗面所の場所</td>
+          <td>各居室</td>
+          <td>共用スペース(各階)</td>
+        </tr>
+        <tr>
+          <td>浴室/シャワー室の数(各階)</td>
+          <td>2部屋/3部屋</td>
+          <td>なし/3部屋</td>
+        </tr>
+        <tr>
+          <td>1ヶ月の寮費(寄宿費+光熱水費)</td>
+          <td>約12000円</td>
+          <td>約15000円</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>よくある質問</h2>
+    <p>よく聞かれる質問とその回答です。新しい質問があったら随時追加します。</p>
+
+    <Panel header="Q. 門限はありますか？">
+      A. ありません。いつでも帰ってこれます。
+    </Panel>
+
+    <Panel header="Q. 就寝時刻はありますか？">
+      A. ありません。ただし、他の人の迷惑にならないようにしましょう。
+    </Panel>
+
+    <Panel header="Q. お風呂はいつでも入れますか？">
+      A. 24時間いつでも入れます。
+    </Panel>
+
+    <Panel header="Q. 食堂はありますか？">
+      A.
+      補食室で自主的に料理をすることはできますが、いわゆる食堂はありません。しかし、大学の食堂（生協）に徒歩5分で行けます。
+    </Panel>
+
+    <Panel header="Q. 盗難はありますか？">
+      A.
+      居室にあるものを盗まれたという話を私は聞いたことはありませんが、共用スペースに置いていたもの(料理用品や、冷蔵庫に入れていた飲み物等)が勝手に使われていた、無くなったという話は時々聞きます。中には共用スペースに物を置かないとする人もいます。
+    </Panel>
+
+    <Panel header="Q. 寮母さんはいますか？">
+      A.
+      基本的に平日の10:00~17:00に寮母さんが1階玄関にいます。寮母さんは寮に関する手続きをしてくれたり、郵便物の受け取りをしてくれたりします。
+    </Panel>
+
+    <Panel header="Q. ネット環境はどうなっていますか？">
+      A.
+      2017年現在、居室にネット接続をしてくれる業者は3つあります。Iam-net、Sun-Net、フレッツ光の3社です。それぞれの長所短所がありますが、ここに記述することはやめておきます。入寮後に先輩に聞いてください。
+    </Panel>
+
+    <Panel header="Q. 上下関係は厳しいですか？">
+      A.
+      2017年現在、上下関係はあまり厳しくなく、緩いです。しかし、各階によって多少の上下はあります。上下関係がないという訳ではありませんが、後輩だからという理由で理不尽な目にあうことは滅多にありません。あったとしても、そういうことをする先輩は他の先輩から糾弾されるでしょう。4年生である私がいうとあまり説得力がないかもしれませんが、少なくとも現在の国寮の先輩は優しい先輩しかいません。
+      ただし、1年生には、学祭の準備をしたり、月一のゴミ置き場の掃除をしたりと、一年生特有の責務はあります。
+    </Panel>
+
+    <Panel header="Q. 寮生同士の雰囲気はどんな感じですか？">
+      A.
+      寮生同士の仲はよい場合がほとんどです。少なくとも顔見知り以上ではあります。廊下で寮生にあったときに世間話が始まったり、談話室で一緒にゲームをしたりと、良い悪いでいうと雰囲気は良いです。
+    </Panel>
+
+    <h2>関連リンク</h2>
+    <ul>
+      <li>
+        宮崎大学学生生活支援部の寮に関するページ → 学生寮・下宿・アパートの概要
+      </li>
+      <li>宮崎大学国際交流宿舎への地図→ google map</li>
+    </ul>
+
+    <h2>みんなで作る、国寮ページ</h2>
+    <p>
+      もし、このページに矛盾点、改善点等がある場合、以下の方法で貢献できます。
+    </p>
+
+    <ul>
+      <li>
+        GitHub で Issue を飛ばす。もしくは、fork してプルリクエストを送る。 → <ExternalLink
+          title="korosuke613/myHomepage"
+          url="https://github.com/korosuke613/myHomepage"
+        />
+      </li>
+      <li>
+        Twitterで連絡する。 → <ExternalLink
+          title="@shitimi_613"
+          url="https://twitter.com/shitimi_613"
+        />
+      </li>
+    </ul>
+
+    <h2>謝辞</h2>
+    <p>
+      本ページを作成するにあたり、アンケートに協力していただいた皆様に感謝いたします。
+    </p>
+  </ContentPost>
+</Base>
