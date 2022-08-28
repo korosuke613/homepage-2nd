@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2022-08-14T11:09:45.809Z",
+  "lastUpdated": "2022-08-28T13:37:51.361Z",
   "articles": {
     "e82445a43782b1": {
       "title": "Productivity Weekly (2020-12-23号)",
@@ -415,6 +415,11 @@
       "title": "Productivity Weekly (2022-07-27号) 簡易版",
       "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--WCEToWrY--/co_rgb:222%2Cg_south_west%2Cl_text:notosansjp-medium.otf_37_bold:Futa%2520Hirakoba%2Cx_203%2Cy_98/c_fit%2Cco_rgb:222%2Cg_north_west%2Cl_text:notosansjp-medium.otf_70_bold:Productivity%2520Weekly%2520%25282022-07-27%25E5%258F%25B7%2529%2520%25E7%25B0%25A1%25E6%2598%2593%25E7%2589%2588%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vemVubi9pbWFnZS9mZXRjaC9zLS1YLWllRmlwQS0tL2NfbGltaXQlMkNmX2F1dG8lMkNmbF9wcm9ncmVzc2l2ZSUyQ3FfYXV0byUyQ3dfNzAvaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_72/v1627274783/default/og-base_z4sxah.png",
       "pubDate": "2022-08-08T07:24:48.000Z"
+    },
+    "productivity-weekly-20220810": {
+      "title": "Productivity Weekly (2022-08-10号)",
+      "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--VHNBrMuC--/co_rgb:222%2Cg_south_west%2Cl_text:notosansjp-medium.otf_37_bold:Futa%2520Hirakoba%2Cx_203%2Cy_98/c_fit%2Cco_rgb:222%2Cg_north_west%2Cl_text:notosansjp-medium.otf_70_bold:Productivity%2520Weekly%2520%25282022-08-10%25E5%258F%25B7%2529%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vemVubi9pbWFnZS9mZXRjaC9zLS1YLWllRmlwQS0tL2NfbGltaXQlMkNmX2F1dG8lMkNmbF9wcm9ncmVzc2l2ZSUyQ3FfYXV0byUyQ3dfNzAvaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_72/v1627274783/default/og-base_z4sxah.png",
+      "pubDate": "2022-08-19T10:30:46.000Z"
     }
   }
 }
