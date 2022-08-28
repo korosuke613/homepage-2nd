@@ -48,3 +48,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
+
+  call-scraping-workflow:
+    needs:
+      - deploy
+    uses: ./.github/workflows/scraping.yaml
