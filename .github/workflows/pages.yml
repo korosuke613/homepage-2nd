@@ -53,3 +53,4 @@ jobs:
     needs:
       - deploy
     uses: ./.github/workflows/scraping.yaml
+    secrets: inherit
