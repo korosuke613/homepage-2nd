@@ -30,6 +30,8 @@ const readLocalHatebaBlogJson = async (path: string) => {
   return hatenaJson;
 };
 
+let updateItemCount = 0;
+
 const updateHatenaBlogJson = async (
   updatedAtString: string,
   rss: HatenaRssJson,
@@ -38,6 +40,14 @@ const updateHatenaBlogJson = async (
   const updatedAt = new Date(updatedAtString);
 
   for (const r of rss) {
+    if (updatedAt > new Date(r.isoDate)) {
+      console.info(`info: skip ${r.title}`);
+      continue;
+    }
+
+    console.info(`info: add ${r.title}`);
+    updateItemCount += 1;
+
     const id = r.link.replace("?utm_source=feed", "");
     hatenaJson.articles[id] = {
       title: r.title,
@@ -65,6 +75,11 @@ const updateHatenaBlogJson = async (
     rss,
     localHatenaBlogJson
   );
+
+  if (updateItemCount === 0) {
+    console.info(`info: nothing update`);
+    return;
+  }
 
   await fs.promises.writeFile(
     localHatenaBlogJsonPath,

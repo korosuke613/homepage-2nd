@@ -29,6 +29,8 @@ const readLocalZennJson = async (path: string) => {
   return zennJson;
 };
 
+let updateItemCount = 0;
+
 const updateZennJson = (
   updatedAtString: string,
   rss: ZennRssJson,
@@ -36,15 +38,22 @@ const updateZennJson = (
 ): ZennJson => {
   const updatedAt = new Date(updatedAtString);
 
-  rss.forEach((r) => {
-    const id = r.link.split("/").pop();
+  for (const r of rss) {
+    if (updatedAt > new Date(r.isoDate)) {
+      console.info(`info: skip ${r.title}`);
+      continue;
+    }
 
+    console.info(`info: add ${r.title}`);
+    updateItemCount += 1;
+
+    const id = r.link.split("/").pop();
     zennJson.articles[id] = {
       title: r.title,
       ogpImageUrl: r.enclosure.url,
       pubDate: r.isoDate,
     };
-  });
+  }
 
   zennJson.lastUpdated = new Date().toISOString();
 
@@ -61,6 +70,11 @@ const updateZennJson = (
     rss,
     localZennJson
   );
+
+  if (updateItemCount === 0) {
+    console.info(`info: nothing update`);
+    return;
+  }
 
   await fs.promises.writeFile(
     localZennJsonPath,
