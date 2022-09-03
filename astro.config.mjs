@@ -14,7 +14,7 @@ import { setupKorosuke } from './src/utils/Integration.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/draft-new-my-homepage', // Set a path prefix.
+  base: '/', // Set a path prefix.
   site: 'https://korosuke613.github.io',
   // Use to generate your sitemap and canonical URLs in your final build.
   // Important!
