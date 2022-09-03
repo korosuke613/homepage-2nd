@@ -15,7 +15,7 @@ import { setupKorosuke } from './src/utils/Integration.mjs';
 // https://astro.build/config
 export default defineConfig({
   base: '/', // Set a path prefix.
-  site: 'https://korosuke613.github.io',
+  site: 'https://korosuke613.dev',
   // Use to generate your sitemap and canonical URLs in your final build.
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro.
