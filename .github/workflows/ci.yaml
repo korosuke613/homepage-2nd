@@ -37,3 +37,26 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+
+  tools:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+          cache-dependency-path: 'tools/package-lock.json'
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Dry run update zenn.json
+        run: |
+          npx ts-node updateZennJson.ts
+
+      - name: Dry run update hatena_blog.json
+        run: |
+          npx ts-node updateHatenaBlogJson.ts
