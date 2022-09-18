@@ -20,7 +20,7 @@
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
     "@proofdict/textlint-rule-proofdict": "3.1.2",
-    "@tailwindcss/aspect-ratio": "0.4.0",
+    "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.4",
     "@types/react": "18.0.17",
     "@typescript-eslint/eslint-plugin": "5.33.1",
