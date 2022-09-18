@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":label(renovate)", // https://docs.renovatebot.com/presets-default/#labelarg0
+    ":timezone(Asia/Tokyo)",
+    ":enableVulnerabilityAlertsWithLabel(security)", // Raise PR when vulnerability alerts are detected with label security.
+    ":semanticCommitTypeAll(chore)", // If semantic commits detected, use semantic commit type chore for all
+    "schedule:weekly"
+  ],
+  "separateMajorMinor": false,
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "groupName": "npm"
+    }
+  ]
+}
