@@ -1,12 +1,12 @@
 import { format } from 'date-fns';
 
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import type { Tags } from '@/utils/Tag';
 
 import { Tag } from './Tag';
 
 type IContentHeaderProps = {
-  content: IProjectFrontmatter;
+  content: IArticleFrontmatter;
   author: string;
   tags: Tags;
   contentCategory: string;

@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 
+import type { BlogData } from '@/types/IBlogPage';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 import type { Tags } from '@/utils/Tag';
 

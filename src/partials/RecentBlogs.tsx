@@ -1,10 +1,10 @@
 import { GradientText } from '@/components/GradientText';
 import { Section } from '@/components/Section';
-import type { BlogData } from '@/types/IZenn';
+import type { BlogData } from '@/types/IBlogPage';
 import { CardClass } from '@/utils/Css';
 import type { Tags } from '@/utils/Tag';
 
-import { ExternalLink } from './ExternalLink';
+import { ExternalLink } from '../components/ExternalLink';
 
 export type IRecentBlogsProps = {
   tags?: Tags;

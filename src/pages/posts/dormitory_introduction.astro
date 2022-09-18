@@ -2,17 +2,17 @@
 import path from 'path';
 
 import { ImageAndDescription } from '@/components/Columns';
+import { ExternalLink } from '@/components/ExternalLink';
 import { Panel } from '@/components/Panel';
 import { ContentPost } from '@/partials/ContentPost';
-import { ExternalLink } from '@/partials/ExternalLink';
 import Base from '@/templates/Base.astro';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 
 export interface Props {
-  content: IProjectFrontmatter;
+  content: IArticleFrontmatter;
 }
 
 const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_name}`;
@@ -23,7 +23,7 @@ const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_nam
 >
   <ContentPost
     frontmatter={DormitoryIntroduction.frontmatter}
-    contentCategory={'Projects'}
+    contentCategory={'Posts'}
   >
     <p>
       宮崎大学の寮の1つ、国際交流宿舎を紹介するページです。宮崎大学の国際交流宿舎ってどうかなと思っている高校生の皆さんの参考になればと思います。
@@ -31,7 +31,7 @@ const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_nam
 
     <p>
       現寮生・元寮生向けのページは<a
-        href={path.join(AppConfig.base, 'projects', 'dormitory')}
+        href={path.join(AppConfig.base, 'posts', 'dormitory')}
         >こちら
       </a>。
     </p>

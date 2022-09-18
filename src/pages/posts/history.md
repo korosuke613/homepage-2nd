@@ -1,11 +1,11 @@
 ---
-layout: '@/templates/BaseProject.astro'
+layout: '@/templates/BasePost.astro'
 title: 経歴
 description: 平木場ヒストリー
 pubDate: 2022-08-21T00:00:00Z
 order: 0
 tags:
-  - Blog
+  - Projects
 ---
 
 ## 職歴

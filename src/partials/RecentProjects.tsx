@@ -1,14 +1,15 @@
-import type { MarkdownInstance } from 'astro';
+import path from 'path';
 
 import { GradientText } from '@/components/GradientText';
 import { PostGallery } from '@/components/PostGallery';
 import { Section } from '@/components/Section';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IContent } from '@/types/IArticleFrontmatter';
+import { AppConfig } from '@/utils/AppConfig';
 import type { Tags } from '@/utils/Tag';
 
 type IRecentProjectsProps = {
   tags: Tags;
-  postList: MarkdownInstance<IProjectFrontmatter>[];
+  postList: IContent[];
 };
 
 export const RecentProjects = (props: IRecentProjectsProps) => (
@@ -16,11 +17,13 @@ export const RecentProjects = (props: IRecentProjectsProps) => (
     title={
       <div className="flex items-baseline justify-between">
         <div>
-          Recent <GradientText>Projects</GradientText>
+          <GradientText>Projects</GradientText>
         </div>
 
         <div className="text-sm">
-          <a href="projects">View all Projects →</a>
+          <a href={path.join(AppConfig.base, 'posts', 'tag', 'Projects')}>
+            View all Projects →
+          </a>
         </div>
       </div>
     }
@@ -28,7 +31,7 @@ export const RecentProjects = (props: IRecentProjectsProps) => (
     <PostGallery
       postList={props.postList}
       tags={props.tags}
-      contentCategory={'Projects'}
+      contentCategory="Posts"
     />
   </Section>
 );

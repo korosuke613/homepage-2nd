@@ -1,7 +1,7 @@
 import fs from 'fs';
 
+import type { IContent } from '@/types/IArticleFrontmatter';
 import type { Values } from '@/types/Values';
-import type { StaticPost } from '@/utils/StaticPages';
 
 export type Tags = {
   [key: string]: string;
@@ -83,7 +83,7 @@ export const generateTags = (tagNames: string[]) => {
   return tags;
 };
 
-export const generateTagsFromMarkdowns = (markdowns: StaticPost[]) => {
+export const generateTagsFromMarkdowns = (markdowns: IContent[]) => {
   const allTagNames = markdowns
     .map((md) => {
       return md.frontmatter.tags;

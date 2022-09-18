@@ -1,6 +1,4 @@
-import type { MarkdownInstance } from 'astro';
-
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IContent } from '@/types/IArticleFrontmatter';
 import type { Tags } from '@/utils/Tag';
 
 import { PostCard } from './PostCard';
@@ -8,7 +6,7 @@ import { PostCard } from './PostCard';
 type IRecentPostsProps = {
   tags: Tags;
   contentCategory: string;
-  postList: MarkdownInstance<IProjectFrontmatter>[];
+  postList: IContent[];
 };
 
 export const PostGallery = (props: IRecentPostsProps) => {

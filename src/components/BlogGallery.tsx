@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { ExternalLink } from '@/partials/ExternalLink';
+import { ExternalLink } from '@/components/ExternalLink';
 import type { IRecentBlogsProps } from '@/partials/RecentBlogs';
 import { CardClass } from '@/utils/Css';
 import { transformTitleForContentCard } from '@/utils/StringWidth';

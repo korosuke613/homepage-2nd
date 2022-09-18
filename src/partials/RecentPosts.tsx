@@ -1,14 +1,12 @@
-import type { MarkdownInstance } from 'astro';
-
 import { GradientText } from '@/components/GradientText';
 import { PostGallery } from '@/components/PostGallery';
 import { Section } from '@/components/Section';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IContent } from '@/types/IArticleFrontmatter';
 import type { Tags } from '@/utils/Tag';
 
 type IRecentPostsProps = {
   tags: Tags;
-  postList: MarkdownInstance<IProjectFrontmatter>[];
+  postList: IContent[];
 };
 
 const RecentPosts = (props: IRecentPostsProps) => (

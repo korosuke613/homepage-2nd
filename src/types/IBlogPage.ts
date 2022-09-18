@@ -1,7 +1,5 @@
 import type { Page } from 'astro';
 
-import type { BlogData } from './IZenn';
-
 export interface IBlog {
   id: string;
   type: string;
@@ -10,6 +8,16 @@ export interface IBlog {
   url: string;
   ogpImageUrl: string;
 }
+
+export type BlogData = {
+  id: string;
+  type: string;
+  ogpImageUrl: string;
+  title: string;
+  pubDate: string;
+  url: string;
+  category: string[];
+};
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 export declare type BlogPage = Page<BlogData>;

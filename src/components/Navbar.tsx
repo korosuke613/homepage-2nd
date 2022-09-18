@@ -1,8 +1,8 @@
 import path from 'path';
 import type { ReactNode } from 'react';
 
-import type { IExternalLinkProps } from '@/partials/ExternalLink';
-import { ExternalLink } from '@/partials/ExternalLink';
+import type { IExternalLinkProps } from '@/components/ExternalLink';
+import { ExternalLink } from '@/components/ExternalLink';
 import { AppConfig } from '@/utils/AppConfig';
 
 type INavbarProps = {

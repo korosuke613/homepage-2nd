@@ -3,12 +3,12 @@ import type { ReactNode } from 'react';
 import { Content } from '@/components/Content';
 import { ContentHeader } from '@/components/ContentHeader';
 import { Section } from '@/components/Section';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { generateTags } from '@/utils/Tag';
 
 type IContentPostProps = {
-  frontmatter: IProjectFrontmatter;
+  frontmatter: IArticleFrontmatter;
   contentCategory: string;
   children: ReactNode;
 };
