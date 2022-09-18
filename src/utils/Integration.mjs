@@ -58,6 +58,7 @@ export const colorToClassMap = {
   [ColorTags.FUCHSIA]: 'bg-fuchsia-400 text-fuchsia-900',
   [ColorTags.PINK]: 'bg-pink-400 text-pink-900',
   [ColorTags.ROSE]: 'bg-rose-400 text-rose-900',
+  PICKUP: 'bg-indigo-900 text-white',
 };
 
 /**
@@ -86,6 +87,9 @@ const generateTags = (tagNames) => {
   tagNames.forEach((tagName) => {
     if (allColors.length === 0) {
       tags[tagName] = pickColor(Object.values(ColorTags));
+    }
+    if (tagName === 'Pickup ⭐️') {
+      tags[tagName] = colorToClassMap.PICKUP;
     } else {
       tags[tagName] = pickColor(allColors);
     }

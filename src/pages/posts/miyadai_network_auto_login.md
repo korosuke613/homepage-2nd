@@ -4,7 +4,7 @@ title: miyadai-sso-auto-login
 description: 宮崎大学の学内ネットワーク接続時に自動でログインするツール
 pubDate: 2018-08-15T00:00:00Z
 tags:
-  - Projects
+  - Pickup ⭐️
   - OSS
   - Archived
   - Python

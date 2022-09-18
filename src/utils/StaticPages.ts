@@ -14,7 +14,7 @@ export const DormitoryIntroduction: StaticPost = {
     order: 4,
     imgSrc: '/assets/images/dormitory/dormitory.webp',
     imgAlt: 'string',
-    tags: ['Projects', '大学'],
+    tags: ['Pickup ⭐️', '大学'],
     draft: false,
   },
   url: path.join(AppConfig.base, 'posts', 'dormitory_introduction'), // src/pages からの相対パス

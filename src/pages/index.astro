@@ -1,7 +1,7 @@
 ---
 import { RecentBlogs } from '@/partials/RecentBlogs';
+import { RecentPickup } from '@/partials/RecentPickup';
 import { RecentPosts } from '@/partials/RecentPosts';
-import { RecentProjects } from '@/partials/RecentProjects';
 import { SelfIntroduction } from '@/partials/SelfIntroduction';
 import Base from '@/templates/Base.astro';
 import type {
@@ -25,12 +25,12 @@ const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
 const sortedPosts = sortByDate(nonDraftPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
 
-const nonDraftProjects = allPosts.filter(
+const nonDraftPickup = allPosts.filter(
   (post) =>
-    post.frontmatter.tags.includes('Projects') && !post.frontmatter.draft
+    post.frontmatter.tags.includes('Pickup ⭐️') && !post.frontmatter.draft
 );
-const sortedProjects = sortByOrder(nonDraftProjects);
-const lastThreeProjects = sortedProjects.slice(0, 3);
+const sortedPickup = sortByOrder(nonDraftPickup);
+const lastThreePickup = sortedPickup.slice(0, 3);
 
 const allBlogs = await getSortedBlogData();
 const lastThreeBlogs = allBlogs.slice(0, 3);
@@ -41,7 +41,7 @@ const { description } = AppConfig;
 
 <Base head={{ title, description }}>
   <SelfIntroduction />
-  <RecentProjects postList={lastThreeProjects} tags={tags.posts} />
+  <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />
   <RecentBlogs postList={lastThreeBlogs} />
 </Base>

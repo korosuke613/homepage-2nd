@@ -5,7 +5,6 @@ export const readYears = async () => {
   const years = JSON.parse(yearsFile.toString()) as {
     [key: string]: number[];
     posts: number[];
-    projects: number[];
     blogs: number[];
   };
 

@@ -7,22 +7,22 @@ import type { IContent } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import type { Tags } from '@/utils/Tag';
 
-type IRecentProjectsProps = {
+type IRecentPickupProps = {
   tags: Tags;
   postList: IContent[];
 };
 
-export const RecentProjects = (props: IRecentProjectsProps) => (
+export const RecentPickup = (props: IRecentPickupProps) => (
   <Section
     title={
       <div className="flex items-baseline justify-between">
         <div>
-          <GradientText>Projects</GradientText>
+          <GradientText>Pickup</GradientText>
         </div>
 
         <div className="text-sm">
-          <a href={path.join(AppConfig.base, 'posts', 'tag', 'Projects')}>
-            View all Projects →
+          <a href={path.join(AppConfig.base, 'posts', 'tag', 'Pickup ⭐️')}>
+            View all Pickup →
           </a>
         </div>
       </div>

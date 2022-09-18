@@ -5,7 +5,7 @@ description: 平木場ヒストリー
 pubDate: 2022-08-21T00:00:00Z
 order: 0
 tags:
-  - Projects
+  - Pickup ⭐️
 ---
 
 ## 職歴

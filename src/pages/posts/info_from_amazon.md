@@ -6,7 +6,7 @@ pubDate: 2017-06-13T00:00:00Z
 imgSrc: '/assets/images/cover/info_from_amazon.webp'
 imgAlt: ''
 tags:
-  - Projects
+  - Pickup ⭐️
   - OSS
   - Archived
   - TypeScript
