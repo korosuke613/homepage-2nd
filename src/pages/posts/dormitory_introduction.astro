@@ -10,10 +10,13 @@ import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
+import { readTags } from '@/utils/Tag';
 
 export interface Props {
   content: IArticleFrontmatter;
 }
+
+const tags = await readTags();
 
 const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_name}`;
 ---
@@ -24,6 +27,7 @@ const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_nam
   <ContentPost
     frontmatter={DormitoryIntroduction.frontmatter}
     contentCategory={'Posts'}
+    tags={tags.posts}
   >
     <p>
       宮崎大学の寮の1つ、国際交流宿舎を紹介するページです。宮崎大学の国際交流宿舎ってどうかなと思っている高校生の皆さんの参考になればと思います。
