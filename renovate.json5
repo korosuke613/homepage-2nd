@@ -12,15 +12,15 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchPaths": [
-        "+(./package.json)"
+      "matchFiles": [
+        "./package.json"
       ],
       "groupName": "npm/."
     },
     {
       "matchManagers": ["npm"],
-      "matchPaths": [
-        "+(./package.json/tools)"
+      "matchFiles": [
+        "./tools/package.json"
       ],
       "groupName": "npm/tools"
     }
