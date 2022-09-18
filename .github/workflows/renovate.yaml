@@ -1,0 +1,11 @@
+name: CI for Renovate
+
+on:
+  push:
+    paths:
+      - .github/workflows/renovate.yaml
+      - renovate.json5
+
+jobs:
+  call:
+    uses: korosuke613/actions/.github/workflows/validate-renovate-config.yaml@main
