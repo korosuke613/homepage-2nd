@@ -7,7 +7,7 @@ order: 1
 imgSrc: '/assets/images/cover/productivity_weekly.webp'
 imgAlt: 'Productivity Weekly'
 tags:
-  - Projects
+  - Pickup ⭐️
   - Productivity
 ---
 

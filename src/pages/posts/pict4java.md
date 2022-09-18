@@ -4,7 +4,7 @@ title: pict4java
 description: PICT を Java/Kotlin から利用する JNA クラス pict4java 
 pubDate: 2018-07-15T00:00:00Z
 tags:
-  - Projects
+  - Pickup ⭐️
   - OSS
   - Archived
   - Java
