@@ -80,3 +80,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr merge --merge --auto
 
+  notify-on-fail:
+    needs:
+      - build
+    if: failure()
+    uses: korosuke613/actions/.github/workflows/notify-to-slack.yaml@main
+    secrets:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    with:
+      status: failure
