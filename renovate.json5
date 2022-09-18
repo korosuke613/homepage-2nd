@@ -12,7 +12,17 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "groupName": "npm"
+      "matchPaths": [
+        "+(./package.json)"
+      ],
+      "groupName": "npm/."
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": [
+        "+(./package.json/tools)"
+      ],
+      "groupName": "npm/tools"
     }
   ]
 }
