@@ -8,4 +8,6 @@ on:
 
 jobs:
   call:
-    uses: korosuke613/actions/.github/workflows/validate-renovate-config.yaml@main
+    uses: korosuke613/actions/.github/workflows/renovate.yaml@main
+    secrets:
+      GH_PAT_FOR_RENOVATE: ${{ secrets.GH_PAT_FOR_RENOVATE }}

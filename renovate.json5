@@ -12,17 +12,13 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchFiles": [
-        "./package.json"
-      ],
-      "groupName": "npm/."
+      "matchPaths": ["tools/package.json"],
+      "groupName": "npm(tools)"
     },
     {
       "matchManagers": ["npm"],
-      "matchFiles": [
-        "./tools/package.json"
-      ],
-      "groupName": "npm/tools"
+      "matchPaths": ["+(package.json)"],
+      "groupName": "npm(root)"
     }
   ]
 }
