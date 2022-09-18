@@ -5,16 +5,22 @@ import { ContentHeader } from '@/components/ContentHeader';
 import { Section } from '@/components/Section';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
-import { generateTags } from '@/utils/Tag';
+import type { Tags } from '@/utils/Tag';
 
 type IContentPostProps = {
   frontmatter: IArticleFrontmatter;
   contentCategory: string;
+  tags: Tags;
   children: ReactNode;
 };
 
 export const ContentPost = (props: IContentPostProps) => {
-  const tags = generateTags(props.frontmatter.tags);
+  const tags: Tags = {};
+  props.frontmatter.tags.forEach((t) => {
+    const tagInfo = props.tags[t];
+    if (tagInfo === undefined) return;
+    tags[t] = tagInfo;
+  });
 
   return (
     <Section>
