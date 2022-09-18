@@ -51,13 +51,13 @@ if (years === undefined) {
     <div class="mt-4 flex flex-wrap justify-center gap-2">
       {
         tags &&
-        Object.keys(tags).map((tagName) => (
-          <Tag
-            name={tagName}
-            color={tags[tagName]}
-            contentCategory={contentCategory}
-          />
-        ))
+          Object.keys(tags).map((tagName) => (
+            <Tag
+              name={tagName}
+              color={tags[tagName]}
+              contentCategory={contentCategory}
+            />
+          ))
       }
     </div>
     <div class="mt-4 flex flex-wrap justify-center gap-2">
