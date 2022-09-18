@@ -1,11 +1,11 @@
 ---
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 export interface Props {
-  content: IProjectFrontmatter;
+  content: IArticleFrontmatter;
 }
 
 const { content } = Astro.props as Props;

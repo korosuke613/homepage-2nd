@@ -1,8 +1,6 @@
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IContent } from '@/types/IArticleFrontmatter';
 
-export const sortByDate = (
-  posts: Array<{ frontmatter: IProjectFrontmatter }>
-) => {
+export const sortByDate = (posts: IContent[]) => {
   return posts.sort(
     (a, b) =>
       new Date(b.frontmatter.pubDate).valueOf() -
@@ -10,9 +8,7 @@ export const sortByDate = (
   );
 };
 
-export const sortByOrder = (
-  posts: Array<{ frontmatter: IProjectFrontmatter }>
-) => {
+export const sortByOrder = (posts: IContent[]) => {
   return posts.sort((a, b) => {
     let aDate = new Date(a.frontmatter.pubDate).valueOf();
     let bDate = new Date(b.frontmatter.pubDate).valueOf();

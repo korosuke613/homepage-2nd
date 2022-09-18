@@ -1,10 +1,12 @@
 ---
 import Post from '@/pages/posts/[...page].astro';
 import type {
-  IProjectFrontmatter,
-  ProjectFrontmatterPage,
-} from '@/types/IProjectFrontmatter';
+  ArticleFrontmatterPage,
+  IArticleFrontmatter,
+  IContent,
+} from '@/types/IArticleFrontmatter';
 import { sortByDate } from '@/utils/Posts';
+import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readYears } from '@/utils/Year';
 
 type GetStaticPaths = {
@@ -12,7 +14,11 @@ type GetStaticPaths = {
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getNonDraftPosts() {
-  const allPosts = await Astro.glob<IProjectFrontmatter>('../../*.md');
+  const allPosts: IContent[] = await Astro.glob<IArticleFrontmatter>(
+    '../../*.md'
+  );
+  allPosts.push(DormitoryIntroduction);
+
   const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
   return nonDraftPosts;
 }
@@ -37,7 +43,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 }
 
 interface Props {
-  page: ProjectFrontmatterPage;
+  page: ArticleFrontmatterPage;
 }
 
 const { page } = Astro.props as Props;

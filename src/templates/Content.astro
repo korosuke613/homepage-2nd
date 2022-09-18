@@ -9,18 +9,20 @@ import { Tag } from '@/components/Tag';
 import { getSectionTitle } from '@/components/Title';
 import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
-import type { ProjectFrontmatterPage } from '@/types/IProjectFrontmatter';
+import type {
+  ArticleFrontmatterPage,
+  IContent,
+} from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
-import type { StaticPost } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 import { readYears } from '@/utils/Year';
 
 interface Props {
-  page: ProjectFrontmatterPage;
+  page: ArticleFrontmatterPage;
   preTitle?: string | number;
   contentCategory: string;
   contentDescription: string;
-  contents: StaticPost[];
+  contents: IContent[];
 }
 
 const { page, preTitle, contentCategory, contentDescription } =

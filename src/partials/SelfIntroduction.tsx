@@ -5,7 +5,7 @@ import { Section } from '@/components/Section';
 import { SocialLink } from '@/components/SocialLink';
 import { AppConfig } from '@/utils/AppConfig';
 
-import { ExternalLink } from './ExternalLink';
+import { ExternalLink } from '../components/ExternalLink';
 
 export const SelfIntroduction = () => (
   <Section>

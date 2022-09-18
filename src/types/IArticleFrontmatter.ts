@@ -1,6 +1,8 @@
 import type { MarkdownInstance, Page } from 'astro';
 
-export interface IProjectFrontmatter {
+import type { StaticPost } from '@/utils/StaticPages';
+
+export interface IArticleFrontmatter {
   title: string;
   description: string;
   pubDate: string;
@@ -12,6 +14,8 @@ export interface IProjectFrontmatter {
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-export declare type ProjectFrontmatterPage = Page<
-  MarkdownInstance<IProjectFrontmatter>
+export declare type ArticleFrontmatterPage = Page<
+  MarkdownInstance<IArticleFrontmatter>
 >;
+
+export type IContent = MarkdownInstance<IArticleFrontmatter> | StaticPost;

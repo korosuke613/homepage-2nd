@@ -1,15 +1,15 @@
 import { format } from 'date-fns';
 import path from 'path';
 
+import type { IContent } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
-import type { StaticPost } from '@/utils/StaticPages';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 import type { Tags } from '@/utils/Tag';
 
 import { Tag } from './Tag';
 
 type IPostCardProps = {
-  instance: StaticPost;
+  instance: IContent;
   contentCategory: string;
   tags: Tags;
 };

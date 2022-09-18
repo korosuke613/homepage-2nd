@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import path from 'path';
 
+import type { BlogData } from '@/types/IBlogPage';
 import type { HatenaJson } from '@/types/IHatena';
-import type { BlogData, ZennJson } from '@/types/IZenn';
+import type { ZennJson } from '@/types/IZenn';
 import { AppConfig } from '@/utils/AppConfig';
 
 export const createZennData = (articles: ZennJson['articles']) => {

@@ -1,11 +1,11 @@
 import path from 'path';
 import type { ReactNode } from 'react';
 
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IContentProps = {
-  content: IProjectFrontmatter;
+  content: IArticleFrontmatter;
   children: ReactNode;
 };
 

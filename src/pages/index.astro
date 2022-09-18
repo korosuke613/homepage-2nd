@@ -4,21 +4,31 @@ import { RecentPosts } from '@/partials/RecentPosts';
 import { RecentProjects } from '@/partials/RecentProjects';
 import { SelfIntroduction } from '@/partials/SelfIntroduction';
 import Base from '@/templates/Base.astro';
-import type { IProjectFrontmatter } from '@/types/IProjectFrontmatter';
+import type {
+  IArticleFrontmatter,
+  IContent,
+} from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { getSortedBlogData } from '@/utils/Blog';
 import { sortByDate, sortByOrder } from '@/utils/Posts';
+import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 
 const tags = await readTags();
 
-const allPosts = await Astro.glob<IProjectFrontmatter>('./posts/*.md');
+const allPosts: IContent[] = await Astro.glob<IArticleFrontmatter>(
+  './posts/*.md'
+);
+allPosts.push(DormitoryIntroduction);
+
 const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
 const sortedPosts = sortByDate(nonDraftPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
 
-const allProjects = await Astro.glob<IProjectFrontmatter>('./projects/*.md');
-const nonDraftProjects = allProjects.filter((post) => !post.frontmatter.draft);
+const nonDraftProjects = allPosts.filter(
+  (post) =>
+    post.frontmatter.tags.includes('Projects') && !post.frontmatter.draft
+);
 const sortedProjects = sortByOrder(nonDraftProjects);
 const lastThreeProjects = sortedProjects.slice(0, 3);
 
@@ -31,7 +41,7 @@ const { description } = AppConfig;
 
 <Base head={{ title, description }}>
   <SelfIntroduction />
-  <RecentProjects postList={lastThreeProjects} tags={tags.projects} />
+  <RecentProjects postList={lastThreeProjects} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />
   <RecentBlogs postList={lastThreeBlogs} />
 </Base>

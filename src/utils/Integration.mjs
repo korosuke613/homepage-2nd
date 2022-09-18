@@ -180,7 +180,6 @@ const getBlogData = async () => {
 
 const setupData = async () => {
   const posts = await getMarkdownData('./src/pages/posts/**.md');
-  const projects = await getMarkdownData('./src/pages/projects/**.md');
   const blogs = await getBlogData();
 
   if (!fs.existsSync('./build')) {
@@ -188,20 +187,12 @@ const setupData = async () => {
   }
   await fs.promises.writeFile(
     './build/tags.json',
-    JSON.stringify(
-      { posts: posts.tags, projects: projects.tags, blogs: blogs.tags },
-      null,
-      2
-    )
+    JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2)
   );
 
   await fs.promises.writeFile(
     './build/years.json',
-    JSON.stringify(
-      { posts: posts.years, projects: projects.years, blogs: blogs.years },
-      null,
-      2
-    )
+    JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2)
   );
 };
 
