@@ -1,11 +1,14 @@
+import type { MarkdownHeading } from 'astro';
 import path from 'path';
 import type { ReactNode } from 'react';
 
+import { Toc } from '@/components/Toc';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IContentProps = {
   content: IArticleFrontmatter;
+  headings: MarkdownHeading[];
   children: ReactNode;
 };
 
@@ -22,6 +25,9 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
           />
         </div>
       )}
+      <div className="invisible fixed top-40 right-10 float-right max-w-[12%] lg:visible xl:max-w-xs">
+        <Toc headings={props.headings} />
+      </div>
       <div
         id="contents_data"
         className="prose prose-invert mt-8 prose-img:rounded-lg"
