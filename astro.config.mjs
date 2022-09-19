@@ -30,6 +30,7 @@ export default defineConfig({
       // https://github.com/shikijs/shiki/blob/main/docs/themes.md
       theme: 'monokai',
     },
+    remarkPlugins: [],
     rehypePlugins: [
       [
         rehypeExternalLinks,

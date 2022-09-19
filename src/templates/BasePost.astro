@@ -4,12 +4,14 @@ import Base from '@/templates/Base.astro';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
+import {MarkdownHeading} from 'astro';
 
 export interface Props {
   content: IArticleFrontmatter;
+  headings: MarkdownHeading[];
 }
 
-const { content } = Astro.props as Props;
+const { content, headings } = Astro.props as Props;
 const title = `${content.title} - ${AppConfig.site_name}`;
 
 const tags = await readTags();
@@ -19,6 +21,7 @@ const tags = await readTags();
   <ContentPost
     frontmatter={content}
     contentCategory={'Posts'}
+    headings={headings}
     tags={tags.posts}
   >
     <slot />

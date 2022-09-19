@@ -1,3 +1,4 @@
+import type { MarkdownHeading } from 'astro';
 import type { ReactNode } from 'react';
 
 import { Content } from '@/components/Content';
@@ -11,6 +12,7 @@ type IContentPostProps = {
   frontmatter: IArticleFrontmatter;
   contentCategory: string;
   tags: Tags;
+  headings: MarkdownHeading[];
   children: ReactNode;
 };
 
@@ -31,8 +33,9 @@ export const ContentPost = (props: IContentPostProps) => {
           tags={tags}
           contentCategory={props.contentCategory}
         />
-
-        <Content content={props.frontmatter}>{props.children}</Content>
+        <Content headings={props.headings} content={props.frontmatter}>
+          {props.children}
+        </Content>
       </div>
     </Section>
   );
