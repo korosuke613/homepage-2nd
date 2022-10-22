@@ -86,7 +86,7 @@ jobs:
 
   notify-on-fail:
     needs:
-      - build
+      - update
     if: failure()
     uses: korosuke613/actions/.github/workflows/notify-to-slack.yaml@main
     secrets:
