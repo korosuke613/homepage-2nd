@@ -14,7 +14,7 @@ concurrency:
   group: "update-blogs-data"
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -59,10 +59,14 @@ jobs:
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com' 
           git config --global user.name 'github-actions[bot]'
           git add ../public/assets/
-          git switch -c "update-blogs/${{ env.commit_datetime }}"
+          git switch -c "bot/update-blogs"
           git commit -m "chore: update blogs data (${{ env.commit_datetime }})"
-          git push origin HEAD
-          gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --body ""
+          git push --force origin HEAD
+          if [[ $(gh pr view 2> /dev/null ) ]];then
+            gh pr edit --title "chore: update blogs data (${{ env.commit_datetime }})" 
+          else
+            gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --body ""
+          fi
 
       - name: Create job summary
         if: env.is_files_changed == 'true'
@@ -70,7 +74,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr view --json number,title,url --template \
-          '# Create {{printf "#%v" .number}} {{.title}}
+          '## Create {{printf "#%v" .number}} {{.title}}
           {{.url}}
           ' >> $GITHUB_STEP_SUMMARY
 
