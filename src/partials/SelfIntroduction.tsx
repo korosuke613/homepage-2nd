@@ -11,9 +11,23 @@ export const SelfIntroduction = () => (
   <Section>
     <div className="flex flex-col items-center md:flex-row md:justify-between md:gap-x-24">
       <div>
-        <h1 className="text-3xl font-bold">
+        <h1 className="hidden md:block text-3xl font-bold">
           Hi there, I'm <GradientText>Futa Hirakoba</GradientText> 👋
         </h1>
+
+        <div className="flex flex-row justify-between md:gap-x-24 md:hidden">
+          {/* スマホ表示用 */}
+          <h1 className="text-3xl font-bold">
+            Hi there, <br />
+            I'm <GradientText>Futa Hirakoba</GradientText> 👋
+          </h1>
+          <img
+            className="h-20 w-20"
+            src={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
+            alt="Avatar image"
+            loading="lazy"
+          />
+        </div>
 
         <p className="mt-6 text-xl leading-9">
           すべての開発者の生産性を向上したいソフトウェアエンジニアです。
@@ -85,7 +99,7 @@ export const SelfIntroduction = () => (
         </div>
       </div>
 
-      <div className="shrink-0">
+      <div className="shrink-0 hidden md:block">
         <img
           className="h-72 w-72"
           src={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
