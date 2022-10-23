@@ -2,6 +2,7 @@ import type { MarkdownHeading } from 'astro';
 import path from 'path';
 import type { ReactNode } from 'react';
 
+import { EditGitHub } from '@/components/EditGitHub';
 import { Toc } from '@/components/Toc';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
@@ -34,6 +35,8 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
       >
         {props.children}
       </div>
+      <br />
+      <EditGitHub content={props.content}></EditGitHub>
     </div>
   );
 };

@@ -11,6 +11,7 @@ export interface IArticleFrontmatter {
   imgAlt: string;
   tags: string[];
   draft: boolean;
+  url?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
