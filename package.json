@@ -64,7 +64,7 @@
     "glob": "8.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.6.0",
+    "react-icons": "4.6.0",
     "rehype-external-links": "2.0.1",
     "rehype-stringify": "9.0.3",
     "remark-extract-frontmatter": "3.2.0",
