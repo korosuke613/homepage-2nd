@@ -8,7 +8,7 @@ imgSrc: '/assets/images/cover/productivity_weekly.webp'
 imgAlt: 'Productivity Weekly'
 tags:
   - Pickup ⭐️
-  - Productivity
+  - サイボウズ
 ---
 
 Full typography example at [this page](./sixth-post).
