@@ -62,7 +62,8 @@ jobs:
           git switch -c "bot/update-blogs"
           git commit -m "chore: update blogs data (${{ env.commit_datetime }})"
           git push --force origin HEAD
-          if [[ $(gh pr view 2> /dev/null ) ]];then
+          if [[ $(gh pr view 2> /dev/null ) ]] && [[ $(gh pr view --json state --jq .state) != "MERGED" ]];then
+            # プルリクエストが存在する、かつ、マージ済みでない
             gh pr edit --title "chore: update blogs data (${{ env.commit_datetime }})" 
           else
             gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --body ""
