@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2022-12-04T23:23:27.367Z",
+  "lastUpdated": "2022-12-23T23:23:08.699Z",
   "articles": {
     "e82445a43782b1": {
       "title": "Productivity Weekly (2020-12-23号)",
@@ -490,6 +490,11 @@
       "title": "Productivity Weekly (2022-11-16号)",
       "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--DVmo41xA--/co_rgb:222%2Cg_south_west%2Cl_text:notosansjp-medium.otf_37_bold:Futa%2520Hirakoba%2Cx_203%2Cy_98/c_fit%2Cco_rgb:222%2Cg_north_west%2Cl_text:notosansjp-medium.otf_70_bold:Productivity%2520Weekly%2520%25282022-11-16%25E5%258F%25B7%2529%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vemVubi9pbWFnZS9mZXRjaC9zLS1YLWllRmlwQS0tL2NfbGltaXQlMkNmX2F1dG8lMkNmbF9wcm9ncmVzc2l2ZSUyQ3FfYXV0byUyQ3dfNzAvaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_72/v1627274783/default/og-base_z4sxah.png",
       "pubDate": "2022-12-03T12:38:09.000Z"
+    },
+    "compare-renovate-dry-run": {
+      "title": "Renovate config の変更が想定通りか確認する 〜真の dry-run を求めて〜",
+      "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--HBoMYdgS--/co_rgb:222%2Cg_south_west%2Cl_text:notosansjp-medium.otf_37_bold:Futa%2520Hirakoba%2Cx_203%2Cy_98/c_fit%2Cco_rgb:222%2Cg_north_west%2Cl_text:notosansjp-medium.otf_65_bold:Renovate%2520config%2520%25E3%2581%25AE%25E5%25A4%2589%25E6%259B%25B4%25E3%2581%258C%25E6%2583%25B3%25E5%25AE%259A%25E9%2580%259A%25E3%2582%258A%25E3%2581%258B%25E7%25A2%25BA%25E8%25AA%258D%25E3%2581%2599%25E3%2582%258B%2520%25E3%2580%259C%25E7%259C%259F%25E3%2581%25AE%2520dry-run%2520%25E3%2582%2592%25E6%25B1%2582%25E3%2582%2581%25E3%2581%25A6%25E3%2580%259C%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vemVubi9pbWFnZS9mZXRjaC9zLS1YLWllRmlwQS0tL2NfbGltaXQlMkNmX2F1dG8lMkNmbF9wcm9ncmVzc2l2ZSUyQ3FfYXV0byUyQ3dfNzAvaHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_72/v1627274783/default/og-base_z4sxah.png",
+      "pubDate": "2022-12-23T05:21:03.000Z"
     }
   }
 }
