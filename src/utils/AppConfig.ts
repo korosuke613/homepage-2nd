@@ -6,5 +6,5 @@ export const AppConfig = {
   locale_region: 'ja-jp',
   locale: 'ja',
   base: '/',
-  github_url: 'github.com/korosuke613/draft-new-my-homepage',
+  github_url: 'github.com/korosuke613/homepage-2nd',
 };
