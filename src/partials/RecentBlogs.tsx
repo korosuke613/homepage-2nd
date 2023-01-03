@@ -34,6 +34,7 @@ export const RecentBlogs = (props: IRecentBlogsProps) => (
               <img
                 className="h-full w-full rounded-md object-cover object-center"
                 src={elt.ogpImageUrl}
+                alt={elt.title}
               />
             }
             url={elt.url}

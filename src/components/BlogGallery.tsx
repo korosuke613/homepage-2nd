@@ -23,6 +23,7 @@ export const BlogGallery = (props: IRecentBlogsProps) => {
                 <img
                   className="h-full w-full object-cover object-center"
                   src={elt.ogpImageUrl}
+                  alt={elt.title}
                 />
               }
               url={elt.url}
