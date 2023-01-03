@@ -11,11 +11,11 @@ export const SelfIntroduction = () => (
   <Section>
     <div className="flex flex-col items-center md:flex-row md:justify-between md:gap-x-24">
       <div>
-        <h1 className="hidden md:block text-3xl font-bold">
+        <h1 className="hidden text-3xl font-bold md:block">
           Hi there, I'm <GradientText>Futa Hirakoba</GradientText> 👋
         </h1>
 
-        <div className="flex flex-row justify-between md:gap-x-24 md:hidden">
+        <div className="flex flex-row justify-between md:hidden md:gap-x-24">
           {/* スマホ表示用 */}
           <h1 className="text-3xl font-bold">
             Hi there, <br />
@@ -100,7 +100,7 @@ export const SelfIntroduction = () => (
         </div>
       </div>
 
-      <div className="shrink-0 hidden md:block">
+      <div className="hidden shrink-0 md:block">
         <img
           className="h-72 w-72"
           src={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}

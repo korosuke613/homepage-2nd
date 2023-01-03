@@ -23,15 +23,15 @@ export const EditGitHub = (props: IEditGitHubProps) => {
   );
 
   return (
-    <div className="justify-end flex">
+    <div className="flex justify-end">
       <a
         style={{ height: 'fit-content' }}
         href={`https://${url}.md`}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <button className="px-2.5 py-0.5 text-sm rounded-lg bg-violet-900">
-          <BsGithub size="16px" className="pb-0.5 inline-block" /> GitHub
+        <button className="rounded-lg bg-violet-900 px-2.5 py-0.5  text-sm">
+          <BsGithub size="16px" className="inline-block pb-0.5" /> GitHub
           で編集する
         </button>
       </a>
