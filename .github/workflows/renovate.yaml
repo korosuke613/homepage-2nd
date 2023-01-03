@@ -1,7 +1,7 @@
 name: CI for Renovate
 
 on:
-  push:
+  pull_request:
     paths:
       - .github/workflows/renovate.yaml
       - renovate.json5

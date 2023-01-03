@@ -8,17 +8,17 @@
     ":semanticCommitTypeAll(chore)", // If semantic commits detected, use semantic commit type chore for all
     "schedule:weekly"
   ],
-  "separateMajorMinor": false,
+  "separateMajorMinor": true,
   "packageRules": [
     {
       "matchManagers": ["npm"],
       "matchPaths": ["tools/package.json"],
-      "groupName": "npm(tools)"
+      "groupName": "npm-tools"
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
-      "groupName": "npm(root)"
+      "groupName": "npm-root"
     }
   ]
 }
