@@ -23,6 +23,13 @@ Preview generated artifacts
 npm run preview
 ```
 
+### Convert to webp
+example
+
+```
+cwebp ./hoge.png -o hoge.webp
+```
+
 ## Structure
 
 ### Root
