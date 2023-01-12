@@ -6,6 +6,8 @@ type ISocialLinkProps = {
   url: string;
   alt: string;
   imgSrc: string;
+  height: number;
+  width: number;
 };
 
 export const SocialLink = (props: ISocialLinkProps) => (
@@ -15,6 +17,12 @@ export const SocialLink = (props: ISocialLinkProps) => (
     target="_blank"
     rel="noopener noreferrer"
   >
-    <img src={path.join(AppConfig.base, props.imgSrc)} alt={props.alt} />
+    <img
+      src={path.join(AppConfig.base, props.imgSrc)}
+      alt={props.alt}
+      loading="lazy"
+      height={props.height}
+      width={props.width}
+    />
   </a>
 );
