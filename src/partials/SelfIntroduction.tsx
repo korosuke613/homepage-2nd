@@ -39,10 +39,15 @@ export const SelfIntroduction = () => (
         </p>
 
         <div className="mt-3 flex flex-wrap gap-1">
-          <img
-            alt="アクセスカウンター"
-            src="https://visitor-badge.glitch.me/badge?page_id=korosuke613.dev.visitor-badge&left_text=You%20are&left_color=Indigo&right_color=DarkSlateGray"
-          />
+          {import.meta.env.PROD && (
+            <img
+              alt="アクセスカウンター"
+              src="https://visitor-badge.glitch.me/badge?page_id=korosuke613.dev.visitor-badge&left_text=You%20are&left_color=Indigo&right_color=DarkSlateGray"
+              loading="lazy"
+              height={20}
+              width={83}
+            />
+          )}
           <SocialLink
             url="https://github.com/korosuke613"
             imgSrc="/assets/images/shields_github.svg"
