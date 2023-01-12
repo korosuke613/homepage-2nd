@@ -1,26 +1,62 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type IMyIconProps = {
   iconPath: string;
 };
 
-export const MyIcon = (props: IMyIconProps) => {
-  useEffect(() => {
-    ['my-icon-small', 'my-icon-large'].forEach((className) => {
-      const thisImg = document.getElementById(className);
-      if (thisImg === null) return;
+const cssNames = [
+  'rotate-animation-x',
+  'rotate-animation-y',
+  'rotate-animation-z',
+  'rotate-animation-xy',
+  'rotate-animation-xz',
+  'rotate-animation-yz',
+];
 
-      thisImg.addEventListener('mousedown', () => {
-        thisImg.classList.add('rotate-animation');
+const makeEffect = (
+  id: string,
+  setMode: React.Dispatch<React.SetStateAction<string>>,
+  modeRef: React.MutableRefObject<string>
+) => {
+  return () => {
+    const thisImg = document.getElementById(id);
+    if (thisImg === null) return () => {};
+
+    const mousedown = () => {
+      const randNum = Math.floor(Math.random() * cssNames.length);
+      const cssName = cssNames[randNum] || 'rotate-animation-z';
+      setMode(cssName);
+      thisImg.classList.add(modeRef.current);
+    };
+    thisImg.addEventListener('mousedown', mousedown);
+
+    const end = () => {
+      cssNames.forEach((cssName) => {
+        thisImg.classList.remove(cssName);
       });
-      thisImg.addEventListener('animationend', () => {
-        thisImg.classList.remove('rotate-animation');
-      });
-      thisImg.addEventListener('animationcancel', () => {
-        thisImg.classList.remove('rotate-animation');
-      });
-    });
-  });
+    };
+    thisImg.addEventListener('animationend', end);
+    thisImg.addEventListener('animationcancel', end);
+
+    return () => {
+      thisImg.removeEventListener('mousedown', mousedown);
+      thisImg.removeEventListener('animationend', end);
+      thisImg.removeEventListener('animationcancel', end);
+    };
+  };
+};
+
+export const MyIcon = (props: IMyIconProps) => {
+  const [largeMode, setLargeMode] = useState('rotate-animation-z');
+  const largeModeRef = useRef<string>(null!);
+  largeModeRef.current = largeMode;
+
+  const [smallMode, setSmallMode] = useState('rotate-animation-z');
+  const smallModeRef = useRef<string>(null!);
+  smallModeRef.current = smallMode;
+
+  useEffect(makeEffect('my-icon-large', setLargeMode, largeModeRef));
+  useEffect(makeEffect('my-icon-small', setSmallMode, smallModeRef));
 
   return (
     <img
