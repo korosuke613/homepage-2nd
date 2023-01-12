@@ -22,5 +22,12 @@ export const MyIcon = (props: IMyIconProps) => {
     });
   });
 
-  return <img src={props.iconPath} alt="Avatar image" loading="lazy" />;
+  return (
+    <img
+      src={props.iconPath}
+      style={{ width: '100%' }}
+      alt="Avatar image"
+      loading="lazy"
+    />
+  );
 };
