@@ -1,9 +1,9 @@
-name: CI for Renovate
+name: Compare Renovate
 
 on:
   pull_request:
     paths:
-      - .github/workflows/renovate.yaml
+      - .github/workflows/compare-renovate.yaml
       - renovate.json5
 
 jobs:
