@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: 'サイボウズ株式会社に\n入社しました'
 description: '就職の話'
 pubDate: 2020-04-01T00:00:00Z

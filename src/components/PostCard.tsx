@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import path from 'path';
 
-import type { IContent } from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { transformTitleForContentCard } from '@/utils/StringWidth';
 import type { Tags } from '@/utils/Tag';
@@ -9,22 +9,26 @@ import type { Tags } from '@/utils/Tag';
 import { Tag } from './Tag';
 
 type IPostCardProps = {
-  instance: IContent;
+  instance: IPost;
   contentCategory: string;
   tags: Tags;
 };
 
 export const PostCard = (props: IPostCardProps) => {
-  const contentPath = props.instance.url;
+  const contentPath = path.join(
+    '/',
+    props.instance.collection,
+    props.instance.slug
+  );
 
   return (
     <div className="relative overflow-hidden rounded-md bg-slate-800">
       <div className="aspect-w-16 aspect-h-9">
-        {props.instance.frontmatter.imgSrc && (
+        {props.instance.data.imgSrc && (
           <img
             className="h-full w-full object-cover object-center"
-            src={path.join(AppConfig.base, props.instance.frontmatter.imgSrc)}
-            alt={props.instance.frontmatter.imgSrc}
+            src={path.join(AppConfig.base, props.instance.data.imgSrc)}
+            alt={props.instance.data.imgSrc}
             loading="lazy"
           />
         )}
@@ -35,7 +39,7 @@ export const PostCard = (props: IPostCardProps) => {
           <div className="py-1.5 px-3">
             <a href={contentPath}>
               <div>
-                {transformTitleForContentCard(props.instance.frontmatter.title)
+                {transformTitleForContentCard(props.instance.data.title)
                   .split('\\n')
                   .map((t) => (
                     <span key={t} className="text-lg font-bold">
@@ -44,16 +48,13 @@ export const PostCard = (props: IPostCardProps) => {
                     </span>
                   ))}
                 <span className="align-middle text-xs text-gray-300	">
-                  {format(
-                    new Date(props.instance.frontmatter.pubDate),
-                    'LLL d, yyyy'
-                  )}
+                  {format(new Date(props.instance.data.pubDate), 'LLL d, yyyy')}
                 </span>
               </div>
             </a>
             <div className="mt-1 flex flex-wrap gap-2">
-              {props.instance.frontmatter.tags &&
-                props.instance.frontmatter.tags.map((tagName) => (
+              {props.instance.data.tags &&
+                props.instance.data.tags.map((tagName) => (
                   <Tag
                     key={tagName}
                     name={tagName}

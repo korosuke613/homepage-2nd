@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: '宮崎大学大学院を\n修了しました'
 description: '修了の話'
 pubDate: 2020-03-24T00:00:00Z

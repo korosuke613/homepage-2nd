@@ -1,5 +1,4 @@
 ---
-layout: '@/templates/BasePost.astro'
 title: 自己紹介
 description: 平木場ヒストリー
 pubDate: 2022-08-21T00:00:00Z

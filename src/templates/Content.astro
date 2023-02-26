@@ -9,24 +9,20 @@ import { Tag } from '@/components/Tag';
 import { getSectionTitle } from '@/components/Title';
 import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
-import type {
-  ArticleFrontmatterPage,
-  IContent,
-} from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
 import { readYears } from '@/utils/Year';
 
-interface Props {
-  page: ArticleFrontmatterPage;
-  preTitle?: string | number;
-  contentCategory: string;
-  contentDescription: string;
-  contents: IContent[];
-}
+// interface Props {
+//   page: ArticleFrontmatterPage;
+//   preTitle?: string | number;
+//   contentCategory: string;
+//   contentDescription: string;
+//   contents: CollectionEntry<'posts'>[];
+// }
 
 const { page, preTitle, contentCategory, contentDescription } =
-  Astro.props as Props;
+  Astro.props;
 const titleSuffix = ` - ${AppConfig.site_name}`;
 const titleBase = preTitle
   ? `${preTitle} / ${contentCategory} p.${page.currentPage}`

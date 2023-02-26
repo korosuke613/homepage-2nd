@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+
+import { ContentPost } from '@/partials/ContentPost';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { readTags } from '@/utils/Tag';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('posts', ({ data }) => {
+    return data.draft !== true;
+  });
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await entry.render();
+
+const title = `${entry.data.title} - ${AppConfig.site_name}`;
+const tags = await readTags();
+---
+
+<Base head={{ title, description: entry.data.description }}>
+  <ContentPost
+    frontmatter={entry}
+    contentCategory={'Posts'}
+    headings={headings}
+    tags={tags.posts}
+  >
+    <Content />
+  </ContentPost>
+</Base>

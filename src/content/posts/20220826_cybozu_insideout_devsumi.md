@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: '生産性向上は一筋縄ではいかない Q&A [デブサミ2022夏]'
 description: ''
 pubDate: 2022-08-26T00:00:00Z

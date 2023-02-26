@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: Productivity Weekly
 description: 「開発者の生産性向上に関するネタを共有する会」で出たネタを毎週発信
 pubDate: 2020-11-17T00:00:00Z

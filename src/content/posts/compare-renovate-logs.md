@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: 'compare-renovate-logs'
 description: ''
 pubDate: 2022-12-23T00:00:00Z
