@@ -8,7 +8,9 @@
     "build": "astro check && tsc --noEmit && astro build",
     "preview": "astro preview",
     "clean": "rimraf dist",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx, . || eslint --ext .astro .",
+    "lint": "concurrently -P npm:lint:*",
+    "lint:normal": "eslint --ext .js,.jsx,.ts,.tsx, .",
+    "lint:astro": "eslint --ext .astro .",
     "build-types": "tsc --noEmit --pretty"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "astro": "2.0.15",
     "astro-compress": "1.1.35",
     "astro-robots-txt": "0.4.0",
+    "concurrently": "^7.6.0",
     "eslint": "8.32.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "17.0.0",
