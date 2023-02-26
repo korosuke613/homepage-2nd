@@ -1,4 +1,6 @@
 ---
+// import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import path from 'path';
 
 import { MyIcon } from '@/components/MyIcon';
@@ -7,10 +9,7 @@ import { RecentPickup } from '@/partials/RecentPickup';
 import { RecentPosts } from '@/partials/RecentPosts';
 import { SelfIntroduction } from '@/partials/SelfIntroduction';
 import Base from '@/templates/Base.astro';
-import type {
-  IArticleFrontmatter,
-  IContent,
-} from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { getSortedBlogData } from '@/utils/Blog';
 import { sortByDate, sortByOrder } from '@/utils/Posts';
@@ -19,18 +18,17 @@ import { readTags } from '@/utils/Tag';
 
 const tags = await readTags();
 
-const allPosts: IContent[] = await Astro.glob<IArticleFrontmatter>(
-  './posts/*.md'
-);
+const allPosts: IPost[] = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
 allPosts.push(DormitoryIntroduction);
 
-const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
+const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
 const sortedPosts = sortByDate(nonDraftPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
 
 const nonDraftPickup = allPosts.filter(
-  (post) =>
-    post.frontmatter.tags.includes('Pickup ⭐️') && !post.frontmatter.draft
+  (post) => post.data.tags.includes('Pickup ⭐️') && !post.data.draft
 );
 const sortedPickup = sortByOrder(nonDraftPickup);
 const lastThreePickup = sortedPickup.slice(0, 3);

@@ -3,13 +3,13 @@ import path from 'path';
 import { GradientText } from '@/components/GradientText';
 import { PostGallery } from '@/components/PostGallery';
 import { Section } from '@/components/Section';
-import type { IContent } from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import type { Tags } from '@/utils/Tag';
 
 type IRecentPickupProps = {
   tags: Tags;
-  postList: IContent[];
+  postList: IPost[];
 };
 
 export const RecentPickup = (props: IRecentPickupProps) => (

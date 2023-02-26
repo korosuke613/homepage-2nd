@@ -1,12 +1,12 @@
+import type { CollectionEntry } from 'astro:content';
 import { format } from 'date-fns';
 
-import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import type { Tags } from '@/utils/Tag';
 
 import { Tag } from './Tag';
 
 type IContentHeaderProps = {
-  content: IArticleFrontmatter;
+  content: CollectionEntry<'posts'>;
   author: string;
   tags: Tags;
   contentCategory: string;
@@ -15,12 +15,12 @@ type IContentHeaderProps = {
 export const ContentHeader = (props: IContentHeaderProps) => (
   <>
     <h1 id="contents_header" className="text-center text-3xl font-bold">
-      {props.content.title.replace('\\n', '')}
+      {props.content.data.title.replace('\\n', '')}
     </h1>
 
     <div className="mt-2 text-center text-sm text-gray-400">
       By {props.author} on{' '}
-      {format(new Date(props.content.pubDate), 'LLL d, yyyy')}
+      {format(new Date(props.content.data.pubDate), 'LLL d, yyyy')}
     </div>
 
     <div className="mt-4 flex flex-wrap justify-center gap-2">

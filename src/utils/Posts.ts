@@ -1,22 +1,21 @@
-import type { IContent } from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 
-export const sortByDate = (posts: IContent[]) => {
+export const sortByDate = (posts: IPost[]) => {
   return posts.sort(
     (a, b) =>
-      new Date(b.frontmatter.pubDate).valueOf() -
-      new Date(a.frontmatter.pubDate).valueOf()
+      new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
   );
 };
 
-export const sortByOrder = (posts: IContent[]) => {
+export const sortByOrder = (posts: IPost[]) => {
   return posts.sort((a, b) => {
-    let aDate = new Date(a.frontmatter.pubDate).valueOf();
-    let bDate = new Date(b.frontmatter.pubDate).valueOf();
-    if (a.frontmatter.order !== undefined) {
-      aDate = Number.MAX_SAFE_INTEGER - a.frontmatter.order;
+    let aDate = new Date(a.data.pubDate).valueOf();
+    let bDate = new Date(b.data.pubDate).valueOf();
+    if (a.data.order !== undefined) {
+      aDate = Number.MAX_SAFE_INTEGER - a.data.order;
     }
-    if (b.frontmatter.order !== undefined) {
-      bDate = Number.MAX_SAFE_INTEGER - b.frontmatter.order;
+    if (b.data.order !== undefined) {
+      bDate = Number.MAX_SAFE_INTEGER - b.data.order;
     }
 
     return bDate - aDate;

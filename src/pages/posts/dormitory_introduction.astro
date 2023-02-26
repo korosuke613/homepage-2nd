@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 import path from 'path';
 
 import { ImageAndDescription } from '@/components/Columns';
@@ -11,19 +12,14 @@ import {
 import { Panel } from '@/components/Panel';
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
-import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 
-export interface Props {
-  content: IArticleFrontmatter;
-}
-
 const tags = await readTags();
 
-const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_name}`;
+const title = `${DormitoryIntroduction.data.title} - ${AppConfig.site_name}`;
 
 const markdownHeadings: MarkdownHeading[] = [
   { depth: 2, slug: '概要', text: '概要' },
@@ -57,10 +53,13 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
 ---
 
 <Base
-  head={{ title, description: DormitoryIntroduction.frontmatter.description }}
+  head={{
+    title,
+    description: DormitoryIntroduction.data.description!,
+  }}
 >
   <ContentPost
-    frontmatter={DormitoryIntroduction.frontmatter}
+    frontmatter={DormitoryIntroduction as unknown as CollectionEntry<'posts'>}
     contentCategory={'Posts'}
     headings={markdownHeadings}
     tags={tags.posts}

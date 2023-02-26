@@ -1,15 +1,15 @@
+import type { CollectionEntry } from 'astro:content';
 import path from 'path';
 import { BsGithub } from 'react-icons/bs/index';
 
-import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IEditGitHubProps = {
-  content: IArticleFrontmatter;
+  content: CollectionEntry<'posts'>;
 };
 
 export const EditGitHub = (props: IEditGitHubProps) => {
-  if (props.content.url === undefined) {
+  if (props.content.id === undefined) {
     return <></>;
   }
 
@@ -19,14 +19,14 @@ export const EditGitHub = (props: IEditGitHubProps) => {
     'main',
     'src',
     'pages',
-    props.content.url
+    props.content.id
   );
 
   return (
     <div className="flex justify-end">
       <a
         style={{ height: 'fit-content' }}
-        href={`https://${url}.md`}
+        href={`https://${url}`}
         target="_blank"
         rel="noopener noreferrer"
       >

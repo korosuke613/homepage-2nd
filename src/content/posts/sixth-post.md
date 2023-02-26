@@ -1,5 +1,5 @@
 ---
-layout: '@/templates/BasePost.astro'
+
 title: あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。またそのなかでいっしょになったたくさんのひとたち、ファゼーロ
 description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi.
 pubDate: 1900-02-06T00:00:00Z

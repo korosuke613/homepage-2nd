@@ -1,12 +1,12 @@
 import { GradientText } from '@/components/GradientText';
 import { PostGallery } from '@/components/PostGallery';
 import { Section } from '@/components/Section';
-import type { IContent } from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 import type { Tags } from '@/utils/Tag';
 
 type IRecentPostsProps = {
   tags: Tags;
-  postList: IContent[];
+  postList: IPost[];
 };
 
 const RecentPosts = (props: IRecentPostsProps) => (

@@ -1,9 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
+
 import Post from '@/pages/posts/[...page].astro';
 import type {
   ArticleFrontmatterPage,
-  IArticleFrontmatter,
-  IContent,
+  IPost,
 } from '@/types/IArticleFrontmatter';
 import { sortByDate } from '@/utils/Posts';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
@@ -14,12 +15,10 @@ type GetStaticPaths = {
 }; // Overrides `GetStaticPathsOptions` types from Astro
 
 export async function getNonDraftPosts() {
-  const allPosts: IContent[] = await Astro.glob<IArticleFrontmatter>(
-    '../../*.md'
-  );
+  const allPosts: IPost[] = await getCollection('posts');
   allPosts.push(DormitoryIntroduction);
 
-  const nonDraftPosts = allPosts.filter((post) => !post.frontmatter.draft);
+  const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
   return nonDraftPosts;
 }
 
@@ -31,7 +30,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 
   return years.posts.map((year) => {
     const filteredPosts = sortedPosts.filter((post) => {
-      const publishYear = new Date(post.frontmatter.pubDate).getFullYear();
+      const publishYear = new Date(post.data.pubDate).getFullYear();
       return publishYear === year;
     });
 

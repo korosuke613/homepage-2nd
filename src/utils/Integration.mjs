@@ -183,7 +183,7 @@ const getBlogData = async () => {
 };
 
 const setupData = async () => {
-  const posts = await getMarkdownData('./src/pages/posts/**.md');
+  const posts = await getMarkdownData('./src/content/posts/**.md');
   const blogs = await getBlogData();
 
   if (!fs.existsSync('./build')) {

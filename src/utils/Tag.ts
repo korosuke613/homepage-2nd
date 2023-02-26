@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-import type { IContent } from '@/types/IArticleFrontmatter';
+import type { IPost } from '@/types/IArticleFrontmatter';
 import type { Values } from '@/types/Values';
 
 export type Tags = {
@@ -84,10 +84,10 @@ export const generateTags = (tagNames: string[]) => {
   return tags;
 };
 
-export const generateTagsFromMarkdowns = (markdowns: IContent[]) => {
+export const generateTagsFromMarkdowns = (markdowns: IPost[]) => {
   const allTagNames = markdowns
     .map((md) => {
-      return md.frontmatter.tags;
+      return md.data.tags;
     })
     .flat();
   return generateTags(allTagNames);

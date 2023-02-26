@@ -1,14 +1,14 @@
 import type { MarkdownHeading } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 import path from 'path';
 import type { ReactNode } from 'react';
 
 import { EditGitHub } from '@/components/EditGitHub';
 import { Toc } from '@/components/Toc';
-import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 
 type IContentProps = {
-  content: IArticleFrontmatter;
+  content: CollectionEntry<'posts'>;
   headings: MarkdownHeading[];
   children: ReactNode;
 };
@@ -16,12 +16,12 @@ type IContentProps = {
 const Content: React.FC<IContentProps> = (props: IContentProps) => {
   return (
     <div className="mx-auto mt-5 max-w-prose">
-      {props.content.imgSrc && (
+      {props.content.data.imgSrc && (
         <div className="aspect-w-3 aspect-h-2">
           <img
             className="h-full w-full rounded-lg object-cover object-center"
-            src={path.join(AppConfig.base, props.content.imgSrc)}
-            alt={props.content.imgAlt}
+            src={path.join(AppConfig.base, props.content.data.imgSrc)}
+            alt={props.content.data.imgAlt}
             loading="lazy"
           />
         </div>
