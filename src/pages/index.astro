@@ -1,5 +1,7 @@
 ---
-import path from "path";
+import path from 'path';
+
+import { MyIcon } from '@/components/MyIcon';
 import { RecentBlogs } from '@/partials/RecentBlogs';
 import { RecentPickup } from '@/partials/RecentPickup';
 import { RecentPosts } from '@/partials/RecentPosts';
@@ -14,7 +16,6 @@ import { getSortedBlogData } from '@/utils/Blog';
 import { sortByDate, sortByOrder } from '@/utils/Posts';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
-import { MyIcon } from "@/components/MyIcon";
 
 const tags = await readTags();
 
@@ -43,7 +44,10 @@ const { description } = AppConfig;
 
 <Base head={{ title, description }}>
   <SelfIntroduction>
-    <MyIcon client:load iconPath={path.join(AppConfig.base, '/assets/images/my_icon_2.png')} />
+    <MyIcon
+      client:load
+      iconPath={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
+    />
   </SelfIntroduction>
   <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />

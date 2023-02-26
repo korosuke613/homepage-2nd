@@ -1,10 +1,14 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import path from 'path';
 
 import { ImageAndDescription } from '@/components/Columns';
 import { ExternalLink } from '@/components/ExternalLink';
+import {
+  convertMarkdownHeadingsToObject,
+  MarkdownHeadingComponent,
+} from '@/components/Headings';
 import { Panel } from '@/components/Panel';
-import { convertMarkdownHeadingsToObject, MarkdownHeadingComponent } from '@/components/Headings';
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
@@ -12,7 +16,6 @@ import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
-import { MarkdownHeading } from 'astro';
 
 export interface Props {
   content: IArticleFrontmatter;
@@ -23,27 +26,34 @@ const tags = await readTags();
 const title = `${DormitoryIntroduction.frontmatter.title} - ${AppConfig.site_name}`;
 
 const markdownHeadings: MarkdownHeading[] = [
-  {depth: 2, slug: "概要", text: "概要"},
-  {depth: 2, slug: "国寮のいいところ", text: "国寮のいいところ 🌏"},
-  {depth: 2, slug: "共用スペース", text: "共用スペース 💃"},
-  {depth: 3, slug: "補食室", text: "補食室 🍙"},
-  {depth: 3, slug: "キッチン", text: "キッチン 🍳"},
-  {depth: 3, slug: "談話室", text: "談話室 📺"},
-  {depth: 3, slug: "洗濯室", text: "洗濯室 👔"},
-  {depth: 3, slug: "お風呂場", text: "お風呂場 🛁"},
-  {depth: 3, slug: "踊り場", text: "踊り場 🕺"},
-  {depth: 3, slug: "エレベータ", text: "エレベータ 📦"},
-  {depth: 3, slug: "玄関", text: "玄関 🚪"},
-  {depth: 2, slug: "周辺施設", text: "周辺施設 🏬"},
-  {depth: 2, slug: "男子寮・女子寮との違い", text: "男子寮👨・女子寮👩との違い"},
-  {depth: 2, slug: "よくある質問", text: "よくある質問"},
-  {depth: 2, slug: "関連リンク", text: "関連リンク"},
-  {depth: 2, slug: "みんなで作る、国寮ページ", text: "みんなで作る、国寮ページ"},
-  {depth: 2, slug: "謝辞", text: "謝辞"},
-]
+  { depth: 2, slug: '概要', text: '概要' },
+  { depth: 2, slug: '国寮のいいところ', text: '国寮のいいところ 🌏' },
+  { depth: 2, slug: '共用スペース', text: '共用スペース 💃' },
+  { depth: 3, slug: '補食室', text: '補食室 🍙' },
+  { depth: 3, slug: 'キッチン', text: 'キッチン 🍳' },
+  { depth: 3, slug: '談話室', text: '談話室 📺' },
+  { depth: 3, slug: '洗濯室', text: '洗濯室 👔' },
+  { depth: 3, slug: 'お風呂場', text: 'お風呂場 🛁' },
+  { depth: 3, slug: '踊り場', text: '踊り場 🕺' },
+  { depth: 3, slug: 'エレベータ', text: 'エレベータ 📦' },
+  { depth: 3, slug: '玄関', text: '玄関 🚪' },
+  { depth: 2, slug: '周辺施設', text: '周辺施設 🏬' },
+  {
+    depth: 2,
+    slug: '男子寮・女子寮との違い',
+    text: '男子寮👨・女子寮👩との違い',
+  },
+  { depth: 2, slug: 'よくある質問', text: 'よくある質問' },
+  { depth: 2, slug: '関連リンク', text: '関連リンク' },
+  {
+    depth: 2,
+    slug: 'みんなで作る、国寮ページ',
+    text: 'みんなで作る、国寮ページ',
+  },
+  { depth: 2, slug: '謝辞', text: '謝辞' },
+];
 
 const headings = convertMarkdownHeadingsToObject(markdownHeadings);
-
 ---
 
 <Base
@@ -72,7 +82,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       このページは2017年当時の情報を元に作られています。内容は変わっている可能性があります。
     </Panel>
 
-    <MarkdownHeadingComponent heading={headings["概要"]} />
+    <MarkdownHeadingComponent heading={headings['概要']} />
 
     <p>
       宮崎大学国際交流宿舎(以下国寮)は宮崎大学木花キャンパスにある学生寮です。寮の自治も寮生が行っています。
@@ -82,7 +92,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       大きな特徴は、日本人と外国人留学生が住んでいるということです。隣の部屋に外国人が住んでいることは国寮において全く珍しいことではありません。捕食室や談話室といった共用スペースもあるので、外国人留学生とのコミュニケーションも積極的に行えます。
     </p>
 
-    <MarkdownHeadingComponent heading={headings["国寮のいいところ"]} />
+    <MarkdownHeadingComponent heading={headings['国寮のいいところ']} />
 
     <Panel header="☆友達ができやすい！">
       各階でつながりがあるだけでなく、月一でイベント(任意参加)もおこなっているので、大学で友達ができるか不安な人も安心です。
@@ -96,7 +106,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       外国の文化に興味がある、普段から英会話をしたいなどを考えている人にはとてもオススメです。寮生の約
     </Panel>
 
-    <MarkdownHeadingComponent heading={headings["居室"]} />
+    <MarkdownHeadingComponent heading={headings['居室']} />
 
     <p>
       実際に国寮生が住んでいる居室について紹介します。
@@ -118,13 +128,13 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       />
     </div>
 
-    <MarkdownHeadingComponent heading={headings["共用スペース"]} />
+    <MarkdownHeadingComponent heading={headings['共用スペース']} />
 
     <p>
       国寮の共用スペースについて紹介します。ここで紹介する設備は各階に一つずつあります。
     </p>
 
-    <MarkdownHeadingComponent heading={headings["補食室"]} />
+    <MarkdownHeadingComponent heading={headings['補食室']} />
 
     <ImageAndDescription
       alt="部屋の3倍ほど広い部屋に8人掛けの机と椅子がある"
@@ -135,7 +145,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       <p>小さなベランダもあります。奥にはキッチンがあります。</p>
     </ImageAndDescription>
 
-    <MarkdownHeadingComponent heading={headings["キッチン"]} />
+    <MarkdownHeadingComponent heading={headings['キッチン']} />
 
     <ImageAndDescription
       alt="コンロ、冷蔵庫等が壁際にあり、真ん中に高脚机がある"
@@ -153,7 +163,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </ul>
     </ImageAndDescription>
 
-    <MarkdownHeadingComponent heading={headings["談話室"]} />
+    <MarkdownHeadingComponent heading={headings['談話室']} />
 
     <ImageAndDescription
       alt="本棚二つの上にテレビ。腰掛け椅子の前に細長机、冷蔵庫"
@@ -164,7 +174,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </p>
     </ImageAndDescription>
 
-    <MarkdownHeadingComponent heading={headings["洗濯室"]} />
+    <MarkdownHeadingComponent heading={headings['洗濯室']} />
 
     <ImageAndDescription
       alt="洗濯機の上に乾燥機が乗っている。それが3台並んでいる"
@@ -175,7 +185,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </p>
     </ImageAndDescription>
 
-    <MarkdownHeadingComponent heading={headings["お風呂場"]} />
+    <MarkdownHeadingComponent heading={headings['お風呂場']} />
 
     <div class="grid grid-cols-3 gap-6">
       <img
@@ -196,7 +206,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       お風呂場は大浴場はなく、全て個室となっています。シャワー室が3部屋、浴室が2部屋あります。いつでも使えます。
     </p>
 
-    <MarkdownHeadingComponent heading={headings["踊り場"]} />
+    <MarkdownHeadingComponent heading={headings['踊り場']} />
 
     <div class="grid grid-cols-2 gap-6">
       <img
@@ -212,7 +222,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
     <p>各階の踊り場にはエレベータとホワイトボードが設置されています。</p>
     <p>ホワイトボードには各階で共有したいことが書かれます。</p>
 
-    <MarkdownHeadingComponent heading={headings["エレベータ"]} />
+    <MarkdownHeadingComponent heading={headings['エレベータ']} />
 
     <ImageAndDescription
       alt="エレベータの中。奥に鏡がついている。手すりがついている"
@@ -221,7 +231,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       <p>エレベータが一台設置されています。縦に長いです。鏡がついています。</p>
     </ImageAndDescription>
 
-    <MarkdownHeadingComponent heading={headings["玄関"]} />
+    <MarkdownHeadingComponent heading={headings['玄関']} />
 
     <div class="grid grid-cols-2 gap-6">
       <img
@@ -237,7 +247,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
     <p>玄関です。入って左に個人のポスト、右に靴入れがあります。</p>
     <p>外から入るには支給されるカードキーが必要です。</p>
 
-    <MarkdownHeadingComponent heading={headings["周辺施設"]} />
+    <MarkdownHeadingComponent heading={headings['周辺施設']} />
 
     <img alt="" src={generateImagePath('dormitory', 'map.webp')} />
     <p>寮から徒歩5分圏内の地図です。</p>
@@ -267,7 +277,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </div>
     </div>
 
-    <MarkdownHeadingComponent heading={headings["男子寮・女子寮との違い"]} />
+    <MarkdownHeadingComponent heading={headings['男子寮・女子寮との違い']} />
 
     <p>
       日本人学生向けには他にも男子寮・女子寮があります。以下は男子寮・女子寮と国際交流宿舎の違いの一部です。
@@ -313,7 +323,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </tbody>
     </table>
 
-    <MarkdownHeadingComponent heading={headings["よくある質問"]} />
+    <MarkdownHeadingComponent heading={headings['よくある質問']} />
 
     <p>よく聞かれる質問とその回答です。新しい質問があったら随時追加します。</p>
 
@@ -360,7 +370,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       寮生同士の仲はよい場合がほとんどです。少なくとも顔見知り以上ではあります。廊下で寮生にあったときに世間話が始まったり、談話室で一緒にゲームをしたりと、良い悪いでいうと雰囲気は良いです。
     </Panel>
 
-    <MarkdownHeadingComponent heading={headings["関連リンク"]} />
+    <MarkdownHeadingComponent heading={headings['関連リンク']} />
 
     <ul>
       <li>
@@ -377,7 +387,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </li>
     </ul>
 
-    <MarkdownHeadingComponent heading={headings["みんなで作る、国寮ページ"]} />
+    <MarkdownHeadingComponent heading={headings['みんなで作る、国寮ページ']} />
     <p>
       もし、このページに矛盾点、改善点等がある場合、以下の方法で貢献できます。
     </p>
@@ -397,7 +407,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
       </li>
     </ul>
 
-    <MarkdownHeadingComponent heading={headings["謝辞"]} />
+    <MarkdownHeadingComponent heading={headings['謝辞']} />
     <p>
       本ページを作成するにあたり、アンケートに協力していただいた皆様に感謝いたします。
     </p>
