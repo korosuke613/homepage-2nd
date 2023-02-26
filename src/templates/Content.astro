@@ -21,8 +21,7 @@ import { readYears } from '@/utils/Year';
 //   contents: CollectionEntry<'posts'>[];
 // }
 
-const { page, preTitle, contentCategory, contentDescription } =
-  Astro.props;
+const { page, preTitle, contentCategory, contentDescription } = Astro.props;
 const titleSuffix = ` - ${AppConfig.site_name}`;
 const titleBase = preTitle
   ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
