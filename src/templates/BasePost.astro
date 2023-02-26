@@ -1,10 +1,11 @@
 ---
+import type { MarkdownHeading } from 'astro';
+
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
 import type { IArticleFrontmatter } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
-import {MarkdownHeading} from 'astro';
 
 export interface Props {
   content: IArticleFrontmatter;
