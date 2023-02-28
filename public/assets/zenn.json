@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2023-02-16T14:32:49.925Z",
+  "lastUpdated": "2023-02-27T23:24:36.036Z",
   "articles": {
     "e82445a43782b1": {
       "title": "Productivity Weekly (2020-12-23号)",
@@ -525,6 +525,11 @@
       "title": "Productivity Weekly (2023-02-08号)",
       "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--J90kO8D7--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_64:Productivity%2520Weekly%2520%25282023-02-08%25E5%258F%25B7%2529%2Cw_1010%2Cx_90%2Cy_100/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%E3%82%B5%E3%82%A4%E3%83%9C%E3%82%A6%E3%82%BA%20%E7%94%9F%E7%94%A3%E6%80%A7%E5%90%91%E4%B8%8A%E3%83%81%E3%83%BC%E3%83%A0%20%F0%9F%92%AA%2Cx_220%2Cy_135/g_south_west%2Cl_text:notosansjp-medium.otf_34:Futa%2520Hirakoba%2Cx_220%2Cy_84/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2I0ZGFiZjEwMjAuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_82/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_50%2Cx_139%2Cy_64/og-base.png",
       "pubDate": "2023-02-16T08:54:38.000Z"
+    },
+    "productivity-weekly-20230222": {
+      "title": "Productivity Weekly (2023-02-22号)",
+      "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--Aoac1Qpb--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_64:Productivity%2520Weekly%2520%25282023-02-22%25E5%258F%25B7%2529%2Cw_1010%2Cx_90%2Cy_100/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%E3%82%B5%E3%82%A4%E3%83%9C%E3%82%A6%E3%82%BA%20%E7%94%9F%E7%94%A3%E6%80%A7%E5%90%91%E4%B8%8A%E3%83%81%E3%83%BC%E3%83%A0%20%F0%9F%92%AA%2Cx_220%2Cy_135/g_south_west%2Cl_text:notosansjp-medium.otf_34:Futa%2520Hirakoba%2Cx_220%2Cy_84/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2I0ZGFiZjEwMjAuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_82/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_50%2Cx_139%2Cy_64/og-base.png",
+      "pubDate": "2023-02-27T06:23:41.000Z"
     }
   }
 }
