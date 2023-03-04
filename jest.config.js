@@ -1,6 +1,10 @@
 /** @type {import('jest').Config} */
 
 const config = {
+  reporters: [
+    'default',
+    ['jest-junit', { outputFile: 'test-results/unit.xml' }],
+  ],
   transform: {
     '^.+\\.(t|j)sx?$': '@swc/jest',
   },

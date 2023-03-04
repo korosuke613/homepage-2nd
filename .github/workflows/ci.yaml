@@ -51,10 +51,16 @@ jobs:
         run: npm ci
       - name: Unit testing
         run: npm run test:unit
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "test-results/unit.xml"
+        if: always()
       - uses: codecov/codecov-action@v3
         with:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
+        if: always()
 
   e2e-test:
     name: "Test [E2E]"
@@ -69,6 +75,10 @@ jobs:
         run: npm ci
       - name: E2E testing
         run: npm run test:playwright-e2e
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "test-results/e2e.xml"
 
   ct-test:
     name: "Test [Component]"
@@ -83,6 +93,10 @@ jobs:
         run: npm ci
       - name: Component testing
         run: npm run test:playwright-ct
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "test-results/ct.xml"
 
   tools:
     runs-on: ubuntu-latest
