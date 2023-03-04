@@ -36,7 +36,10 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
         {props.children}
       </div>
       <br />
-      <EditGitHub content={props.content}></EditGitHub>
+      <EditGitHub
+        id={props.content.id}
+        collection={props.content.collection}
+      ></EditGitHub>
     </div>
   );
 };

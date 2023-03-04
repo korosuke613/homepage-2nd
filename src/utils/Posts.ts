@@ -21,3 +21,17 @@ export const sortByOrder = (posts: IPost[]) => {
     return bDate - aDate;
   });
 };
+
+export const getGitHubUrl = (
+  githubUrl: string,
+  collection: string,
+  id: string
+) => {
+  const baseUrl = `https://${githubUrl}/tree/main/src/content/`;
+  const url = new URL(
+    `${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    baseUrl
+  );
+
+  return url.toString();
+};

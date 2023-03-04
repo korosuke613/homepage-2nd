@@ -1,32 +1,25 @@
-import type { CollectionEntry } from 'astro:content';
-import path from 'path';
 import { BsGithub } from 'react-icons/bs/index';
 
 import { AppConfig } from '@/utils/AppConfig';
+import { getGitHubUrl } from '@/utils/Posts';
 
 type IEditGitHubProps = {
-  content: CollectionEntry<'posts'>;
+  id: string;
+  collection: string;
 };
 
 export const EditGitHub = (props: IEditGitHubProps) => {
-  if (props.content.id === undefined) {
-    return <></>;
-  }
-
-  const url = path.join(
+  const githubUrl = getGitHubUrl(
     AppConfig.github_url,
-    'tree',
-    'main',
-    'src',
-    'pages',
-    props.content.id
+    props.collection,
+    props.id
   );
 
   return (
     <div className="flex justify-end">
       <a
         style={{ height: 'fit-content' }}
-        href={`https://${url}`}
+        href={githubUrl}
         target="_blank"
         rel="noopener noreferrer"
       >

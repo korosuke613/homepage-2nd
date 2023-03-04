@@ -38,6 +38,52 @@ jobs:
       - name: Build
         run: npm run build
 
+  unit-test:
+    name: "Test [Unit]"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Unit testing
+        run: npm run test:unit
+      - uses: codecov/codecov-action@v3
+        with:
+          flags: unittests
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  e2e-test:
+    name: "Test [E2E]"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: E2E testing
+        run: npm run test:playwright-e2e
+
+  ct-test:
+    name: "Test [Component]"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Component testing
+        run: npm run test:playwright-ct
+
   tools:
     runs-on: ubuntu-latest
     defaults:

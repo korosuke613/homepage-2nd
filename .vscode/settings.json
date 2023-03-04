@@ -35,5 +35,6 @@
   "terminal.integrated.defaultProfile.linux": "zsh",
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
-  }
+  },
+  "cSpell.words": ["cobertura"]
 }
