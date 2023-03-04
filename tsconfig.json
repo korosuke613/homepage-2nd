@@ -35,12 +35,19 @@
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
     // Add type definitions for our Vite runtime.
-    "types": ["astro/client"],
+    "types": ["astro/client", "jest"],
 
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.astro"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.astro",
+    "playwright-*.ts",
+    "playwright/*.ts",
+    "playwright/index.tsx"
+  ]
 }

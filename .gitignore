@@ -26,3 +26,5 @@ build/
 
 .env
 .astro/
+playwright-report/
+coverage/
