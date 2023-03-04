@@ -28,3 +28,4 @@ build/
 .astro/
 playwright-report/
 coverage/
+test-results/
