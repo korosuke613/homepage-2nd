@@ -8,15 +8,18 @@ tags:
   - ポエム
 ---
 
+import { SocialLink } from '@/components/SocialLink';
+import { SocialLinkData } from '@/utils/SocialLinkData';
+
 ## 名前
-平木場　風太（Futa Hirakoba）
+平木場 風太（Futa Hirakoba）
 
 ## はじめに 🏃
 
 **全ての社内エンジニアの開発生産性を上げたい**民です。
 
-生産性が上がることで、作業できる量が増えるだけでなく、気持ちよく働くことにつながります。<br>
-社内エンジニア全ての開発生産性を上げることで、離職率低下や売り上げ増加（≒給料アップ）につながると考えています。<br>
+生産性が上がることで、作業できる量が増えるだけでなく、気持ちよく働くことにつながります。<br />
+社内エンジニア全ての開発生産性を上げることで、離職率低下や売り上げ増加（≒給料アップ）につながると考えています。<br />
 僕はあらゆるエンジニアが困っている面倒ごとを解決していくことで全体の開発生産性を上げていきたいです。
 
 **エンジニアとして心がけていること**:
@@ -26,9 +29,12 @@ tags:
 - 継続的に新技術などを探求
 - 全てを自動化することが正義ではない
 
-
 ## よく使う技術 🔧
-次をご覧ください。
+- TypeScript, Go
+- Terraform, Serverless Framework
+- GitHub Actions
+
+もっと詳しく知りたい場合は次をご覧ください。
 
 - [GitHub](https://github.com/korosuke613/) 
 - [LAPRAS 公開ポートフォリオ](https://lapras.com/public/korosuke613)
@@ -39,7 +45,7 @@ tags:
 ### 職歴 🏢
 
 #### 正社員
-- **2020~**: [サイボウズ株式会社](https://cybozu.co.jp/)　開発本部　生産性向上チーム
+- **2020~**: [サイボウズ株式会社](https://cybozu.co.jp/) 開発本部 生産性向上チーム
 
 #### インターン
 - **2019/02~2019/03**: 株式会社リクルートライフスタイル（エンジニアインターン）
@@ -49,10 +55,10 @@ tags:
 #### アルバイト
 
 ##### ソフトウェアエンジニア
-- **2017/12~2020/03**: 国立大学法人　宮崎大学　フロンティア科学実験総合センター/医学部
+- **2017/12~2020/03**: 国立大学法人 宮崎大学 フロンティア科学実験総合センター/医学部
   - 所属
-    - **2019/11~2020/03**: 医学部（解剖学講座医学生物学分野　技術補佐員）
-    - **2017/12~2019/10**: ロンティア科学実験総合センター（実験支援部門　RI 分野 RI 清武分室　技術補佐員）
+    - **2019/11~2020/03**: 医学部（解剖学講座医学生物学分野 技術補佐員）
+    - **2017/12~2019/10**: ロンティア科学実験総合センター（実験支援部門 RI 分野 RI 清武分室 技術補佐員）
   - やったこと
     - RNA データベースサービス [snOPY](http://snoopy.med.miyazaki-u.ac.jp/) の改善・保守
       - snOPY の Docker コンテナ化
@@ -66,7 +72,7 @@ tags:
 ##### その他
 
 - **2017/02~2020/03**: ローソン宮崎大学病院店（店員）
-- **2014/05~2016/01**: タイヨー清武店　酒のベリーマッチ（店員）
+- **2014/05~2016/01**: タイヨー清武店 酒のベリーマッチ（店員）
 
 ### 学歴 🎓
 - **2018~2020**: 宮崎大学大学院 [工学研究科](http://www.miyazaki-u.ac.jp/tech/departments/master.html) 機械・情報系修士課程 - 片山(徹)研究室
@@ -87,15 +93,42 @@ tags:
 - **2012**: 基本情報技術者
 - **2018**: 応用情報技術者
 
-## アウトプット 🗞
+## 各種リンク 🔗
 
-### ブログ 🖌
-- [Zenn](https://zenn.dev/korosuke613)
-- [はてなブログ](https://korosuke613.hatenablog.com/)
-- [Qiita](https://qiita.com/Shitimi_613)
+<div className="flex flex-wrap gap-1 mt-3">
+{SocialLinkData.filter((link) => link.type === undefined).map((link) => (
+  <SocialLink {...link} />
+))}
+</div>
 
-### スライド 🎬
-- [Docswell](https://www.docswell.com/user/korosuke613)
-- [SpeakerDeck](https://speakerdeck.com/korosuke613)
-- [SlideShare](https://www.slideshare.net/FutaHirakoba/presentations)
+### SNS
 
+<div className="flex flex-wrap gap-1 mt-3">
+{SocialLinkData.filter((link) => link.type === "SNS").map((link) => (
+  <SocialLink {...link} />
+))}
+</div>
+
+### Blog
+
+<div className="flex flex-wrap gap-1 mt-3">
+{SocialLinkData.filter((link) => link.type === "Blog").map((link) => (
+  <SocialLink {...link} />
+))}
+</div>
+
+### Slide
+
+<div className="flex flex-wrap gap-1 mt-3">
+{SocialLinkData.filter((link) => link.type === "Slide").map((link) => (
+  <SocialLink {...link} />
+))}
+</div>
+
+### Career
+
+<div className="flex flex-wrap gap-1 mt-3">
+{SocialLinkData.filter((link) => link.type === "Career").map((link) => (
+  <SocialLink {...link} />
+))}
+</div>
