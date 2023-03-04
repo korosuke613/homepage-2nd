@@ -1,16 +1,9 @@
 import path from 'path';
 
 import { AppConfig } from '@/utils/AppConfig';
+import type { ISocialLink } from '@/utils/SocialLinkData';
 
-type ISocialLinkProps = {
-  url: string;
-  alt: string;
-  imgSrc: string;
-  height: number;
-  width: number;
-};
-
-export const SocialLink = (props: ISocialLinkProps) => (
+export const SocialLink = (props: ISocialLink) => (
   <a
     style={{ height: 'fit-content' }}
     href={props.url}
@@ -19,10 +12,15 @@ export const SocialLink = (props: ISocialLinkProps) => (
   >
     <img
       src={path.join(AppConfig.base, props.imgSrc)}
-      alt={props.alt}
+      alt={`${props.name} icon`}
       loading="lazy"
       height={props.height}
       width={props.width}
+      style={{
+        marginTop: 0,
+        marginBottom: 0,
+        borderRadius: 0,
+      }}
     />
   </a>
 );
