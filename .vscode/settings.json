@@ -36,5 +36,8 @@
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
-  "cSpell.words": ["cobertura"]
+  "cSpell.words": [
+    "cobertura"
+  ],
+  "files.autoSave": "afterDelay"
 }
