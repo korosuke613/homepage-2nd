@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import type { PlaywrightTestConfig } from '@playwright/test';
+import { devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
   reporter: [['list'], ['junit', { outputFile: 'test-results/e2e.xml' }]],
@@ -12,6 +14,19 @@ const config: PlaywrightTestConfig = {
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
+
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          ignoreDefaultArgs: ['--headless'],
+          args: ['--headless=new'],
+        },
+      },
+    },
+  ],
 };
 
 export default config;
