@@ -28,7 +28,7 @@ export const RecentBlogs = (props: IRecentBlogsProps) => (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {props.postList.map((elt) => (
         // <BlogCardForTop zennData={elt} tags={BlogTags} />
-        <div style={CardClass}>
+        <div key={elt.id} style={CardClass}>
           <ExternalLink
             title={
               <img
