@@ -21,6 +21,8 @@ interface Props {
 const { page, preTitle } = Astro.props as Props;
 ---
 
+<meta name="robots" content="noindex" />
+
 <Blogs
   page={page}
   contentCategory="Blogs"

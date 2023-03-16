@@ -39,6 +39,8 @@ const { page, preTitle } = Astro.props as Props;
 const nonDraftPosts = await getNonDraftPosts();
 ---
 
+<meta name="robots" content="noindex" />
+
 <Content
   page={page}
   contentCategory="Posts"
