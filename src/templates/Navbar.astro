@@ -35,12 +35,15 @@ export interface Props {}
         />
       </NavMenu>
 
-      <DocSearch
-        appId="YLT78H3I8T"
-        indexName="draft_my_homepage"
-        apiKey="ecd092a52e0fdaf9b5cc50f059bba8ea"
-        client:only="react"
-      />
+      <!-- DocSearch のアイコンが遅れてロードされるため、同じサイズの div で囲む -->
+      <div style="height: 36px; width: 36px">
+        <DocSearch
+          appId="YLT78H3I8T"
+          indexName="draft_my_homepage"
+          apiKey="ecd092a52e0fdaf9b5cc50f059bba8ea"
+          client:only="react"
+        />
+      </div>
     </div>
   </NavbarTwoColumns>
 </Section>
