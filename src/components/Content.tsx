@@ -13,9 +13,11 @@ type IContentProps = {
   children: ReactNode;
 };
 
+const maxCharWidth = 'max-w-[80ch]';
+
 const Content: React.FC<IContentProps> = (props: IContentProps) => {
   return (
-    <div className="mx-auto mt-5 max-w-prose">
+    <div className={`mx-auto mt-5 ${maxCharWidth}`}>
       {props.content.data.imgSrc && (
         <div className="aspect-w-3 aspect-h-2">
           <img
@@ -31,7 +33,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
       </div>
       <div
         id="contents_data"
-        className="prose prose-invert mt-8 prose-img:rounded-lg"
+        className={`prose prose-invert mt-8 ${maxCharWidth} prose-img:rounded-lg`}
       >
         {props.children}
       </div>
