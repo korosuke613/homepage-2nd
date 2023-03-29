@@ -18,7 +18,7 @@ tags:
 | Pleasure '98 〜人生の快楽〜              | Pleasure は歳が経つにつれて「あいつ」の状況が変わっていくのが好き。98は特に音が好きなのと裸で盛り上がってるのが好き                                    |
 | YOU & I                                  | 歌詞も好きだし曲も好き。どう見ても失恋ソングなのになんでこんな明るくなれるんだろう                                                                     |
 | ZERO                                     | 歌詞にないラップ部分が好き。何も見ずに回りながら歌える                                                                                                 |
-| love me, I love you                      | PVのサラリーマン稲葉さんが良い                                                                                                                                     |
+| love me, I love you                      | PVのサラリーマン稲葉さんが良い                                                                                                                         |
 | SUPER LOVE SONG                          | めちゃテンション上がる                                                                                                                                 |
 | HOME                                     | PVの導入（おじさんがアコーディオン弾き始める）がめちゃ好き。あと stay home 時の [“HOME” session](https://www.youtube.com/watch?v=Xuv-uqfXHtU) がヤバい |
 | スイマーよ                               | めちゃテンション上がる                                                                                                                                 |
@@ -53,22 +53,28 @@ tags:
 
 ## GLAY
 
-| <div style="width:180px">曲名</div> | 備考 |
-| ----------------------------------- | ---- |
-| Winter, again                       |      |
-| HOWEVER                             |      |
-| BE WITH YOU                         |      |
-| SOUL LOVE                           |      |
-| グロリアス                          |      |
-| BELOVED                             |      |
-| Way of Difference                   |      |
-| 誘惑                                |      |
-| 口唇                                |      |
-| BEAUTIFUL DREAMER                   |      |
-| ここではない、どこかへ              |      |
+| <div style="width:180px">曲名</div> | 備考                                   |
+| ----------------------------------- | -------------------------------------- |
+| Winter, again                       | 冬感・雪感がいい。あとPVでTERUがどアップな所。生まれた街のあの白さは見せたくなるよね |
+| HOWEVER                             | 平成初期感あふれる映像がいい。                                       |
+| BE WITH YOU                         |                                        |
+| SOUL LOVE                           | PVのわちゃわちゃ楽しそうな感じがいい   |
+| サバイバル                          | なんかポジティブになれる               |
+| グロリアス                          |                                        |
+| BELOVED                             |                                        |
+| Way of Difference                   |                                        |
+| 誘惑                                | わかる。それだけでいいよね             |
+| 口唇                                | アチアチ                                       |
+| BEAUTIFUL DREAMER                   | 疾走感がいい                                       |
+| ここではない、どこかへ              |                                        |
+
+<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/jp/playlist/glay/pl.u-leylWNJf0bxRpz"></iframe>
 
 ## YUI 🚧 
-※ 工事中
+
+
+<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/jp/playlist/yui/pl.u-Zmblzlat9JzDLa"></iframe>
+
 
 ## Every Little Thing 🚧 
 ※ 工事中
