@@ -1,3 +1,4 @@
+import { ExternalLink } from '@/components/ExternalLink';
 import type { getSimilarPosts } from '@/utils/TextSimilarity';
 
 type ISimilarityPosts = {
@@ -14,12 +15,20 @@ export const SimilarityPosts = (props: ISimilarityPosts) => {
           .map((s) => {
             return (
               <li className="list-inside pt-2	">
-                <a
-                  className="text-cyan-400 hover:underline"
-                  href={`/${s.meta.collection}/${s.meta.slug}`}
-                >
-                  {s.meta.data.title.replaceAll('\\n', '')}
-                </a>
+                {s.meta.urlType === 'internal' && (
+                  <a
+                    className="text-cyan-400 hover:underline"
+                    href={s.meta.url}
+                  >
+                    {s.meta.title}
+                  </a>
+                )}
+                {s.meta.urlType === 'external' && (
+                  <span>
+                    <ExternalLink title={s.meta.title} url={s.meta.url} />{' '}
+                    <span className="text-xs">[外部リンク]</span>
+                  </span>
+                )}
                 <span className="text-xs">
                   （類似度: <code>{s.score.toFixed(2)}</code>）
                 </span>
