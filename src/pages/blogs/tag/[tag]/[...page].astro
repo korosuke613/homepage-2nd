@@ -39,6 +39,8 @@ const { tag } = Astro.params;
 const originTag = (tag as string).replace('_', '/');
 ---
 
+<meta name="robots" content="noindex" />
+
 <Blogs
   page={page}
   contentCategory="Blogs"
