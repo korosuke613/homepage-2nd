@@ -7,12 +7,16 @@ import { ContentHeader } from '@/components/ContentHeader';
 import { Section } from '@/components/Section';
 import { AppConfig } from '@/utils/AppConfig';
 import type { Tags } from '@/utils/Tag';
+import type { getSimilarPosts } from '@/utils/TextSimilarity';
+
+import { SimilarityPosts } from './SimilarityPosts';
 
 type IContentPostProps = {
   frontmatter: CollectionEntry<'posts'>;
   contentCategory: string;
   tags: Tags;
   headings: MarkdownHeading[];
+  similars: ReturnType<typeof getSimilarPosts>;
   children: ReactNode;
 };
 
@@ -24,6 +28,8 @@ export const ContentPost = (props: IContentPostProps) => {
     tags[t] = tagInfo;
   });
 
+  const maxCharWidth = 'max-w-[80ch]';
+
   return (
     <Section>
       <div id="contents">
@@ -33,9 +39,16 @@ export const ContentPost = (props: IContentPostProps) => {
           tags={tags}
           contentCategory={props.contentCategory}
         />
-        <Content headings={props.headings} content={props.frontmatter}>
-          {props.children}
-        </Content>
+        <div className={`mx-auto mt-5 ${maxCharWidth}`}>
+          <Content
+            headings={props.headings}
+            maxCharWidth={maxCharWidth}
+            content={props.frontmatter}
+          >
+            {props.children}
+          </Content>
+          <SimilarityPosts similars={props.similars} />
+        </div>
       </div>
     </Section>
   );

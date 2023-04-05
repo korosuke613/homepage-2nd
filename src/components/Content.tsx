@@ -10,14 +10,13 @@ import { AppConfig } from '@/utils/AppConfig';
 type IContentProps = {
   content: CollectionEntry<'posts'>;
   headings: MarkdownHeading[];
+  maxCharWidth: string;
   children: ReactNode;
 };
 
-const maxCharWidth = 'max-w-[80ch]';
-
 const Content: React.FC<IContentProps> = (props: IContentProps) => {
   return (
-    <div className={`mx-auto mt-5 ${maxCharWidth}`}>
+    <div>
       {props.content.data.imgSrc && (
         <div className="aspect-w-3 aspect-h-2">
           <img
@@ -33,7 +32,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
       </div>
       <div
         id="contents_data"
-        className={`prose prose-invert mt-8 ${maxCharWidth} prose-img:rounded-lg`}
+        className={`prose prose-invert mt-8 ${props.maxCharWidth} prose-img:rounded-lg`}
       >
         {props.children}
       </div>
