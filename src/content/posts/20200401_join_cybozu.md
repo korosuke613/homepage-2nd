@@ -7,6 +7,7 @@ imgSrc: '/assets/images/cover/cybozu_sakura.webp'
 imgAlt: '桜の下にハンモックと椅子がある'
 tags: 
   - 就職
+  - サイボウズ
 ---
 
 - 大学院を修了したので就職しました

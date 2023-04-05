@@ -1,10 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
+import { getSimilarPosts } from '@/utils/TextSimilarity';
+import { DormitoryIntroduction } from '@/utils/StaticPages';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('posts', ({ data }) => {
@@ -21,6 +24,14 @@ const { Content, headings } = await entry.render();
 
 const title = `${entry.data.title} - ${AppConfig.site_name}`;
 const tags = await readTags();
+
+const entries = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+// 国際交流宿舎の紹介用の特別措置
+entries.push(DormitoryIntroduction as unknown as CollectionEntry<'posts'>);
+
+const similars = getSimilarPosts(entry, entries);
 ---
 
 <Base head={{ title, description: entry.data.description }}>
@@ -28,6 +39,7 @@ const tags = await readTags();
     frontmatter={entry}
     contentCategory={'Posts'}
     headings={headings}
+    similars={similars}
     tags={tags.posts}
   >
     <Content />

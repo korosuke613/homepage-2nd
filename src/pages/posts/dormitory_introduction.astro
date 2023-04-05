@@ -3,6 +3,7 @@ import type { MarkdownHeading } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import path from 'path';
 
+import { getCollection } from 'astro:content';
 import { ImageAndDescription } from '@/components/Columns';
 import { ExternalLink } from '@/components/ExternalLink';
 import {
@@ -16,6 +17,7 @@ import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
+import { getSimilarPosts } from '@/utils/TextSimilarity';
 
 const tags = await readTags();
 
@@ -50,6 +52,17 @@ const markdownHeadings: MarkdownHeading[] = [
 ];
 
 const headings = convertMarkdownHeadingsToObject(markdownHeadings);
+
+const entries = await getCollection('posts', ({ data }) => {
+  return data.draft !== true;
+});
+const similars = getSimilarPosts(
+  {
+    ...DormitoryIntroduction,
+    body: markdownHeadings.map((h) => `${h.slug} ${h.text}`).join(' '),
+  },
+  entries
+);
 ---
 
 <Base
@@ -63,6 +76,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
     contentCategory={'Posts'}
     headings={markdownHeadings}
     tags={tags.posts}
+    similars={similars}
   >
     <p>
       宮崎大学の寮の1つ、国際交流宿舎を紹介するページです。宮崎大学の国際交流宿舎ってどうかなと思っている高校生の皆さんの参考になればと思います。

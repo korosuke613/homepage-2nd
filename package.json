@@ -79,6 +79,7 @@
     "eastasianwidth": "0.2.0",
     "emoji-regex": "10.2.1",
     "glob": "8.1.0",
+    "natural": "^6.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "4.7.1",
