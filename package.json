@@ -70,7 +70,6 @@
     "textlint-rule-spellcheck-tech-word": "5.0.0"
   },
   "dependencies": {
-    "@astrojs/image": "0.16.5",
     "@astrojs/mdx": "^0.18.0",
     "@docsearch/css": "3.3.3",
     "@docsearch/react": "3.3.3",
