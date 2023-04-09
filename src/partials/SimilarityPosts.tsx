@@ -14,7 +14,7 @@ export const SimilarityPosts = (props: ISimilarityPosts) => {
         {props.similars
           .map((s) => {
             return (
-              <li className="list-inside pt-2	">
+              <li key={s.meta.url} className="list-inside pt-2">
                 {s.meta.urlType === 'internal' && (
                   <a
                     className="text-cyan-400 hover:underline"
