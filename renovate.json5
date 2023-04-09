@@ -10,6 +10,7 @@
   ],
   "separateMajorMinor": true,
   "packageRules": [
+    // The rules below take precedence.
     {
       "matchManagers": ["npm"],
       "matchPaths": ["tools/package.json"],
@@ -19,6 +20,31 @@
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "groupName": "npm-root"
-    }
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "npm-root-major"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "npm-root-minor"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "npm-root-patch"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchPackagePatterns": ["^astro", "^@astro"],  
+      "matchUpdateTypes": ["major", "minor"],    
+      "groupName": "npm-root-astro-without-patch"
+    },
   ]
 }
