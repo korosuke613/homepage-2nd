@@ -1,3 +1,18 @@
+import blog from '@/assets/images/shields_blog.svg';
+import docswell from '@/assets/images/shields_docswell.svg';
+import facebook from '@/assets/images/shields_facebook.svg';
+import findy from '@/assets/images/shields_findy.svg';
+import github from '@/assets/images/shields_github.svg';
+import instagram from '@/assets/images/shields_instagram.svg';
+import lapras from '@/assets/images/shields_lapras.svg';
+import misskey from '@/assets/images/shields_misskey.svg';
+import qiita from '@/assets/images/shields_qiita.svg';
+import slideshare from '@/assets/images/shields_slideshare.svg';
+import speakerdeck from '@/assets/images/shields_speakerdeck.svg';
+import twitter from '@/assets/images/shields_twitter.svg';
+import wantedly from '@/assets/images/shields_wantedly.svg';
+import zenn from '@/assets/images/shields_zenn.svg';
+
 type SocialTypes = 'Blog' | 'SNS' | 'Slide' | 'Career';
 
 export type ISocialLink = {
@@ -14,98 +29,98 @@ export const SocialLinkData: Array<ISocialLink> = [
   {
     url: 'https://github.com/korosuke613',
     name: 'GitHub',
-    imgSrc: '/assets/images/shields_github.svg',
+    imgSrc: github.src,
     height: 20,
-    width: 65,
+    width: github.width,
     isTop: true,
   },
   {
     url: 'https://twitter.com/Shitimi_613',
     name: 'Twitter',
-    imgSrc: '/assets/images/shields_twitter.svg',
+    imgSrc: twitter.src,
     height: 20,
-    width: 67,
+    width: twitter.width,
     type: 'SNS',
     isTop: true,
   },
   {
     url: 'https://www.facebook.com/futa.hirakoba.5',
     name: 'Facebook',
-    imgSrc: '/assets/images/shields_facebook.svg',
+    imgSrc: facebook.src,
     height: 20,
-    width: 79,
+    width: facebook.width,
     type: 'SNS',
     isTop: true,
   },
   {
     url: 'https://www.instagram.com/kwlv613/',
     name: 'Instagram',
-    imgSrc: '/assets/images/shields_instagram.svg',
+    imgSrc: instagram.src,
     height: 20,
-    width: 85,
+    width: instagram.width,
     type: 'SNS',
     isTop: true,
   },
   {
     url: 'https://korosuke613.hatenablog.com/',
     name: 'Blog',
-    imgSrc: '/assets/images/shields_blog.svg',
+    imgSrc: blog.src,
     height: 20,
-    width: 53,
+    width: blog.width,
     type: 'Blog',
     isTop: true,
   },
   {
     url: 'https://zenn.dev/korosuke613',
     name: 'Zenn',
-    imgSrc: '/assets/images/shields_zenn.svg',
+    imgSrc: zenn.src,
     height: 20,
-    width: 57,
+    width: zenn.width,
     type: 'Blog',
     isTop: true,
   },
   {
     url: 'http://qiita.com/Shitimi_613',
     name: 'Qiita',
-    imgSrc: '/assets/images/shields_qiita.svg',
+    imgSrc: qiita.src,
     height: 20,
-    width: 53,
+    width: qiita.width,
     type: 'Blog',
     isTop: true,
   },
   {
     url: 'https://www.slideshare.net/FutaHirakoba/presentations',
     name: 'SlideShare',
-    imgSrc: '/assets/images/shields_slideshare.svg',
+    imgSrc: slideshare.src,
     height: 20,
-    width: 87,
+    width: slideshare.width,
     type: 'Slide',
     isTop: true,
   },
   {
     url: 'https://speakerdeck.com/korosuke613',
     name: 'SpeakerDeck',
-    imgSrc: '/assets/images/shields_speakerdeck.svg',
+    imgSrc: speakerdeck.src,
     height: 20,
-    width: 101,
+    width: speakerdeck.width,
     type: 'Slide',
     isTop: true,
   },
   {
     url: 'https://www.docswell.com/user/korosuke613',
     name: 'Docswell',
-    imgSrc: '/assets/images/shields_docswell.svg',
+    imgSrc: docswell.src,
     height: 20,
-    width: 77,
+    width: docswell.width,
     type: 'Slide',
     isTop: true,
   },
   {
     url: 'https://www.wantedly.com/id/futa_hirakoba',
     name: 'Wantedly',
-    imgSrc: '/assets/images/shields_wantedly.svg',
+    imgSrc: wantedly.src,
     height: 20,
-    width: 79,
+    width: wantedly.width,
     type: 'Career',
     isTop: false,
   },
@@ -113,9 +128,9 @@ export const SocialLinkData: Array<ISocialLink> = [
     url: 'https://lapras.com/public/korosuke613',
     name: 'LAPRAS',
     // https://img.shields.io/static/v1?label=&message=LAPRAS&color=1131a3&style=flat
-    imgSrc: '/assets/images/shields_lapras.svg',
+    imgSrc: lapras.src,
     height: 20,
-    width: 53,
+    width: lapras.width,
     type: 'Career',
     isTop: false,
   },
@@ -123,9 +138,9 @@ export const SocialLinkData: Array<ISocialLink> = [
     url: 'https://findy-code.io/share_profiles/VIEfTIdxGcZ8K',
     name: 'Findy',
     // https://img.shields.io/static/v1?label=&message=Findy&color=2a5599&style=flat
-    imgSrc: '/assets/images/shields_findy.svg',
+    imgSrc: findy.src,
     height: 20,
-    width: 39,
+    width: findy.width,
     type: 'Career',
     isTop: false,
   },
@@ -133,9 +148,9 @@ export const SocialLinkData: Array<ISocialLink> = [
     url: 'https://misskey.io/@korosuke613',
     name: 'Misskey',
     // https://img.shields.io/static/v1?label=&message=Findy&color=2a5599&style=flat
-    imgSrc: '/assets/images/shields_misskey.svg',
+    imgSrc: misskey.src,
     height: 20,
-    width: 71,
+    width: misskey.width,
     type: 'SNS',
     isTop: false,
   },

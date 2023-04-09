@@ -3,7 +3,7 @@
 title: 'サイボウズ株式会社に\n入社しました'
 description: '就職の話'
 pubDate: 2020-04-01T00:00:00Z
-imgSrc: '/assets/images/cover/cybozu_sakura.webp'
+imgSrc: 'src/assets/images/cover/cybozu_sakura.webp'
 imgAlt: '桜の下にハンモックと椅子がある'
 tags: 
   - 就職

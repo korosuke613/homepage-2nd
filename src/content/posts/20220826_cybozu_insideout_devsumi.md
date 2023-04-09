@@ -3,7 +3,7 @@
 title: '生産性向上は一筋縄ではいかない Q&A [デブサミ2022夏]'
 description: ''
 pubDate: 2022-08-26T00:00:00Z
-imgSrc: '/assets/images/cover/hatena_devsumi.webp'
+imgSrc: 'src/assets/images/cover/hatena_devsumi.webp'
 imgAlt: '記事のバナー画像'
 tags: 
   - サイボウズ

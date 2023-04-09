@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-type IMyIconProps = {
-  iconPath: string;
-};
+import myIcon from '@/assets/images/my_icon_2.png';
 
 const cssNames = [
   'rotate-animation-x',
@@ -46,7 +44,7 @@ const makeEffect = (
   };
 };
 
-export const MyIcon = (props: IMyIconProps) => {
+export const MyIcon = () => {
   const [largeMode, setLargeMode] = useState('rotate-animation-z');
   const largeModeRef = useRef<string>(null!);
   largeModeRef.current = largeMode;
@@ -60,7 +58,7 @@ export const MyIcon = (props: IMyIconProps) => {
 
   return (
     <img
-      src={props.iconPath}
+      src={myIcon.src}
       style={{ width: '100%' }}
       alt="Avatar image"
       loading="lazy"

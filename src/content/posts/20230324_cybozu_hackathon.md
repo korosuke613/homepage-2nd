@@ -1,7 +1,7 @@
 ---
 title: 社内ハッカソンで爪痕賞
 pubDate: 2023-03-24T00:00:00Z
-imgSrc: '/assets/images/cover/hackathon_tsumeato.webp'
+imgSrc: 'src/assets/images/cover/hackathon_tsumeato.webp'
 tags: 
   - サイボウズ
   - 登壇

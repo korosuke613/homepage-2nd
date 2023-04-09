@@ -3,7 +3,7 @@
 title: 'compare-renovate-logs'
 description: ''
 pubDate: 2022-12-23T00:00:00Z
-imgSrc: '/assets/images/cover/compare_renovate_logs_workflow.webp'
+imgSrc: 'src/assets/images/cover/compare_renovate_logs_workflow.webp'
 imgAlt: ''
 tags:
   - Pickup ⭐️

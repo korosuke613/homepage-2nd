@@ -3,7 +3,7 @@
 title: '宮崎大学大学院を\n修了しました'
 description: '修了の話'
 pubDate: 2020-03-24T00:00:00Z
-imgSrc: '/assets/images/cover/graduate_miyazaki_u.webp'
+imgSrc: 'src/assets/images/cover/graduate_miyazaki_u.webp'
 imgAlt: '卒業式、修了式の風景。コロナ禍だったため大学の教室で行われた'
 tags: 
   - 大学

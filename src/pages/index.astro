@@ -41,10 +41,7 @@ const { description } = AppConfig;
 
 <Base head={{ title, description }}>
   <SelfIntroduction>
-    <MyIcon
-      client:load
-      iconPath={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
-    />
+    <MyIcon client:load />
   </SelfIntroduction>
   <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />

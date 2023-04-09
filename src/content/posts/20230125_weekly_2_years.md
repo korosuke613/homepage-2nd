@@ -1,7 +1,7 @@
 ---
 title: Productivity Weekly 100 回記念イベントがありました
 pubDate: 2023-01-25T00:00:00Z
-imgSrc: '/assets/images/cover/productivity_weekly_100th_banner.webp'
+imgSrc: 'src/assets/images/cover/productivity_weekly_100th_banner.webp'
 tags: 
   - サイボウズ
   - 登壇
