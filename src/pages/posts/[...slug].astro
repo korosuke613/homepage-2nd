@@ -7,6 +7,7 @@ import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
 import { getSimilarPosts } from '@/utils/TextSimilarity';
+import { getCommitHistories } from '@/utils/CommitHistories';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 
 export async function getStaticPaths() {
@@ -32,6 +33,9 @@ const entries = await getCollection('posts', ({ data }) => {
 entries.push(DormitoryIntroduction as unknown as CollectionEntry<'posts'>);
 
 const similars = getSimilarPosts(entry, entries);
+
+const filePath = `src/content/posts/${entry.id}`;
+const histories = await getCommitHistories(filePath);
 ---
 
 <Base head={{ title, description: entry.data.description }}>
@@ -40,6 +44,7 @@ const similars = getSimilarPosts(entry, entries);
     contentCategory={'Posts'}
     headings={headings}
     similars={similars}
+    histories={histories}
     tags={tags.posts}
   >
     <Content />

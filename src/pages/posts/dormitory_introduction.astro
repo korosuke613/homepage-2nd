@@ -18,6 +18,7 @@ import { generateImagePath } from '@/utils/Blog';
 import { DormitoryIntroduction } from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 import { getSimilarPosts } from '@/utils/TextSimilarity';
+import { getCommitHistories } from '@/utils/CommitHistories';
 
 const tags = await readTags();
 
@@ -63,6 +64,8 @@ const similars = getSimilarPosts(
   },
   entries
 );
+const filePath = 'src/pages/posts/dormitory_introduction.astro';
+const histories = await getCommitHistories(filePath);
 ---
 
 <Base
@@ -77,6 +80,7 @@ const similars = getSimilarPosts(
     headings={markdownHeadings}
     tags={tags.posts}
     similars={similars}
+    histories={histories}
   >
     <p>
       宮崎大学の寮の1つ、国際交流宿舎を紹介するページです。宮崎大学の国際交流宿舎ってどうかなと思っている高校生の皆さんの参考になればと思います。
