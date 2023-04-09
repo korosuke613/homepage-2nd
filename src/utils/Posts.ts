@@ -27,6 +27,11 @@ export const getGitHubUrl = (
   collection: string,
   id: string
 ) => {
+  if (id === 'dormitory_introduction') {
+    // 国際交流宿舎の紹介はパスが異なるので特別扱い
+    return `https://${githubUrl}/blob/main/src/pages/posts/dormitory_introduction.astro`;
+  }
+
   const baseUrl = `https://${githubUrl}/tree/main/src/content/`;
   const url = new URL(
     `${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
