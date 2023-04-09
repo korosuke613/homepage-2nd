@@ -8,7 +8,6 @@ type ISimilarityPosts = {
 export const SimilarityPosts = (props: ISimilarityPosts) => {
   return (
     <div>
-      <hr className="my-10" />
       <h3 className="my-4 text-2xl font-bold">あわせて読む</h3>
       <ul className="list-disc">
         {props.similars
