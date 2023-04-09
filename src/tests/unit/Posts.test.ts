@@ -49,13 +49,26 @@ test('sortByOrder', () => {
   expect(actual).toStrictEqual(expected);
 });
 
-test('getGitHubUrl', () => {
-  const actual = getGitHubUrl(
-    'github.com/korosuke613/homepage-2nd',
-    'fff',
-    'ddd'
-  );
-  expect(actual).toBe(
-    'https://github.com/korosuke613/homepage-2nd/tree/main/src/content/fff/ddd'
-  );
+describe('getGitHubUrl', () => {
+  test('normal', () => {
+    const actual = getGitHubUrl(
+      'github.com/korosuke613/homepage-2nd',
+      'fff',
+      'ddd'
+    );
+    expect(actual).toBe(
+      'https://github.com/korosuke613/homepage-2nd/tree/main/src/content/fff/ddd'
+    );
+  });
+
+  test('dormitory introduction', () => {
+    const actual = getGitHubUrl(
+      'github.com/korosuke613/homepage-2nd',
+      'fff',
+      'dormitory_introduction'
+    );
+    expect(actual).toBe(
+      'https://github.com/korosuke613/homepage-2nd/blob/main/src/pages/posts/dormitory_introduction.astro'
+    );
+  });
 });

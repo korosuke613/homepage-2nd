@@ -23,6 +23,10 @@ const makeEffect = (
     if (thisImg === null) return () => {};
 
     const mousedown = () => {
+      cssNames.forEach((c) => {
+        thisImg.classList.remove(c);
+      });
+
       const randNum = Math.floor(Math.random() * cssNames.length);
       const cssName = cssNames[randNum] || 'rotate-animation-z';
       setMode(cssName);

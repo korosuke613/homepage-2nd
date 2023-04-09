@@ -14,7 +14,7 @@ export const Toc = (props: TocProps) => {
       {props.headings.map((h) => {
         if (baseLevel === h.depth) {
           return (
-            <li className="pt-2">
+            <li key={h.slug} className="pt-2">
               <a className="font-bold no-underline" href={`#${h.slug}`}>
                 {h.text}
               </a>
@@ -23,7 +23,7 @@ export const Toc = (props: TocProps) => {
         }
         if (baseLevel + 1 === h.depth) {
           return (
-            <li className="list-none pt-2">
+            <li key={h.slug} className="list-none pt-2">
               <a className=" font-thin no-underline" href={`#${h.slug}`}>
                 {h.text}
               </a>
