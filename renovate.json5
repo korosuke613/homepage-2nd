@@ -8,43 +8,50 @@
     ":semanticCommitTypeAll(chore)", // If semantic commits detected, use semantic commit type chore for all
     "schedule:weekly"
   ],
-  "separateMajorMinor": true,
   "packageRules": [
     // The rules below take precedence.
     {
       "matchManagers": ["npm"],
       "matchPaths": ["tools/package.json"],
-      "groupName": "npm-tools"
+      "groupName": "npm-tools",
+      "schedule": ["after 3am on Monday"],
+      "automerge": true
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
-      "groupName": "npm-root"
+      "groupName": "npm-root",
+      "schedule": ["after 3am on Tuesday"]
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["major"],
-      "groupName": "npm-root-major"
+      "groupName": "npm-root-major",
+      "schedule": ["after 3am on the 2nd day of the month"]
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["minor"],
-      "groupName": "npm-root-minor"
+      "groupName": "npm-root-minor",
+      "schedule": ["after 3am on Wednesday"]
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["patch"],
-      "groupName": "npm-root-patch"
+      "groupName": "npm-root-patch",
+      "schedule": ["after 3am on Thursday"],
+      "automerge": true
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchPackagePatterns": ["^astro", "^@astro"],  
       "matchUpdateTypes": ["major", "minor"],    
-      "groupName": "npm-root-astro-without-patch"
+      "groupName": "npm-root-astro-without-patch",
+      "schedule": ["after 3am on the 3rd day of the month"]
     },
   ]
 }
