@@ -93,8 +93,8 @@ export const generateTagsFromMarkdowns = (markdowns: IPost[]) => {
   return generateTags(allTagNames);
 };
 
-export const readTags = async () => {
-  const tagsFile = await fs.promises.readFile('./build/tags.json');
+export const readTags = async (filePath = './build/tags.json') => {
+  const tagsFile = await fs.promises.readFile(filePath);
   return JSON.parse(tagsFile.toString()) as {
     [key: string]: Tags;
     posts: Tags;

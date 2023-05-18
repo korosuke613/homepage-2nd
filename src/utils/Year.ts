@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 
-export const readYears = async () => {
-  const yearsFile = await fs.promises.readFile('./build/years.json');
+export const readYears = async (filePath = './build/years.json') => {
+  const yearsFile = await fs.promises.readFile(filePath);
   const years = JSON.parse(yearsFile.toString()) as {
     [key: string]: number[];
     posts: number[];
