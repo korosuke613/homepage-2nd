@@ -42,15 +42,6 @@ export const SelfIntroduction = (props: ISelfIntroductionProps) => {
           </p>
 
           <div className="mt-3 flex flex-wrap gap-1">
-            {import.meta.env.PROD && (
-              <img
-                alt="アクセスカウンター"
-                src="https://visitor-badge.glitch.me/badge?page_id=korosuke613.dev.visitor-badge&left_text=You%20are&left_color=Indigo&right_color=DarkSlateGray"
-                loading="lazy"
-                height={20}
-                width={83}
-              />
-            )}
             <SocialLinks />
           </div>
         </div>
