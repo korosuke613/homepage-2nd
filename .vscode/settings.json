@@ -23,6 +23,10 @@
     "onSave": "test-src-file", // Trigger test run for the given test or source file upon save
     "onStartup": ["all-tests"] // Run all tests upon project launch
   },
+  "jest.shell": {
+    "path": "/usr/bin/env",
+    "args": ["zsh", "--login"]
+  },
   "jest.showCoverageOnLoad": true, // Show code coverage when the project is launched
   // Multiple language settings for json and jsonc files
   "[json][jsonc]": {
