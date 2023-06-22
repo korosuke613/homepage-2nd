@@ -13,7 +13,6 @@
 } */
 
 .rotate-animation-xy {
-  animation-fill-mode: both;
   animation: rotate-anime-xy 1.5s linear 1
 }
 
@@ -26,7 +25,6 @@
 }
 
 .rotate-animation-xz {
-  animation-fill-mode: both;
   animation: rotate-anime-xz 1.5s linear 1
 }
 
@@ -39,7 +37,6 @@
 }
 
 .rotate-animation-yz {
-  animation-fill-mode: both;
   animation: rotate-anime-yz 1.5s linear 1
 }
 
@@ -52,7 +49,6 @@
 }
 
 .rotate-animation-z {
-  animation-fill-mode: both;
   animation: rotate-anime-z 1.5s linear 1
 }
 
@@ -65,7 +61,6 @@
 }
 
 .rotate-animation-y {
-  animation-fill-mode: both;
   animation: rotate-anime-y 1.5s linear 1
 }
 
@@ -78,7 +73,6 @@
 }
 
 .rotate-animation-x {
-  animation-fill-mode: both;
   animation: rotate-anime-x 1.5s linear 1
 }
 
