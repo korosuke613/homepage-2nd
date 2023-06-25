@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 
 type IMyIconProps = {
   iconPath: string;
+  iconId: string;
 };
 
-const cssNames = [
+const cssClassNames = [
   'rotate-animation-x',
   'rotate-animation-y',
   'rotate-animation-z',
@@ -13,54 +14,28 @@ const cssNames = [
   'rotate-animation-yz',
 ];
 
-const makeEffect = (
-  id: string,
-  setMode: React.Dispatch<React.SetStateAction<string>>,
-  modeRef: React.MutableRefObject<string>
-) => {
-  return () => {
-    const thisImg = document.getElementById(id);
-    if (thisImg === null) return () => {};
-
-    const mousedown = () => {
-      cssNames.forEach((c) => {
-        thisImg.classList.remove(c);
-      });
-
-      const randNum = Math.floor(Math.random() * cssNames.length);
-      const cssName = cssNames[randNum] || 'rotate-animation-z';
-      setMode(cssName);
-      thisImg.classList.add(modeRef.current);
-    };
-    thisImg.addEventListener('mousedown', mousedown);
-
-    const end = () => {
-      cssNames.forEach((cssName) => {
-        thisImg.classList.remove(cssName);
-      });
-    };
-    thisImg.addEventListener('animationend', end);
-    thisImg.addEventListener('animationcancel', end);
-
-    return () => {
-      thisImg.removeEventListener('mousedown', mousedown);
-      thisImg.removeEventListener('animationend', end);
-      thisImg.removeEventListener('animationcancel', end);
-    };
-  };
-};
-
 export const MyIcon = (props: IMyIconProps) => {
-  const [largeMode, setLargeMode] = useState('rotate-animation-z');
-  const largeModeRef = useRef<string>(null!);
-  largeModeRef.current = largeMode;
+  useEffect(() => {
+    const thisImg = document.getElementById(props.iconId);
+    if (thisImg === null) return;
 
-  const [smallMode, setSmallMode] = useState('rotate-animation-z');
-  const smallModeRef = useRef<string>(null!);
-  smallModeRef.current = smallMode;
+    // クリック時にランダムにアニメーションのクラスを付与する
+    thisImg.addEventListener('click', () => {
+      const randNum = Math.floor(Math.random() * cssClassNames.length);
+      const cssClassName = cssClassNames[randNum] || 'rotate-animation-z';
+      thisImg.classList.add(cssClassName);
+    });
 
-  useEffect(makeEffect('my-icon-large', setLargeMode, largeModeRef));
-  useEffect(makeEffect('my-icon-small', setSmallMode, smallModeRef));
+    // アニメーションが終わったらアニメーションのクラスを削除する
+    const removeClass = () => {
+      cssClassNames.forEach((cssClassName) => {
+        // どのクラスが付与されているかわからないので全部削除する
+        thisImg.classList.remove(cssClassName);
+      });
+    };
+    thisImg.addEventListener('animationend', removeClass);
+    thisImg.addEventListener('animationcancel', removeClass);
+  });
 
   return (
     <img
