@@ -1,13 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import path from 'path';
 
-import { MyIcon } from '@/components/MyIcon';
 import { RecentBlogs } from '@/partials/RecentBlogs';
 import { RecentPickup } from '@/partials/RecentPickup';
 import { RecentPosts } from '@/partials/RecentPosts';
-import { SelfIntroduction } from '@/partials/SelfIntroduction';
 import Base from '@/templates/Base.astro';
+
+import SelfIntroduction from '@/templates/SelfIntroduction.astro';
 import type { IPost } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
 import { getSortedBlogData } from '@/utils/Blog';
@@ -40,12 +39,7 @@ const { description } = AppConfig;
 ---
 
 <Base head={{ title, description }}>
-  <SelfIntroduction>
-    <MyIcon
-      client:idle
-      iconPath={path.join(AppConfig.base, '/assets/images/my_icon_2.png')}
-    />
-  </SelfIntroduction>
+  <SelfIntroduction />
   <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />
   <RecentBlogs postList={lastThreeBlogs} />
