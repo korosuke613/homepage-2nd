@@ -24,6 +24,7 @@ jobs:
       run:
         working-directory: ${{ matrix.working_dir }}
     steps:
+      - uses: GitHubSecurityLab/actions-permissions/monitor@v1
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
