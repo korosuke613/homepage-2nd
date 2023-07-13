@@ -40,18 +40,18 @@
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["patch"],
-      "groupName": "npm-root-patch",
-      "schedule": ["after 3am on Thursday"],
-      "automerge": true
+      "matchPackagePatterns": ["^astro", "^@astro"],  
+      "separateMajorMinor": false,
+      "groupName": "npm-root-astro-without-patch",
+      "schedule": ["after 3am on the 3rd day of the month"]
     },
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
-      "matchPackagePatterns": ["^astro", "^@astro"],  
-      "matchUpdateTypes": ["major", "minor"],    
-      "groupName": "npm-root-astro-without-patch",
-      "schedule": ["after 3am on the 3rd day of the month"]
-    },
+      "matchUpdateTypes": ["patch"],
+      "groupName": "npm-root-patch",
+      "schedule": ["after 3am on Thursday"],
+      "automerge": true
+    }
   ]
 }
