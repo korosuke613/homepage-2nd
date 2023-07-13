@@ -46,6 +46,23 @@
       "automerge": true
     },
 
+    // linters
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchPackagePatterns": [
+        "^eslint",
+        "^eslint-*",
+        "^@typescript-eslint/*",
+        "^prettier",
+        "^prettier-*"
+      ],
+      "separateMajorMinor": false,
+      "groupName": "npm-linters",
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+
     // dependencies
     {
       "matchManagers": ["npm"],
