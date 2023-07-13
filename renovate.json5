@@ -10,6 +10,8 @@
   ],
   "packageRules": [
     // The rules below take precedence.
+
+    // tools
     {
       "matchManagers": ["npm"],
       "matchPaths": ["tools/package.json"],
@@ -17,9 +19,38 @@
       "schedule": ["after 3am on Monday"],
       "automerge": true
     },
+
+    // auto merge devDependencies 
     {
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "npm-dev-patch",
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "npm-dev-minor",
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "npm-dev-major",
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+
+    // dependencies
+    {
+      "matchManagers": ["npm"],
+      "matchPaths": ["+(package.json)"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "npm-root",
       "schedule": ["after 3am on Tuesday"]
     },
@@ -27,6 +58,7 @@
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["major"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "npm-root-major",
       "schedule": ["after 3am on the 2nd day of the month"]
     },
@@ -34,6 +66,7 @@
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["minor"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "npm-root-minor",
       "schedule": ["after 3am on Wednesday"]
     },
@@ -49,6 +82,7 @@
       "matchManagers": ["npm"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["patch"],
+      "matchDepTypes": ["dependencies"],
       "groupName": "npm-root-patch",
       "schedule": ["after 3am on Thursday"],
       "automerge": true
