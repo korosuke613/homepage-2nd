@@ -177,6 +177,7 @@ const getBlogData = async () => {
 
   const tags = generateTags(uniqTagNames);
   tags.Zenn = 'bg-sky-400 text-neutral-900';
+  tags['Zenn scrap'] = 'bg-sky-400 text-neutral-900';
   tags.Hatena = 'bg-rose-400 text-neutral-900';
 
   return { tags, years: uniqYears };

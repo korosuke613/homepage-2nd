@@ -23,7 +23,7 @@ export const PostCard = (props: IPostCardProps) => {
 
   return (
     <div className="relative overflow-hidden rounded-md bg-slate-800">
-      <div className="aspect-w-16 aspect-h-9">
+      <div className="aspect-h-9 aspect-w-16">
         {props.instance.data.imgSrc && (
           <img
             className="h-full w-full object-cover object-center"
@@ -36,7 +36,7 @@ export const PostCard = (props: IPostCardProps) => {
 
       <div className="absolute inset-0 flex flex-col justify-center">
         <div className="bg-gradient-to-br from-violet-900 backdrop-blur-lg">
-          <div className="py-1.5 px-3">
+          <div className="px-3 py-1.5">
             <a href={contentPath}>
               <div>
                 {transformTitleForContentCard(props.instance.data.title)
