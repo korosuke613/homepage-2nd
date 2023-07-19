@@ -5,6 +5,7 @@ export type ZennJson = {
       title: string;
       ogpImageUrl: string;
       pubDate: string;
+      url: string;
     };
   };
 };

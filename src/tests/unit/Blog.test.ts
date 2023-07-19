@@ -19,6 +19,7 @@ describe('getSortedBlogData', () => {
         {
           title: 'Zenn Blog Post',
           pubDate: '2022-01-02T00:00:00.000Z',
+          url: 'https://zenn.dev/korosuke613/articles/0',
           category: ['Zenn', 'test'],
         },
       ],

@@ -52,6 +52,7 @@ const updateZennJson = (
       title: r.title,
       ogpImageUrl: r.enclosure.url,
       pubDate: r.isoDate,
+      url: r.link,
     };
   }
 

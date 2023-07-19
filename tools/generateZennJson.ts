@@ -5,6 +5,7 @@ import { ZennJson } from "../src/types/IZenn";
 
 // `/bin/ls -1 | grep .md` の結果
 const articlesString = `
+compare-renovate-dry-run.md
 e82445a43782b1.md
 easy-generate-pw-article.md
 github_actions_history_all_list.md
@@ -87,7 +88,39 @@ productivity-weekly-20220713.md
 productivity-weekly-20220720.md
 productivity-weekly-20220727.md
 productivity-weekly-20220803.md
-testing-article.md
+productivity-weekly-20220810.md
+productivity-weekly-20220817.md
+productivity-weekly-20220824.md
+productivity-weekly-20220831.md
+productivity-weekly-20220907.md
+productivity-weekly-20220914.md
+productivity-weekly-20220921.md
+productivity-weekly-20220928.md
+productivity-weekly-20221005.md
+productivity-weekly-20221012.md
+productivity-weekly-20221019.md
+productivity-weekly-20221026.md
+productivity-weekly-20221102.md
+productivity-weekly-20221109.md
+productivity-weekly-20221116.md
+productivity-weekly-20221207.md
+productivity-weekly-20221214.md
+productivity-weekly-20221221.md
+productivity-weekly-20230111.md
+productivity-weekly-20230125.md
+productivity-weekly-20230208.md
+productivity-weekly-20230222.md
+productivity-weekly-20230308.md
+productivity-weekly-20230315.md
+productivity-weekly-20230405.md
+productivity-weekly-20230426.md
+productivity-weekly-20230510.md
+productivity-weekly-20230517.md
+productivity-weekly-20230531.md
+productivity-weekly-20230607.md
+productivity-weekly-20230614.md
+productivity-weekly-20230628.md
+vscode-jest-extension-with-asdf.md
 zenn-metadata-updater.md
 `;
 
@@ -95,6 +128,7 @@ const getArticleInfo = async (articleUrl: string) => {
   let ogpImageUrl = "";
   let title = "";
   let pubDate = "";
+  let url = "";
   try {
     const res = await axios.get(articleUrl, {
       responseType: "document",
@@ -110,13 +144,35 @@ const getArticleInfo = async (articleUrl: string) => {
     title = dom.window.document.head
       .querySelector("meta[property='og:title']")
       ?.attributes.getNamedItem("content")?.value;
-    pubDate = dom.window.document.body
+    const rawPubDate = dom.window.document.body
       .querySelector("time")
       ?.attributes.getNamedItem("datetime")?.value;
+    pubDate = new Date(rawPubDate).toISOString();
+    url = res.request.res.responseUrl.replace("?redirected=1", "");
   } catch (e) {
     console.error(e);
   }
-  return { title, ogpImageUrl, pubDate };
+  return { title, ogpImageUrl, pubDate, url };
+};
+
+const sortZennJson = (zennJson: ZennJson) => {
+  const sortedZennJson: ZennJson = {
+    lastUpdated: zennJson.lastUpdated,
+    articles: {},
+  };
+
+  // 日付で昇順
+  const sortedKeys = Object.keys(zennJson.articles).sort((a, b) => {
+    const aDate = new Date(zennJson.articles[a].pubDate);
+    const bDate = new Date(zennJson.articles[b].pubDate);
+    return aDate.getTime() - bDate.getTime();
+  });
+
+  for (const key of sortedKeys) {
+    sortedZennJson.articles[key] = zennJson.articles[key];
+  }
+
+  return sortedZennJson;
 };
 
 const generateZennJson = async () => {
@@ -143,7 +199,7 @@ const generateZennJson = async () => {
     zennJson.articles[id] = articleInfo;
   }
 
-  console.log(JSON.stringify(zennJson, null, 2));
+  console.log(JSON.stringify(sortZennJson(zennJson), null, 2));
 };
 
 (async () => {
