@@ -37,6 +37,10 @@ jobs:
         run: |
           npx ts-node updateZennJson.ts
 
+      - name: Update zenn_scrap.json
+        run: |
+          npx ts-node updateZennScrapJson.ts
+
       - name: Update hatena_blog.json
         run: |
           npx ts-node updateHatenaBlogJson.ts

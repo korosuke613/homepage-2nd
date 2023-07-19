@@ -9,3 +9,13 @@ export type ZennJson = {
     };
   };
 };
+
+export type ZennScrapJson = {
+  lastUpdated: string;
+  articles: {
+    [key: string]: {
+      title: string;
+      pubDate: string;
+    };
+  };
+};
