@@ -4,7 +4,7 @@ import path from 'path';
 
 import type { BlogData } from '@/types/IBlogPage';
 import type { HatenaJson } from '@/types/IHatena';
-import type { ZennJson } from '@/types/IZenn';
+import type { ZennJson, ZennScrapJson } from '@/types/IZenn';
 import { AppConfig } from '@/utils/AppConfig';
 
 export const createZennData = (articles: ZennJson['articles']) => {
@@ -22,6 +22,27 @@ export const createZennData = (articles: ZennJson['articles']) => {
       title: article.title,
       pubDate: article.pubDate,
       category: ['Zenn'],
+    };
+  });
+
+  return arrayArticles;
+};
+
+export const createZennScrapData = (articles: ZennScrapJson['articles']) => {
+  const arrayArticles: BlogData[] = Object.keys(articles).map((articleId) => {
+    const article = articles[articleId];
+    if (article === undefined) {
+      throw new Error();
+    }
+
+    return {
+      id: articleId,
+      type: 'zenn',
+      ogpImageUrl: '/assets/images/zenn_scrap.webp', // スクラップには OGP 画像がない
+      url: `https://zenn.dev/korosuke613/scraps/${articleId}`,
+      title: article.title,
+      pubDate: article.pubDate,
+      category: ['Zenn scrap'],
     };
   });
 
@@ -60,7 +81,17 @@ export const getSortedBlogData = async () => {
   const zennJson: ZennJson = JSON.parse(zennJsonFile.toString());
   const sortedZenns = createZennData(zennJson.articles);
 
-  const sortedBlogData = [...hatenaData, ...sortedZenns].sort(
+  const zennScrapJsonFile = await fs.promises.readFile(
+    './public/assets/zenn_scrap.json'
+  );
+  const zennScrapJson: ZennScrapJson = JSON.parse(zennScrapJsonFile.toString());
+  const sortedZennScraps = createZennScrapData(zennScrapJson.articles);
+
+  const sortedBlogData = [
+    ...hatenaData,
+    ...sortedZenns,
+    ...sortedZennScraps,
+  ].sort(
     (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf()
   );
 
