@@ -18,7 +18,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
   return (
     <div>
       {props.content.data.imgSrc && (
-        <div className="aspect-w-3 aspect-h-2">
+        <div className="aspect-h-2 aspect-w-3">
           <img
             className="h-full w-full rounded-lg object-cover object-center"
             src={path.join(AppConfig.base, props.content.data.imgSrc)}
@@ -27,7 +27,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
           />
         </div>
       )}
-      <div className="invisible fixed top-40 right-10 float-right max-w-[12%] lg:visible xl:max-w-xs">
+      <div className="invisible fixed right-10 top-40 float-right max-w-[12%] lg:visible xl:max-w-xs">
         <Toc headings={props.headings} />
       </div>
       <div
