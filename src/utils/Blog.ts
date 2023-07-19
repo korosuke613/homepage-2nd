@@ -18,7 +18,7 @@ export const createZennData = (articles: ZennJson['articles']) => {
       id: articleId,
       type: 'zenn',
       ogpImageUrl: article.ogpImageUrl,
-      url: `https://zenn.dev/korosuke613/articles/${articleId}`,
+      url: article.url,
       title: article.title,
       pubDate: article.pubDate,
       category: ['Zenn'],
