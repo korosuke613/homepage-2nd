@@ -42,7 +42,7 @@ d7367ec10a8d04
 `;
 
 const getScrapInfo = async (
-  scrapUrl: string
+  scrapUrl: string,
 ): Promise<ZennScrapJson["articles"]["key"]> => {
   let title = "";
   let pubDate = "";
@@ -104,7 +104,7 @@ const generateZennScrapJson = async () => {
     console.log(`id: ${id}`);
 
     const scrapInfo = await getScrapInfo(
-      `https://zenn.dev/korosuke613/scraps/${id}`
+      `https://zenn.dev/korosuke613/scraps/${id}`,
     );
     if (scrapInfo.title === "") {
       continue;

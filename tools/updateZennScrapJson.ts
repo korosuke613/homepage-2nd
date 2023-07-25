@@ -33,7 +33,7 @@ let updateItemCount = 0;
 const updateZennScrapJson = (
   updatedAtString: string,
   rss: ZennRssJsonWithScrap,
-  zennScrapJson: ZennScrapJson
+  zennScrapJson: ZennScrapJson,
 ): ZennScrapJson => {
   const updatedAt = new Date(updatedAtString);
 
@@ -68,12 +68,12 @@ const updateZennScrapJson = (
 
   const localZennJson = await readLocalZennJson(localZennJsonPath);
   const rss = await convertXmlToJson(
-    "https://zenn.dev/korosuke613/feed?include_scraps=1"
+    "https://zenn.dev/korosuke613/feed?include_scraps=1",
   );
   const updatedZennJson = updateZennScrapJson(
     localZennJson.lastUpdated,
     rss,
-    localZennJson
+    localZennJson,
   );
 
   if (updateItemCount === 0) {
@@ -83,6 +83,6 @@ const updateZennScrapJson = (
 
   await fs.promises.writeFile(
     localZennJsonPath,
-    JSON.stringify(updatedZennJson, null, 2) + "\n"
+    JSON.stringify(updatedZennJson, null, 2) + "\n",
   );
 })();
