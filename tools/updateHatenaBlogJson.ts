@@ -35,7 +35,7 @@ let updateItemCount = 0;
 const updateHatenaBlogJson = async (
   updatedAtString: string,
   rss: HatenaRssJson,
-  hatenaJson: HatenaJson
+  hatenaJson: HatenaJson,
 ) => {
   const updatedAt = new Date(updatedAtString);
 
@@ -67,13 +67,13 @@ const updateHatenaBlogJson = async (
   const localHatenaBlogJsonPath = "../public/assets/hatena_blog.json";
 
   const localHatenaBlogJson = await readLocalHatebaBlogJson(
-    localHatenaBlogJsonPath
+    localHatenaBlogJsonPath,
   );
   const rss = await convertXmlToJson("https://korosuke613.hatenablog.com/rss");
   const updatedZennJson = await updateHatenaBlogJson(
     localHatenaBlogJson.lastUpdated,
     rss,
-    localHatenaBlogJson
+    localHatenaBlogJson,
   );
 
   if (updateItemCount === 0) {
@@ -83,6 +83,6 @@ const updateHatenaBlogJson = async (
 
   await fs.promises.writeFile(
     localHatenaBlogJsonPath,
-    JSON.stringify(updatedZennJson, null, 2) + "\n"
+    JSON.stringify(updatedZennJson, null, 2) + "\n",
   );
 })();

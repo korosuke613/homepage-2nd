@@ -35,7 +35,7 @@ const getCategory = (
     | {
         "@_term": string;
       }
-    | undefined
+    | undefined,
 ) => {
   if (category === undefined) {
     return [];

@@ -191,7 +191,7 @@ const generateZennJson = async () => {
     console.log(`id: ${id}`);
 
     const articleInfo = await getArticleInfo(
-      `https://zenn.dev/korosuke613/articles/${id}`
+      `https://zenn.dev/korosuke613/articles/${id}`,
     );
     if (articleInfo.ogpImageUrl === "" || articleInfo.title === "") {
       continue;

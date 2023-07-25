@@ -34,7 +34,7 @@ let updateItemCount = 0;
 const updateZennJson = (
   updatedAtString: string,
   rss: ZennRssJson,
-  zennJson: ZennJson
+  zennJson: ZennJson,
 ): ZennJson => {
   const updatedAt = new Date(updatedAtString);
 
@@ -69,7 +69,7 @@ const updateZennJson = (
   const updatedZennJson = updateZennJson(
     localZennJson.lastUpdated,
     rss,
-    localZennJson
+    localZennJson,
   );
 
   if (updateItemCount === 0) {
@@ -79,6 +79,6 @@ const updateZennJson = (
 
   await fs.promises.writeFile(
     localZennJsonPath,
-    JSON.stringify(updatedZennJson, null, 2) + "\n"
+    JSON.stringify(updatedZennJson, null, 2) + "\n",
   );
 })();
