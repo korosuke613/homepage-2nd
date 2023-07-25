@@ -12,7 +12,7 @@ export const EditGitHub = (props: IEditGitHubProps) => {
   const githubUrl = getGitHubUrl(
     AppConfig.github_url,
     props.collection,
-    props.id
+    props.id,
   );
 
   return (

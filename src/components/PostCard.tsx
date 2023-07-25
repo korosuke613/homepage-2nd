@@ -18,7 +18,7 @@ export const PostCard = (props: IPostCardProps) => {
   const contentPath = path.join(
     '/',
     props.instance.collection,
-    props.instance.slug
+    props.instance.slug,
   );
 
   return (

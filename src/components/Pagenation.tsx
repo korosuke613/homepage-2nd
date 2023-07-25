@@ -20,17 +20,17 @@ const createPageNumberLink = (page: Page) => {
       items.push(
         <span className="font-bold underline underline-offset-4">
           {i.toString()}
-        </span>
+        </span>,
       );
     } else if (i === 1) {
       items.push(
-        <a href={path.join(AppConfig.base, currentPageBaseUrl)}>{i}</a>
+        <a href={path.join(AppConfig.base, currentPageBaseUrl)}>{i}</a>,
       );
     } else {
       items.push(
         <a href={path.join(AppConfig.base, currentPageBaseUrl, i.toString())}>
           {i}
-        </a>
+        </a>,
       );
     }
   }

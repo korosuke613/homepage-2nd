@@ -16,7 +16,7 @@ export const Tag = (props: ITagProps) => {
         AppConfig.base,
         props.contentCategory.toLowerCase(),
         'tag',
-        escapeTag(props.name)
+        escapeTag(props.name),
       )}
     >
       <div

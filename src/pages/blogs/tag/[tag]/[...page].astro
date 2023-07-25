@@ -19,7 +19,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
   return Object.keys(tags).map((tagName) => {
     const filteredPosts = sorteBlogs.filter(
       (post) =>
-        post.type === tagName.toLowerCase() || post.category.includes(tagName)
+        post.type === tagName.toLowerCase() || post.category.includes(tagName),
     );
     const escapeTagName = escapeTag(tagName);
     return paginate(filteredPosts, {

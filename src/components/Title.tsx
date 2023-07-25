@@ -4,7 +4,7 @@ import { AppConfig } from '@/utils/AppConfig';
 
 export const getSectionTitle = (
   preTitle: string | number | undefined,
-  contentCategory: string
+  contentCategory: string,
 ) => {
   const linkedContentCategory = (
     <a href={path.join(AppConfig.base, contentCategory.toLowerCase())}>

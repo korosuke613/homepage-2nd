@@ -9,7 +9,7 @@ export type CommitHistory = {
 const MAX_COUNT = 3;
 
 export const getCommitHistories = async (
-  filePath: string
+  filePath: string,
 ): Promise<CommitHistory[]> => {
   const git = simpleGit();
   const log = await git.log({
