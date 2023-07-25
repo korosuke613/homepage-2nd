@@ -5,7 +5,7 @@ import hatena from '@/../public/assets/hatena_blog.json';
 
 export const listSimilarities = <T>(
   base: string,
-  search: { meta: T; content: string }[]
+  search: { meta: T; content: string }[],
 ) => {
   const searched = search.map((s) => {
     // const rawScore = leven(s.content, base);
@@ -25,7 +25,7 @@ export const listSimilarities = <T>(
 
 export const getSimilarPosts = (
   base: { slug: string; data: { title: string; tags: string[] }; body: string },
-  collections: CollectionEntry<'posts'>[]
+  collections: CollectionEntry<'posts'>[],
 ) => {
   const unionBase = `${base.data.title}\n\n${base.data.tags.join(' ')}\n\n${
     base.body

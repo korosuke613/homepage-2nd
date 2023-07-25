@@ -3,7 +3,7 @@ import type { IPost } from '@/types/IArticleFrontmatter';
 export const sortByDate = (posts: IPost[]) => {
   return posts.sort(
     (a, b) =>
-      new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+      new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf(),
   );
 };
 
@@ -25,7 +25,7 @@ export const sortByOrder = (posts: IPost[]) => {
 export const getGitHubUrl = (
   githubUrl: string,
   collection: string,
-  id: string
+  id: string,
 ) => {
   if (id === 'dormitory_introduction') {
     // 国際交流宿舎の紹介はパスが異なるので特別扱い
@@ -35,7 +35,7 @@ export const getGitHubUrl = (
   const baseUrl = `https://${githubUrl}/tree/main/src/content/`;
   const url = new URL(
     `${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
-    baseUrl
+    baseUrl,
   );
 
   return url.toString();

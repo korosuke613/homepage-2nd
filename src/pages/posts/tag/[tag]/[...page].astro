@@ -24,7 +24,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 
   return tags.map((tag) => {
     const filteredPosts = sortedPosts.filter((post) =>
-      post.data.tags.includes(tag)
+      post.data.tags.includes(tag),
     );
     return paginate(filteredPosts, { params: { tag }, pageSize: 9 });
   });

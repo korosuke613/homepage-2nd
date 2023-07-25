@@ -9,7 +9,7 @@ test('sortByDate', () => {
           pubDate: new Date(d),
         },
       };
-    }
+    },
   );
 
   const expected = ['2023-04-01', '2023-03-01', '2023-02-01', '2023-01-01'].map(
@@ -19,7 +19,7 @@ test('sortByDate', () => {
           pubDate: new Date(d),
         },
       };
-    }
+    },
   );
 
   const actual = sortByDate(testData as IPost[]);
@@ -54,10 +54,10 @@ describe('getGitHubUrl', () => {
     const actual = getGitHubUrl(
       'github.com/korosuke613/homepage-2nd',
       'fff',
-      'ddd'
+      'ddd',
     );
     expect(actual).toBe(
-      'https://github.com/korosuke613/homepage-2nd/tree/main/src/content/fff/ddd'
+      'https://github.com/korosuke613/homepage-2nd/tree/main/src/content/fff/ddd',
     );
   });
 
@@ -65,10 +65,10 @@ describe('getGitHubUrl', () => {
     const actual = getGitHubUrl(
       'github.com/korosuke613/homepage-2nd',
       'fff',
-      'dormitory_introduction'
+      'dormitory_introduction',
     );
     expect(actual).toBe(
-      'https://github.com/korosuke613/homepage-2nd/blob/main/src/pages/posts/dormitory_introduction.astro'
+      'https://github.com/korosuke613/homepage-2nd/blob/main/src/pages/posts/dormitory_introduction.astro',
     );
   });
 });

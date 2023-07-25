@@ -72,7 +72,7 @@ export const createHatenaData = (articles: HatenaJson['articles']) => {
 
 export const getSortedBlogData = async () => {
   const hatenaBlogJsonFile = await fs.promises.readFile(
-    './public/assets/hatena_blog.json'
+    './public/assets/hatena_blog.json',
   );
   const hatenaJson: HatenaJson = JSON.parse(hatenaBlogJsonFile.toString());
   const hatenaData = createHatenaData(hatenaJson.articles);
@@ -82,7 +82,7 @@ export const getSortedBlogData = async () => {
   const sortedZenns = createZennData(zennJson.articles);
 
   const zennScrapJsonFile = await fs.promises.readFile(
-    './public/assets/zenn_scrap.json'
+    './public/assets/zenn_scrap.json',
   );
   const zennScrapJson: ZennScrapJson = JSON.parse(zennScrapJsonFile.toString());
   const sortedZennScraps = createZennScrapData(zennScrapJson.articles);
@@ -92,7 +92,7 @@ export const getSortedBlogData = async () => {
     ...sortedZenns,
     ...sortedZennScraps,
   ].sort(
-    (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf()
+    (a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf(),
   );
 
   return sortedBlogData;

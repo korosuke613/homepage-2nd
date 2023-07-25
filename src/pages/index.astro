@@ -26,7 +26,7 @@ const sortedPosts = sortByDate(nonDraftPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
 
 const nonDraftPickup = allPosts.filter(
-  (post) => post.data.tags.includes('Pickup ⭐️') && !post.data.draft
+  (post) => post.data.tags.includes('Pickup ⭐️') && !post.data.draft,
 );
 const sortedPickup = sortByOrder(nonDraftPickup);
 const lastThreePickup = sortedPickup.slice(0, 3);
