@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2023-07-19T09:59:55.279Z",
+  "lastUpdated": "2023-07-29T16:38:32.731Z",
   "articles": {
     "d7367ec10a8d04": {
       "title": "ホームページ更新",
@@ -140,6 +140,10 @@
     "8236994b2d2929": {
       "title": "GitHubSecurityLab/actions-permissions 触ってみる",
       "pubDate": "2023-07-12T07:23:24.000Z"
+    },
+    "c801cb634bb42c": {
+      "title": "github/issue-metrics アクション触ってみる",
+      "pubDate": "2023-07-29T08:42:30.000Z"
     }
   }
 }
