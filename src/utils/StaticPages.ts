@@ -1,6 +1,5 @@
-import type { CollectionEntry } from 'astro:content';
 import path from 'path';
-
+import type { CollectionEntry } from 'astro:content';
 import { AppConfig } from './AppConfig';
 
 export type StaticPost = {
