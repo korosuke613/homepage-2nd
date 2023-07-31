@@ -38,6 +38,7 @@ jobs:
       - name: Create issue
         uses: peter-evans/create-issue-from-file@433e51abf769039ee20ba1293a088ca19d573b7f # v4.0.1
         with:
-          title: Monthly pull request metrics report
+          title: Monthly pull request metrics report (${{ steps.days.outputs.last_month }})
           token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: 251 # 最初に作った Issue を更新する。https://github.com/korosuke613/homepage-2nd/issues/251
           content-filepath: ./issue_metrics.md
