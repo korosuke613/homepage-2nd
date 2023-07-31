@@ -1,5 +1,5 @@
-import type { Page } from 'astro';
 import path from 'path';
+import type { Page } from 'astro';
 import type { ReactNode } from 'react';
 
 import { AppConfig } from '@/utils/AppConfig';

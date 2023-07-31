@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
 import path from 'path';
+import { format } from 'date-fns';
 
 import type { IPost } from '@/types/IArticleFrontmatter';
 import { AppConfig } from '@/utils/AppConfig';
