@@ -21,8 +21,8 @@ const FooterCopyright = (props: IFooterCopyrightProps) => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        Astro
-      </a>{' '}
+        Astro{' '}
+      </a>
       and{' '}
       <a
         className="text-cyan-400 hover:underline"
