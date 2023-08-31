@@ -21,7 +21,7 @@ tags:
 | love me, I love you                      | PVのサラリーマン稲葉さんが良い                                                                                                                         |
 | SUPER LOVE SONG                          | めちゃテンション上がる                                                                                                                                 |
 | HOME                                     | PVの導入（おじさんがアコーディオン弾き始める）がめちゃ好き。あと stay home 時の [“HOME” session](https://www.youtube.com/watch?v=Xuv-uqfXHtU) がヤバい |
-| スイマーよ                               | めちゃテンション上がる                                                                                                                                 |
+| スイマーよ!!                             | めちゃテンション上がる                                                                                                                                 |
 | LADY NAVIGATION                          | エンエー！ヴィー！アイ！ジー！エー！ティ！アイオーエン！                                                                                               |
 | いつかのメリークリスマス                 | クリスマスが近づいたら歌う曲。椅子を買うぞ                                                                                                             |
 | 恋心 (KOI-GOKORO)                        | 松本に相談しようか                                                                                                                                     |
