@@ -3,9 +3,7 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import robotsTxt from 'astro-robots-txt';
-import { astroImageTools } from 'astro-imagetools';
 import mdx from '@astrojs/mdx';
-import compress from 'astro-compress';
 import rehypeExternalLinks from 'rehype-external-links';
 
 import partytown from '@astrojs/partytown';
@@ -43,8 +41,6 @@ export default defineConfig({
     tailwind({}),
     sitemap(),
     robotsTxt(),
-    astroImageTools,
-    compress(),
     partytown(),
     setupKorosuke(),
     mdx(),

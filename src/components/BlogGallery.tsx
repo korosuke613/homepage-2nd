@@ -3,9 +3,6 @@ import type { IRecentBlogsProps } from '@/partials/RecentBlogs';
 import { BlogCard } from './BlogCard';
 
 export const BlogGallery = (props: IRecentBlogsProps) => {
-  if (props.tags === undefined) {
-    throw new Error('Tags are required');
-  }
   const { tags } = props;
 
   return (
