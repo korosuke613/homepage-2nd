@@ -15,14 +15,15 @@ import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
 import { generateImagePath } from '@/utils/Blog';
-import { DormitoryIntroduction } from '@/utils/StaticPages';
+// avoid `named import` to solve problem ts(2440).
+import * as Static from '@/utils/StaticPages';
 import { readTags } from '@/utils/Tag';
 import { getSimilarPosts } from '@/utils/TextSimilarity';
 import { getCommitHistories } from '@/utils/CommitHistories';
 
 const tags = await readTags();
 
-const title = `${DormitoryIntroduction.data.title} - ${AppConfig.site_name}`;
+const title = `${Static.DormitoryIntroduction.data.title} - ${AppConfig.site_name}`;
 
 const markdownHeadings: MarkdownHeading[] = [
   { depth: 2, slug: '概要', text: '概要' },
@@ -59,7 +60,7 @@ const entries = await getCollection('posts', ({ data }) => {
 });
 const similars = getSimilarPosts(
   {
-    ...DormitoryIntroduction,
+    ...Static.DormitoryIntroduction,
     body: markdownHeadings.map((h) => `${h.slug} ${h.text}`).join(' '),
   },
   entries,
@@ -71,11 +72,11 @@ const histories = await getCommitHistories(filePath);
 <Base
   head={{
     title,
-    description: DormitoryIntroduction.data.description!,
+    description: Static.DormitoryIntroduction.data.description!,
   }}
 >
   <ContentPost
-    frontmatter={DormitoryIntroduction as unknown as CollectionEntry<'posts'>}
+    frontmatter={Static.DormitoryIntroduction as unknown as CollectionEntry<'posts'>}
     contentCategory={'Posts'}
     headings={markdownHeadings}
     tags={tags.posts}
