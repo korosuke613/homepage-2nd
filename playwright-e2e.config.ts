@@ -6,12 +6,12 @@ const config: PlaywrightTestConfig = {
   reporter: [['list'], ['junit', { outputFile: 'test-results/e2e.xml' }]],
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'http://localhost:4321/',
   },
   testDir: 'src/tests/e2e',
   webServer: {
     command: 'npm run dev',
-    port: 3000,
+    port: 4321,
     reuseExistingServer: !process.env.CI,
   },
 
