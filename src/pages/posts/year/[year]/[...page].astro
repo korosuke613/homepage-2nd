@@ -28,7 +28,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 
   const years = await readYears();
 
-  return years.posts.map((year) => {
+  return years.posts.flatMap((year) => {
     const filteredPosts = sortedPosts.filter((post) => {
       const publishYear = new Date(post.data.pubDate).getFullYear();
       return publishYear === year;

@@ -22,7 +22,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
   const tags = Object.keys(generateTagsFromMarkdowns(allPosts));
   const sortedPosts = sortByDate(allPosts);
 
-  return tags.map((tag) => {
+  return tags.flatMap((tag) => {
     const filteredPosts = sortedPosts.filter((post) =>
       post.data.tags.includes(tag),
     );

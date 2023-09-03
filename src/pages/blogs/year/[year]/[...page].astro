@@ -13,7 +13,7 @@ export async function getStaticPaths({ paginate }: GetStaticPaths) {
 
   const years = await readYears();
 
-  return years.blogs.map((year) => {
+  return years.blogs.flatMap((year) => {
     const filteredPosts = sortedBlogs.filter((post) => {
       const publishYear = new Date(post.pubDate).getFullYear();
       return publishYear === year;
