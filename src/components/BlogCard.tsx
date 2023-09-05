@@ -51,7 +51,7 @@ export const BlogCard = (props: IBlogCard) => {
                 throw new Error("Tags don't match");
               }
               if (!props.elt.category.includes(tagName)) {
-                return <div key={props.elt.id}></div>;
+                return <></>;
               }
               return (
                 <Tag
