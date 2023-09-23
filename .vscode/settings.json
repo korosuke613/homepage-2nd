@@ -32,6 +32,13 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome"
   },
+  "[astro]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
   "terminal.integrated.defaultProfile.linux": "zsh",
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
