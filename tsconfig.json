@@ -35,7 +35,7 @@
     // Enable stricter transpilation for better output.
     "isolatedModules": true,
     // Add type definitions for our Vite runtime.
-    "types": ["astro/client", "jest"],
+    "types": ["astro/client", "jest", "bun-types"],
 
     "baseUrl": ".",
     "paths": {
