@@ -1,6 +1,8 @@
 ---
 import '@docsearch/css/dist/style.css';
 import '@/components/DocSearch.css';
+// eslint-disable-next-line import/no-unresolved
+import { ViewTransitions } from 'astro:transitions';
 
 import path from 'path';
 
@@ -45,6 +47,8 @@ const faviconLink = path.join(AppConfig.base, 'favicon.ico');
 
     <link rel="alternate" type="application/rss+xml" href={rssLink} />
     <link rel="icon" type="image/x-icon" href={faviconLink} />
+
+    <ViewTransitions />
   </head>
 
   <body class="bg-slate-900 text-gray-100">
