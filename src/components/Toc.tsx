@@ -1,4 +1,4 @@
-import type { MarkdownHeading } from 'astro';
+import type { MarkdownHeading } from "astro";
 
 type TocProps = {
   headings: MarkdownHeading[];
@@ -8,7 +8,10 @@ export const Toc = (props: TocProps) => {
   if (props.headings.length === 0) {
     return <></>;
   }
-  const baseLevel = props.headings[0]!.depth;
+  const baseLevel = props.headings[0]?.depth;
+  if (baseLevel === undefined) {
+    return <></>;
+  }
   return (
     <ul className="list-disc">
       {props.headings.map((h) => {

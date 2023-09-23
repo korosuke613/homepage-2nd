@@ -1,5 +1,5 @@
-import { SocialLink } from '@/components/SocialLink';
-import { SocialLinkData } from '@/utils/SocialLinkData';
+import { SocialLink } from "@/components/SocialLink";
+import { SocialLinkData } from "@/utils/SocialLinkData";
 
 export const SocialLinks = () => (
   <>

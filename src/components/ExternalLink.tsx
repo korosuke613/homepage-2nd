@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export type IExternalLinkProps = {
   title: ReactNode;
@@ -7,9 +7,9 @@ export type IExternalLinkProps = {
 };
 
 export const ExternalLink = (props: IExternalLinkProps) => {
-  let cssClass = 'text-cyan-400 hover:underline';
+  let cssClass = "text-cyan-400 hover:underline";
   if (props.noClass === true) {
-    cssClass = '';
+    cssClass = "";
   }
 
   return (

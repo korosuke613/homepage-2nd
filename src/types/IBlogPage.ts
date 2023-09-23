@@ -1,4 +1,4 @@
-import type { Page } from 'astro';
+import type { Page } from "astro";
 
 export interface IBlog {
   id: string;

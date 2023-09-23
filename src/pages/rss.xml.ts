@@ -1,14 +1,14 @@
-import rss from '@astrojs/rss';
-import type { APIContext } from 'astro';
-import { getCollection } from 'astro:content';
+import rss from "@astrojs/rss";
+import type { APIContext } from "astro";
+import { getCollection } from "astro:content";
 
-import { AppConfig } from '@/utils/AppConfig';
+import { AppConfig } from "@/utils/AppConfig";
 
 export const GET = async (context: APIContext) => {
-  const posts = await getCollection('posts');
+  const posts = await getCollection("posts");
   const { site } = context;
   if (site === undefined) {
-    throw new Error('context.site is undefined');
+    throw new Error("context.site is undefined");
   }
 
   return rss({
@@ -27,6 +27,6 @@ export const GET = async (context: APIContext) => {
       link: `/posts/${post.slug}`,
     })),
     // (optional) inject custom xml
-    customData: `<language>ja-jp</language>`,
+    customData: "<language>ja-jp</language>",
   });
 };

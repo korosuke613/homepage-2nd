@@ -1,20 +1,20 @@
-import type { MarkdownHeading } from 'astro';
-import type { CollectionEntry } from 'astro:content';
-import type { ReactNode } from 'react';
+import type { MarkdownHeading } from "astro";
+import type { ReactNode } from "react";
+import type { CollectionEntry } from "astro:content";
 
-import { Content } from '@/components/Content';
-import { ContentHeader } from '@/components/ContentHeader';
-import { Section } from '@/components/Section';
-import { AppConfig } from '@/utils/AppConfig';
-import type { CommitHistory } from '@/utils/CommitHistories';
-import type { Tags } from '@/utils/Tag';
-import type { getSimilarPosts } from '@/utils/TextSimilarity';
+import { Content } from "@/components/Content";
+import { ContentHeader } from "@/components/ContentHeader";
+import { Section } from "@/components/Section";
+import { AppConfig } from "@/utils/AppConfig";
+import type { CommitHistory } from "@/utils/CommitHistories";
+import type { Tags } from "@/utils/Tag";
+import type { getSimilarPosts } from "@/utils/TextSimilarity";
 
-import { CommitHistoryPost } from './CommitHistory';
-import { SimilarityPosts } from './SimilarityPosts';
+import { CommitHistoryPost } from "./CommitHistory";
+import { SimilarityPosts } from "./SimilarityPosts";
 
 type IContentPostProps = {
-  frontmatter: CollectionEntry<'posts'>;
+  frontmatter: CollectionEntry<"posts">;
   contentCategory: string;
   tags: Tags;
   headings: MarkdownHeading[];
@@ -31,7 +31,7 @@ export const ContentPost = (props: IContentPostProps) => {
     tags[t] = tagInfo;
   });
 
-  const maxCharWidth = 'max-w-[80ch]';
+  const maxCharWidth = "max-w-[80ch]";
 
   return (
     <Section>

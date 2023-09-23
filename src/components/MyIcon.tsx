@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 type IMyIconProps = {
   iconPath: string;
@@ -6,12 +6,12 @@ type IMyIconProps = {
 };
 
 const cssClassNames = [
-  'rotate-animation-x',
-  'rotate-animation-y',
-  'rotate-animation-z',
-  'rotate-animation-xy',
-  'rotate-animation-xz',
-  'rotate-animation-yz',
+  "rotate-animation-x",
+  "rotate-animation-y",
+  "rotate-animation-z",
+  "rotate-animation-xy",
+  "rotate-animation-xz",
+  "rotate-animation-yz",
 ];
 
 export const MyIcon = (props: IMyIconProps) => {
@@ -20,9 +20,9 @@ export const MyIcon = (props: IMyIconProps) => {
     if (thisImg === null) return;
 
     // クリック時にランダムにアニメーションのクラスを付与する
-    thisImg.addEventListener('click', () => {
+    thisImg.addEventListener("click", () => {
       const randNum = Math.floor(Math.random() * cssClassNames.length);
-      const cssClassName = cssClassNames[randNum] || 'rotate-animation-z';
+      const cssClassName = cssClassNames[randNum] || "rotate-animation-z";
       thisImg.classList.add(cssClassName);
     });
 
@@ -33,15 +33,15 @@ export const MyIcon = (props: IMyIconProps) => {
         thisImg.classList.remove(cssClassName);
       });
     };
-    thisImg.addEventListener('animationend', removeClass);
-    thisImg.addEventListener('animationcancel', removeClass);
+    thisImg.addEventListener("animationend", removeClass);
+    thisImg.addEventListener("animationcancel", removeClass);
   });
 
   return (
     <img
       src={props.iconPath}
-      style={{ width: '100%' }}
-      alt="Avatar image"
+      style={{ width: "100%" }}
+      alt="Avatar"
       loading="lazy"
     />
   );

@@ -1,7 +1,7 @@
-import path from 'path';
+import path from "path";
 
-import { AppConfig } from '@/utils/AppConfig';
-import { escapeTag } from '@/utils/Tag';
+import { AppConfig } from "@/utils/AppConfig";
+import { escapeTag } from "@/utils/Tag";
 
 type ITagProps = {
   name: string;
@@ -15,7 +15,7 @@ export const Tag = (props: ITagProps) => {
       href={path.join(
         AppConfig.base,
         props.contentCategory.toLowerCase(),
-        'tag',
+        "tag",
         escapeTag(props.name),
       )}
     >

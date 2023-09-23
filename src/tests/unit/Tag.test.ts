@@ -1,15 +1,15 @@
-import type { IPost } from '@/types/IArticleFrontmatter';
+import type { IPost } from "@/types/IArticleFrontmatter";
 import {
   escapeTag,
   generateTags,
   generateTagsFromMarkdowns,
   readTags,
-} from '@/utils/Tag';
+} from "@/utils/Tag";
 
-describe('Tag', () => {
-  describe('generateTags', () => {
-    it('should generate tags with unique colors', () => {
-      const tagNames = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5'];
+describe("Tag", () => {
+  describe("generateTags", () => {
+    it("should generate tags with unique colors", () => {
+      const tagNames = ["tag1", "tag2", "tag3", "tag4", "tag5"];
       const tags = generateTags(tagNames);
 
       const colors = Object.values(tags);
@@ -20,17 +20,17 @@ describe('Tag', () => {
     });
   });
 
-  describe('generateTagsFromMarkdowns', () => {
-    it('should generate tags from an array of markdowns', () => {
+  describe("generateTagsFromMarkdowns", () => {
+    it("should generate tags from an array of markdowns", () => {
       const markdowns = [
         {
           data: {
-            tags: ['tag1', 'tag2'],
+            tags: ["tag1", "tag2"],
           },
         },
         {
           data: {
-            tags: ['tag2', 'tag3'],
+            tags: ["tag2", "tag3"],
           },
         },
       ];
@@ -45,17 +45,17 @@ describe('Tag', () => {
     });
   });
 
-  describe('escapeTag', () => {
-    it('should replace forward slashes with underscores', () => {
-      const tagName = 'tag/with/slashes';
+  describe("escapeTag", () => {
+    it("should replace forward slashes with underscores", () => {
+      const tagName = "tag/with/slashes";
       const escapedTagName = escapeTag(tagName);
 
-      expect(escapedTagName).toEqual('tag_with_slashes');
+      expect(escapedTagName).toEqual("tag_with_slashes");
     });
   });
 
-  describe('readTags', () => {
-    it('should read tags from a file', async () => {
+  describe("readTags", () => {
+    it("should read tags from a file", async () => {
       const tags = await readTags(`${__dirname}/data/build/tags.json`);
 
       expect(tags).toEqual({

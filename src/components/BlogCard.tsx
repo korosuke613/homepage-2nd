@@ -1,12 +1,12 @@
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import type { BlogData } from '@/types/IBlogPage';
-import { CardClass } from '@/utils/Css';
-import { transformTitleForContentCard } from '@/utils/StringWidth';
-import type { Tags } from '@/utils/Tag';
+import type { BlogData } from "@/types/IBlogPage";
+import { CardClass } from "@/utils/Css";
+import { transformTitleForContentCard } from "@/utils/StringWidth";
+import type { Tags } from "@/utils/Tag";
 
-import { ExternalLink } from './ExternalLink';
-import { Tag } from './Tag';
+import { ExternalLink } from "./ExternalLink";
+import { Tag } from "./Tag";
 
 type IBlogCard = {
   elt: BlogData;
@@ -38,7 +38,7 @@ export const BlogCard = (props: IBlogCard) => {
                 </span>
                 <br />
                 <span className="align-middle text-xs text-gray-300	">
-                  {format(new Date(props.elt.pubDate), 'LLL d, yyyy')}
+                  {format(new Date(props.elt.pubDate), "LLL d, yyyy")}
                 </span>
               </div>
             }
@@ -58,7 +58,7 @@ export const BlogCard = (props: IBlogCard) => {
                   key={tagName}
                   name={tagName}
                   color={props.tags[tagName]}
-                  contentCategory={'Blogs'}
+                  contentCategory={"Blogs"}
                 />
               );
             })}

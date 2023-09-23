@@ -1,7 +1,7 @@
 /* @ts-ignore */
-import eastAsianWidth from 'eastasianwidth';
-import emojiRegex from 'emoji-regex';
-import stripAnsi from 'strip-ansi';
+import eastAsianWidth from "eastasianwidth";
+import emojiRegex from "emoji-regex";
+import stripAnsi from "strip-ansi";
 
 type StringInfo = {
   width: number;
@@ -17,7 +17,7 @@ export default function getStringInfo(originStr: string): StringInfo {
     chars: [],
   };
 
-  if (typeof originStr !== 'string' || originStr.length === 0) {
+  if (typeof originStr !== "string" || originStr.length === 0) {
     return stringInfo;
   }
 
@@ -28,7 +28,7 @@ export default function getStringInfo(originStr: string): StringInfo {
     return stringInfo;
   }
 
-  str = str.replace(emojiRegex(), '  ');
+  str = str.replace(emojiRegex(), "  ");
 
   const multiByteWidth = 2;
   const singleByteWidth = 1;
@@ -52,12 +52,12 @@ export default function getStringInfo(originStr: string): StringInfo {
 
     const code = eastAsianWidth.eastAsianWidth(character);
     switch (code) {
-      case 'F':
-      case 'W':
+      case "F":
+      case "W":
         stringInfo.width += multiByteWidth;
         stringInfo.chars.push({ char: character, width: multiByteWidth });
         break;
-      case 'A':
+      case "A":
         stringInfo.width += ambiguousCharacterWidth;
         stringInfo.chars.push({
           char: character,
@@ -77,11 +77,11 @@ export const transformTitleForContentCard = (title: string) => {
   // 以下の文章量がタイトルの限界。幅125
   // 'あのイーハトーヴォのすきとおった風、夏でも底に冷たさをもつ青いそら、うつくしい森で飾られたモリーオ市、郊外のぎらぎらひかる草の波。またそのなかでいっしょになっ'
   const MAX_WIDTH = 125;
-  const REPLACE_STRING = '...';
+  const REPLACE_STRING = "...";
 
   const titleInfo = getStringInfo(title);
 
-  let compressTitle = '';
+  let compressTitle = "";
   let compressTitleWidth = 0;
   if (titleInfo.width >= MAX_WIDTH) {
     for (let i = 0; i < title.length; i += 1) {

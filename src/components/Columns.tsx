@@ -1,6 +1,6 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import { generateImagePath } from '@/utils/Blog';
+import { generateImagePath } from "@/utils/Blog";
 
 export const ImageAndDescription = (props: {
   imageName: string[];

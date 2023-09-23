@@ -1,6 +1,6 @@
-import type { IRecentBlogsProps } from '@/partials/RecentBlogs';
+import type { IRecentBlogsProps } from "@/partials/RecentBlogs";
 
-import { BlogCard } from './BlogCard';
+import { BlogCard } from "./BlogCard";
 
 export const BlogGallery = (props: IRecentBlogsProps) => {
   const { tags } = props;

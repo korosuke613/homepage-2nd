@@ -1,11 +1,11 @@
-import path from 'path';
+import path from "path";
 
-import { AppConfig } from '@/utils/AppConfig';
-import type { ISocialLink } from '@/utils/SocialLinkData';
+import { AppConfig } from "@/utils/AppConfig";
+import type { ISocialLink } from "@/utils/SocialLinkData";
 
 export const SocialLink = (props: ISocialLink) => (
   <a
-    style={{ height: 'fit-content' }}
+    style={{ height: "fit-content" }}
     href={props.url}
     target="_blank"
     rel="noopener noreferrer"

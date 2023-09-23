@@ -1,14 +1,14 @@
-import path from 'path';
-import type { MarkdownHeading } from 'astro';
-import type { CollectionEntry } from 'astro:content';
-import type { ReactNode } from 'react';
+import path from "path";
+import type { MarkdownHeading } from "astro";
+import type { ReactNode } from "react";
+import type { CollectionEntry } from "astro:content";
 
-import { EditGitHub } from '@/components/EditGitHub';
-import { Toc } from '@/components/Toc';
-import { AppConfig } from '@/utils/AppConfig';
+import { EditGitHub } from "@/components/EditGitHub";
+import { Toc } from "@/components/Toc";
+import { AppConfig } from "@/utils/AppConfig";
 
 type IContentProps = {
-  content: CollectionEntry<'posts'>;
+  content: CollectionEntry<"posts">;
   headings: MarkdownHeading[];
   maxCharWidth: string;
   children: ReactNode;
@@ -37,10 +37,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
         {props.children}
       </div>
       <br />
-      <EditGitHub
-        id={props.content.id}
-        collection={props.content.collection}
-      ></EditGitHub>
+      <EditGitHub id={props.content.id} collection={props.content.collection} />
     </div>
   );
 };

@@ -1,11 +1,11 @@
-import { getCommitHistories } from '@/utils/CommitHistories';
+import { getCommitHistories } from "@/utils/CommitHistories";
 
-test('getCommitHistries', async () => {
-  const actual = await getCommitHistories('src/content/posts/history.mdx');
+test("getCommitHistries", async () => {
+  const actual = await getCommitHistories("src/content/posts/history.mdx");
 
   actual.forEach((a) => {
-    expect(a).toHaveProperty('sha');
-    expect(a).toHaveProperty('commitMessage');
-    expect(a).toHaveProperty('date');
+    expect(a).toHaveProperty("sha");
+    expect(a).toHaveProperty("commitMessage");
+    expect(a).toHaveProperty("date");
   });
 });

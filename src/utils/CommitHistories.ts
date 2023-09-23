@@ -1,4 +1,4 @@
-import { simpleGit } from 'simple-git';
+import { simpleGit } from "simple-git";
 
 export type CommitHistory = {
   sha: string;

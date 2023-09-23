@@ -1,4 +1,4 @@
-import type { IPost } from '@/types/IArticleFrontmatter';
+import type { IPost } from "@/types/IArticleFrontmatter";
 
 export const sortByDate = (posts: IPost[]) => {
   return posts.sort(
@@ -27,7 +27,7 @@ export const getGitHubUrl = (
   collection: string,
   id: string,
 ) => {
-  if (id === 'dormitory_introduction') {
+  if (id === "dormitory_introduction") {
     // 国際交流宿舎の紹介はパスが異なるので特別扱い
     return `https://${githubUrl}/blob/main/src/pages/posts/dormitory_introduction.astro`;
   }

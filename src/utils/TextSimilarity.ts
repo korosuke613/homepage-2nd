@@ -1,7 +1,7 @@
-import type { CollectionEntry } from 'astro:content';
-import natural from 'natural';
+import natural from "natural";
+import type { CollectionEntry } from "astro:content";
 
-import hatena from '@/../public/assets/hatena_blog.json';
+import hatena from "@/../public/assets/hatena_blog.json";
 
 export const listSimilarities = <T>(
   base: string,
@@ -25,15 +25,15 @@ export const listSimilarities = <T>(
 
 export const getSimilarPosts = (
   base: { slug: string; data: { title: string; tags: string[] }; body: string },
-  collections: CollectionEntry<'posts'>[],
+  collections: CollectionEntry<"posts">[],
 ) => {
-  const unionBase = `${base.data.title}\n\n${base.data.tags.join(' ')}\n\n${
+  const unionBase = `${base.data.title}\n\n${base.data.tags.join(" ")}\n\n${
     base.body
   }`;
 
   type Meta = {
     url: string;
-    urlType: 'internal' | 'external';
+    urlType: "internal" | "external";
     title: string;
   };
   type List = { meta: Meta; content: string }[];
@@ -43,20 +43,20 @@ export const getSimilarPosts = (
     .map((c) => ({
       meta: {
         url: `/${c.collection}/${c.slug}`,
-        urlType: 'internal',
-        title: c.data.title.replaceAll('\\n', ''),
+        urlType: "internal",
+        title: c.data.title.replaceAll("\\n", ""),
       },
-      content: `${c.data.title}\n\n${c.data.tags.join(' ')}\n\n${c.body}`,
+      content: `${c.data.title}\n\n${c.data.tags.join(" ")}\n\n${c.body}`,
     }));
 
   const hatenaList: List = Object.values(hatena.articles).map((a) => {
     return {
       meta: {
         url: a.link,
-        urlType: 'external',
+        urlType: "external",
         title: a.title,
       },
-      content: `${a.title}\n\n${a.category.join(' ')}\n\n`,
+      content: `${a.title}\n\n${a.category.join(" ")}\n\n`,
     };
   });
 

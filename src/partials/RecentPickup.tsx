@@ -1,11 +1,11 @@
-import path from 'path';
+import path from "path";
 
-import { GradientText } from '@/components/GradientText';
-import { PostGallery } from '@/components/PostGallery';
-import { Section } from '@/components/Section';
-import type { IPost } from '@/types/IArticleFrontmatter';
-import { AppConfig } from '@/utils/AppConfig';
-import type { Tags } from '@/utils/Tag';
+import { GradientText } from "@/components/GradientText";
+import { PostGallery } from "@/components/PostGallery";
+import { Section } from "@/components/Section";
+import type { IPost } from "@/types/IArticleFrontmatter";
+import { AppConfig } from "@/utils/AppConfig";
+import type { Tags } from "@/utils/Tag";
 
 type IRecentPickupProps = {
   tags: Tags;
@@ -21,7 +21,7 @@ export const RecentPickup = (props: IRecentPickupProps) => (
         </div>
 
         <div className="text-sm">
-          <a href={path.join(AppConfig.base, 'posts', 'tag', 'Pickup ⭐️')}>
+          <a href={path.join(AppConfig.base, "posts", "tag", "Pickup ⭐️")}>
             View all Pickup →
           </a>
         </div>

@@ -1,4 +1,4 @@
-import type { MarkdownHeading } from 'astro';
+import type { MarkdownHeading } from "astro";
 
 export const convertMarkdownHeadingsToObject = (
   headings: MarkdownHeading[],

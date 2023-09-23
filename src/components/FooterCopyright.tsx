@@ -5,7 +5,7 @@ type IFooterCopyrightProps = {
 const FooterCopyright = (props: IFooterCopyrightProps) => (
   <div className="border-t border-gray-600 pt-5">
     <div className="text-sm text-gray-200">
-      © Copyright 2022 by{' '}
+      © Copyright 2022 by{" "}
       <a
         className="text-cyan-400 hover:underline"
         href="https://github.com/korosuke613"
@@ -14,16 +14,16 @@ const FooterCopyright = (props: IFooterCopyrightProps) => (
       >
         {props.site_name}
       </a>
-      . Built with ♥ by{' '}
+      . Built with ♥ by{" "}
       <a
         className="text-cyan-400 hover:underline"
         href="https://astro.build/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Astro{' '}
+        Astro{" "}
       </a>
-      and{' '}
+      and{" "}
       <a
         className="text-cyan-400 hover:underline"
         href="https://creativedesignsguru.com"
@@ -32,7 +32,7 @@ const FooterCopyright = (props: IFooterCopyrightProps) => (
       >
         CreativeDesignsGuru
       </a>
-      . The source code for this site is{' '}
+      . The source code for this site is{" "}
       <a
         className="text-cyan-400 hover:underline"
         href="https://github.com/korosuke613/homepage-2nd"
