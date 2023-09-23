@@ -1,15 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { resolve } from 'node:path';
+import { resolve } from "node:path";
 
-import { defineConfig, devices } from '@playwright/experimental-ct-react';
+import { defineConfig, devices } from "@playwright/experimental-ct-react";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './src/tests/component',
+  testDir: "./src/tests/component",
   /* The base directory, relative to the config file, for snapshot files created with toMatchSnapshot and toHaveScreenshot. */
-  snapshotDir: './__snapshots__',
+  snapshotDir: "./__snapshots__",
   /* Maximum time one test can run for. */
   timeout: 10 * 1000,
   /* Run tests in files in parallel */
@@ -21,21 +21,21 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [['list'], ['junit', { outputFile: 'test-results/ct.xml' }]],
+  reporter: [["list"], ["junit", { outputFile: "test-results/ct.xml" }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
 
     /* Port to use for Playwright component endpoint. */
     ctPort: 3100,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3000/',
+    baseURL: "http://localhost:3000/",
     ctViteConfig: {
       resolve: {
         alias: {
-          '@': resolve('src'),
+          "@": resolve("src"),
         },
       },
     },
@@ -44,12 +44,12 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: "chromium",
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices["Desktop Chrome"],
         launchOptions: {
-          ignoreDefaultArgs: ['--headless'],
-          args: ['--headless=new'],
+          ignoreDefaultArgs: ["--headless"],
+          args: ["--headless=new"],
         },
       },
     },

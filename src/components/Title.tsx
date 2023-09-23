@@ -1,6 +1,6 @@
-import path from 'path';
+import path from "path";
 
-import { AppConfig } from '@/utils/AppConfig';
+import { AppConfig } from "@/utils/AppConfig";
 
 export const getSectionTitle = (
   preTitle: string | number | undefined,

@@ -77,12 +77,12 @@ const updateHatenaBlogJson = async (
   );
 
   if (updateItemCount === 0) {
-    console.info(`info: nothing update`);
+    console.info("info: nothing update");
     return;
   }
 
   await fs.promises.writeFile(
     localHatenaBlogJsonPath,
-    JSON.stringify(updatedZennJson, null, 2) + "\n",
+    `${JSON.stringify(updatedZennJson, null, 2)}\n`,
   );
 })();

@@ -1,7 +1,7 @@
-import type { IPost } from '@/types/IArticleFrontmatter';
-import type { Tags } from '@/utils/Tag';
+import type { IPost } from "@/types/IArticleFrontmatter";
+import type { Tags } from "@/utils/Tag";
 
-import { PostCard } from './PostCard';
+import { PostCard } from "./PostCard";
 
 type IRecentPostsProps = {
   tags: Tags;

@@ -1,64 +1,64 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
-import fs from 'node:fs';
-import { unified } from 'unified';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkExtractFrontmatter from 'remark-extract-frontmatter';
-import yaml from 'yaml';
-import glob from 'glob';
+import fs from "node:fs";
+import glob from "glob";
+import rehypeStringify from "rehype-stringify";
+import remarkExtractFrontmatter from "remark-extract-frontmatter";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import yaml from "yaml";
 
 export const ColorTags = {
-  SLATE: 'SLATE',
-  GRAY: 'GRAY',
-  ZINC: 'ZINC',
-  NEUTRAL: 'NEUTRAL',
-  STONE: 'STONE',
-  RED: 'RED',
-  ORANGE: 'ORANGE',
-  AMBER: 'AMBER',
-  YELLOW: 'YELLOW',
-  LIME: 'LIME',
-  GREEN: 'GREEN',
-  EMERALD: 'EMERALD',
-  TEAL: 'TEAL',
-  CYAN: 'CYAN',
-  SKY: 'SKY',
-  BLUE: 'BLUE',
-  INDIGO: 'INDIGO',
-  VIOLET: 'VIOLET',
-  PURPLE: 'PURPLE',
-  FUCHSIA: 'FUCHSIA',
-  PINK: 'PINK',
-  ROSE: 'ROSE',
+  SLATE: "SLATE",
+  GRAY: "GRAY",
+  ZINC: "ZINC",
+  NEUTRAL: "NEUTRAL",
+  STONE: "STONE",
+  RED: "RED",
+  ORANGE: "ORANGE",
+  AMBER: "AMBER",
+  YELLOW: "YELLOW",
+  LIME: "LIME",
+  GREEN: "GREEN",
+  EMERALD: "EMERALD",
+  TEAL: "TEAL",
+  CYAN: "CYAN",
+  SKY: "SKY",
+  BLUE: "BLUE",
+  INDIGO: "INDIGO",
+  VIOLET: "VIOLET",
+  PURPLE: "PURPLE",
+  FUCHSIA: "FUCHSIA",
+  PINK: "PINK",
+  ROSE: "ROSE",
 };
 
 export const colorToClassMap = {
-  [ColorTags.SLATE]: 'bg-slate-400 text-slate-900',
-  [ColorTags.GRAY]: 'bg-gray-400 text-gray-900',
-  [ColorTags.ZINC]: 'bg-zinc-400 text-zinc-900',
-  [ColorTags.NEUTRAL]: 'bg-neutral-400 text-neutral-900',
-  [ColorTags.STONE]: 'bg-stone-400 text-stone-900',
-  [ColorTags.RED]: 'bg-red-400 text-red-900',
-  [ColorTags.ORANGE]: 'bg-orange-400 text-orange-900',
-  [ColorTags.AMBER]: 'bg-amber-400 text-amber-900',
-  [ColorTags.YELLOW]: 'bg-yellow-400 text-yellow-900',
-  [ColorTags.LIME]: 'bg-lime-400 text-lime-900',
-  [ColorTags.GREEN]: 'bg-green-400 text-green-900',
-  [ColorTags.EMERALD]: 'bg-emerald-400 text-emerald-900',
-  [ColorTags.TEAL]: 'bg-teal-400 text-teal-900',
-  [ColorTags.CYAN]: 'bg-cyan-400 text-cyan-900',
-  [ColorTags.SKY]: 'bg-sky-400 text-sky-900',
-  [ColorTags.BLUE]: 'bg-blue-400 text-blue-900',
-  [ColorTags.INDIGO]: 'bg-indigo-400 text-indigo-900',
-  [ColorTags.VIOLET]: 'bg-violet-400 text-violet-900',
-  [ColorTags.PURPLE]: 'bg-purple-400 text-purple-900',
-  [ColorTags.FUCHSIA]: 'bg-fuchsia-400 text-fuchsia-900',
-  [ColorTags.PINK]: 'bg-pink-400 text-pink-900',
-  [ColorTags.ROSE]: 'bg-rose-400 text-rose-900',
-  PICKUP: 'bg-indigo-900 text-white',
+  [ColorTags.SLATE]: "bg-slate-400 text-slate-900",
+  [ColorTags.GRAY]: "bg-gray-400 text-gray-900",
+  [ColorTags.ZINC]: "bg-zinc-400 text-zinc-900",
+  [ColorTags.NEUTRAL]: "bg-neutral-400 text-neutral-900",
+  [ColorTags.STONE]: "bg-stone-400 text-stone-900",
+  [ColorTags.RED]: "bg-red-400 text-red-900",
+  [ColorTags.ORANGE]: "bg-orange-400 text-orange-900",
+  [ColorTags.AMBER]: "bg-amber-400 text-amber-900",
+  [ColorTags.YELLOW]: "bg-yellow-400 text-yellow-900",
+  [ColorTags.LIME]: "bg-lime-400 text-lime-900",
+  [ColorTags.GREEN]: "bg-green-400 text-green-900",
+  [ColorTags.EMERALD]: "bg-emerald-400 text-emerald-900",
+  [ColorTags.TEAL]: "bg-teal-400 text-teal-900",
+  [ColorTags.CYAN]: "bg-cyan-400 text-cyan-900",
+  [ColorTags.SKY]: "bg-sky-400 text-sky-900",
+  [ColorTags.BLUE]: "bg-blue-400 text-blue-900",
+  [ColorTags.INDIGO]: "bg-indigo-400 text-indigo-900",
+  [ColorTags.VIOLET]: "bg-violet-400 text-violet-900",
+  [ColorTags.PURPLE]: "bg-purple-400 text-purple-900",
+  [ColorTags.FUCHSIA]: "bg-fuchsia-400 text-fuchsia-900",
+  [ColorTags.PINK]: "bg-pink-400 text-pink-900",
+  [ColorTags.ROSE]: "bg-rose-400 text-rose-900",
+  PICKUP: "bg-indigo-900 text-white",
 };
 
 /**
@@ -88,7 +88,7 @@ const generateTags = (tagNames) => {
     if (allColors.length === 0) {
       tags[tagName] = pickColor(Object.values(ColorTags));
     }
-    if (tagName === 'Pickup ⭐️') {
+    if (tagName === "Pickup ⭐️") {
       tags[tagName] = colorToClassMap.PICKUP;
     } else {
       tags[tagName] = pickColor(allColors);
@@ -103,19 +103,19 @@ const getMarkdownData = async (pattern) => {
   let tagNames = [];
   const years = [];
   for (const mdPath of mdPaths) {
-    const rawFile = await fs.promises.readFile(mdPath, 'utf-8');
+    const rawFile = await fs.promises.readFile(mdPath, "utf-8");
     const parser = await unified()
       .use(remarkParse)
       .use(remarkFrontmatter, [
         {
-          type: 'yaml',
-          marker: '-',
+          type: "yaml",
+          marker: "-",
           anywhere: false, // ファイルの冒頭に Front Matter がある前提で探索する
         },
       ])
       .use(remarkExtractFrontmatter, {
         yaml: yaml.parse,
-        name: 'frontMatter', // result.data 配下のキー名を決める
+        name: "frontMatter", // result.data 配下のキー名を決める
       })
       .use(remarkRehype)
       .use(rehypeStringify);
@@ -141,8 +141,8 @@ const getMarkdownData = async (pattern) => {
 
 const getBlogData = async () => {
   const rawHatenaBlogJson = await fs.promises.readFile(
-    './public/assets/hatena_blog.json',
-    'utf-8'
+    "./public/assets/hatena_blog.json",
+    "utf-8",
   );
 
   /**
@@ -151,8 +151,8 @@ const getBlogData = async () => {
   const hatenaBlogJson = JSON.parse(rawHatenaBlogJson);
 
   const rawZennJson = await fs.promises.readFile(
-    './public/assets/zenn.json',
-    'utf-8'
+    "./public/assets/zenn.json",
+    "utf-8",
   );
 
   /**
@@ -176,28 +176,28 @@ const getBlogData = async () => {
   const uniqYears = Array.from(new Set(years));
 
   const tags = generateTags(uniqTagNames);
-  tags.Zenn = 'bg-sky-400 text-neutral-900';
-  tags['Zenn scrap'] = 'bg-sky-400 text-neutral-900';
-  tags.Hatena = 'bg-rose-400 text-neutral-900';
+  tags.Zenn = "bg-sky-400 text-neutral-900";
+  tags["Zenn scrap"] = "bg-sky-400 text-neutral-900";
+  tags.Hatena = "bg-rose-400 text-neutral-900";
 
   return { tags, years: uniqYears };
 };
 
 const setupData = async () => {
-  const posts = await getMarkdownData('./src/content/posts/**.md');
+  const posts = await getMarkdownData("./src/content/posts/**.md");
   const blogs = await getBlogData();
 
-  if (!fs.existsSync('./build')) {
-    await fs.promises.mkdir('./build');
+  if (!fs.existsSync("./build")) {
+    await fs.promises.mkdir("./build");
   }
   await fs.promises.writeFile(
-    './build/tags.json',
-    JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2)
+    "./build/tags.json",
+    JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2),
   );
 
   await fs.promises.writeFile(
-    './build/years.json',
-    JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2)
+    "./build/years.json",
+    JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2),
   );
 };
 
@@ -206,9 +206,9 @@ function setupKorosuke() {
    * @type { import("astro").AstroIntegration;}
    */
   const integration = {
-    name: 'setupKorosuke',
+    name: "setupKorosuke",
     hooks: {
-      'astro:config:setup': async () => {
+      "astro:config:setup": async () => {
         await setupData();
       },
     },

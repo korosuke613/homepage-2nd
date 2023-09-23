@@ -1,8 +1,8 @@
-import { BlogCard } from '@/components/BlogCard';
-import { GradientText } from '@/components/GradientText';
-import { Section } from '@/components/Section';
-import type { BlogData } from '@/types/IBlogPage';
-import type { Tags } from '@/utils/Tag';
+import { BlogCard } from "@/components/BlogCard";
+import { GradientText } from "@/components/GradientText";
+import { Section } from "@/components/Section";
+import type { BlogData } from "@/types/IBlogPage";
+import type { Tags } from "@/utils/Tag";
 
 export type IRecentBlogsProps = {
   tags: Tags;

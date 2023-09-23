@@ -1,8 +1,8 @@
-import path from 'path';
-import type { Page } from 'astro';
-import type { ReactNode } from 'react';
+import path from "path";
+import type { Page } from "astro";
+import type { ReactNode } from "react";
 
-import { AppConfig } from '@/utils/AppConfig';
+import { AppConfig } from "@/utils/AppConfig";
 
 type INewerOlderPaginationProps = {
   page: Page;

@@ -1,12 +1,12 @@
-import path from 'path';
-import { format } from 'date-fns';
+import path from "path";
+import { format } from "date-fns";
 
-import type { IPost } from '@/types/IArticleFrontmatter';
-import { AppConfig } from '@/utils/AppConfig';
-import { transformTitleForContentCard } from '@/utils/StringWidth';
-import type { Tags } from '@/utils/Tag';
+import type { IPost } from "@/types/IArticleFrontmatter";
+import { AppConfig } from "@/utils/AppConfig";
+import { transformTitleForContentCard } from "@/utils/StringWidth";
+import type { Tags } from "@/utils/Tag";
 
-import { Tag } from './Tag';
+import { Tag } from "./Tag";
 
 type IPostCardProps = {
   instance: IPost;
@@ -16,7 +16,7 @@ type IPostCardProps = {
 
 export const PostCard = (props: IPostCardProps) => {
   const contentPath = path.join(
-    '/',
+    "/",
     props.instance.collection,
     props.instance.slug,
   );
@@ -40,7 +40,7 @@ export const PostCard = (props: IPostCardProps) => {
             <a href={contentPath}>
               <div>
                 {transformTitleForContentCard(props.instance.data.title)
-                  .split('\\n')
+                  .split("\\n")
                   .map((t) => (
                     <span key={t} className="text-lg font-bold">
                       {t}
@@ -48,20 +48,19 @@ export const PostCard = (props: IPostCardProps) => {
                     </span>
                   ))}
                 <span className="align-middle text-xs text-gray-300	">
-                  {format(new Date(props.instance.data.pubDate), 'LLL d, yyyy')}
+                  {format(new Date(props.instance.data.pubDate), "LLL d, yyyy")}
                 </span>
               </div>
             </a>
             <div className="mt-1 flex flex-wrap gap-2">
-              {props.instance.data.tags &&
-                props.instance.data.tags.map((tagName) => (
-                  <Tag
-                    key={tagName}
-                    name={tagName}
-                    color={props.tags[tagName]}
-                    contentCategory={props.contentCategory}
-                  />
-                ))}
+              {props.instance.data.tags.map((tagName) => (
+                <Tag
+                  key={tagName}
+                  name={tagName}
+                  color={props.tags[tagName]}
+                  contentCategory={props.contentCategory}
+                />
+              ))}
             </div>
           </div>
         </div>

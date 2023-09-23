@@ -77,12 +77,12 @@ const updateZennScrapJson = (
   );
 
   if (updateItemCount === 0) {
-    console.info(`info: nothing update`);
+    console.info("info: nothing update");
     return;
   }
 
   await fs.promises.writeFile(
     localZennJsonPath,
-    JSON.stringify(updatedZennJson, null, 2) + "\n",
+    `${JSON.stringify(updatedZennJson, null, 2)}\n`,
   );
 })();

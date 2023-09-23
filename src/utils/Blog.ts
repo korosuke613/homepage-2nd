@@ -1,13 +1,13 @@
-import fs from 'node:fs';
+import fs from "node:fs";
 
-import path from 'path';
+import path from "path";
 
-import type { BlogData } from '@/types/IBlogPage';
-import type { HatenaJson } from '@/types/IHatena';
-import type { ZennJson, ZennScrapJson } from '@/types/IZenn';
-import { AppConfig } from '@/utils/AppConfig';
+import type { BlogData } from "@/types/IBlogPage";
+import type { HatenaJson } from "@/types/IHatena";
+import type { ZennJson, ZennScrapJson } from "@/types/IZenn";
+import { AppConfig } from "@/utils/AppConfig";
 
-export const createZennData = (articles: ZennJson['articles']) => {
+export const createZennData = (articles: ZennJson["articles"]) => {
   const arrayArticles: BlogData[] = Object.keys(articles).map((articleId) => {
     const article = articles[articleId];
     if (article === undefined) {
@@ -16,19 +16,19 @@ export const createZennData = (articles: ZennJson['articles']) => {
 
     return {
       id: articleId,
-      type: 'zenn',
+      type: "zenn",
       ogpImageUrl: article.ogpImageUrl,
       url: article.url,
       title: article.title,
       pubDate: article.pubDate,
-      category: ['Zenn'],
+      category: ["Zenn"],
     };
   });
 
   return arrayArticles;
 };
 
-export const createZennScrapData = (articles: ZennScrapJson['articles']) => {
+export const createZennScrapData = (articles: ZennScrapJson["articles"]) => {
   const arrayArticles: BlogData[] = Object.keys(articles).map((articleId) => {
     const article = articles[articleId];
     if (article === undefined) {
@@ -37,19 +37,19 @@ export const createZennScrapData = (articles: ZennScrapJson['articles']) => {
 
     return {
       id: articleId,
-      type: 'zenn',
-      ogpImageUrl: '/assets/images/zenn_scrap.webp', // スクラップには OGP 画像がない
+      type: "zenn",
+      ogpImageUrl: "/assets/images/zenn_scrap.webp", // スクラップには OGP 画像がない
       url: `https://zenn.dev/korosuke613/scraps/${articleId}`,
       title: article.title,
       pubDate: article.pubDate,
-      category: ['Zenn scrap'],
+      category: ["Zenn scrap"],
     };
   });
 
   return arrayArticles;
 };
 
-export const createHatenaData = (articles: HatenaJson['articles']) => {
+export const createHatenaData = (articles: HatenaJson["articles"]) => {
   const arrayArticles: BlogData[] = Object.keys(articles).map((articleId) => {
     const article = articles[articleId];
     if (article === undefined) {
@@ -58,12 +58,12 @@ export const createHatenaData = (articles: HatenaJson['articles']) => {
 
     return {
       id: articleId,
-      type: 'hatena',
+      type: "hatena",
       ogpImageUrl: article.ogpImageUrl,
       url: article.link,
       title: article.title,
       pubDate: article.pubDate,
-      category: ['Hatena', ...article.category],
+      category: ["Hatena", ...article.category],
     };
   });
 
@@ -72,17 +72,17 @@ export const createHatenaData = (articles: HatenaJson['articles']) => {
 
 export const getSortedBlogData = async () => {
   const hatenaBlogJsonFile = await fs.promises.readFile(
-    './public/assets/hatena_blog.json',
+    "./public/assets/hatena_blog.json",
   );
   const hatenaJson: HatenaJson = JSON.parse(hatenaBlogJsonFile.toString());
   const hatenaData = createHatenaData(hatenaJson.articles);
 
-  const zennJsonFile = await fs.promises.readFile('./public/assets/zenn.json');
+  const zennJsonFile = await fs.promises.readFile("./public/assets/zenn.json");
   const zennJson: ZennJson = JSON.parse(zennJsonFile.toString());
   const sortedZenns = createZennData(zennJson.articles);
 
   const zennScrapJsonFile = await fs.promises.readFile(
-    './public/assets/zenn_scrap.json',
+    "./public/assets/zenn_scrap.json",
   );
   const zennScrapJson: ZennScrapJson = JSON.parse(zennScrapJsonFile.toString());
   const sortedZennScraps = createZennScrapData(zennScrapJson.articles);
@@ -99,5 +99,5 @@ export const getSortedBlogData = async () => {
 };
 
 export function generateImagePath(...paths: string[]) {
-  return path.join(AppConfig.base, 'assets', 'images', ...paths);
+  return path.join(AppConfig.base, "assets", "images", ...paths);
 }

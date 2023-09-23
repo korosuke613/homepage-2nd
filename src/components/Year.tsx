@@ -1,6 +1,6 @@
-import path from 'path';
+import path from "path";
 
-import { AppConfig } from '@/utils/AppConfig';
+import { AppConfig } from "@/utils/AppConfig";
 
 type IYearProps = {
   year: string;
@@ -13,11 +13,11 @@ export const Year = (props: IYearProps) => {
       href={path.join(
         AppConfig.base,
         props.contentCategory.toLowerCase(),
-        'year',
+        "year",
         props.year,
       )}
     >
-      <div className={`px-1 py-0.5 text-sm font-semibold`}>{props.year}</div>
+      <div className={"px-1 py-0.5 text-sm font-semibold"}>{props.year}</div>
     </a>
   );
 };
