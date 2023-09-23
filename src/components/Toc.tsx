@@ -15,7 +15,11 @@ export const Toc = (props: TocProps) => {
         if (baseLevel === h.depth) {
           return (
             <li key={h.slug} className="pt-2">
-              <a className="font-bold no-underline" href={`#${h.slug}`}>
+              <a
+                key={h.slug}
+                className="font-bold no-underline"
+                href={`#${h.slug}`}
+              >
                 {h.text}
               </a>
             </li>
@@ -24,7 +28,11 @@ export const Toc = (props: TocProps) => {
         if (baseLevel + 1 === h.depth) {
           return (
             <li key={h.slug} className="list-none pt-2">
-              <a className=" font-thin no-underline" href={`#${h.slug}`}>
+              <a
+                key={h.slug}
+                className=" font-thin no-underline"
+                href={`#${h.slug}`}
+              >
                 {h.text}
               </a>
             </li>
