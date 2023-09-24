@@ -10,6 +10,10 @@ import { MyIcon } from '@/components/MyIcon';
 import { AppConfig } from '@/utils/AppConfig';
 
 const iconPath = path.join(AppConfig.base, '/assets/images/my_icon_2.png');
+const iconIds = {
+  small: 'my-icon-small',
+  large: 'my-icon-large',
+};
 ---
 
 <Section>
@@ -27,8 +31,8 @@ const iconPath = path.join(AppConfig.base, '/assets/images/my_icon_2.png');
           Hi there, <br />
            I'm <GradientText>Futa Hirakoba</GradientText> 👋
         </h1>
-        <div class="my-icon h-20 w-20" id="my-icon-small">
-          <MyIcon client:idle iconPath={iconPath} iconId="my-icon-small" />
+        <div class="my-icon h-20 w-20 md:hidden" id={iconIds.small}>
+          <MyIcon client:idle iconPath={iconPath} iconId={iconIds.small} />
         </div>
       </div>
 
@@ -43,10 +47,8 @@ const iconPath = path.join(AppConfig.base, '/assets/images/my_icon_2.png');
       </div>
     </div>
 
-    <div class="hidden shrink-0 md:block">
-      <div class="my-icon h-72 w-72" id="my-icon-large">
-        <MyIcon client:idle iconPath={iconPath} iconId="my-icon-large" />
-      </div>
+    <div class="hidden shrink-0 md:block my-icon h-72 w-72" id={iconIds.large}>
+      <MyIcon client:idle iconPath={iconPath} iconId={iconIds.large} />
     </div>
   </div>
 </Section>
