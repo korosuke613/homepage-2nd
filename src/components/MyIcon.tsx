@@ -63,6 +63,7 @@ const animationKeys = Object.keys(animations);
 export const MyIcon = (props: IMyIconProps) => {
   const [rotationComplete, setRotationComplete] = useState(true);
   const [isNoLimit, setIsNoLimit] = useState(false);
+  const [keyString, setKeyString] = useState("");
 
   const toggleRotation = async () => {
     if (rotationComplete || isNoLimit) {
@@ -96,15 +97,44 @@ export const MyIcon = (props: IMyIconProps) => {
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
-      console.debug("key", event.key);
-      switch (event.key) {
-        case "r":
+      const NO_LIMIT_MODE_KEY = "mugen";
+      let _keyString = keyString;
+
+      if (keyString.length > NO_LIMIT_MODE_KEY.length - 1) {
+        // keyString を NO_LIMIT_MODE_KEY の長さに合わせる
+        _keyString = _keyString.slice(-(NO_LIMIT_MODE_KEY.length - 1));
+      }
+      _keyString = _keyString + event.key;
+      console.debug("keyString", _keyString);
+      setKeyString(_keyString);
+
+      const icon = document.getElementById(props.iconId);
+      if (!icon) {
+        console.warn("icon not found");
+        return;
+      }
+      if (window.getComputedStyle(icon, null).display === "none") {
+        return;
+      }
+
+      switch (_keyString.toLocaleLowerCase()) {
+        case NO_LIMIT_MODE_KEY:
+          if (!isNoLimit) {
+            console.log(
+              "%c NO LIMIT MODE ",
+              "color: red; background-color: black; border: 4px solid yellow; font-size: 90px",
+            );
+          } else {
+            console.log(
+              "%c LIMIT MODE ",
+              "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
+            );
+          }
           setIsNoLimit(!isNoLimit);
-          console.debug(`no limit mode ${!isNoLimit}`);
           break;
       }
     },
-    [isNoLimit],
+    [isNoLimit, keyString],
   );
 
   useEffect(() => {
@@ -120,7 +150,6 @@ export const MyIcon = (props: IMyIconProps) => {
       style={{ width: "100%" }}
       alt="Avatar"
       loading="lazy"
-      id={props.iconId}
       onMouseDown={toggleRotation}
     />
   );
