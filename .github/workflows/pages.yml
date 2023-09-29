@@ -10,6 +10,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read  # required for actions-timeline
 
 concurrency:
   group: "pages"
@@ -19,8 +20,6 @@ jobs:
   actions-timeline:
     needs: [build, deploy, call-scraping-workflow]
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
     steps:
       - uses: Kesin11/actions-timeline@v1
 
