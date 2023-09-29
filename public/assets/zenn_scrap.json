@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2023-07-29T16:38:32.731Z",
+  "lastUpdated": "2023-09-29T23:21:37.207Z",
   "articles": {
     "d7367ec10a8d04": {
       "title": "ホームページ更新",
@@ -144,6 +144,10 @@
     "c801cb634bb42c": {
       "title": "github/issue-metrics アクション触ってみる",
       "pubDate": "2023-07-29T08:42:30.000Z"
+    },
+    "715b228a9c81b2": {
+      "title": "Kesin11/actions-timeline を使ってみる",
+      "pubDate": "2023-09-29T04:36:54.000Z"
     }
   }
 }
