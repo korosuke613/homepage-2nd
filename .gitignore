@@ -29,3 +29,6 @@ Thumbs.db
 playwright-report/
 coverage/
 test-results/
+
+bun.lockb
+
