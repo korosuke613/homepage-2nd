@@ -10,6 +10,10 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import yaml from "yaml";
 
+const generatedDir = "./generated";
+const tagJsonPath = "./generated/tags.json";
+const yearJsonPath = "./generated/years.json";
+
 export const ColorTags = {
   SLATE: "SLATE",
   GRAY: "GRAY",
@@ -74,7 +78,7 @@ const pickColor = (colors) => {
   return color;
 };
 
-const generateTags = (tagNames) => {
+const generateTags = async (tagJson, tagNames) => {
   const allColors = Object.values(ColorTags);
 
   /**
@@ -84,7 +88,12 @@ const generateTags = (tagNames) => {
 
   // tagに一意のColorTagsを設定する
   // もしColorTagsが枯渇したら再度ColorTagsの中からcolorを渡す
+  // すでに設定されているtagはそのまま使う
   tagNames.forEach((tagName) => {
+    if (tagJson[tagName] !== undefined) {
+      tags[tagName] = tagJson[tagName];
+      return;
+    }
     if (allColors.length === 0) {
       tags[tagName] = pickColor(Object.values(ColorTags));
     }
@@ -131,10 +140,17 @@ const getMarkdownData = async (pattern) => {
     years.push(year);
   }
 
+  const tagJsonFile = await fs.promises.readFile(tagJsonPath, "utf-8");
+
+  /**
+   * @type { import("../utils/Tag").Tags; }
+   */
+  const tagJson = JSON.parse(tagJsonFile).posts;
+
   const uniqTagNames = Array.from(new Set(tagNames));
   const uniqYears = Array.from(new Set(years));
   return {
-    tags: generateTags(uniqTagNames),
+    tags: await generateTags(tagJson, uniqTagNames),
     years: uniqYears,
   };
 };
@@ -175,7 +191,14 @@ const getBlogData = async () => {
   const uniqTagNames = Array.from(new Set(tagNames));
   const uniqYears = Array.from(new Set(years));
 
-  const tags = generateTags(uniqTagNames);
+  const tagJsonFile = await fs.promises.readFile(tagJsonPath, "utf-8");
+
+  /**
+   * @type { import("../utils/Tag").Tags; }
+   */
+  const tagJson = JSON.parse(tagJsonFile).blogs;
+
+  const tags = await generateTags(tagJson, uniqTagNames);
   tags.Zenn = "bg-sky-400 text-neutral-900";
   tags["Zenn scrap"] = "bg-sky-400 text-neutral-900";
   tags.Hatena = "bg-rose-400 text-neutral-900";
@@ -187,16 +210,16 @@ const setupData = async () => {
   const posts = await getMarkdownData("./src/content/posts/**.md");
   const blogs = await getBlogData();
 
-  if (!fs.existsSync("./build")) {
-    await fs.promises.mkdir("./build");
+  if (!fs.existsSync(generatedDir)) {
+    await fs.promises.mkdir(generatedDir);
   }
   await fs.promises.writeFile(
-    "./build/tags.json",
+    tagJsonPath,
     JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2),
   );
 
   await fs.promises.writeFile(
-    "./build/years.json",
+    yearJsonPath,
     JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2),
   );
 };

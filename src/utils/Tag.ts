@@ -2,6 +2,7 @@ import fs from "fs";
 
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { Values } from "@/types/Values";
+import { AppConfig } from "./AppConfig";
 
 export type Tags = {
   [key: string]: string;
@@ -91,7 +92,7 @@ export const generateTagsFromMarkdowns = (markdowns: IPost[]) => {
   return generateTags(allTagNames);
 };
 
-export const readTags = async (filePath = "./build/tags.json") => {
+export const readTags = async (filePath = AppConfig.paths.generated.tags) => {
   const tagsFile = await fs.promises.readFile(filePath);
   return JSON.parse(tagsFile.toString()) as {
     [key: string]: Tags;

@@ -1,6 +1,7 @@
 import fs from "node:fs";
+import { AppConfig } from "./AppConfig";
 
-export const readYears = async (filePath = "./build/years.json") => {
+export const readYears = async (filePath = AppConfig.paths.generated.years) => {
   const yearsFile = await fs.promises.readFile(filePath);
   const years = JSON.parse(yearsFile.toString()) as {
     [key: string]: number[];

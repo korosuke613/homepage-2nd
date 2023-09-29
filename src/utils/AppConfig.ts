@@ -7,4 +7,10 @@ export const AppConfig = {
   locale: "ja",
   base: "/",
   github_url: "github.com/korosuke613/homepage-2nd",
+  paths: {
+    generated: {
+      tags: "generated/tags.json",
+      years: "generated/years.json",
+    },
+  },
 };

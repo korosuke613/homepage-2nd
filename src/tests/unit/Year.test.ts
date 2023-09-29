@@ -4,7 +4,7 @@ describe("readYears", () => {
   let years: Awaited<ReturnType<typeof readYears>>;
 
   beforeAll(async () => {
-    years = await readYears(`${__dirname}/data/build/years.json`);
+    years = await readYears(`${__dirname}/data/generated/years.json`);
   });
 
   it("should return an object with a posts array", () => {

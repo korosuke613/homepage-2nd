@@ -56,7 +56,7 @@ describe("Tag", () => {
 
   describe("readTags", () => {
     it("should read tags from a file", async () => {
-      const tags = await readTags(`${__dirname}/data/build/tags.json`);
+      const tags = await readTags(`${__dirname}/data/generated/tags.json`);
 
       expect(tags).toEqual({
         posts: expect.any(Object),
