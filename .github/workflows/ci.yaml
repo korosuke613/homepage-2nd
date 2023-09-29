@@ -5,6 +5,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  actions-timeline:
+    needs: [lint, build, unit-test, e2e-test, ct-test, tools]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - uses: Kesin11/actions-timeline@v1
+
   lint:
     runs-on: ubuntu-latest
     steps:

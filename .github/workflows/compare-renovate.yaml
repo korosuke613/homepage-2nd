@@ -11,3 +11,11 @@ jobs:
     uses: korosuke613/actions/.github/workflows/renovate.yaml@main
     secrets:
       GH_PAT_FOR_RENOVATE: ${{ secrets.GH_PAT_FOR_RENOVATE }}
+
+  actions-timeline:
+    needs: call
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - uses: Kesin11/actions-timeline@v1

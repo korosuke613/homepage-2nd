@@ -16,6 +16,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  actions-timeline:
+    needs: [build, deploy, call-scraping-workflow]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - uses: Kesin11/actions-timeline@v1
+
   build:
     runs-on: ubuntu-latest
     steps:
