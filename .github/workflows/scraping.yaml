@@ -24,3 +24,4 @@ jobs:
             algolia/docsearch-scraper
 
       - uses: Kesin11/actions-timeline@v1
+        if: github.event_name != 'workflow_call'
