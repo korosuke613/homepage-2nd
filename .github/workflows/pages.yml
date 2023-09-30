@@ -87,7 +87,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          gh variable set RECENT_ARTIFACTS_SHA256 --body ${{ needs.build.outputs.artifacts_sha256 }} 
+          gh variable set RECENT_ARTIFACTS_SHA256 --body ${{ needs.build.outputs.artifacts_sha256 }}
+          echo "Old SHA256: ${{ vars.RECENT_ARTIFACTS_SHA256 }}" >> $GITHUB_STEP_SUMMARY
+          echo "New SHA256: ${{ needs.build.outputs.artifacts_sha256 }}" >> $GITHUB_STEP_SUMMARY
 
   call-scraping-workflow:
     needs:

@@ -1,7 +1,7 @@
 name: CI
 
 on:
-  push:
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -49,12 +49,6 @@ jobs:
             cut -d ' ' -f 1)
           set +x
           echo $SHA256_OUTPUT
-          if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
-            echo "### No changes in artifacts" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "### Changes in artifacts" >> $GITHUB_STEP_SUMMARY
-          fi
-          echo "Recent SHA256: ${{ vars.RECENT_ARTIFACTS_SHA256 }}" >> $GITHUB_STEP_SUMMARY
           echo "Now SHA256: $SHA256_OUTPUT" >> $GITHUB_STEP_SUMMARY
 
   unit-test:
