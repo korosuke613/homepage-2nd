@@ -22,7 +22,6 @@ pnpm-debug.log*
 Thumbs.db
 
 .cache/
-/build/
 
 .env
 .astro/

@@ -1,2 +1,2 @@
 *.lockb binary diff=lockb
-
+generated/** linguist-generated=true
