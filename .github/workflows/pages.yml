@@ -28,7 +28,7 @@ jobs:
     outputs:
       artifacts_sha256: ${{ steps.sha256.outputs.artifacts }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: 
           fetch-depth: 0
       - uses: actions/setup-node@v3
@@ -68,7 +68,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
