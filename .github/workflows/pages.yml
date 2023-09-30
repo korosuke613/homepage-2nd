@@ -25,6 +25,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      artifacts_sha256: ${{ steps.sha256.outputs.artifacts }}
     steps:
       - uses: actions/checkout@v3
         with: 
@@ -38,12 +40,27 @@ jobs:
       - name: Build
         run: |
           npm run build
+
+      - name: Calcurate hash
+        id: sha256
+        run: |
+          set -x
+          SHA256_OUTPUT=$(find ./dist -type f -print0 | \
+            sort -z | \
+            xargs -0 sha256sum | \
+            cut -d ' ' -f 1 | \
+            sha256sum | \
+            cut -d ' ' -f 1)
+          set +x
+          echo "artifacts=$SHA256_OUTPUT" >> $GITHUB_OUTPUT
+  
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: './dist'
 
   deploy:
+    if: vars.RECENT_ARTIFACTS_SHA256 != needs.build.outputs.artifacts_sha256
     needs: 
       - build
     environment:
@@ -52,11 +69,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
+
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app_id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
+          private_key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
+
+      - name: Set new sha256 to variable
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh variable set RECENT_ARTIFACTS_SHA256 --body ${{ needs.build.outputs.artifacts_sha256 }} 
 
   call-scraping-workflow:
     needs:

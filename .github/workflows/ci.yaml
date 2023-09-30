@@ -38,6 +38,25 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Calcurate hash
+        run: |
+          set -x
+          SHA256_OUTPUT=$(find ./dist -type f -print0 | \
+            sort -z | \
+            xargs -0 sha256sum | \
+            cut -d ' ' -f 1 | \
+            sha256sum | \
+            cut -d ' ' -f 1)
+          set +x
+          echo $SHA256_OUTPUT
+          if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
+            echo "### No changes in artifacts" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Changes in artifacts" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "Recent SHA256: ${{ vars.RECENT_ARTIFACTS_SHA256 }}" >> $GITHUB_STEP_SUMMARY
+          echo "Now SHA256: $SHA256_OUTPUT" >> $GITHUB_STEP_SUMMARY
+
   unit-test:
     name: "Test [Unit]"
     runs-on: ubuntu-latest
