@@ -27,7 +27,10 @@ const twitterCardType = Astro.props.head.ogpUrl
   : 'summary';
 const ogpUrl = Astro.props.head.ogpUrl
   ? Astro.props.head.ogpUrl
-  : path.join('https://korosuke613.dev/', 'assets/images/my_icon_2.png');
+  : new URL(
+      'assets/images/my_icon_2.png',
+      'https://korosuke613.dev/',
+    ).toString();
 
 const rssLink = path.join(AppConfig.base, 'rss.xml');
 const faviconLink = path.join(AppConfig.base, 'favicon.ico');
