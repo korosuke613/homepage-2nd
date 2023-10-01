@@ -16,6 +16,11 @@ type IContentProps = {
 };
 
 const Content: React.FC<IContentProps> = (props: IContentProps) => {
+  const contentUrl = new URL(
+    `${props.content.collection}/${props.content.slug}`,
+    `https://${AppConfig.publish_domain}`,
+  ).href;
+
   return (
     <div>
       {props.content.data.imgSrc && (
@@ -39,7 +44,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
       </div>
       <br />
       <div className="flex flex-wrap justify-end gap-2">
-        <TweetButton />
+        <TweetButton text={props.content.data.title} url={contentUrl} />
         <EditGitHub
           id={props.content.id}
           collection={props.content.collection}
