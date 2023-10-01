@@ -5,6 +5,7 @@ import type { CollectionEntry } from "astro:content";
 
 import { EditGitHub } from "@/components/EditGitHub";
 import { Toc } from "@/components/Toc";
+import { TweetButton } from "@/components/TweetButton";
 import { AppConfig } from "@/utils/AppConfig";
 
 type IContentProps = {
@@ -37,7 +38,13 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
         {props.children}
       </div>
       <br />
-      <EditGitHub id={props.content.id} collection={props.content.collection} />
+      <div className="flex flex-wrap justify-end gap-2">
+        <TweetButton />
+        <EditGitHub
+          id={props.content.id}
+          collection={props.content.collection}
+        />
+      </div>
     </div>
   );
 };
