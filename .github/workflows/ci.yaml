@@ -80,14 +80,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
+
       - name: Install dependencies
-        run: npm ci
+        id: npm-install
+        run: |
+          npm ci
+          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          restore-keys: playwright-
+
+      - name: Install playwright
+        run: npx playwright install chromium --with-deps
+
       - name: E2E testing
         run: npm run test:playwright-e2e
+  
       - name: Test Summary
         uses: test-summary/action@v2
         with:
@@ -98,14 +117,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
+
       - name: Install dependencies
-        run: npm ci
+        id: npm-install
+        run: |
+          npm ci
+          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          restore-keys: playwright-
+  
+      - name: Install playwright
+        run: npx playwright install chromium --with-deps
+
       - name: Component testing
         run: npm run test:playwright-ct
+
       - name: Test Summary
         uses: test-summary/action@v2
         with:
