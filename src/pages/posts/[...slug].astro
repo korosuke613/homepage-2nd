@@ -39,11 +39,7 @@ const filePath = `src/content/posts/${entry.id}`;
 const histories = await getCommitHistories(filePath);
 
 const ogpUrl = entry.data.imgSrc
-  ? path.join(
-      'https://raw.githubusercontent.com',
-      'korosuke613/homepage-2nd/main/public',
-      entry.data.imgSrc,
-    )
+  ? path.join('https://korosuke613.dev/', entry.data.imgSrc)
   : undefined;
 ---
 
