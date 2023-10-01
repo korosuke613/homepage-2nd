@@ -67,12 +67,19 @@ const similars = getSimilarPosts(
 );
 const filePath = 'src/pages/posts/dormitory_introduction.astro';
 const histories = await getCommitHistories(filePath);
+
+const ogpUrl = path.join(
+  'https://raw.githubusercontent.com',
+  'korosuke613/homepage-2nd/main/public',
+  Static.DormitoryIntroduction.data.imgSrc!,
+);
 ---
 
 <Base
   head={{
     title,
     description: Static.DormitoryIntroduction.data.description!,
+    ogpUrl,
   }}
 >
   <ContentPost
