@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.tool-versions'
@@ -49,7 +52,16 @@ jobs:
             cut -d ' ' -f 1)
           set +x
           echo $SHA256_OUTPUT
-          echo "Now SHA256: $SHA256_OUTPUT" >> $GITHUB_STEP_SUMMARY
+
+          if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
+            echo "### ✅ No change to the artifacts" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ Changes to the artifacts" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "||SHA256|" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "|Recent deployed|\`${{ vars.RECENT_ARTIFACTS_SHA256 }}\`|" >> $GITHUB_STEP_SUMMARY
+          echo "|This build|\`${SHA256_OUTPUT}\`|" >> $GITHUB_STEP_SUMMARY
 
   unit-test:
     name: "Test [Unit]"
