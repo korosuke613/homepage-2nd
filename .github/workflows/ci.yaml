@@ -17,18 +17,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: oven-sh/setup-bun@v1
+
       - name: Install dependencies
         run: bun install
+
       - run: bun run lint
 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: oven-sh/setup-bun@v1
+
       - name: Install dependencies
         run: bun install
+
       - name: Build
         run: bun run build
 
@@ -50,16 +56,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: oven-sh/setup-bun@v1
+
       - name: Install dependencies
         run: bun install
+
       - name: Unit testing
         run: bun run test:unit
+
       - name: Test Summary
         uses: test-summary/action@v2
         with:
           paths: "test-results/unit.xml"
         if: always()
+
       - uses: codecov/codecov-action@v3
         with:
           flags: unittests
@@ -72,16 +83,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.tool-versions'
-          cache: 'npm'
+      - uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
-        id: npm-install
+        id: install-deps
         run: |
-          npm ci
-          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          bun install
+          PLAYWRIGHT_VERSION=$(jq '.devDependencies["@playwright/test"]' --raw-output package.json)
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
@@ -89,14 +97,14 @@ jobs:
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          key: playwright-${{ steps.install-deps.outputs.PLAYWRIGHT_VERSION }}
           restore-keys: playwright-
 
       - name: Install playwright
-        run: npx playwright install chromium --with-deps
+        run: bunx playwright install chromium --with-deps
 
       - name: E2E testing
-        run: npm run test:playwright-e2e
+        run: bun run test:playwright-e2e
   
       - name: Test Summary
         uses: test-summary/action@v2
@@ -109,16 +117,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.tool-versions'
-          cache: 'npm'
+      - uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
-        id: npm-install
+        id: install-deps
         run: |
-          npm ci
-          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          bun install
+          PLAYWRIGHT_VERSION=$(jq '.devDependencies["@playwright/test"]' --raw-output package.json)
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
@@ -126,14 +131,14 @@ jobs:
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          key: playwright-${{ steps.install-deps.outputs.PLAYWRIGHT_VERSION }}
           restore-keys: playwright-
   
       - name: Install playwright
-        run: npx playwright install chromium --with-deps
+        run: bunx playwright install chromium --with-deps
 
       - name: Component testing
-        run: npm run test:playwright-ct
+        run: bun run test:playwright-ct
 
       - name: Test Summary
         uses: test-summary/action@v2
@@ -147,11 +152,13 @@ jobs:
         working-directory: tools
     steps: 
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
           cache-dependency-path: 'tools/package-lock.json'
+
       - name: Install dependencies
         run: npm ci
 
