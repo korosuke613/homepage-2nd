@@ -14,12 +14,23 @@ export interface Props {
   head: {
     title: string;
     description: string;
+    ogpUrl?: string;
   };
 }
 
 const {
   head: { title, description },
 } = Astro.props as Props;
+
+const twitterCardType = Astro.props.head.ogpUrl
+  ? 'summary_large_image'
+  : 'summary';
+const ogpUrl = Astro.props.head.ogpUrl
+  ? Astro.props.head.ogpUrl
+  : path.join(
+      'https://raw.githubusercontent.com',
+      'korosuke613/homepage-2nd/main/public/assets/images/my_icon_2.png',
+    );
 
 const rssLink = path.join(AppConfig.base, 'rss.xml');
 const faviconLink = path.join(AppConfig.base, 'favicon.ico');
@@ -44,6 +55,11 @@ const faviconLink = path.join(AppConfig.base, 'favicon.ico');
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={AppConfig.author} />
+    <meta name="twitter:card" content={twitterCardType} />
+    <meta name="twitter:site" content="shitimi_613" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogpUrl} />
 
     <link rel="alternate" type="application/rss+xml" href={rssLink} />
     <link rel="icon" type="image/x-icon" href={faviconLink} />
