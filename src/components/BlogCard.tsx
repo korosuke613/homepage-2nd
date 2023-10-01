@@ -15,8 +15,11 @@ type IBlogCard = {
 
 export const BlogCard = (props: IBlogCard) => {
   return (
-    <div className="overflow-hidden rounded-md bg-slate-800 bg-gradient-to-br from-violet-900 backdrop-blur-lg">
-      <div style={CardClass}>
+    <div
+      key={props.elt.id}
+      className="overflow-hidden rounded-md bg-slate-800 bg-gradient-to-br from-violet-900 backdrop-blur-lg"
+    >
+      <div key={props.elt.title} style={CardClass}>
         <ExternalLink
           title={
             <img
@@ -28,11 +31,11 @@ export const BlogCard = (props: IBlogCard) => {
           url={props.elt.url}
         />
       </div>
-      <div className="inset-0 flex flex-col justify-center">
-        <div className="px-3 py-1.5">
+      <div key={props.elt.id} className="inset-0 flex flex-col justify-center">
+        <div key={props.elt.id} className="px-3 py-1.5">
           <ExternalLink
             title={
-              <div>
+              <div key={props.elt.id}>
                 <span className="text-base font-semibold">
                   {transformTitleForContentCard(props.elt.title)}
                 </span>
@@ -45,13 +48,16 @@ export const BlogCard = (props: IBlogCard) => {
             url={props.elt.url}
             noClass={true}
           />
-          <div className="mt-1 flex flex-wrap gap-2">
+          <div
+            key={`${props.elt.id}-tags`}
+            className="mt-1 flex flex-wrap gap-2"
+          >
             {Object.keys(props.tags).map((tagName) => {
               if (props.tags?.[tagName] === undefined) {
                 throw new Error("Tags don't match");
               }
               if (!props.elt.category.includes(tagName)) {
-                return <></>;
+                return;
               }
               return (
                 <Tag
