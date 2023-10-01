@@ -1,23 +1,34 @@
-export const TweetButton = () => {
+import { BsTwitter } from "react-icons/bs/index";
+
+type ITweetButtonProps = {
+  text: string;
+  url: string;
+};
+
+export const TweetButton = (props: ITweetButtonProps) => {
+  const url = new URL("https://twitter.com/intent/tweet");
+  const params = new URLSearchParams({
+    hashtags: "korosuke613dev",
+    text: props.text,
+    url: props.url,
+    related: "shitimi_613",
+  });
+  const href = `${url.href}?${params.toString()}`;
+
   return (
-    <>
-      <a
-        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-        className="twitter-share-button"
-        data-hashtags="korosuke613dev"
-        data-lang="en"
-        data-dnt="true"
-        data-show-count="false"
-        data-size="large"
+    <a
+      style={{ height: "fit-content" }}
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <button
+        type="button"
+        style={{ backgroundColor: "#00acee" }}
+        className="rounded-lg px-2.5 py-0.5 text-sm"
       >
-        Tweet
-      </a>
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        // @ts-ignore
-        charset="utf-8"
-      />
-    </>
+        <BsTwitter size="16px" className="inline-block pb-0.5" /> Tweet
+      </button>
+    </a>
   );
 };

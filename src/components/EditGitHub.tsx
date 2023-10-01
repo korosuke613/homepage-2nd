@@ -26,7 +26,7 @@ export const EditGitHub = (props: IEditGitHubProps) => {
         type="button"
         className="rounded-lg bg-violet-900 px-2.5 py-0.5 text-sm"
       >
-        <BsGithub size="24px" className="inline-block pb-0.5" /> GitHub
+        <BsGithub size="16px" className="inline-block pb-0.5" /> GitHub
         で編集する
       </button>
     </a>
