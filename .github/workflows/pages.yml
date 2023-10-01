@@ -31,15 +31,15 @@ jobs:
       - uses: actions/checkout@v4
         with: 
           fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: '.tool-versions'
-          cache: 'npm'
+
+      - uses: oven-sh/setup-bun@v1
+
       - name: Install dependencies
-        run: npm ci
+        run: bun install
+
       - name: Build
         run: |
-          npm run build
+          bun run build
 
       - name: Calcurate hash
         id: sha256

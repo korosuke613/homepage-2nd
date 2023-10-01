@@ -22,7 +22,7 @@
 
     // auto merge devDependencies 
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["patch"],
       "groupName": "npm-dev-patch",
@@ -30,7 +30,7 @@
       "automerge": true
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["minor"],
       "groupName": "npm-dev-minor",
@@ -38,7 +38,7 @@
       "automerge": true
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["major"],
       "groupName": "npm-dev-major",
@@ -48,7 +48,7 @@
 
     // linters
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchPackagePatterns": [
         "^eslint",
@@ -65,14 +65,14 @@
 
     // dependencies
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchDepTypes": ["dependencies"],
       "groupName": "npm-root",
       "schedule": ["after 3am on Tuesday"]
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["major"],
       "matchDepTypes": ["dependencies"],
@@ -80,7 +80,7 @@
       "schedule": ["after 3am on the 2nd day of the month"]
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["minor"],
       "matchDepTypes": ["dependencies"],
@@ -88,7 +88,7 @@
       "schedule": ["after 3am on Wednesday"]
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchPackagePatterns": ["^astro", "^@astro"],  
       "separateMajorMinor": false,
@@ -96,7 +96,7 @@
       "schedule": ["after 3am on the 3rd day of the month"]
     },
     {
-      "matchManagers": ["npm"],
+      "matchManagers": ["bun"],
       "matchPaths": ["+(package.json)"],
       "matchUpdateTypes": ["patch"],
       "matchDepTypes": ["dependencies"],
