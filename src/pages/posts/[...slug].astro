@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-import * as path from 'node:path';
 import { ContentPost } from '@/partials/ContentPost';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
@@ -39,7 +38,7 @@ const filePath = `src/content/posts/${entry.id}`;
 const histories = await getCommitHistories(filePath);
 
 const ogpUrl = entry.data.imgSrc
-  ? path.join('https://korosuke613.dev/', entry.data.imgSrc)
+  ? new URL(entry.data.imgSrc, 'https://korosuke613.dev/').toString()
   : undefined;
 ---
 

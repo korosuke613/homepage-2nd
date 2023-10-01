@@ -68,10 +68,10 @@ const similars = getSimilarPosts(
 const filePath = 'src/pages/posts/dormitory_introduction.astro';
 const histories = await getCommitHistories(filePath);
 
-const ogpUrl = path.join(
-  'https://korosuke613.dev/',
+const ogpUrl = new URL(
   Static.DormitoryIntroduction.data.imgSrc!,
-);
+  'https://korosuke613.dev/',
+).toString();
 ---
 
 <Base
