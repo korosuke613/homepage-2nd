@@ -21,7 +21,7 @@ tags:
 ## プルリクエストと解説
 - [feat: improve twitter by korosuke613 · Pull Request #337 · korosuke613/homepage-2nd](https://github.com/korosuke613/homepage-2nd/pull/337)
   - `twitter:card` などの Twitter OGP 関連のメタタグを設置
-  - ついでにツイートボタンを設置
+  - ついでにツイートボタン[^tweet]を設置
 - [fix: twitter ogp by korosuke613 · Pull Request #338 · korosuke613/homepage-2nd](https://github.com/korosuke613/homepage-2nd/pull/338)
   - ogp の画像がうまく表示されないので `korosuke613.dev` から画像を読むように修正
   - `twitter:image` などを `og:image` といった汎用的なものに変更
