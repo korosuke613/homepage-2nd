@@ -14,7 +14,9 @@ tags:
 各記事ページに Tweet ボタンを設置しました。記事下部にあります。
 ついでに OGP 対応しました。
 
-<iframe width="720" height="480" src="https://www.youtube.com/embed/dxmM2yeAiLw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div style="width: 100%; aspect-ratio: 4/3;">
+<iframe style="width: 100%; height: 100%;" width="640" height="480" src="https://www.youtube.com/embed/dxmM2yeAiLw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 ## プルリクエストと解説
 - [feat: improve twitter by korosuke613 · Pull Request #337 · korosuke613/homepage-2nd](https://github.com/korosuke613/homepage-2nd/pull/337)
