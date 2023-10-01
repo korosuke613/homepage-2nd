@@ -27,10 +27,7 @@ const twitterCardType = Astro.props.head.ogpUrl
   : 'summary';
 const ogpUrl = Astro.props.head.ogpUrl
   ? Astro.props.head.ogpUrl
-  : path.join(
-      'https://raw.githubusercontent.com',
-      'korosuke613/homepage-2nd/main/public/assets/images/my_icon_2.png',
-    );
+  : path.join('https://korosuke613.dev/', 'assets/images/my_icon_2.png');
 
 const rssLink = path.join(AppConfig.base, 'rss.xml');
 const faviconLink = path.join(AppConfig.base, 'favicon.ico');
@@ -57,9 +54,9 @@ const faviconLink = path.join(AppConfig.base, 'favicon.ico');
     <meta name="author" content={AppConfig.author} />
     <meta name="twitter:card" content={twitterCardType} />
     <meta name="twitter:site" content="shitimi_613" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogpUrl} />
+    <meta name="og:title" content={title} />
+    <meta name="og:description" content={description} />
+    <meta name="og:image" content={ogpUrl} />
 
     <link rel="alternate" type="application/rss+xml" href={rssLink} />
     <link rel="icon" type="image/x-icon" href={faviconLink} />
