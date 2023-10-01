@@ -71,7 +71,7 @@ jobs:
             # プルリクエストが存在する、かつ、マージ済みでない
             gh pr edit --title "chore: update blogs data (${{ env.commit_datetime }})" 
           else
-            gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --body ""
+            gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --reviewer korosuke613 --body ""
           fi
 
       - name: Create job summary
@@ -83,12 +83,6 @@ jobs:
           '## Create {{printf "#%v" .number}} {{.title}}
           {{.url}}
           ' >> $GITHUB_STEP_SUMMARY
-
-      - name: Setting auto merge
-        if: env.is_files_changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge --merge --auto
 
       - uses: Kesin11/actions-timeline@v1
 
