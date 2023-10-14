@@ -19,7 +19,7 @@ export const DormitoryIntroduction: StaticPost = {
     description: "宮崎大学の寮の一つ、国際交流宿舎を紹介するページです。",
     pubDate: new Date("2017-08-21T00:00:00Z"),
     order: 4,
-    imgSrc: "/assets/images/dormitory/dormitory.webp",
+    imgSrc: "/assets/images/cover/dormitory.webp",
     imgAlt: "string",
     tags: ["Pickup ⭐️", "大学"],
     draft: false,
