@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2023-09-29T23:21:37.207Z",
+  "lastUpdated": "2023-11-07T23:22:14.619Z",
   "articles": {
     "d7367ec10a8d04": {
       "title": "ホームページ更新",
@@ -148,6 +148,10 @@
     "715b228a9c81b2": {
       "title": "Kesin11/actions-timeline を使ってみる",
       "pubDate": "2023-09-29T04:36:54.000Z"
+    },
+    "f3e0d86fc2a5c8": {
+      "title": "Spring 入門ログ",
+      "pubDate": "2023-11-07T12:08:38.000Z"
     }
   }
 }
