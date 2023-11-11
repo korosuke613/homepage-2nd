@@ -40,12 +40,14 @@ const histories = await getCommitHistories(filePath);
 const ogpUrl = entry.data.imgSrc
   ? new URL(entry.data.imgSrc, 'https://korosuke613.dev/').toString()
   : undefined;
+
+const description = entry.data.description || '';
 ---
 
 <Base
   head={{
     title,
-    description: entry.data.description,
+    description,
     ogpUrl,
   }}
 >
