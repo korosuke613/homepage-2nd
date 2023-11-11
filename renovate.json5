@@ -1,58 +1,53 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: ["github>korosuke613/renovate-config"],
-  "packageRules": [
-    // The rules below take precedence.
-
-    // tools
+  packageRules: [
     {
-      "matchManagers": ["npm"],
-      "matchPaths": ["tools/package.json"],
-      "groupName": "npm-tools",
-      "schedule": ["after 3am on Monday"],
-      "automerge": true
-    },
-
-    // dependencies
-    {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "npm-root",
-      "schedule": ["after 3am on Tuesday"]
+      matchManagers: ["npm"],
+      matchFileNames: ["tools/package.json"],
+      groupName: "npm-tools",
+      schedule: ["after 3am on Monday"],
+      automerge: true,
     },
     {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["major"],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "npm-root-major",
-      "schedule": ["after 3am on the 2nd day of the month"]
+      matchManagers: ["npm"],
+      matchFileNames: ["+(package.json)"],
+      matchDepTypes: ["dependencies"],
+      groupName: "npm-root",
+      schedule: ["after 3am on Tuesday"],
     },
     {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["minor"],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "npm-root-minor",
-      "schedule": ["after 3am on Wednesday"]
+      matchManagers: ["npm"],
+      matchFileNames: ["+(package.json)"],
+      matchUpdateTypes: ["major"],
+      matchDepTypes: ["dependencies"],
+      groupName: "npm-root-major",
+      schedule: ["after 3am on the 2nd day of the month"],
     },
     {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchPackagePatterns": ["^astro", "^@astro"],  
-      "separateMajorMinor": false,
-      "groupName": "npm-root-astro-without-patch",
-      "schedule": ["after 3am on the 3rd day of the month"]
+      matchManagers: ["npm"],
+      matchFileNames: ["+(package.json)"],
+      matchUpdateTypes: ["minor"],
+      matchDepTypes: ["dependencies"],
+      groupName: "npm-root-minor",
+      schedule: ["after 3am on Wednesday"],
     },
     {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["patch"],
-      "matchDepTypes": ["dependencies"],
-      "groupName": "npm-root-patch",
-      "schedule": ["after 3am on Thursday"],
-      "automerge": true
-    }
-  ]
+      matchManagers: ["npm"],
+      matchFileNames: ["+(package.json)"],
+      matchPackagePatterns: ["^astro", "^@astro"],
+      separateMajorMinor: false,
+      groupName: "npm-root-astro-without-patch",
+      schedule: ["after 3am on the 3rd day of the month"],
+    },
+    {
+      matchManagers: ["npm"],
+      matchFileNames: ["+(package.json)"],
+      matchUpdateTypes: ["patch"],
+      matchDepTypes: ["dependencies"],
+      groupName: "npm-root-patch",
+      schedule: ["after 3am on Thursday"],
+      automerge: true,
+    },
+  ],
 }
