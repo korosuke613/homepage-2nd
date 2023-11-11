@@ -89,10 +89,10 @@ const generateTags = async (tagJson, tagNames) => {
   // tagに一意のColorTagsを設定する
   // もしColorTagsが枯渇したら再度ColorTagsの中からcolorを渡す
   // すでに設定されているtagはそのまま使う
-  tagNames.forEach((tagName) => {
+  for (const tagName of tagNames) {
     if (tagJson[tagName] !== undefined) {
       tags[tagName] = tagJson[tagName];
-      return;
+      continue;
     }
     if (allColors.length === 0) {
       tags[tagName] = pickColor(Object.values(ColorTags));
@@ -102,7 +102,7 @@ const generateTags = async (tagJson, tagNames) => {
     } else {
       tags[tagName] = pickColor(allColors);
     }
-  });
+  }
 
   return tags;
 };
@@ -180,13 +180,13 @@ const getBlogData = async () => {
   /** @type {string[]} */
   let tagNames = [];
   const years = [];
-  Object.keys(articles).forEach((a) => {
+  for (const a of Object.keys(articles)) {
     if (articles[a].category !== undefined) {
       tagNames = tagNames.concat(articles[a].category);
     }
     const year = new Date(articles[a].pubDate).getFullYear();
     years.push(year);
-  });
+  }
 
   const uniqTagNames = Array.from(new Set(tagNames));
   const uniqYears = Array.from(new Set(years));

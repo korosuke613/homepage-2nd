@@ -74,13 +74,13 @@ export const generateTags = (tagNames: string[]) => {
 
   // tagに一意のColorTagsを設定する
   // もしColorTagsが枯渇したら再度ColorTagsの中からcolorを渡す
-  tagNames.forEach((tagName) => {
+  for (const tagName of tagNames) {
     if (allColors.length === 0) {
       tags[tagName] = pickColor(Object.values(ColorTags));
     } else {
       tags[tagName] = pickColor(allColors);
     }
-  });
+  }
 
   return tags;
 };

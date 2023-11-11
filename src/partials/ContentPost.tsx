@@ -25,11 +25,11 @@ type IContentPostProps = {
 
 export const ContentPost = (props: IContentPostProps) => {
   const tags: Tags = {};
-  props.frontmatter.data.tags.forEach((t) => {
+  for (const t of props.frontmatter.data.tags) {
     const tagInfo = props.tags[t];
-    if (tagInfo === undefined) return;
+    if (tagInfo === undefined) continue;
     tags[t] = tagInfo;
-  });
+  }
 
   const maxCharWidth = "max-w-[80ch]";
 
