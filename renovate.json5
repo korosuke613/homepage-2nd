@@ -1,12 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
-    ":label(renovate)", // https://docs.renovatebot.com/presets-default/#labelarg0
-    ":timezone(Asia/Tokyo)",
-    ":enableVulnerabilityAlertsWithLabel(security)", // Raise PR when vulnerability alerts are detected with label security.
-    ":semanticCommitTypeAll(chore)", // If semantic commits detected, use semantic commit type chore for all
-    "schedule:weekly"
+    "github>ganta/renovate-config:renovate.json5"
   ],
   "packageRules": [
     // The rules below take precedence.
@@ -17,49 +12,6 @@
       "matchPaths": ["tools/package.json"],
       "groupName": "npm-tools",
       "schedule": ["after 3am on Monday"],
-      "automerge": true
-    },
-
-    // auto merge devDependencies 
-    {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["patch"],
-      "groupName": "npm-dev-patch",
-      "matchDepTypes": ["devDependencies"],
-      "automerge": true
-    },
-    {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["minor"],
-      "groupName": "npm-dev-minor",
-      "matchDepTypes": ["devDependencies"],
-      "automerge": true
-    },
-    {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchUpdateTypes": ["major"],
-      "groupName": "npm-dev-major",
-      "matchDepTypes": ["devDependencies"],
-      "automerge": true
-    },
-
-    // linters
-    {
-      "matchManagers": ["npm"],
-      "matchPaths": ["+(package.json)"],
-      "matchPackagePatterns": [
-        "^eslint",
-        "^eslint-*",
-        "^@typescript-eslint/*",
-        "^prettier",
-        "^prettier-*"
-      ],
-      "separateMajorMinor": false,
-      "groupName": "npm-linters",
-      "matchDepTypes": ["devDependencies"],
       "automerge": true
     },
 
