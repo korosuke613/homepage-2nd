@@ -19,5 +19,5 @@ jobs:
         with:
           config-file: renovate.json5
 
-      - uses: Kesin11/actions-timeline@6aeaf437ef4d950e33d045805e2c0435f0f4ff13 # v1
+      - uses: Kesin11/actions-timeline@6aeaf437ef4d950e33d045805e2c0435f0f4ff13 # v1.0.1
 
