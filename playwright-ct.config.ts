@@ -31,7 +31,7 @@ export default defineConfig({
     ctPort: 3100,
 
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "http://localhost:3000/",
+    // baseURL: "http://localhost:3000/",
     ctViteConfig: {
       resolve: {
         alias: {
