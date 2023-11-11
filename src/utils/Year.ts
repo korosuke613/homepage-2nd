@@ -9,9 +9,9 @@ export const readYears = async (filePath = AppConfig.paths.generated.years) => {
     blogs: number[];
   };
 
-  Object.keys(years).forEach((category) => {
+  for (const category of Object.keys(years)) {
     years[category]?.sort((a, b) => b - a);
-  });
+  }
 
   return years;
 };

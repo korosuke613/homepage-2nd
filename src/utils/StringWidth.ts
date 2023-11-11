@@ -34,20 +34,20 @@ export default function getStringInfo(originStr: string): StringInfo {
   const singleByteWidth = 1;
   const ambiguousCharacterWidth = 1;
 
-  Array.from(str).forEach((character) => {
+  for (const character of str) {
     const codePoint = character.codePointAt(0);
     if (!codePoint) {
-      return;
+      continue;
     }
 
     // Ignore control characters
     if (codePoint <= 0x1f || (codePoint >= 0x7f && codePoint <= 0x9f)) {
-      return;
+      continue;
     }
 
     // Ignore combining characters
     if (codePoint >= 0x300 && codePoint <= 0x36f) {
-      return;
+      continue;
     }
 
     const code = eastAsianWidth.eastAsianWidth(character);
@@ -68,7 +68,7 @@ export default function getStringInfo(originStr: string): StringInfo {
         stringInfo.width += singleByteWidth;
         stringInfo.chars.push({ char: character, width: singleByteWidth });
     }
-  });
+  }
 
   return stringInfo;
 }

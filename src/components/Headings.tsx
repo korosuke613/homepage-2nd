@@ -7,9 +7,9 @@ export const convertMarkdownHeadingsToObject = (
     [key: string]: MarkdownHeading;
   } = {};
 
-  headings.forEach((h) => {
+  for (const h of headings) {
     obj[h.slug] = h;
-  });
+  }
 
   return obj;
 };

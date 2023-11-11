@@ -134,7 +134,7 @@ export const MyIcon = (props: IMyIconProps) => {
           break;
       }
     },
-    [isNoLimit, keyString],
+    [isNoLimit, keyString, props.iconId],
   );
 
   useEffect(() => {
