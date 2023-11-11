@@ -29,7 +29,7 @@ jobs:
           echo "last_month=$first_day..$last_day" >> "$GITHUB_OUTPUT"
 
       - name: Run issue-metrics tool
-        uses: github/issue-metrics@v2
+        uses: github/issue-metrics@6bc5254e72971dbb7462db077779f1643f772afd # v2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ワークフロー実行リポジトリで
@@ -44,4 +44,4 @@ jobs:
           issue-number: 251 # 最初に作った Issue を更新する。https://github.com/korosuke613/homepage-2nd/issues/251
           content-filepath: ./issue_metrics.md
 
-      - uses: Kesin11/actions-timeline@v1
+      - uses: Kesin11/actions-timeline@6aeaf437ef4d950e33d045805e2c0435f0f4ff13 # v1
