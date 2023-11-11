@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>ganta/renovate-config:renovate.json5"
-  ],
+  extends: ["github>korosuke613/renovate-config"],
   "packageRules": [
     // The rules below take precedence.
 
