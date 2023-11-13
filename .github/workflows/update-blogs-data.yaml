@@ -2,7 +2,7 @@ name: Update blogs data
 
 on:
   schedule:
-    - cron: '18 23 * * *' # 毎日朝 8 時 18 分（JST）
+    - cron: '20 14 * * *' # 毎日 23 時 20 分（JST）
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
