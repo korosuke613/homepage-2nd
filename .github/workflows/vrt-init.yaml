@@ -1,0 +1,11 @@
+name: VRT init
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  vrt-init:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, world!"
