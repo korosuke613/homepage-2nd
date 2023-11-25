@@ -1,0 +1,114 @@
+name: VRT regression
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  actions-timeline:
+    needs: [changed-content, vrt-regression-test]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    steps:
+      - uses: Kesin11/actions-timeline@37c6155f2e2fc1a056abe1108c9ca61975a6e4f8 # v2.0.0
+
+  changed-content:
+    runs-on: ubuntu-latest
+    name: Test changed-files
+    outputs:
+      chenged_content: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
+
+      - name: Get changed contents
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files_yaml: |
+            blogs:
+              - public/assets/*.json
+            contents:
+              - src/content/posts/**
+
+      - name: Print changed files
+        run: |
+          echo ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+
+
+  vrt-regression-test:
+    name: "Test [Visual Regression]"
+    runs-on: ubuntu-latest
+    needs: changed-content
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+
+      - name: Install dependencies
+        id: npm-install
+        run: |
+          npm ci
+          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          restore-keys: playwright-
+  
+      - name: Install playwright
+        run: npx playwright install chromium --with-deps
+
+      - name: Cache VRT snapshots
+        uses: actions/cache@v3
+        id: vrt-cache
+        with:
+          path: src/tests/vrt/snapshots
+          key: vrt-${{ vars.RECENT_ARTIFACTS_SHA256 }}
+          restore-keys: vrt-
+
+      - name: Check snapshot exists
+        run: |
+          if [[ -z "$(ls -A src/tests/vrt/snapshots)" ]]; then
+            echo "### ⚠️ No snapshot exists" >> $GITHUB_STEP_SUMMARY
+            npm run vrt:init
+          else
+            echo "### ✅ Snapshot exists" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Visual regression testing
+        run: |
+          if [[ -z "${{ needs.changed-content.outputs.chenged_content }}" ]]; then
+            # コンテンツの変更がない
+            npm run vrt:regression -- --retries=3 --grep="update dependencies"
+          else
+            # コンテンツの変更がある
+            npm run vrt:regression -- --retries=3 --grep="add contents"
+          fi
+
+      - name: Upload failed screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: vrt-failed-screenshots-${{ github.sha }}
+          path: test-results
+
+      - name: Test Summary
+        if: always()
+        uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
+        with:
+          paths: "test-results/vrt.xml"

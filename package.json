@@ -19,7 +19,9 @@
     "test": "concurrently -P npm:test:*",
     "test:playwright-ct": "playwright test -c playwright-ct.config.ts",
     "test:playwright-e2e": "playwright test -c playwright-e2e.config.ts",
-    "test:unit": "jest --ci"
+    "test:unit": "jest --ci",
+    "vrt:init": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/init.spec.ts",
+    "vrt:regression": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/regression.spec.ts"
   },
   "dependencies": {
     "@astrojs/check": "0.3.1",

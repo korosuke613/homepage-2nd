@@ -157,6 +157,7 @@ jobs:
         run: npm run test:playwright-ct
 
       - name: Test Summary
+        if: always()
         uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
         with:
           paths: "test-results/ct.xml"

@@ -71,6 +71,8 @@ const ogpUrl = new URL(
   Static.DormitoryIntroduction.data.imgSrc!,
   'https://korosuke613.dev/',
 ).toString();
+
+const imgLoading = process.env.IS_TESTING ? 'eager' : 'lazy';
 ---
 
 <Base
@@ -141,16 +143,19 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/room1.webp')}
         formats={['avif', 'webp']}
         alt="細長い通路の奥に6畳ほどの部屋"
+        loading={imgLoading}
       />
       <Picture
         src={import('../images/dormitory/room2.webp')}
         formats={['avif', 'webp']}
         alt="机、本棚、クローゼット、ベッドが並んでいる。部屋の1/3を埋めている"
+        loading={imgLoading}
       />
       <Picture
         src={import('../images/dormitory/toile.webp')}
         formats={['avif', 'webp']}
         alt="トイレと洗面台、鏡"
+        loading={imgLoading}
       />
     </div>
 
@@ -167,6 +172,7 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/hosyoku.webp')}
         formats={['avif', 'webp']}
         alt="部屋の3倍ほど広い部屋に8人掛けの机と椅子がある"
+        loading={imgLoading}
       />
       <div>
         <p>補食室はご飯を食べたり個人の料理用品を置いたりするスペースです。</p>
@@ -182,6 +188,7 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/kitchen.webp')}
         formats={['avif', 'webp']}
         alt="コンロ、冷蔵庫等が壁際にあり、真ん中に高脚机がある"
+        loading={imgLoading}
       />
       <div>
         <p>
@@ -204,6 +211,7 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/danwa.webp')}
         formats={['avif', 'webp']}
         alt="本棚二つの上にテレビ。腰掛け椅子の前に細長机、冷蔵庫"
+        loading={imgLoading}
       />
       <div>
         <p>
@@ -219,6 +227,7 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/sentaku.webp')}
         formats={['avif', 'webp']}
         alt="洗濯機の上に乾燥機が乗っている。それが3台並んでいる"
+        loading={imgLoading}
       />
       <div>
         <p>
@@ -234,16 +243,19 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/huroba.webp')}
         formats={['avif', 'webp']}
         alt="人1.5人分くらいの幅の廊下。個室ごとに扉がついている。"
+        loading={imgLoading}
       />
       <Picture
         src={import('../images/dormitory/shower.webp')}
         formats={['avif', 'webp']}
         alt="シャワー室の部屋。シャワーと脱衣所は分かれている"
+        loading={imgLoading}
       />
       <Picture
         src={import('../images/dormitory/bath.webp')}
         formats={['avif', 'webp']}
         alt="浴室の部屋。浴室と脱衣所は分かれている"
+        loading={imgLoading}
       />
     </div>
 
@@ -258,11 +270,13 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/elevetor.webp')}
         formats={['avif', 'webp']}
         alt="廊下の真ん中にエレベータ"
+        loading={imgLoading}
       />
       <Picture
         src={import('../images/dormitory/whiteboard.webp')}
         formats={['avif', 'webp']}
         alt="廊下の真ん中にホワイトボード。部屋と部屋の間にある"
+        loading={imgLoading}
       />
     </div>
 
@@ -276,6 +290,7 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/elevetor2.webp')}
         formats={['avif', 'webp']}
         alt="エレベータの中。奥に鏡がついている。手すりがついている"
+        loading={imgLoading}
       />
 
       <div>
@@ -292,12 +307,14 @@ const ogpUrl = new URL(
         src={import('../images/dormitory/genkan.webp')}
         formats={['avif', 'webp']}
         alt="外から見た玄関。奥にエレベータと階段が並んでいる"
+        loading={imgLoading}
       />
 
       <Picture
         src={import('../images/dormitory/genkan2.webp')}
         formats={['avif', 'webp']}
         alt="エレベータ側から見た玄関。扉が重そう"
+        loading={imgLoading}
       />
     </div>
 
@@ -310,6 +327,7 @@ const ogpUrl = new URL(
       src={import('../images/dormitory/map.webp')}
       formats={['avif', 'webp']}
       alt="寮から徒歩5分圏内の地図。駐輪場、マックスバリュー、ジョイフル、郵便局、セブンイレブンがある"
+      loading={imgLoading}
     />
     <p>寮から徒歩5分圏内の地図です。</p>
 
@@ -327,6 +345,7 @@ const ogpUrl = new URL(
           src={import('../images/dormitory/parking.webp')}
           formats={['avif', 'webp']}
           alt="駐車場の画像。砂利の上に適当に車が止まっている"
+          loading={imgLoading}
         />
         <p>駐車場</p>
       </div>
@@ -335,6 +354,7 @@ const ogpUrl = new URL(
           src={import('../images/dormitory/parking2.webp')}
           formats={['avif', 'webp']}
           alt="駐輪場の画像。自転車がたくさん止まっており、置き場には屋根がついている"
+          loading={imgLoading}
         />
         <p>駐輪場</p>
       </div>

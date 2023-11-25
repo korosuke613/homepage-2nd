@@ -1,22 +1,16 @@
-name: VRT init
+name: Cache
 
 on:
-  workflow_call:
-    inputs:
-      sha:
-        type: string
-        required: true
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  vrt-init:
+  cache:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: 
-          fetch-depth: 0
-          filter: blob:none
-          
+
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
@@ -39,23 +33,3 @@ jobs:
 
       - name: Install playwright
         run: npx playwright install chromium --with-deps
-
-      - name: Cache VRT snapshots
-        uses: actions/cache@v3
-        id: vrt-cache
-        with:
-          path: src/tests/vrt/snapshots
-          key: vrt-${{ inputs.sha || vars.RECENT_ARTIFACTS_SHA256 }}
-          restore-keys: vrt-
-      
-      - name: Run VRT init
-        run: |
-          npm run vrt:init
-
-      - name: Test Summary
-        if: always()
-        uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
-        with:
-          paths: "test-results/vrt.xml"
-
-      - uses: Kesin11/actions-timeline@37c6155f2e2fc1a056abe1108c9ca61975a6e4f8 # v2.0.0

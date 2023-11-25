@@ -101,11 +101,20 @@ jobs:
     uses: ./.github/workflows/scraping.yaml
     secrets: inherit
 
+  call-vrt-init:
+    needs:
+      - build
+      - deploy
+    uses: ./.github/workflows/vrt-init.yaml
+    with:
+      sha: needs.build.outputs.artifacts_sha256
+
   notify-on-fail:
     needs:
       - build
       - deploy
       - call-scraping-workflow
+      - call-vrt-init
     if: failure()
     uses: korosuke613/actions/.github/workflows/notify-to-slack.yaml@main
     secrets:
