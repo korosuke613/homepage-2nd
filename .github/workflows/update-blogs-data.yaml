@@ -84,7 +84,7 @@ jobs:
           {{.url}}
           ' >> $GITHUB_STEP_SUMMARY
 
-      - uses: Kesin11/actions-timeline@37c6155f2e2fc1a056abe1108c9ca61975a6e4f8 # v2.0.0
+      - uses: Kesin11/actions-timeline@baa62e018ca5504e2d617502ce1eacf9171e757a # v2.0.1
 
   notify-on-fail:
     needs:
