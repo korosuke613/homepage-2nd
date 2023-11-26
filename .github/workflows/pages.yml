@@ -47,7 +47,7 @@ jobs:
         run: |
           set -x
           SHA256_OUTPUT=$(find ./dist -type f -print0 | \
-            sort -z | \
+            sort --zero-terminated | \
             xargs -0 sha256sum | \
             cut -d ' ' -f 1 | \
             sha256sum | \
