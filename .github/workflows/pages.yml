@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   actions-timeline:
-    needs: [build, deploy, call-scraping-workflow]
+    needs: [build, deploy, call-scraping-workflow, call-vrt-init]
     runs-on: ubuntu-latest
     steps:
       - uses: Kesin11/actions-timeline@baa62e018ca5504e2d617502ce1eacf9171e757a # v2.0.1
@@ -81,8 +81,8 @@ jobs:
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app_id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
-          private_key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
+          app-id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
 
       - name: Set new sha256 to variable
         env:
