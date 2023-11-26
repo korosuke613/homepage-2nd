@@ -27,6 +27,8 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with: 
@@ -53,15 +55,24 @@ jobs:
           set +x
           echo $SHA256_OUTPUT
 
+          touch ${{ runner.temp }}/tmp_artifacts_result.txt
           if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
-            echo "### ✅ No change to the artifacts" >> $GITHUB_STEP_SUMMARY
+            echo "### ✅ No changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           else
-            echo "### ⚠️ Changes to the artifacts" >> $GITHUB_STEP_SUMMARY
+            echo "### ⚠️ Changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           fi
-          echo "||SHA256|" >> $GITHUB_STEP_SUMMARY
-          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
-          echo "|Recent deployed|\`${{ vars.RECENT_ARTIFACTS_SHA256 }}\`|" >> $GITHUB_STEP_SUMMARY
-          echo "|This build|\`${SHA256_OUTPUT}\`|" >> $GITHUB_STEP_SUMMARY
+          echo "building commit: \`${{ github.sha }}\`" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          echo "||SHA256|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          echo "|---|---|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          echo "|Recent deployed|\`${{ vars.RECENT_ARTIFACTS_SHA256 }}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          echo "|This build|\`${SHA256_OUTPUT}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          cat ${{ runner.temp }}/tmp_artifacts_result.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment artifacts hash to pull request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: ${{ runner.temp }}/tmp_artifacts_result.txt
+          comment_tag: artifacts_sha
 
   unit-test:
     name: "Test [Unit]"
