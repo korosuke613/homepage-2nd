@@ -35,7 +35,7 @@
     "@docsearch/react": "3.5.2",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.10",
-    "astro": "3.5.4",
+    "astro": "3.6.0",
     "astro-robots-txt": "1.0.0",
     "date-fns": "2.30.0",
     "eastasianwidth": "0.2.0",

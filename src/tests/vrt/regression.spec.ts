@@ -20,24 +20,6 @@ const baseOptions: TestOptions = {
   dormitoryIntroduction: {
     testTimeout: 60000,
   },
-  posts: {
-    reload: true,
-  },
-  postsTag: {
-    reload: true,
-  },
-  postsYear: {
-    reload: true,
-  },
-  blogs: {
-    reload: true,
-  },
-  blogsTag: {
-    reload: true,
-  },
-  blogsYear: {
-    reload: true,
-  },
 };
 
 test.describe("Visual Regression Test", () => {
