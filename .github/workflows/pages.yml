@@ -107,7 +107,7 @@ jobs:
       - deploy
     uses: ./.github/workflows/vrt-init.yaml
     with:
-      sha: needs.build.outputs.artifacts_sha256
+      sha: ${{ needs.build.outputs.artifacts_sha256 }}
 
   notify-on-fail:
     needs:
