@@ -44,6 +44,10 @@ jobs:
         run: npm run build
 
       - name: Calcurate hash
+        id: calcurate-hash
+        env:
+          LABEL_CHANGES: 'changes 🚨'
+          LABEL_NO_CHANGES: 'no changes ✅'
         run: |
           set -x
           SHA256_OUTPUT=$(find ./dist -type f -print0 | \
@@ -57,9 +61,13 @@ jobs:
 
           touch ${{ runner.temp }}/tmp_artifacts_result.txt
           if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
+            echo "add_label=${LABEL_NO_CHANGES}" >> $GITHUB_OUTPUT
+            echo "remove_label=${LABEL_CHANGES}" >> $GITHUB_OUTPUT
             echo "### ✅ No changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           else
-            echo "### ⚠️ Changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+            echo "add_label=${LABEL_CHANGES}" >> $GITHUB_OUTPUT
+            echo "remove_label=${LABEL_NO_CHANGES}" >> $GITHUB_OUTPUT
+            echo "### 🚨 Changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           fi
           echo "building commit: \`${{ github.sha }}\`" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "||SHA256|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
@@ -67,6 +75,13 @@ jobs:
           echo "|Recent deployed|\`${{ vars.RECENT_ARTIFACTS_SHA256 }}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "|This build|\`${SHA256_OUTPUT}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           cat ${{ runner.temp }}/tmp_artifacts_result.txt >> $GITHUB_STEP_SUMMARY
+
+      - name: Add label to PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr edit ${{ github.event.number }} --add-label '${{ steps.calcurate-hash.outputs.add_label }}'
+          gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
 
       - name: Comment artifacts hash to pull request
         uses: thollander/actions-comment-pull-request@1d3973dc4b8e1399c0620d3f2b1aa5e795465308 # v2
