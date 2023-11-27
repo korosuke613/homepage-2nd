@@ -15,12 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Cache node_modules of tools
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies of root
         id: npm-install
         run: |
           npm ci
@@ -38,3 +39,15 @@ jobs:
       - name: Install playwright
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
+
+      - name: Cache node_modules of tools
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+          cache-dependency-path: 'tools/package-lock.json'
+
+      - name: Install dependencies of tools
+        working-directory: tools
+        run: |
+          npm ci
