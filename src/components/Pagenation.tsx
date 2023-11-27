@@ -38,22 +38,32 @@ const createPageNumberLink = (page: Page) => {
   return items;
 };
 
-export const NewerOlderPagination = (props: INewerOlderPaginationProps) => (
-  <div className="flex justify-center gap-8">
-    {props.page.url.prev && (
-      <a href={path.join(AppConfig.base, props.page.url.prev)}>← Newer Posts</a>
-    )}
-    {props.page.lastPage !== 1 && (
-      <div className="hidden justify-center gap-4 sm:flex">
-        {createPageNumberLink(props.page)}
-      </div>
-    )}
+export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
+  // Check the existence of props since they are sometimes undefined during astro dev.
+  // ref: https://github.com/withastro/astro/issues/9110
+  if (props === undefined) return <></>;
 
-    {props.page.url.next && (
-      <a href={path.join(AppConfig.base, props.page.url.next)}>Older Posts →</a>
-    )}
-  </div>
-);
+  return (
+    <div className="flex justify-center gap-8">
+      {props.page.url.prev && (
+        <a href={path.join(AppConfig.base, props.page.url.prev)}>
+          ← Newer Posts
+        </a>
+      )}
+      {props.page.lastPage !== 1 && (
+        <div className="hidden justify-center gap-4 sm:flex">
+          {createPageNumberLink(props.page)}
+        </div>
+      )}
+
+      {props.page.url.next && (
+        <a href={path.join(AppConfig.base, props.page.url.next)}>
+          Older Posts →
+        </a>
+      )}
+    </div>
+  );
+};
 
 type IPaginationHeaderProps = {
   title: ReactNode;
