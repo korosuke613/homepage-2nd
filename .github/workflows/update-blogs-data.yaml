@@ -5,17 +5,14 @@ on:
     - cron: '20 14 * * *' # 毎日 23 時 20 分（JST）
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: write
-  pull-requests: write
-  actions: read  # required for actions-timeline
-
 concurrency:
   group: "update-blogs-data"
 
 jobs:
   update:
+    permissions:
+      pull-requests: read
+      actions: read  # required for actions-timeline
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -54,11 +51,17 @@ jobs:
             git diff
             echo "commit_datetime=$(date +%Y%m%d-%H%M%S)" >> $GITHUB_ENV
           fi
-      
+
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
+
       - name: Commit files
         if: env.is_files_changed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           set -x
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com' 
