@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Test changed-files
     outputs:
-      chenged_content: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+      chenged_content: ${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}
     steps:
       - uses: actions/checkout@v4
         with: 
@@ -30,14 +30,13 @@ jobs:
         uses: tj-actions/changed-files@da093c1609db0edd0a037ce9664e135f74bf30d9 # v40.2.0
         with:
           files_yaml: |
-            blogs:
-              - public/assets/*.json
             contents:
               - src/content/posts/**
+              - public/assets/**.json
 
       - name: Print changed files
         run: |
-          echo ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+          echo ${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}
 
 
   vrt-regression-test:
