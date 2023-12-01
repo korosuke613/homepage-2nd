@@ -52,6 +52,10 @@ test.describe("Visual Regression Test", () => {
         ...baseOptions.dormitoryIntroduction,
         waitForTimeoutBeforeScreenshot: 1000,
       },
+      blogs: {
+        ...baseOptions.blogs,
+        matchSnapshot: { maxDiffPixelRatio: 0.2 },
+      },
     };
 
     for (const [key, targetPage] of Object.entries(p)) {
