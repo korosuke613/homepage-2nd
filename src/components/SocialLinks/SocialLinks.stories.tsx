@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SocialLinks } from "./SocialLinks";
+import { SocialLinks } from ".";
 
 const metaData: Meta = {
   title: "SocialLinks",
