@@ -1,10 +1,26 @@
 import { SocialLink } from "@/components/SocialLink";
-import { SocialLinkData } from "@/utils/SocialLinkData";
+import { SocialLinkData, type SocialTypes } from "@/utils/SocialLinkData";
 
-export const SocialLinks = () => (
-  <>
-    {SocialLinkData.filter((link) => link.isTop).map((link) => (
-      <SocialLink key={link.name} {...link} />
-    ))}
-  </>
+type ISocialLinksProps = {
+  type: SocialTypes;
+  topOnly: boolean;
+};
+
+export const SocialLinks: React.FC<ISocialLinksProps> = ({
+  type,
+  topOnly = false,
+}) => (
+  <div className="flex flex-wrap gap-1">
+    {SocialLinkData.filter((link) => {
+      if (type === "All") return true;
+      return link.type === type;
+    })
+      .filter((link) => {
+        if (topOnly) return link.isTop;
+        return true;
+      })
+      .map((link) => (
+        <SocialLink key={link.name} {...link} />
+      ))}
+  </div>
 );

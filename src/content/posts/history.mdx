@@ -9,6 +9,7 @@ tags:
 ---
 
 import { SocialLink } from '@/components/SocialLink';
+import { SocialLinks } from '@/partials/SocialLinks';
 import { SocialLinkData } from '@/utils/SocialLinkData';
 
 ## 名前
@@ -95,40 +96,20 @@ import { SocialLinkData } from '@/utils/SocialLinkData';
 
 ## 各種リンク 🔗
 
-<div className="flex flex-wrap gap-1 mt-3">
-{SocialLinkData.filter((link) => link.type === undefined).map((link) => (
-  <SocialLink {...link} />
-))}
-</div>
+<SocialLinks type="Other" />
 
 ### SNS
 
-<div className="flex flex-wrap gap-1 mt-3">
-{SocialLinkData.filter((link) => link.type === "SNS").map((link) => (
-  <SocialLink {...link} />
-))}
-</div>
+<SocialLinks type="SNS" />
 
 ### Blog
 
-<div className="flex flex-wrap gap-1 mt-3">
-{SocialLinkData.filter((link) => link.type === "Blog").map((link) => (
-  <SocialLink {...link} />
-))}
-</div>
+<SocialLinks type="Blog" />
 
 ### Slide
 
-<div className="flex flex-wrap gap-1 mt-3">
-{SocialLinkData.filter((link) => link.type === "Slide").map((link) => (
-  <SocialLink {...link} />
-))}
-</div>
+<SocialLinks type="Slide" />
 
 ### Career
 
-<div className="flex flex-wrap gap-1 mt-3">
-{SocialLinkData.filter((link) => link.type === "Career").map((link) => (
-  <SocialLink {...link} />
-))}
-</div>
+<SocialLinks type="Career" />
