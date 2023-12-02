@@ -208,6 +208,7 @@ jobs:
         uses: chromaui/action@v10
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitOnceUploaded: true
 
   tools:
     runs-on: ubuntu-latest
