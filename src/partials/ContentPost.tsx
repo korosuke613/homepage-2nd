@@ -10,8 +10,8 @@ import type { CommitHistory } from "@/utils/CommitHistories";
 import type { Tags } from "@/utils/Tag";
 import type { getSimilarPosts } from "@/utils/TextSimilarity";
 
+import { SimilarityPosts } from "@/components/SimilarityPosts";
 import { CommitHistoryPost } from "./CommitHistory";
-import { SimilarityPosts } from "./SimilarityPosts";
 
 type IContentPostProps = {
   frontmatter: CollectionEntry<"posts">;
