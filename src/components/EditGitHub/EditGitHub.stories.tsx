@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { EditGitHub } from "./EditGitHub";
+import { EditGitHub } from ".";
 
 const metaData: Meta = {
   title: "EditGitHub",
