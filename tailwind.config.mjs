@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies, global-require */
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: ["./src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {},

@@ -8,12 +8,8 @@ type IEditGitHubProps = {
   collection: string;
 };
 
-export const EditGitHub = (props: IEditGitHubProps) => {
-  const githubUrl = getGitHubUrl(
-    AppConfig.github_url,
-    props.collection,
-    props.id,
-  );
+export const EditGitHub: React.FC<IEditGitHubProps> = ({ id, collection }) => {
+  const githubUrl = getGitHubUrl(AppConfig.github_url, collection, id);
 
   return (
     <a

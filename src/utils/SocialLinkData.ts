@@ -1,4 +1,4 @@
-type SocialTypes = "Blog" | "SNS" | "Slide" | "Career";
+export type SocialTypes = "All" | "Blog" | "SNS" | "Slide" | "Career" | "Other";
 
 export type ISocialLink = {
   url: string;
@@ -6,7 +6,7 @@ export type ISocialLink = {
   imgSrc: string;
   height: number;
   width: number;
-  type?: SocialTypes;
+  type: SocialTypes;
   isTop: boolean;
 };
 
@@ -17,6 +17,7 @@ export const SocialLinkData: Array<ISocialLink> = [
     imgSrc: "/assets/images/shields_github.svg",
     height: 20,
     width: 65,
+    type: "Other",
     isTop: true,
   },
   {

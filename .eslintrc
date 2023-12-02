@@ -3,7 +3,8 @@
   "extends": [
     "airbnb-base",
     "plugin:prettier/recommended",
-    "plugin:astro/recommended"
+    "plugin:astro/recommended",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     "prettier/prettier": [
