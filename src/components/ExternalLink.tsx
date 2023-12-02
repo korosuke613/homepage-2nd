@@ -6,9 +6,13 @@ export type IExternalLinkProps = {
   noClass?: boolean;
 };
 
-export const ExternalLink = (props: IExternalLinkProps) => {
+export const ExternalLink: React.FC<IExternalLinkProps> = ({
+  title,
+  url,
+  noClass,
+}) => {
   let cssClass = "text-cyan-400 hover:underline";
-  if (props.noClass === true) {
+  if (noClass === true) {
     cssClass = "";
   }
 
@@ -16,11 +20,11 @@ export const ExternalLink = (props: IExternalLinkProps) => {
     <>
       <a
         className={cssClass}
-        href={props.url}
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {props.title}
+        {title}
       </a>
     </>
   );
