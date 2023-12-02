@@ -15,8 +15,6 @@ export const Default: StoryObj<typeof BlogCard> = {
         style={{
           width: "300px",
         }}
-        id={elt.id}
-        className="text-gray-100"
       >
         <BlogCard elt={elt} tags={tags} />
       </div>

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Panel } from ".";
+import type { GlobalArgs } from "../../../.storybook/preview";
 
 const metaData: Meta = {
   title: "Panel",
@@ -8,14 +9,15 @@ const metaData: Meta = {
 
 export default metaData;
 
-export const Text: StoryObj<typeof Panel> = {
+export const Text: StoryObj<typeof Panel & GlobalArgs> = {
   args: {
     header: "Header",
     children: "Children",
+    Global_disableDecorator: true,
   },
 };
 
-export const Component: StoryObj<typeof Panel> = {
+export const Component: StoryObj<typeof Panel & GlobalArgs> = {
   args: {
     header: "Header",
     children: (
@@ -38,5 +40,6 @@ export const Component: StoryObj<typeof Panel> = {
         </a>
       </div>
     ),
+    Global_disableDecorator: true,
   },
 };

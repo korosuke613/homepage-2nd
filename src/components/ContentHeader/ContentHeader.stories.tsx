@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { MarkdownHeading } from "astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import { ContentHeader } from ".";
+import type { GlobalArgs } from ".storybook/preview";
 
 const metaData: Meta = {
   title: "ContentHeader",
@@ -10,7 +11,7 @@ const metaData: Meta = {
 
 export default metaData;
 
-export const Default: StoryObj<typeof ContentHeader> = {
+export const Default: StoryObj<typeof ContentHeader & GlobalArgs> = {
   args: {
     content: {
       id: "20170930_etrobocon2017.md",
@@ -29,6 +30,7 @@ export const Default: StoryObj<typeof ContentHeader> = {
         remarkPluginFrontmatter: Record<string, unknown>;
       }>,
     },
+    Global_disableDecorator: true,
     tags: {
       ETロボコン: "bg-slate-400 text-slate-900",
     },
