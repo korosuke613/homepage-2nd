@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/experimental-ct-react";
 
-import { EditGitHub } from "@/components/EditGitHub";
+import { TweetButton } from "@/components/TweetButton";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
 test("should work", async ({ mount }) => {
   const component = await mount(
     <div className="text-gray-100">
-      <EditGitHub id="template.md" collection="posts" />
+      <TweetButton text="this_is_text" url="https://korosuke613.dev/hoge" />
     </div>,
   );
 
@@ -20,6 +20,6 @@ test("should work", async ({ mount }) => {
   // correct url
   await expect(a).toHaveAttribute(
     "href",
-    "https://github.com/korosuke613/homepage-2nd/tree/main/src/content/posts/template.md",
+    "https://twitter.com/intent/tweet?hashtags=korosuke613dev&text=this_is_text&url=https%3A%2F%2Fkorosuke613.dev%2Fhoge&related=shitimi_613",
   );
 });
