@@ -6,7 +6,7 @@ import {
 } from '@/components/Pagenation';
 import { Section } from '@/components/Section';
 import { Tag } from '@/components/Tag';
-import { getSectionTitle } from '@/components/Title';
+import { Title } from '@/components/Title/index';
 import { Year } from '@/components/Year';
 import Base from '@/templates/Base.astro';
 import type { BlogPage } from '@/types/IBlogPage';
@@ -28,7 +28,7 @@ const titleBase = preTitle
   ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
   : `${contentCategory} p. ${page.currentPage}`;
 const title = titleBase + titleSuffix;
-const sectionTitle = getSectionTitle(preTitle, contentCategory);
+const sectionTitle = Title({ preTitle, contentCategory });
 
 const tags = (await readTags()).blogs;
 if (tags === undefined) {
