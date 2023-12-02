@@ -23,7 +23,7 @@ const config: StorybookConfig = {
           ? [
               turbosnap({
                 // This should be the base path of your storybook.  In monorepos, you may only need process.cwd().
-                rootDir: "src/**/*",
+                rootDir: config.root ?? process.cwd(),
               }),
             ]
           : [],
