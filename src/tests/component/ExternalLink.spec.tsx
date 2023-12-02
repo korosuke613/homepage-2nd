@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/experimental-ct-react";
 
-import { EditGitHub } from "@/components/EditGitHub";
+import { ExternalLink } from "@/components/ExternalLink";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
 test("should work", async ({ mount }) => {
   const component = await mount(
     <div className="text-gray-100">
-      <EditGitHub id="template.md" collection="posts" />
+      <ExternalLink title="homepage" url="https://korosuke613.dev" />
     </div>,
   );
 
@@ -18,8 +18,5 @@ test("should work", async ({ mount }) => {
   await expect(a).toHaveAttribute("rel", "noopener noreferrer");
 
   // correct url
-  await expect(a).toHaveAttribute(
-    "href",
-    "https://github.com/korosuke613/homepage-2nd/tree/main/src/content/posts/template.md",
-  );
+  await expect(a).toHaveAttribute("href", "https://korosuke613.dev");
 });
