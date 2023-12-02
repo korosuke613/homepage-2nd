@@ -77,3 +77,4 @@ jobs:
           exitOnceUploaded: true
           onlyChanged: true
           traceChanged: true
+          debug: true
