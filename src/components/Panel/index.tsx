@@ -5,7 +5,7 @@ type IPanelProps = {
   children: ReactNode;
 };
 
-export const Panel = (props: IPanelProps) => {
+export const Panel: React.FC<IPanelProps> = (props) => {
   return (
     <div
       style={{
