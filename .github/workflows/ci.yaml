@@ -209,6 +209,8 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
+          onlyChanged: true
+          traceChanged: true
 
   tools:
     runs-on: ubuntu-latest
