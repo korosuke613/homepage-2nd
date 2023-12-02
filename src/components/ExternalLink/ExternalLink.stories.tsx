@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ExternalLink } from "./ExternalLink";
+import { ExternalLink } from ".";
 
 const metaData: Meta = {
   title: "ExternalLink",
