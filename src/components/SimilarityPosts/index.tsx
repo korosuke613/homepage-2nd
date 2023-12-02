@@ -5,7 +5,7 @@ type ISimilarityPosts = {
   similars: ReturnType<typeof getSimilarPosts>;
 };
 
-export const SimilarityPosts = (props: ISimilarityPosts) => {
+export const SimilarityPosts: React.FC<ISimilarityPosts> = (props) => {
   return (
     <div>
       <h3 className="my-4 text-2xl font-bold">あわせて読む</h3>
