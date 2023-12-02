@@ -70,7 +70,7 @@ jobs:
         run: npm ci
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v10
+        uses: chromaui/action@2f12dc37555ffc9ed980d883e96b6d03724a2d6a # v10
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true
