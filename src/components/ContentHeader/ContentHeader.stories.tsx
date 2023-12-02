@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { MarkdownHeading } from "astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
-import { ContentHeader } from "./ContentHeader";
+import { ContentHeader } from ".";
 
 const metaData: Meta = {
   title: "ContentHeader",

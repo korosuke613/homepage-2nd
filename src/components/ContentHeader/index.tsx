@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 
 import type { Tags } from "@/utils/Tag";
 
-import { Tag } from "./Tag";
+import { Tag } from "../Tag";
 
 type IContentHeaderProps = {
   content: CollectionEntry<"posts">;
