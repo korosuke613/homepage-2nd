@@ -5,8 +5,8 @@ import { CardClass } from "@/utils/Css";
 import { transformTitleForContentCard } from "@/utils/StringWidth";
 import type { Tags } from "@/utils/Tag";
 
-import { ExternalLink } from "./ExternalLink";
-import { Tag } from "./Tag";
+import { ExternalLink } from "../ExternalLink";
+import { Tag } from "../Tag";
 
 type IBlogCard = {
   elt: BlogData;

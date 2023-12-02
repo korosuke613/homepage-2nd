@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FooterCopyright } from "./FooterCopyright";
+import { FooterCopyright } from ".";
 
 const metaData: Meta = {
   title: "FooterCopyright",
