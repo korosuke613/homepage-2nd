@@ -60,7 +60,7 @@ const animations: Record<string, Array<{ transform: string }>> = {
 };
 const animationKeys = Object.keys(animations);
 
-export const MyIcon = (props: IMyIconProps) => {
+export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [rotationComplete, setRotationComplete] = useState(true);
   const [isNoLimit, setIsNoLimit] = useState(false);
   const [keyString, setKeyString] = useState("");
@@ -68,7 +68,7 @@ export const MyIcon = (props: IMyIconProps) => {
   const toggleRotation = async () => {
     if (rotationComplete || isNoLimit) {
       setRotationComplete(false);
-      const icon = document.getElementById(props.iconId);
+      const icon = document.getElementById(iconId);
       if (!icon) {
         console.warn("icon not found");
         return;
@@ -108,7 +108,7 @@ export const MyIcon = (props: IMyIconProps) => {
       console.debug("keyString", _keyString);
       setKeyString(_keyString);
 
-      const icon = document.getElementById(props.iconId);
+      const icon = document.getElementById(iconId);
       if (!icon) {
         console.warn("icon not found");
         return;
@@ -134,7 +134,7 @@ export const MyIcon = (props: IMyIconProps) => {
           break;
       }
     },
-    [isNoLimit, keyString, props.iconId],
+    [isNoLimit, keyString, iconId],
   );
 
   useEffect(() => {
@@ -146,7 +146,7 @@ export const MyIcon = (props: IMyIconProps) => {
 
   return (
     <img
-      src={props.iconPath}
+      src={iconPath}
       style={{ width: "100%" }}
       alt="Avatar"
       loading="lazy"
