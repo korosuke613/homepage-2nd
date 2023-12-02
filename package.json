@@ -26,7 +26,7 @@
     "vrt:init": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/init.spec.ts",
     "vrt:regression": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/regression.spec.ts",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --disable-telemetry",
+    "build-storybook": "storybook build --debug --disable-telemetry",
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {

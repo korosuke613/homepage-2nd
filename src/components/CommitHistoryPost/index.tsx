@@ -8,7 +8,7 @@ type ICommitHistoryPost = {
   histories: CommitHistory[];
 };
 
-export const CommitHistoryPost = (props: ICommitHistoryPost) => {
+export const CommitHistoryPost: React.FC<ICommitHistoryPost> = (props) => {
   const url =
     props.id === "dormitory_introduction"
       ? // dormitory_introduction: https://github.com/korosuke613/homepage-2nd/commits/main/src/pages/posts/dormitory_introduction.astro
