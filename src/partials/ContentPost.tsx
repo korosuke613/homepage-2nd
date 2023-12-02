@@ -2,16 +2,15 @@ import type { MarkdownHeading } from "astro";
 import type { ReactNode } from "react";
 import type { CollectionEntry } from "astro:content";
 
+import { CommitHistoryPost } from "@/components/CommitHistoryPost";
 import { Content } from "@/components/Content";
 import { ContentHeader } from "@/components/ContentHeader";
 import { Section } from "@/components/Section";
+import { SimilarityPosts } from "@/components/SimilarityPosts";
 import { AppConfig } from "@/utils/AppConfig";
 import type { CommitHistory } from "@/utils/CommitHistories";
 import type { Tags } from "@/utils/Tag";
 import type { getSimilarPosts } from "@/utils/TextSimilarity";
-
-import { SimilarityPosts } from "@/components/SimilarityPosts";
-import { CommitHistoryPost } from "./CommitHistory";
 
 type IContentPostProps = {
   frontmatter: CollectionEntry<"posts">;
