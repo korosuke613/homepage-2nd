@@ -34,3 +34,5 @@ bun.lockb
 snapshots/
 
 build-storybook.log
+chromatic-diagnostics.json
+storybook-static/
