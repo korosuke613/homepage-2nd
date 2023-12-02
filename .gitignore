@@ -32,3 +32,5 @@ test-results/
 bun.lockb
 
 snapshots/
+
+build-storybook.log

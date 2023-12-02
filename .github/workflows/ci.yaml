@@ -6,7 +6,7 @@ on:
 
 jobs:
   actions-timeline:
-    needs: [lint, build, unit-test, e2e-test, ct-test, tools]
+    needs: [lint, build, unit-test, e2e-test, ct-test, tools, chromatic]
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -187,6 +187,27 @@ jobs:
         uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
         with:
           paths: "test-results/ct.xml"
+
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
 
   tools:
     runs-on: ubuntu-latest
