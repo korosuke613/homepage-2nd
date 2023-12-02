@@ -10,6 +10,8 @@ import { Footer } from '@/partials/Footer';
 import Navbar from '@/templates/Navbar.astro';
 import { AppConfig } from '@/utils/AppConfig';
 
+import '@/styles/global.css';
+
 export interface Props {
   head: {
     title: string;
@@ -67,7 +69,7 @@ const faviconLink = path.join(AppConfig.base, 'favicon.ico');
     <ViewTransitions />
   </head>
 
-  <body class="bg-slate-900 text-gray-100">
+  <body>
     <Navbar />
 
     <slot />
