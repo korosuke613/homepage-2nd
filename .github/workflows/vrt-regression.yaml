@@ -1,31 +1,38 @@
 name: VRT regression
 
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      skip:
+        description: 'if true, Skipping VRT'
+        required: false
+        default: false
+        type: boolean
+
+  workflow_dispatch:
+    inputs:
+      skip:
+        description: 'if true, Skipping VRT'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
-  actions-timeline:
-    needs: [changed-content, vrt-regression-test]
+  vrt-regression-test:
+    name: Visual Regression Testing
     runs-on: ubuntu-latest
     permissions:
       actions: read
     steps:
-      - uses: Kesin11/actions-timeline@baa62e018ca5504e2d617502ce1eacf9171e757a # v2.0.1
-
-  changed-content:
-    runs-on: ubuntu-latest
-    name: Test changed-files
-    outputs:
-      chenged_content: ${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}
-    steps:
       - uses: actions/checkout@v4
+        if: ${{ !inputs.skip }}
+
         with: 
           fetch-depth: 0
           filter: blob:none
 
       - name: Get changed contents
+        if: ${{ !inputs.skip }}
         id: changed-files
         uses: tj-actions/changed-files@da093c1609db0edd0a037ce9664e135f74bf30d9 # v40.2.0
         with:
@@ -33,28 +40,23 @@ jobs:
             contents:
               - src/content/posts/**
               - public/assets/**.json
-
+  
       - name: Print changed files
+        if: ${{ !inputs.skip }}
         run: |
           echo ${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}
 
 
-  vrt-regression-test:
-    name: "Test [Visual Regression]"
-    runs-on: ubuntu-latest
-    needs: changed-content
-    steps:
-      - uses: actions/checkout@v4
-        with: 
-          fetch-depth: 0
-          filter: blob:none
-
       - uses: actions/setup-node@v4
+        if: ${{ !inputs.skip }}
+
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
 
       - name: Install dependencies
+        if: ${{ !inputs.skip }}
+
         id: npm-install
         run: |
           npm ci
@@ -62,6 +64,8 @@ jobs:
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
+        if: ${{ !inputs.skip }}
+
         uses: actions/cache@v3
         id: playwright-cache
         with:
@@ -70,9 +74,13 @@ jobs:
           restore-keys: playwright-
   
       - name: Install playwright
+        if: ${{ !inputs.skip }}
+
         run: npx playwright install chromium --with-deps
 
       - name: Cache VRT snapshots
+        if: ${{ !inputs.skip }}
+
         uses: actions/cache@v3
         id: vrt-cache
         with:
@@ -81,6 +89,8 @@ jobs:
           restore-keys: vrt-
 
       - name: Check snapshot exists
+        if: ${{ !inputs.skip }}
+
         run: |
           if [[ -z "$(ls -A src/tests/vrt/snapshots)" ]]; then
             echo "### ⚠️ No snapshot exists" >> $GITHUB_STEP_SUMMARY
@@ -90,8 +100,10 @@ jobs:
           fi
 
       - name: Visual regression testing
+        if: ${{ !inputs.skip }}
+
         run: |
-          if [[ -z "${{ needs.changed-content.outputs.chenged_content }}" ]]; then
+          if [[ -z "${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}" ]]; then
             # コンテンツの変更がない
             npm run vrt:regression -- --retries=3 --grep="update dependencies"
           else
@@ -107,7 +119,14 @@ jobs:
           path: test-results
 
       - name: Test Summary
-        if: always()
+        if: ${{ !inputs.skip && always() }} 
         uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
         with:
           paths: "test-results/vrt.xml"
+
+      - uses: Kesin11/actions-timeline@baa62e018ca5504e2d617502ce1eacf9171e757a # v2.0.1
+        if: ${{ !inputs.skip && github.event.workflow == '.github/workflows/vrt-regression.yaml' }} 
+
+      - name: Skipped
+        if: inputs.skip
+        run: echo "Skipped"
