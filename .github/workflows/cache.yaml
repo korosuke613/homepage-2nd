@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache node_modules of tools
+      - name: Cache node_modules of root
         uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
@@ -27,6 +27,16 @@ jobs:
           npm ci
           PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@2f12dc37555ffc9ed980d883e96b6d03724a2d6a # v10
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+          exitOnceUploaded: true
+          onlyChanged: true
+          traceChanged: true
+          debug: true
 
       - name: Cache playwright binaries
         uses: actions/cache@v3
@@ -40,6 +50,16 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
+      - name: Cache astro build
+        uses: actions/cache@v3
+        with:
+          path: .astro/cache
+          key: astro-build-${{ github.sha }}
+          restore-keys: astro-build-
+
+      - name: Build
+        run: npm run build
+
       - name: Cache node_modules of tools
         uses: actions/setup-node@v4
         with:
@@ -51,30 +71,3 @@ jobs:
         working-directory: tools
         run: |
           npm ci
-
-  chromatic:
-    needs: cache
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with: 
-          fetch-depth: 0
-          filter: blob:none
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.tool-versions'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@2f12dc37555ffc9ed980d883e96b6d03724a2d6a # v10
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          exitZeroOnChanges: true
-          exitOnceUploaded: true
-          onlyChanged: true
-          traceChanged: true
-          debug: true

@@ -12,6 +12,7 @@ import { setupKorosuke } from "./src/utils/Integration.mjs";
 
 // https://astro.build/config
 export default defineConfig({
+  cacheDir: ".astro/cache",
   base: "/", // Set a path prefix.
   site: "https://korosuke613.dev/",
   // Use to generate your sitemap and canonical URLs in your final build.
