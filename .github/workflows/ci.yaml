@@ -6,7 +6,7 @@ on:
 
 jobs:
   actions-timeline:
-    needs: [lint, build, unit-test, e2e-test, ct-test, tools, chromatic]
+    needs: [lint, build, unit-test, e2e-test, ct-test, vrt, tools, chromatic]
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -29,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    outputs:
+      is_artifacts_changed: ${{ steps.calcurate-hash.outputs.add_label == vars.LABEL_CHANGES }}
     steps:
       - uses: actions/checkout@v4
         with: 
@@ -45,9 +47,6 @@ jobs:
 
       - name: Calcurate hash
         id: calcurate-hash
-        env:
-          LABEL_CHANGES: 'changes 🚨'
-          LABEL_NO_CHANGES: 'no changes ✅'
         run: |
           set -x
           SHA256_OUTPUT=$(find ./dist -type f -print0 | \
@@ -61,12 +60,12 @@ jobs:
 
           touch ${{ runner.temp }}/tmp_artifacts_result.txt
           if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
-            echo "add_label=${LABEL_NO_CHANGES}" >> $GITHUB_OUTPUT
-            echo "remove_label=${LABEL_CHANGES}" >> $GITHUB_OUTPUT
+            echo "add_label=${{ vars.LABEL_NO_CHANGES }}" >> $GITHUB_OUTPUT
+            echo "remove_label=${{ vars.LABEL_CHANGES }}" >> $GITHUB_OUTPUT
             echo "### ✅ No changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           else
-            echo "add_label=${LABEL_CHANGES}" >> $GITHUB_OUTPUT
-            echo "remove_label=${LABEL_NO_CHANGES}" >> $GITHUB_OUTPUT
+            echo "add_label=${{ vars.LABEL_CHANGES }}" >> $GITHUB_OUTPUT
+            echo "remove_label=${{ vars.LABEL_NO_CHANGES }}" >> $GITHUB_OUTPUT
             echo "### 🚨 Changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           fi
           echo "building commit: \`${{ github.sha }}\`" >> ${{ runner.temp }}/tmp_artifacts_result.txt
@@ -88,6 +87,16 @@ jobs:
         with:
           filePath: ${{ runner.temp }}/tmp_artifacts_result.txt
           comment_tag: artifacts_sha
+
+  vrt:
+    name: "Test [VRT]"
+    needs: [build]
+    permissions:
+      actions: read  # required for actions-timeline
+
+    uses: ./.github/workflows/vrt-regression.yaml
+    with:
+      skip: ${{ needs.build.outputs.is_artifacts_changed != 'true' }}
 
   unit-test:
     name: "Test [Unit]"
