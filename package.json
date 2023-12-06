@@ -39,6 +39,8 @@
     "@astrojs/tailwind": "5.0.3",
     "@docsearch/css": "3.5.2",
     "@docsearch/react": "3.5.2",
+    "@sentry/astro": "7.85.0",
+    "@spotlightjs/astro": "0.0.26",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.10",
     "astro": "4.0.2",
