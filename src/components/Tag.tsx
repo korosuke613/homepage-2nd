@@ -1,4 +1,3 @@
-import { AppConfig } from "@/utils/AppConfig";
 import { escapeTag } from "@/utils/Tag";
 
 type ITagProps = {
@@ -10,9 +9,9 @@ type ITagProps = {
 export const Tag = (props: ITagProps) => {
   return (
     <a
-      href={`${
-        AppConfig.base
-      }/${props.contentCategory.toLowerCase()}/tag/${escapeTag(props.name)}`}
+      href={`/${props.contentCategory.toLowerCase()}/tag/${escapeTag(
+        props.name,
+      )}`}
     >
       <div
         className={`contents_tag rounded-md px-1.5 py-0.5 text-xs font-semibold ${props.color}`}
