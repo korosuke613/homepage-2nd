@@ -1,13 +1,12 @@
 import mdx from "@astrojs/mdx";
-import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
-import sentry from "@sentry/astro";
-import spotlightjs from "@spotlightjs/astro";
 import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
+
+import partytown from "@astrojs/partytown";
 // eslint-disable-next-line import/extensions
 import { setupKorosuke } from "./src/utils/Integration.mjs";
 
@@ -29,10 +28,7 @@ export default defineConfig({
     rehypePlugins: [
       [
         rehypeExternalLinks,
-        {
-          target: "_blank",
-          rel: ["noopener", "noreferrer"],
-        },
+        { target: "_blank", rel: ["noopener", "noreferrer"] },
       ],
     ],
   },
@@ -49,7 +45,5 @@ export default defineConfig({
     partytown(),
     setupKorosuke(),
     mdx(),
-    sentry(),
-    spotlightjs(),
   ],
 });
