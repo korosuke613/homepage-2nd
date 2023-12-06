@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 import fs from "node:fs";
-import { glob } from "glob";
+import glob from "glob";
 import rehypeStringify from "rehype-stringify";
 import remarkExtractFrontmatter from "remark-extract-frontmatter";
 import remarkFrontmatter from "remark-frontmatter";
