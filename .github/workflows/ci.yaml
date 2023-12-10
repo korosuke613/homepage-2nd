@@ -117,15 +117,26 @@ jobs:
         with:
           node-version-file: '.tool-versions'
           cache: 'npm'
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Cache Vitest
+        uses: actions/cache@v3
+        with:
+          path: .cache/.vitest
+          key: vitest-${{ github.sha }}
+          restore-keys: vitest-
+
       - name: Unit testing
         run: npm run test:unit
+
       - name: Test Summary
         uses: test-summary/action@62bc5c68de2a6a0d02039763b8c754569df99e3f # v2.1
         with:
           paths: "test-results/unit.xml"
         if: always()
+
       - uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         with:
           flags: unittests

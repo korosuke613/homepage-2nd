@@ -1,6 +1,6 @@
 import fs from "node:fs";
-
 import { getSortedBlogData } from "@/utils/Blog";
+import { describe, expect, it, vi } from "vitest";
 
 describe("getSortedBlogData", () => {
   it("returns an array of blog data sorted by publication date", async () => {
@@ -33,14 +33,9 @@ describe("getSortedBlogData", () => {
         },
       ],
     };
-    jest
-      .spyOn(fs.promises, "readFile")
-      .mockResolvedValueOnce(Buffer.from(JSON.stringify(hatenaJson)));
-    jest
-      .spyOn(fs.promises, "readFile")
-      .mockResolvedValueOnce(Buffer.from(JSON.stringify(zennJson)));
-    jest
-      .spyOn(fs.promises, "readFile")
+    vi.spyOn(fs.promises, "readFile")
+      .mockResolvedValueOnce(Buffer.from(JSON.stringify(hatenaJson)))
+      .mockResolvedValueOnce(Buffer.from(JSON.stringify(zennJson)))
       .mockResolvedValueOnce(Buffer.from(JSON.stringify(zennScrapJson)));
 
     const result = await getSortedBlogData();

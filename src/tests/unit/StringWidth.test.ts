@@ -1,4 +1,5 @@
 import getStringInfo from "@/utils/StringWidth";
+import { describe, expect, it } from "vitest";
 
 describe("getStringInfo", () => {
   it("should return an object with width and chars properties", () => {

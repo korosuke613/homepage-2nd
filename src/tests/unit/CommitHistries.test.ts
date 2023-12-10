@@ -1,4 +1,5 @@
 import { getCommitHistories } from "@/utils/CommitHistories";
+import { expect, test } from "vitest";
 
 test("getCommitHistries", async () => {
   const actual = await getCommitHistories("src/content/posts/history.mdx");
