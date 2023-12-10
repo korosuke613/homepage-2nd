@@ -1,12 +1,10 @@
-import path from "path";
 import { format } from "date-fns";
 
 import type { IPost } from "@/types/IArticleFrontmatter";
-import { AppConfig } from "@/utils/AppConfig";
 import { transformTitleForContentCard } from "@/utils/StringWidth";
 import type { Tags } from "@/utils/Tag";
 
-import { Tag } from "./Tag";
+import { Tag } from "@/components/Tag";
 
 type IPostCardProps = {
   instance: IPost;
@@ -15,11 +13,7 @@ type IPostCardProps = {
 };
 
 export const PostCard = (props: IPostCardProps) => {
-  const contentPath = path.join(
-    "/",
-    props.instance.collection,
-    props.instance.slug,
-  );
+  const contentPath = `/${props.instance.collection}/${props.instance.slug}`;
 
   return (
     <div className="relative overflow-hidden rounded-md bg-slate-800">
@@ -27,8 +21,8 @@ export const PostCard = (props: IPostCardProps) => {
         {props.instance.data.imgSrc && (
           <img
             className="h-full w-full object-cover object-center"
-            src={path.join(AppConfig.base, props.instance.data.imgSrc)}
-            alt={props.instance.data.imgSrc}
+            src={props.instance.data.imgSrc}
+            alt={props.instance.data.imgAlt}
             loading="lazy"
           />
         )}
