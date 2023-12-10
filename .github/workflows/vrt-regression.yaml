@@ -86,7 +86,6 @@ jobs:
         with:
           path: src/tests/vrt/snapshots
           key: vrt-${{ vars.RECENT_ARTIFACTS_SHA256 }}
-          restore-keys: vrt-
 
       - name: Check snapshot exists
         if: ${{ !inputs.skip }}
