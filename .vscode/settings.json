@@ -9,24 +9,14 @@
     "astro"
   ],
   "eslint.workingDirectories": [".", "./tools"],
-  "jest.autoRun": {
-    "watch": true, // Start the jest with the watch flag
-    "onSave": "test-src-file", // Trigger test run for the given test or source file upon save
-    "onStartup": ["all-tests"] // Run all tests upon project launch
-  },
-  "jest.shell": {
-    "path": "/usr/bin/env",
-    "args": ["zsh", "--login"]
-  },
   "[javascript][typescript][typescriptreact]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "biomejs.biome",
     "editor.codeActionsOnSave": {
-      "quickfix.biome": true,
-      "source.organizeImports.biome": true
+      "quickfix.biome": "explicit",
+      "source.organizeImports.biome": "explicit"
     },
   },
-  "jest.showCoverageOnLoad": true, // Show code coverage when the project is launched
   // Multiple language settings for json and jsonc files
   "[json][jsonc]": {
     "editor.formatOnSave": true,
@@ -36,7 +26,7 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": "explicit"
     }
   },
   "terminal.integrated.defaultProfile.linux": "zsh",
@@ -49,5 +39,6 @@
   "files.autoSave": "afterDelay",
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
-  }
+  },
+  "testing.automaticallyOpenPeekView": "never"
 }
