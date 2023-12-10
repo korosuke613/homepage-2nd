@@ -9,7 +9,6 @@
   "scripts": {
     "build": "astro check && tsc --noEmit && astro build",
     "build-types": "tsc --noEmit --pretty",
-    "clean": "rimraf dist",
     "dev": "astro dev",
     "lint": "concurrently -P 'npm:lint:*(!fix)'",
     "lint:astro": "eslint --ext .astro ./src",
@@ -81,7 +80,6 @@
     "@typescript-eslint/parser": "6.13.1",
     "@vitest/coverage-v8": "1.0.4",
     "@vitest/ui": "1.0.4",
-    "bun-types": "1.0.14",
     "chromatic": "10.0.0",
     "concurrently": "8.2.2",
     "eslint": "8.55.0",
@@ -100,7 +98,6 @@
     "playwright": "1.40.1",
     "prettier": "3.1.0",
     "prettier-plugin-astro": "0.12.2",
-    "rimraf": "5.0.5",
     "storybook": "7.6.3",
     "textlint": "13.4.1",
     "textlint-filter-rule-comments": "1.2.2",
