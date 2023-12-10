@@ -5,7 +5,7 @@ import { devices } from "@playwright/test";
 const config: PlaywrightTestConfig = {
   reporter: [["list"], ["junit", { outputFile: "test-results/vrt.xml" }]],
   testDir: "src/tests/vrt",
-  snapshotPathTemplate: "{snapshotDir}/{testFileDir}/snapshots/{arg}{ext}",
+  snapshotPathTemplate: "{testFileDir}/snapshots/{arg}{ext}",
   webServer: {
     command: "npm run dev",
     port: 4321,
