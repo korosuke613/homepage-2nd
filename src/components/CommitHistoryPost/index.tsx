@@ -27,13 +27,12 @@ export const CommitHistoryPost: React.FC<ICommitHistoryPost> = (props) => {
 
             return (
               <li key={h.sha} className="list-inside pt-1 text-sm">
-                <span key={h.sha}>
-                  <span key={h.sha}>
-                    <code key={h.sha}>{dateWithoutTime}</code>:{" "}
+                <span>
+                  <span>
+                    <code>{dateWithoutTime}</code>:{" "}
                   </span>{" "}
                   <ExternalLink
                     title={h.commitMessage}
-                    key={h.sha}
                     url={`https://${AppConfig.github_url}/commit/${h.sha}`}
                   />
                 </span>

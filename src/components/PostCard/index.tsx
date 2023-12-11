@@ -38,7 +38,7 @@ export const PostCard = (props: IPostCardProps) => {
                   .map((t) => (
                     <span key={t} className="text-lg font-bold">
                       {t}
-                      <br key={t} />
+                      <br />
                     </span>
                   ))}
                 <span className="align-middle text-xs text-gray-300	">
