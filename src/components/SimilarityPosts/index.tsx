@@ -16,6 +16,7 @@ export const SimilarityPosts: React.FC<ISimilarityPosts> = (props) => {
               <li key={s.meta.url} className="list-inside pt-2">
                 {s.meta.urlType === "internal" && (
                   <a
+                    key={s.meta.url}
                     className="text-cyan-400 hover:underline"
                     href={s.meta.url}
                   >
@@ -23,12 +24,18 @@ export const SimilarityPosts: React.FC<ISimilarityPosts> = (props) => {
                   </a>
                 )}
                 {s.meta.urlType === "external" && (
-                  <span>
-                    <ExternalLink title={s.meta.title} url={s.meta.url} />{" "}
-                    <span className="text-xs">[外部リンク]</span>
+                  <span key={s.meta.url}>
+                    <ExternalLink
+                      key={s.meta.url}
+                      title={s.meta.title}
+                      url={s.meta.url}
+                    />{" "}
+                    <span key={s.meta.url} className="text-xs">
+                      [外部リンク]
+                    </span>
                   </span>
                 )}
-                <span className="text-xs">
+                <span key={s.meta.url} className="text-xs">
                   （類似度: <code>{s.score.toFixed(2)}</code>）
                 </span>
               </li>
