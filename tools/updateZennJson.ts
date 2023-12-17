@@ -1,5 +1,4 @@
 import Parser from "rss-parser";
-import { json } from "stream/consumers";
 const parser = new Parser();
 import fs from "node:fs";
 // eslint-disable-next-line node/no-unpublished-import
@@ -38,7 +37,8 @@ const updateZennJson = (
 ): ZennJson => {
   const updatedAt = new Date(updatedAtString);
 
-  for (const r of rss) {
+  // 取得した RSS は新しい順に並んでいるので、古い順に並び替える
+  for (const r of rss.reverse()) {
     if (updatedAt > new Date(r.isoDate)) {
       console.info(`info: skip ${r.title}`);
       continue;
