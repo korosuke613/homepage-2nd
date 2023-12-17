@@ -36,7 +36,13 @@ export const BlogCard = (props: IBlogCard) => {
           <ExternalLink
             title={
               <div key={props.elt.id}>
-                <span className="text-base font-semibold">
+                <span
+                  className="text-base font-semibold"
+                  style={{
+                    display: "flex",
+                    height: "3rem",
+                  }}
+                >
                   {transformTitleForContentCard(props.elt.title)}
                 </span>
                 <br />
