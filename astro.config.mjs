@@ -10,11 +10,16 @@ import partytown from "@astrojs/partytown";
 // eslint-disable-next-line import/extensions
 import { setupKorosuke } from "./src/utils/Integration.mjs";
 
+const IS_TESTING = process.env.IS_TESTING === "true";
+
 // https://astro.build/config
 export default defineConfig({
   cacheDir: ".astro/cache",
   base: "/", // Set a path prefix.
   site: "https://korosuke613.dev/",
+  devToolbar: {
+    enabled: IS_TESTING ? false : true,
+  },
   // Use to generate your sitemap and canonical URLs in your final build.
   // Important!
   // Only official '@astrojs/*' integrations are currently supported by Astro.

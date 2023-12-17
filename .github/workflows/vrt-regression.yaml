@@ -104,10 +104,10 @@ jobs:
         run: |
           if [[ -z "${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}" ]]; then
             # コンテンツの変更がない
-            npm run vrt:regression -- --retries=3 --grep="update dependencies"
+            npm run vrt:regression -- --retries=1 --grep="update dependencies"
           else
             # コンテンツの変更がある
-            npm run vrt:regression -- --retries=3 --grep="add contents"
+            npm run vrt:regression -- --retries=1 --grep="add contents"
           fi
 
       - name: Upload failed screenshots
