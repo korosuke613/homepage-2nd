@@ -98,15 +98,46 @@ jobs:
           filePath: ${{ runner.temp }}/tmp_artifacts_result.txt
           comment_tag: artifacts_sha
 
+  pre-vrt:
+    name: "Pre Test [VRT]"
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      skip_vrt: ${{ steps.check.outputs.skip_vrt }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check skippable
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+
+          skip_vrt_label=$(gh pr view ${{ github.event.number }} --json labels --jq '.labels[] | select(.name == "skip VRT 🚫")')
+          is_artifacts_changed=${{ needs.build.outputs.is_artifacts_changed }}
+
+          if [[ -n $skip_vrt_label ]]; then
+            echo "skip_vrt=true" >> $GITHUB_OUTPUT
+          elif [[ $is_artifacts_changed != 'true' ]]; then
+            echo "skip_vrt=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip_vrt=false" >> $GITHUB_OUTPUT
+          fi
+
+          set +x
+      
   vrt:
     name: "Test [VRT]"
-    needs: [build]
+    needs: [pre-vrt]
     permissions:
       actions: read  # required for actions-timeline
 
     uses: ./.github/workflows/vrt-regression.yaml
     with:
-      skip: ${{ needs.build.outputs.is_artifacts_changed != 'true' }}
+      skip: ${{ needs.pre-vrt.outputs.skip_vrt == 'true' }}
 
   unit-test:
     name: "Test [Unit]"
