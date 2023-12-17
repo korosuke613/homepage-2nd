@@ -73,10 +73,14 @@ jobs:
           git switch -c "bot/update-blogs"
           git commit -m "chore: update blogs data (${{ env.commit_datetime }})"
           git push --force origin HEAD
-          if [[ $(gh pr view 2> /dev/null ) ]] && [[ $(gh pr view --json state --jq .state) != "MERGED" ]];then
-            # プルリクエストが存在する、かつ、マージ済みでない
+
+          PR_STATE=$(gh pr view --json state --jq .state)
+          echo $PR_STATE
+          if [[ $(gh pr view 2> /dev/null ) ]] && [[ $PR_STATE == "OPEN" ]];then
+            # プルリクエストが存在する、かつ、オープンである場合
             gh pr edit --title "chore: update blogs data (${{ env.commit_datetime }})" 
           else
+            # プルリクエストが存在しない、または、クローズされている場合
             gh pr create --title "chore: update blogs data (${{ env.commit_datetime }})" --reviewer korosuke613 --body ""
           fi
 
