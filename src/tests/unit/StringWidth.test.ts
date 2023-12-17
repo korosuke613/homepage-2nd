@@ -1,4 +1,6 @@
-import getStringInfo from "@/utils/StringWidth";
+import getStringInfo, {
+  transformTitleForContentCard,
+} from "@/utils/StringWidth";
 import { describe, expect, it } from "vitest";
 
 describe("getStringInfo", () => {
@@ -41,5 +43,12 @@ describe("getStringInfo", () => {
     const result = getStringInfo("¢");
     expect(result.width).toBe(1);
     expect(result.chars[0]?.width).toBe(1);
+  });
+});
+
+describe("transformTitleForContentCard", () => {
+  it("should return a string with width MAX_WIDTH if the input is an empty string", () => {
+    const result = transformTitleForContentCard("");
+    expect(result.length).toBe(0);
   });
 });
