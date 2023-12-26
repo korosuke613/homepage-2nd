@@ -42,7 +42,7 @@
     "@tailwindcss/typography": "0.5.10",
     "astro": "4.0.7",
     "astro-robots-txt": "1.0.0",
-    "date-fns": "2.30.0",
+    "date-fns": "3.0.6",
     "eastasianwidth": "0.2.0",
     "emoji-regex": "10.3.0",
     "glob": "10.3.10",
