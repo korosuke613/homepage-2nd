@@ -75,7 +75,7 @@
     "@storybook/react": "7.6.6",
     "@storybook/react-vite": "7.6.6",
     "@storybook/test": "7.6.6",
-    "@types/react": "18.2.43",
+    "@types/react": "18.2.45",
     "@typescript-eslint/eslint-plugin": "6.14.0",
     "@typescript-eslint/parser": "6.14.0",
     "@vitest/coverage-v8": "1.0.4",
