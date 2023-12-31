@@ -56,6 +56,10 @@ test.describe("Visual Regression Test", () => {
         ...baseOptions.blogs,
         matchSnapshot: { maxDiffPixelRatio: 0.2 },
       },
+      blogsTag: {
+        ...baseOptions.blogsTag,
+        matchSnapshot: { maxDiffPixelRatio: 0.2 },
+      },
     };
 
     for (const [key, targetPage] of Object.entries(p)) {
