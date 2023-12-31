@@ -9,7 +9,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [".vscode", "generated"]
+    "ignore": [".vscode", "generated", "public/assets/*.json"]
   },
   "formatter": {
     "indentStyle": "space"
