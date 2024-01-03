@@ -40,7 +40,7 @@
     "@docsearch/react": "3.5.2",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.10",
-    "astro": "4.0.8",
+    "astro": "4.0.9",
     "astro-robots-txt": "1.0.0",
     "date-fns": "3.0.6",
     "eastasianwidth": "0.2.0",
