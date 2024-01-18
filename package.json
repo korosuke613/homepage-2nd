@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "@astrojs/check": "0.3.4",
-    "@astrojs/mdx": "2.0.4",
+    "@astrojs/mdx": "2.0.5",
     "@astrojs/partytown": "2.0.4",
     "@astrojs/react": "3.0.9",
     "@astrojs/rss": "4.0.2",
-    "@astrojs/sitemap": "3.0.4",
+    "@astrojs/sitemap": "3.0.5",
     "@astrojs/tailwind": "5.1.0",
     "@docsearch/css": "3.5.2",
     "@docsearch/react": "3.5.2",
