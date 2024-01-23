@@ -2,8 +2,8 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 // eslint-disable-next-line node/no-unpublished-import
 import { HatenaArticle, HatenaJson } from "../src/types/IHatena";
-import { HatenaXML } from "./HatenaXML";
-import { fetchHatenaOgpImageUrl } from "./utils";
+import { HatenaXML } from "./libs/HatenaBlogDataGenerator";
+import { fetchHatenaOgpImageUrl } from "./libs/utils";
 
 const HATENA_ENDPOINT_URL =
   "https://blog.hatena.ne.jp/korosuke613/korosuke613.hatenablog.com/atom/entry";

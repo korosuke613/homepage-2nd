@@ -1,3 +1,5 @@
+import type { BlogDataJson } from "./IBlogData";
+
 export type HatenaArticle = {
   title: string;
   link: string;
@@ -6,9 +8,4 @@ export type HatenaArticle = {
   category: string[];
 };
 
-export type HatenaJson = {
-  lastUpdated: string;
-  articles: {
-    [key: string]: HatenaArticle;
-  };
-};
+export type HatenaJson = BlogDataJson<HatenaArticle>;
