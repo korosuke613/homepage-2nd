@@ -38,7 +38,7 @@ jobs:
           filter: blob:none
 
       - name: Restore astro build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: .astro/cache
           key: astro-build-
@@ -153,7 +153,7 @@ jobs:
         run: npm ci
 
       - name: Cache Vitest
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .cache/.vitest
           key: vitest-${{ github.sha }}
@@ -193,7 +193,7 @@ jobs:
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -230,7 +230,7 @@ jobs:
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
