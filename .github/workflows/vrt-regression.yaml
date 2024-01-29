@@ -66,7 +66,7 @@ jobs:
       - name: Cache playwright binaries
         if: ${{ !inputs.skip }}
 
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -81,7 +81,7 @@ jobs:
       - name: Cache VRT snapshots
         if: ${{ !inputs.skip }}
 
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: vrt-cache
         with:
           path: src/tests/vrt/snapshots

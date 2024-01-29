@@ -34,7 +34,7 @@ jobs:
           filter: blob:none
 
       - name: Restore astro build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: .astro/cache
           key: astro-build-

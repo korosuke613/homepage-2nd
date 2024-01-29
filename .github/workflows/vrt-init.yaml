@@ -30,7 +30,7 @@ jobs:
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -45,7 +45,7 @@ jobs:
           npm run vrt:init
 
       - name: Cache VRT snapshots
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         id: vrt-cache
         with:
           path: src/tests/vrt/snapshots

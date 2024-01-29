@@ -42,7 +42,7 @@ jobs:
           debug: true
 
       - name: Cache playwright binaries
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -54,7 +54,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Cache astro build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .astro/cache
           key: astro-build-${{ github.sha }}
@@ -64,7 +64,7 @@ jobs:
         run: npm run build
 
       - name: Cache Vitest
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .cache/.vitest
           key: vitest-${{ github.sha }}
