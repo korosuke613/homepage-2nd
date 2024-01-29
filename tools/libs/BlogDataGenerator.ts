@@ -1,15 +1,15 @@
 import fs from "node:fs";
 import { BlogDataJson } from "../../src/types/IBlogData";
 
-export abstract class BlogDataGenerator<T extends BlogDataJson<unknown>> {
+export abstract class BlogDataGenerator<T> {
   protected updateItemCount: number;
-  protected blogDate: T;
+  protected blogDate: BlogDataJson<T>;
 
   constructor() {
     this.updateItemCount = 0;
   }
 
-  getBlogData(): T {
+  getBlogData(): BlogDataJson<T> {
     return this.blogDate;
   }
 

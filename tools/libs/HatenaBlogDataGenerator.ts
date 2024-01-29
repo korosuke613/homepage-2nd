@@ -1,6 +1,6 @@
 import Parser from "rss-parser";
 const parser = new Parser();
-import { HatenaJson } from "../../src/types/IHatena";
+import { HatenaArticle } from "../../src/types/IHatena";
 import { BlogDataGenerator } from "./BlogDataGenerator";
 import { fetchHatenaOgpImageUrl } from "./utils";
 
@@ -44,7 +44,7 @@ export type HatenaRssJson = Array<{
   categories: string[];
 }>;
 
-export class HatenaBlogDataGenerator extends BlogDataGenerator<HatenaJson> {
+export class HatenaBlogDataGenerator extends BlogDataGenerator<HatenaArticle> {
   protected XML_URL = "https://korosuke613.hatenablog.com/rss";
 
   protected async getXml(url: string): Promise<HatenaRssJson> {
