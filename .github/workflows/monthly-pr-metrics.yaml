@@ -44,4 +44,4 @@ jobs:
           issue-number: 251 # 最初に作った Issue を更新する。https://github.com/korosuke613/homepage-2nd/issues/251
           content-filepath: ./issue_metrics.md
 
-      - uses: Kesin11/actions-timeline@baa62e018ca5504e2d617502ce1eacf9171e757a # v2.0.1
+      - uses: Kesin11/actions-timeline@40b912d44677e158feec8015d092b5428f9c8247 # v2.0.2
