@@ -50,7 +50,7 @@
     "natural": "6.10.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "4.12.0",
+    "react-icons": "5.0.1",
     "rehype-external-links": "3.0.0",
     "rehype-stringify": "10.0.0",
     "remark-extract-frontmatter": "3.2.0",
