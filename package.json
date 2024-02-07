@@ -32,7 +32,7 @@
     "@astrojs/check": "0.3.4",
     "@astrojs/mdx": "2.0.5",
     "@astrojs/partytown": "2.0.4",
-    "@astrojs/react": "3.0.9",
+    "@astrojs/react": "3.0.10",
     "@astrojs/rss": "4.0.5",
     "@astrojs/sitemap": "3.0.5",
     "@astrojs/tailwind": "5.1.0",
