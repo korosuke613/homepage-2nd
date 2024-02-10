@@ -1,4 +1,4 @@
-import { BsTwitter } from "react-icons/bs/index";
+import { BsTwitter } from "react-icons/bs";
 
 type ITweetButtonProps = {
   text: string;
