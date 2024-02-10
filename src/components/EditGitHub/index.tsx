@@ -1,4 +1,4 @@
-import { BsGithub } from "react-icons/bs/index";
+import { BsGithub } from "react-icons/bs";
 
 import { AppConfig } from "@/utils/AppConfig";
 import { getGitHubUrl } from "@/utils/Posts";
