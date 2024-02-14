@@ -29,7 +29,7 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
-    "@astrojs/check": "0.5.2",
+    "@astrojs/check": "0.5.4",
     "@astrojs/mdx": "2.1.1",
     "@astrojs/partytown": "2.0.4",
     "@astrojs/react": "3.0.10",
@@ -40,7 +40,7 @@
     "@docsearch/react": "3.5.2",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.10",
-    "astro": "4.3.5",
+    "astro": "4.3.7",
     "astro-meta-tags": "^0.2.1",
     "astro-robots-txt": "1.0.0",
     "date-fns": "3.3.1",
