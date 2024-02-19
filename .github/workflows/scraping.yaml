@@ -23,5 +23,5 @@ jobs:
             --env "API_KEY=${{ secrets.ALGOLIA_API_KEY }}" \
             algolia/docsearch-scraper
 
-      - uses: Kesin11/actions-timeline@40b912d44677e158feec8015d092b5428f9c8247 # v2.0.2
+      - uses: Kesin11/actions-timeline@6905b677e042d41193107842cc5c7b715bef0042 # v2.0.3
         if: github.event.workflow == '.github/workflows/scraping.yaml'
