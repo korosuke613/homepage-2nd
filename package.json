@@ -29,7 +29,7 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
-    "@astrojs/check": "0.5.4",
+    "@astrojs/check": "0.5.5",
     "@astrojs/mdx": "2.1.1",
     "@astrojs/partytown": "2.0.4",
     "@astrojs/react": "3.0.10",
