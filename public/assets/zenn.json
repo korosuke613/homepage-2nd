@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2024-02-20T14:26:19.089Z",
+  "lastUpdated": "2024-02-24T14:24:43.728Z",
   "articles": {
     "e82445a43782b1": {
       "title": "Productivity Weekly (2020-12-23号)",
@@ -858,6 +858,12 @@
       "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--DEo2smOB--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Actions%25E3%2581%25A7M1%2520Mac%25E3%2581%258C%25E7%2584%25A1%25E6%2596%2599%25E3%2581%25A7%25E4%25BD%25BF%25E3%2581%2588%25E3%2582%258B%25E3%2582%2588%25E3%2581%2586%25E3%2581%25AB%25E3%2580%2582Docker%25E3%2582%2584Go%25E3%2581%25AE%25E8%25A9%25B1%25E3%2582%2582%25EF%25BD%259CProductivity%2520Weekly...%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:Futa%2520Hirakoba%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2RmZGEyOTIyNDQuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%259C%25E3%2582%25A6%25E3%2582%25BA%2520%25E7%2594%259F%25E7%2594%25A3%25E6%2580%25A7%25E5%2590%2591%25E4%25B8%258A%25E3%2583%2581%25E3%2583%25BC%25E3%2583%25A0%2520%2520%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png",
       "pubDate": "2024-02-19T01:00:00.000Z",
       "url": "https://zenn.dev/cybozu_ept/articles/productivity-weekly-20240131"
+    },
+    "copilot-in-github-support": {
+      "title": "Copilot in GitHub SupportがGA！GitHubの仕様に関するわからないことをすばやく解決できやすくなったよ",
+      "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--3SsKY_Ac--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:Copilot%2520in%2520GitHub%2520Support%25E3%2581%258CGA%25EF%25BC%2581GitHub%25E3%2581%25AE%25E4%25BB%2595%25E6%25A7%2598%25E3%2581%25AB%25E9%2596%25A2%25E3%2581%2599%25E3%2582%258B%25E3%2582%258F%25E3%2581%258B%25E3%2582%2589%25E3%2581%25AA%25E3%2581%2584%25E3%2581%2593%25E3%2581%25A8%25E3%2582%2592%25E3%2581%2599%25E3%2581%25B0%25E3%2582%2584%25E3%2581%258F%25E8%25A7%25A3%25E6%25B1%25BA%25E3%2581%25A7...%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_37:Futa%2520Hirakoba%2Cx_203%2Cy_121/g_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_90%2Cx_87%2Cy_95/v1627283836/default/og-base-w1200-v2.png",
+      "pubDate": "2024-02-24T10:32:37.000Z",
+      "url": "https://zenn.dev/korosuke613/articles/copilot-in-github-support"
     }
   }
 }
