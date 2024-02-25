@@ -93,7 +93,7 @@ jobs:
           gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
 
       - name: Comment artifacts hash to pull request
-        uses: thollander/actions-comment-pull-request@fabd468d3a1a0b97feee5f6b9e499eab0dd903f6 # v2.4.3
+        uses: thollander/actions-comment-pull-request@1d3973dc4b8e1399c0620d3f2b1aa5e795465308 # v2.4.3
         with:
           filePath: ${{ runner.temp }}/tmp_artifacts_result.txt
           comment_tag: artifacts_sha
