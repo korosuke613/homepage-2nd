@@ -5,12 +5,10 @@ type ILogoProps = {
   name: string;
 };
 
-const Logo = (props: ILogoProps) => (
+export const Logo: React.FC<ILogoProps> = ({ icon, name }) => (
   <div className="flex items-center bg-gradient-to-br from-violet-600 to-fuchsia-400 bg-clip-text text-xl font-bold text-transparent">
-    {props.icon}
+    {icon}
     &nbsp; {/* 半角スペース */}
-    {props.name}
+    {name}
   </div>
 );
-
-export { Logo };
