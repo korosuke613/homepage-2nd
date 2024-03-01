@@ -57,9 +57,7 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
       )}
 
       {props.page.url.next && (
-        <a href={path.join(AppConfig.base, props.page.url.next)}>
-          Older Posts →
-        </a>
+        <a href={path.join(AppConfig.base, props.page.url.next)}>→</a>
       )}
     </div>
   );
