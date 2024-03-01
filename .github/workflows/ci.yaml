@@ -207,6 +207,7 @@ jobs:
         run: npm run test:playwright-e2e
   
       - name: Test Summary
+        if: always()
         uses: test-summary/action@032c8a9cec6aaa3c20228112cae6ca10a3b29336 # v2.3
         with:
           paths: "test-results/e2e.xml"
