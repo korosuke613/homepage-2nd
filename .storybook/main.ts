@@ -8,6 +8,9 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-storysource",
+    "@storybook/addon-a11y",
+    "@storybook/addon-console",
   ],
   framework: {
     name: "@storybook/react-vite",
@@ -34,6 +37,9 @@ const config: StorybookConfig = {
         },
       },
     });
+  },
+  typescript: {
+    reactDocgen: "react-docgen",
   },
 };
 export default config;
