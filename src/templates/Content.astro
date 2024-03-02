@@ -11,14 +11,6 @@ import { AppConfig } from '@/utils/AppConfig';
 import { readTags } from '@/utils/Tag';
 import { readYears } from '@/utils/Year';
 
-// interface Props {
-//   page: ArticleFrontmatterPage;
-//   preTitle?: string | number;
-//   contentCategory: string;
-//   contentDescription: string;
-//   contents: CollectionEntry<'posts'>[];
-// }
-
 const { page, preTitle, contentCategory, contentDescription } = Astro.props;
 const titleSuffix = ` - ${AppConfig.site_name}`;
 const titleBase = preTitle
@@ -71,6 +63,6 @@ if (years === undefined) {
   </Section>
 
   <Section>
-    <NewerOlderPagination page={page} />
+    <NewerOlderPagination client:load page={page} />
   </Section>
 </Base>
