@@ -1,5 +1,5 @@
 import type { Page } from "astro";
-import type { ReactNode } from "react";
+import { type ReactNode, useCallback, useEffect } from "react";
 
 type INewerOlderPaginationProps = {
   page: Page;
@@ -38,6 +38,29 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
   // Check the existence of props since they are sometimes undefined during astro dev.
   // ref: https://github.com/withastro/astro/issues/9110
   if (props === undefined) return <></>;
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowLeft":
+          // 左キーが押されたら前のページに遷移する
+          if (props.page.url.prev) location.href = props.page.url.prev;
+          break;
+        case "ArrowRight":
+          // 右キーが押されたら次のページに遷移する
+          if (props.page.url.next) location.href = props.page.url.next;
+          break;
+      }
+    },
+    [props.page.url.prev, props.page.url.next],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   return (
     <div className="flex justify-center gap-8">
