@@ -2,7 +2,6 @@ import { format } from "date-fns";
 
 import type { BlogData } from "@/types/IBlogPage";
 import { CardClass } from "@/utils/Css";
-import { transformTitleForContentCard } from "@/utils/StringWidth";
 import type { Tags } from "@/utils/Tag";
 
 import { ExternalLink } from "../ExternalLink";
@@ -36,15 +35,18 @@ export const BlogCard = (props: IBlogCard) => {
           <ExternalLink
             title={
               <div key={props.elt.id}>
-                <span
-                  className="text-base font-semibold"
+                <div
                   style={{
-                    display: "flex",
                     height: "3rem",
                   }}
                 >
-                  {transformTitleForContentCard(props.elt.title)}
-                </span>
+                  <p
+                    className="line-clamp-3 text-base font-semibold"
+                    title={props.elt.title}
+                  >
+                    {props.elt.title}
+                  </p>
+                </div>
                 <br />
                 <span className="align-middle text-xs text-gray-300	">
                   {format(new Date(props.elt.pubDate), "LLL d, yyyy")}

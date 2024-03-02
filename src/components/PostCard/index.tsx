@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 
 import type { IPost } from "@/types/IArticleFrontmatter";
-import { transformTitleForContentCard } from "@/utils/StringWidth";
 import type { Tags } from "@/utils/Tag";
 
 import { Tag } from "@/components/Tag";
@@ -33,15 +32,16 @@ export const PostCard = (props: IPostCardProps) => {
           <div className="px-3 py-1.5">
             <a href={contentPath}>
               <div>
-                {transformTitleForContentCard(props.instance.data.title)
-                  .split("\\n")
-                  .map((t) => (
-                    <span key={t} className="text-lg font-bold">
-                      {t}
-                      <br />
-                    </span>
-                  ))}
-                <span className="align-middle text-xs text-gray-300	">
+                <span>
+                  <p
+                    className="text-lg font-bold line-clamp-4"
+                    title={props.instance.data.title}
+                  >
+                    {props.instance.data.title}
+                    <br />
+                  </p>
+                </span>
+                <span className="align-middle text-xs text-gray-300">
                   {format(new Date(props.instance.data.pubDate), "LLL d, yyyy")}
                 </span>
               </div>
