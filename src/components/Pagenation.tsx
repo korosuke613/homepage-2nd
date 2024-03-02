@@ -46,9 +46,7 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
   return (
     <div className="flex justify-center gap-8">
       {props.page.url.prev && (
-        <a href={path.join(AppConfig.base, props.page.url.prev)}>
-          ← Newer Posts
-        </a>
+        <a href={path.join(AppConfig.base, props.page.url.prev)}>←</a>
       )}
       {props.page.lastPage !== 1 && (
         <div className="hidden justify-center gap-4 sm:flex">
