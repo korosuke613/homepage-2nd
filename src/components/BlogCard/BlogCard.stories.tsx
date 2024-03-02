@@ -1,9 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BlogCard } from "./index";
 
-const metaData: Meta = {
+const metaData: Meta<typeof BlogCard> = {
   title: "BlogCard",
   component: BlogCard,
+  render: (args) => {
+    return (
+      <div
+        style={{
+          width: "320px",
+        }}
+      >
+        <BlogCard elt={args.elt} tags={args.tags} />
+      </div>
+    );
+  },
 };
 
 export default metaData;
@@ -25,39 +36,18 @@ const baseTags = {
   hoge: "bg-red-400 text-slate-900",
 };
 
-const baseRender: StoryObj<typeof BlogCard>["render"] = ({ elt, tags }) => {
-  return (
-    <div
-      style={{
-        width: "300px",
-      }}
-    >
-      <BlogCard elt={elt} tags={tags} />
-    </div>
-  );
-};
-
-export const ThreeLines: StoryObj<typeof BlogCard> = {
-  render: baseRender,
-  args: {
-    elt: baseElt,
-    tags: baseTags,
-  },
-};
-
-export const TwoLines: StoryObj<typeof BlogCard> = {
-  render: baseRender,
+export const LongTitle: StoryObj<typeof BlogCard> = {
   args: {
     elt: {
       ...baseElt,
-      title: "成果物のハッシュ値を保存・比較して余計なデプロ",
+      title:
+        "成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値",
     },
     tags: baseTags,
   },
 };
 
-export const OneLines: StoryObj<typeof BlogCard> = {
-  render: baseRender,
+export const Default: StoryObj<typeof BlogCard> = {
   args: {
     elt: { ...baseElt, title: "成果物のハッシュ値" },
     tags: baseTags,
