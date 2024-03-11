@@ -1,28 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import Post from '@/pages/posts/[...page].astro';
+import Post from "@/pages/posts/[...page].astro";
 import type {
   ArticleFrontmatterPage,
   IPost,
-} from '@/types/IArticleFrontmatter';
-import { sortByDate } from '@/utils/Posts';
-import { DormitoryIntroduction } from '@/utils/StaticPages';
-import { readYears } from '@/utils/Year';
-
-type GetStaticPaths = {
-  paginate: any;
-}; // Overrides `GetStaticPathsOptions` types from Astro
+} from "@/types/IArticleFrontmatter";
+import { sortByDate } from "@/utils/Posts";
+import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { readYears } from "@/utils/Year";
+import type { GetStaticPathsOptions } from "astro";
 
 export async function getNonDraftPosts() {
-  const allPosts: IPost[] = await getCollection('posts');
+  const allPosts: IPost[] = await getCollection("posts");
   allPosts.push(DormitoryIntroduction);
 
   const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
   return nonDraftPosts;
 }
 
-export async function getStaticPaths({ paginate }: GetStaticPaths) {
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const nonDraftPosts = await getNonDraftPosts();
   const sortedPosts = sortByDate(nonDraftPosts);
 

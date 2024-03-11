@@ -2,19 +2,10 @@
   // Configuration for JavaScript files
   "extends": [
     "airbnb-base",
-    "plugin:prettier/recommended",
     "plugin:astro/recommended",
     "plugin:storybook/recommended"
   ],
-  "rules": {
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "endOfLine": "auto"
-      }
-    ]
-  },
+  "rules": {},
   "ignorePatterns": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs"],
   "overrides": [
     // Configuration for Astro
@@ -34,6 +25,14 @@
             "ignore": ["@/*", "astro:content", "astro:assets"]
           }
         ],
+        "import/order": "off",
+        "quotes": "off",
+        "indent": "off",
+        "max-len": "off",
+        "object-curly-newline": "off",
+        "operator-linebreak": "off",
+        "implicit-arrow-linebreak": "off",
+        "function-paren-newline": "off",
         "import/extensions": [
           "error",
           "ignorePackages",

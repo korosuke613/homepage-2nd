@@ -1,14 +1,11 @@
 ---
-import Blogs from '@/templates/Blogs.astro';
-import type { BlogPage } from '@/types/IBlogPage';
-import { getSortedBlogData } from '@/utils/Blog';
-import { readYears } from '@/utils/Year';
+import Blogs from "@/templates/Blogs.astro";
+import type { BlogPage } from "@/types/IBlogPage";
+import { getSortedBlogData } from "@/utils/Blog";
+import { readYears } from "@/utils/Year";
+import type { GetStaticPathsOptions } from "astro";
 
-type GetStaticPaths = {
-  paginate: any;
-}; // Overrides `GetStaticPathsOptions` types from Astro
-
-export async function getStaticPaths({ paginate }: GetStaticPaths) {
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedBlogs = await getSortedBlogData();
 
   const years = await readYears();
