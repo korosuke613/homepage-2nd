@@ -1,6 +1,6 @@
+import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import type { ReactNode } from "react";
-import type { CollectionEntry } from "astro:content";
 
 import { CommitHistoryPost } from "@/components/CommitHistoryPost";
 import { Content } from "@/components/Content";

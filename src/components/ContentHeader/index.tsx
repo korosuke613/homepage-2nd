@@ -1,5 +1,5 @@
-import { format } from "date-fns";
 import type { CollectionEntry } from "astro:content";
+import { format } from "date-fns";
 
 import type { Tags } from "@/utils/Tag";
 

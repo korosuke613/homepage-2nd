@@ -1,5 +1,5 @@
-import natural from "natural";
 import type { CollectionEntry } from "astro:content";
+import natural from "natural";
 
 import hatena from "@/../public/assets/hatena_blog.json";
 

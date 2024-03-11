@@ -1,7 +1,7 @@
-import path from "path";
+import path from "node:path";
+import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import type { ReactNode } from "react";
-import type { CollectionEntry } from "astro:content";
 
 import { EditGitHub } from "@/components/EditGitHub";
 import { Toc } from "@/components/Toc";

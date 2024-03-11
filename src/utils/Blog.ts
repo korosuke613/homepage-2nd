@@ -1,6 +1,5 @@
 import fs from "node:fs";
-
-import path from "path";
+import path from "node:path";
 
 import type { BlogData } from "@/types/IBlogPage";
 import type { HatenaJson } from "@/types/IHatena";

@@ -1,8 +1,7 @@
 import Parser from "rss-parser";
 const parser = new Parser();
 import fs from "node:fs";
-// eslint-disable-next-line node/no-unpublished-import
-import { ZennJson } from "../src/types/IZenn";
+import type { ZennJson } from "../src/types/IZenn";
 
 type ZennRssJson = Array<{
   title: string;
