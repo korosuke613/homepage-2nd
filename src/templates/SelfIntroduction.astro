@@ -1,18 +1,18 @@
 ---
-import path from 'path';
+import path from "node:path";
 
-import { GradientText } from '@/components/GradientText';
-import { Section } from '@/components/Section';
+import { GradientText } from "@/components/GradientText";
+import { Section } from "@/components/Section";
 
-import { ExternalLink } from '@/components/ExternalLink/index';
-import { SocialLinks } from '@/components/SocialLinks/index';
-import { MyIcon } from '@/components/MyIcon/index';
-import { AppConfig } from '@/utils/AppConfig';
+import { ExternalLink } from "@/components/ExternalLink/index";
+import { MyIcon } from "@/components/MyIcon/index";
+import { SocialLinks } from "@/components/SocialLinks/index";
+import { AppConfig } from "@/utils/AppConfig";
 
-const iconPath = path.join(AppConfig.base, '/assets/images/my_icon_2.png');
+const iconPath = path.join(AppConfig.base, "/assets/images/my_icon_2.png");
 const iconIds = {
-  small: 'my-icon-small',
-  large: 'my-icon-large',
+  small: "my-icon-small",
+  large: "my-icon-large",
 };
 ---
 

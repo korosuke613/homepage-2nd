@@ -1,24 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-import { RecentBlogs } from '@/partials/RecentBlogs';
-import { RecentPickup } from '@/partials/RecentPickup';
-import { RecentPosts } from '@/partials/RecentPosts';
-import Base from '@/templates/Base.astro';
+import { RecentBlogs } from "@/partials/RecentBlogs";
+import { RecentPickup } from "@/partials/RecentPickup";
+import { RecentPosts } from "@/partials/RecentPosts";
+import Base from "@/templates/Base.astro";
 
-import SelfIntroduction from '@/templates/SelfIntroduction.astro';
-import type { IPost } from '@/types/IArticleFrontmatter';
-import { AppConfig } from '@/utils/AppConfig';
-import { getSortedBlogData } from '@/utils/Blog';
-import { sortByDate, sortByOrder } from '@/utils/Posts';
-import { DormitoryIntroduction } from '@/utils/StaticPages';
-import { readTags } from '@/utils/Tag';
+import SelfIntroduction from "@/templates/SelfIntroduction.astro";
+import type { IPost } from "@/types/IArticleFrontmatter";
+import { AppConfig } from "@/utils/AppConfig";
+import { getSortedBlogData } from "@/utils/Blog";
+import { sortByDate, sortByOrder } from "@/utils/Posts";
+import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { readTags } from "@/utils/Tag";
 
 const tags = await readTags();
 
-const allPosts: IPost[] = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
+const allPosts: IPost[] = await getCollection(
+  "posts",
+  ({ data }) => data.draft !== true,
+);
 allPosts.push(DormitoryIntroduction);
 
 const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
@@ -26,7 +27,7 @@ const sortedPosts = sortByDate(nonDraftPosts);
 const lastThreePosts = sortedPosts.slice(0, 3);
 
 const nonDraftPickup = allPosts.filter(
-  (post) => post.data.tags.includes('Pickup ⭐️') && !post.data.draft,
+  (post) => post.data.tags.includes("Pickup ⭐️") && !post.data.draft,
 );
 const sortedPickup = sortByOrder(nonDraftPickup);
 const lastThreePickup = sortedPickup.slice(0, 3);

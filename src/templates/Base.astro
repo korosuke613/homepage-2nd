@@ -1,16 +1,16 @@
 ---
-import '@docsearch/css/dist/style.css';
-import '@/components/DocSearch.css';
 // eslint-disable-next-line import/no-unresolved
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
+import "@/components/DocSearch.css";
+import "@docsearch/css/dist/style.css";
 
-import path from 'path';
+import path from "node:path";
 
-import { Footer } from '@/partials/Footer';
-import Navbar from '@/templates/Navbar.astro';
-import { AppConfig } from '@/utils/AppConfig';
+import { Footer } from "@/partials/Footer";
+import Navbar from "@/templates/Navbar.astro";
+import { AppConfig } from "@/utils/AppConfig";
 
-import '@/styles/global.css';
+import "@/styles/global.css";
 
 export interface Props {
   head: {
@@ -25,17 +25,17 @@ const {
 } = Astro.props as Props;
 
 const twitterCardType = Astro.props.head.ogpUrl
-  ? 'summary_large_image'
-  : 'summary';
+  ? "summary_large_image"
+  : "summary";
 const ogpUrl = Astro.props.head.ogpUrl
   ? Astro.props.head.ogpUrl
   : new URL(
-      'assets/images/my_icon_2.png',
-      'https://korosuke613.dev/',
+      "assets/images/my_icon_2.png",
+      "https://korosuke613.dev/",
     ).toString();
 
-const rssLink = path.join(AppConfig.base, 'rss.xml');
-const faviconLink = path.join(AppConfig.base, 'favicon.ico');
+const rssLink = path.join(AppConfig.base, "rss.xml");
+const faviconLink = path.join(AppConfig.base, "favicon.ico");
 ---
 
 <html lang="ja">

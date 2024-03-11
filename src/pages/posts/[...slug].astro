@@ -1,19 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
-import { ContentPost } from '@/partials/ContentPost';
-import Base from '@/templates/Base.astro';
-import { AppConfig } from '@/utils/AppConfig';
-import { readTags } from '@/utils/Tag';
-import { getSimilarPosts } from '@/utils/TextSimilarity';
-import { getCommitHistories } from '@/utils/CommitHistories';
-import { DormitoryIntroduction } from '@/utils/StaticPages';
+import { ContentPost } from "@/partials/ContentPost";
+import Base from "@/templates/Base.astro";
+import { AppConfig } from "@/utils/AppConfig";
+import { getCommitHistories } from "@/utils/CommitHistories";
+import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { readTags } from "@/utils/Tag";
+import { getSimilarPosts } from "@/utils/TextSimilarity";
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('posts', ({ data }) => {
-    return data.draft !== true;
-  });
+  const blogEntries = await getCollection(
+    "posts",
+    ({ data }) => data.draft !== true,
+  );
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -26,11 +27,9 @@ const { Content, headings } = await entry.render();
 const title = `${entry.data.title} - ${AppConfig.site_name}`;
 const tags = await readTags();
 
-const entries = await getCollection('posts', ({ data }) => {
-  return data.draft !== true;
-});
+const entries = await getCollection("posts", ({ data }) => data.draft !== true);
 // 国際交流宿舎の紹介用の特別措置
-entries.push(DormitoryIntroduction as unknown as CollectionEntry<'posts'>);
+entries.push(DormitoryIntroduction as unknown as CollectionEntry<"posts">);
 
 const similars = getSimilarPosts(entry, entries);
 
@@ -38,10 +37,10 @@ const filePath = `src/content/posts/${entry.id}`;
 const histories = await getCommitHistories(filePath);
 
 const ogpUrl = entry.data.imgSrc
-  ? new URL(entry.data.imgSrc, 'https://korosuke613.dev/').toString()
+  ? new URL(entry.data.imgSrc, "https://korosuke613.dev/").toString()
   : undefined;
 
-const description = entry.data.description || '';
+const description = entry.data.description || "";
 ---
 
 <Base
@@ -53,7 +52,7 @@ const description = entry.data.description || '';
 >
   <ContentPost
     frontmatter={entry}
-    contentCategory={'Posts'}
+    contentCategory={"Posts"}
     headings={headings}
     similars={similars}
     histories={histories}

@@ -1,19 +1,16 @@
 ---
-import Blogs from '@/templates/Blogs.astro';
-import type { BlogPage } from '@/types/IBlogPage';
-import { getSortedBlogData } from '@/utils/Blog';
-import { escapeTag, readTags } from '@/utils/Tag';
+import Blogs from "@/templates/Blogs.astro";
+import type { BlogPage } from "@/types/IBlogPage";
+import { getSortedBlogData } from "@/utils/Blog";
+import { escapeTag, readTags } from "@/utils/Tag";
+import type { GetStaticPathsOptions } from "astro";
 
-type GetStaticPaths = {
-  paginate: any;
-}; // Overrides `GetStaticPathsOptions` types from Astro
-
-export async function getStaticPaths({ paginate }: GetStaticPaths) {
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sorteBlogs = await getSortedBlogData();
 
   const tags = (await readTags()).blogs;
   if (tags === undefined) {
-    throw new Error('readed tags is undefined');
+    throw new Error("readed tags is undefined");
   }
 
   return Object.keys(tags).flatMap((tagName) => {
@@ -36,7 +33,7 @@ interface Props {
 const { page } = Astro.props as Props;
 const { tag } = Astro.params;
 
-const originTag = (tag as string).replace('_', '/');
+const originTag = (tag as string).replace("_", "/");
 ---
 
 <meta name="robots" content="noindex" />
