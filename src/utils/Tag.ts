@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { Values } from "@/types/Values";

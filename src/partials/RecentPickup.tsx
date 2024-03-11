@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 
 import { GradientText } from "@/components/GradientText";
 import { PostGallery } from "@/components/PostGallery";

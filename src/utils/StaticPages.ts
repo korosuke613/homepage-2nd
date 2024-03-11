@@ -1,6 +1,6 @@
-import path from "path";
-import { AppConfig } from "./AppConfig";
+import path from "node:path";
 import type { CollectionEntry } from "astro:content";
+import { AppConfig } from "./AppConfig";
 
 export type StaticPost = {
   data: CollectionEntry<"posts">["data"];

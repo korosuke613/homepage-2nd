@@ -1,5 +1,5 @@
-import type { MarkdownInstance, Page } from "astro";
 import type { CollectionEntry } from "astro:content";
+import type { MarkdownInstance, Page } from "astro";
 
 import type { StaticPost } from "@/utils/StaticPages";
 

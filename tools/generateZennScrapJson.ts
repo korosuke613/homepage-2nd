@@ -1,7 +1,7 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
 // eslint-disable-next-line node/no-unpublished-import
-import { ZennScrapJson } from "../src/types/IZenn";
+import type { ZennScrapJson } from "../src/types/IZenn";
 
 const scrapIdsString = `
 8236994b2d2929
