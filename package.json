@@ -66,6 +66,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.1",
+    "@chromatic-com/storybook": "^1.2.22",
     "@playwright/experimental-ct-react": "1.42.1",
     "@playwright/test": "1.42.1",
     "@proofdict/textlint-rule-proofdict": "3.1.2",
