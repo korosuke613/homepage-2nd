@@ -14,6 +14,9 @@ const IS_TESTING = process.env.IS_TESTING === "true";
 
 // https://astro.build/config
 export default defineConfig({
+  experimental: {
+    contentCollectionCache: true,
+  },
   cacheDir: ".astro/cache",
   base: "/", // Set a path prefix.
   site: "https://korosuke613.dev/",
