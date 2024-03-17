@@ -32,7 +32,7 @@ jobs:
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Publish to Chromatic
-        uses: chromaui/action@b64ac51e49ecec89c73de61c1b48aecbfe94fd1e # v11.0.6
+        uses: chromaui/action@306092d42c0743800aadf544ee263cbc56598b1b # v11.0.8
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitZeroOnChanges: true
