@@ -22,7 +22,7 @@
         "import/no-unresolved": [
           "error",
           {
-            "ignore": ["@/*", "astro:*"]
+            "ignore": ["@/*", "astro:content", "astro:assets"]
           }
         ],
         "import/order": "off",

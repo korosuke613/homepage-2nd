@@ -1,4 +1,3 @@
-import db from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
@@ -10,12 +9,13 @@ import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 // eslint-disable-next-line import/extensions
 import { setupKorosuke } from "./src/utils/Integration.mjs";
+
 const IS_TESTING = process.env.IS_TESTING === "true";
 
 // https://astro.build/config
 export default defineConfig({
   cacheDir: ".astro/cache",
-  base: "/",
+  base: "/", // Set a path prefix.
   site: "https://korosuke613.dev/",
   devToolbar: {
     enabled: IS_TESTING ? false : true,
@@ -33,10 +33,7 @@ export default defineConfig({
     rehypePlugins: [
       [
         rehypeExternalLinks,
-        {
-          target: "_blank",
-          rel: ["noopener", "noreferrer"],
-        },
+        { target: "_blank", rel: ["noopener", "noreferrer"] },
       ],
     ],
   },
@@ -54,6 +51,5 @@ export default defineConfig({
     setupKorosuke(),
     mdx(),
     metaTags(),
-    db(),
   ],
 });
