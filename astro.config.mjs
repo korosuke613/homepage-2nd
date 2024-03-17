@@ -39,7 +39,7 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      exclude: ["fsevents"],
+      exclude: ["fsevents", "playwright"],
     },
   },
   integrations: [
