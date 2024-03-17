@@ -70,7 +70,6 @@
     "@playwright/test": "1.42.1",
     "@proofdict/textlint-rule-proofdict": "3.1.2",
     "@storybook/addon-a11y": "8.0.0",
-    "@storybook/addon-console": "3.0.0",
     "@storybook/addon-essentials": "8.0.0",
     "@storybook/addon-interactions": "8.0.0",
     "@storybook/addon-links": "8.0.0",
