@@ -47,7 +47,8 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-      - name: Build
+
+      - name: Pre build
         run: |
           npm run build
 
@@ -63,7 +64,19 @@ jobs:
             cut -d ' ' -f 1)
           set +x
           echo "artifacts=$SHA256_OUTPUT" >> $GITHUB_OUTPUT
+
+      - name: Verify
+        env: 
+          ASTRO_STUDIO_APP_TOKEN: ${{ secrets.ASTRO_STUDIO_APP_TOKEN }}
+        run: |
+          npx astro db verify
   
+      - name: Build
+        env: 
+          ASTRO_STUDIO_APP_TOKEN: ${{ secrets.ASTRO_STUDIO_APP_TOKEN }}
+        run: |
+          npm run build -- --remote
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
