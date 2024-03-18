@@ -1,0 +1,23 @@
+---
+import { Playground, db, desc } from "astro:db";
+import { PlaygroundDb } from "@/components/PlaygroundDb";
+import { Section } from "@/components/Section";
+import Base from "@/templates/Base.astro";
+
+const title = "AstroDb";
+const description =
+  "AstroDb is a database of astronomical objects and their properties.";
+
+const playground = await db
+  .select()
+  .from(Playground)
+  .orderBy(desc(Playground.date));
+---
+
+<Base head={{ title, description }}>
+
+<Section>
+  <PlaygroundDb client:load playground={playground}/>
+</Section>
+
+</Base>
