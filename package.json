@@ -81,7 +81,7 @@
     "@storybook/react-vite": "8.0.4",
     "@storybook/test": "8.0.4",
     "@storybook/testing-library": "0.2.2",
-    "@types/react": "18.2.69",
+    "@types/react": "18.2.74",
     "@typescript-eslint/eslint-plugin": "7.2.0",
     "@typescript-eslint/parser": "7.2.0",
     "@vitest/coverage-v8": "1.4.0",
