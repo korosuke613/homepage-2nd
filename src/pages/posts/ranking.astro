@@ -1,0 +1,159 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import { Blogs, Posts, db, desc } from "astro:db";
+import { ExternalLink } from "@/components/ExternalLink";
+import { ContentPost } from "@/partials/ContentPost";
+import Base from "@/templates/Base.astro";
+import { AppConfig } from "@/utils/AppConfig";
+import { getSortedBlogData } from "@/utils/Blog";
+import { getCommitHistories } from "@/utils/CommitHistories";
+import { Ranking as RankingStaticPage, StaticPages } from "@/utils/StaticPages";
+import { readTags } from "@/utils/Tag";
+import { getSimilarPosts } from "@/utils/TextSimilarity";
+
+// ランキングの上限数
+const RANKING_LIMIT = 30;
+
+type RankingItem = {
+  rank: number;
+  path: string;
+  title: string;
+  views: number;
+};
+
+const postsData = await db
+  .select()
+  .from(Posts)
+  .orderBy(desc(Posts.screenPageViews))
+  .limit(RANKING_LIMIT);
+
+const blogsData = await db
+  .select()
+  .from(Blogs)
+  .orderBy(desc(Blogs.click))
+  .limit(RANKING_LIMIT);
+
+const tags = await readTags();
+
+const title = `${RankingStaticPage.data.title} - ${AppConfig.site_name}`;
+
+const filePath = "src/pages/posts/ranking.astro";
+const histories = await getCommitHistories(filePath);
+
+const entries = await getCollection("posts", ({ data }) => data.draft !== true);
+const similars = getSimilarPosts(
+  {
+    ...RankingStaticPage,
+    body: "",
+  },
+  entries,
+);
+
+const postsCollection = await getCollection(
+  "posts",
+  ({ data }) => data.draft !== true,
+);
+const postsRanking: RankingItem[] = [];
+let index = 1;
+for (const p of postsData) {
+  const pageTitle = [...postsCollection, ...StaticPages].find(
+    (post) => post.slug === p.pagePath.replace("/posts/", ""),
+  )?.data.title;
+  if (!pageTitle) {
+    continue;
+  }
+  postsRanking.push({
+    rank: index,
+    path: p.pagePath,
+    title: pageTitle,
+    views: p.screenPageViews,
+  });
+  index += 1;
+}
+
+const blogsCollection = await getSortedBlogData();
+const blogsRanking: RankingItem[] = [];
+index = 1;
+for (const b of blogsData) {
+  const pageTitle = blogsCollection.find(
+    (blog) => blog.url === b.linkUrl,
+  )?.title;
+  if (!pageTitle) {
+    continue;
+  }
+  blogsRanking.push({
+    rank: index,
+    path: b.linkUrl,
+    title: pageTitle,
+    views: b.click,
+  });
+  index += 1;
+}
+---
+<Base
+  head={{
+    title,
+    description: RankingStaticPage.data.description!,
+  }}
+>
+  <ContentPost
+    frontmatter={RankingStaticPage as unknown as CollectionEntry<"posts">}
+    contentCategory={"Posts"}
+    headings={[]}
+    tags={tags.posts}
+    similars={similars}
+    histories={histories}
+  >
+    <p>
+      このページでは、アクセス数の多い記事やブログをランキング形式で紹介しています。
+      大体毎日更新されます。
+    </p>
+    <h2>Posts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="right">順位</th>
+          <th>タイトル</th>
+          <th align="right">Views</th>
+        </tr>
+      </thead>
+      <tbody>
+        {postsRanking.map((p) => (
+            <tr>
+              <td style="width:2.5rem;" align="right">{p.rank}位</td>
+              <td>
+                <a href={p.path} class="line-clamp-1">{p.title}</a>
+              </td>
+              <td align="right">{p.views}</td>
+            </tr>
+          ))
+      }
+      </tbody>
+    </table>
+
+    <h2>Blogs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th align="right">順位</th>
+          <th>タイトル</th>
+          <th align="right">Clicks</th>
+        </tr>
+      </thead>
+      <tbody>
+        {blogsRanking.map((b) => (
+            <tr>
+              <td style="width:2.5rem;" align="right">{b.rank}位</td>
+              <td>
+                <span class="line-clamp-1">
+                  <ExternalLink url={b.path} title={b.title}></ExternalLink>
+                </span>
+              </td>
+              <td align="right">{b.views}</td>
+            </tr>
+          ))
+      }
+      </tbody>
+    </table>
+  </ContentPost>
+</Base>

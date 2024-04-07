@@ -11,7 +11,7 @@ import type { IPost } from "@/types/IArticleFrontmatter";
 import { AppConfig } from "@/utils/AppConfig";
 import { getSortedBlogData } from "@/utils/Blog";
 import { sortByDate, sortByOrder } from "@/utils/Posts";
-import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { StaticPages } from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
 
 const tags = await readTags();
@@ -20,7 +20,7 @@ const allPosts: IPost[] = await getCollection(
   "posts",
   ({ data }) => data.draft !== true,
 );
-allPosts.push(DormitoryIntroduction);
+allPosts.push(...StaticPages);
 
 const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
 const sortedPosts = sortByDate(nonDraftPosts);
