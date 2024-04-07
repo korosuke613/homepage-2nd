@@ -7,13 +7,13 @@ import type {
   IPost,
 } from "@/types/IArticleFrontmatter";
 import { sortByDate } from "@/utils/Posts";
-import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { StaticPages } from "@/utils/StaticPages";
 import { readYears } from "@/utils/Year";
 import type { GetStaticPathsOptions } from "astro";
 
 export async function getNonDraftPosts() {
   const allPosts: IPost[] = await getCollection("posts");
-  allPosts.push(DormitoryIntroduction);
+  allPosts.push(...StaticPages);
 
   const nonDraftPosts = allPosts.filter((post) => !post.data.draft);
   return nonDraftPosts;

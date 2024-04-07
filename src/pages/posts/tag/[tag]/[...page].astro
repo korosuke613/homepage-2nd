@@ -7,7 +7,7 @@ import type {
   IPost,
 } from "@/types/IArticleFrontmatter";
 import { sortByDate } from "@/utils/Posts";
-import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { StaticPages } from "@/utils/StaticPages";
 import { generateTagsFromMarkdowns } from "@/utils/Tag";
 import type { GetStaticPathsOptions } from "astro";
 
@@ -16,7 +16,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     "posts",
     ({ data }) => data.draft !== true,
   );
-  allPosts.push(DormitoryIntroduction);
+  allPosts.push(...StaticPages);
   const tags = Object.keys(generateTagsFromMarkdowns(allPosts));
   const sortedPosts = sortByDate(allPosts);
 

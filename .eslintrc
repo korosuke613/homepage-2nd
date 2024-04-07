@@ -33,6 +33,8 @@
         "operator-linebreak": "off",
         "implicit-arrow-linebreak": "off",
         "function-paren-newline": "off",
+        "no-continue": "off",
+        "no-restricted-syntax": "off",
         "import/extensions": [
           "error",
           "ignorePackages",

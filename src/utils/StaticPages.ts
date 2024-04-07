@@ -26,3 +26,20 @@ export const DormitoryIntroduction: StaticPost = {
   },
   url: path.join(AppConfig.base, "posts", "dormitory_introduction"), // src/pages からの相対パス
 };
+
+export const Ranking: StaticPost = {
+  collection: "posts",
+  slug: "ranking",
+  id: "ranking",
+  data: {
+    title: "人気記事 👑",
+    description: "本ホームページの人気記事一覧です。",
+    pubDate: new Date("2024-04-07T00:00:00Z"),
+    order: 5,
+    tags: ["Pickup ⭐️"],
+    draft: false,
+  },
+  url: path.join(AppConfig.base, "posts", "ranking"), // src/pages からの相対パス
+};
+
+export const StaticPages = [DormitoryIntroduction, Ranking];

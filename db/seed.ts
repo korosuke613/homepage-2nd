@@ -16,14 +16,26 @@ export default async function seed() {
   ]);
 
   await db.insert(Posts).values([
-    { pagePath: "/post/hello-world", screenPageViews: 100 },
-    { pagePath: "/post/another-post", screenPageViews: 200 },
-    { pagePath: "/post/last-post", screenPageViews: 300 },
+    { pagePath: "/posts/20190330_intern", screenPageViews: 100 },
+    { pagePath: "/posts/20200401_join_cybozu", screenPageViews: 200 },
+    { pagePath: "/posts/20231001_put_tweet_button", screenPageViews: 300 },
   ]);
 
   await db.insert(Blogs).values([
-    { linkUrl: "https://example.com/hoge", click: 100 },
-    { linkUrl: "https://example.com/foo", click: 200 },
-    { linkUrl: "https://example.com/bar", click: 300 },
+    {
+      linkUrl:
+        "https://zenn.dev/cybozu_ept/articles/productivity-weekly-20240306",
+      click: 400,
+    },
+    {
+      linkUrl:
+        "https://zenn.dev/cybozu_ept/articles/productivity-weekly-20240214",
+      click: 500,
+    },
+    {
+      linkUrl:
+        "https://zenn.dev/cybozu_ept/articles/practice-vrt-using-github-actions-cache",
+      click: 600,
+    },
   ]);
 }

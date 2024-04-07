@@ -6,7 +6,7 @@ import { ContentPost } from "@/partials/ContentPost";
 import Base from "@/templates/Base.astro";
 import { AppConfig } from "@/utils/AppConfig";
 import { getCommitHistories } from "@/utils/CommitHistories";
-import { DormitoryIntroduction } from "@/utils/StaticPages";
+import { StaticPages } from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
 import { getSimilarPosts } from "@/utils/TextSimilarity";
 
@@ -29,7 +29,7 @@ const tags = await readTags();
 
 const entries = await getCollection("posts", ({ data }) => data.draft !== true);
 // 国際交流宿舎の紹介用の特別措置
-entries.push(DormitoryIntroduction as unknown as CollectionEntry<"posts">);
+entries.push(...(StaticPages as unknown as CollectionEntry<"posts">[]));
 
 const similars = getSimilarPosts(entry, entries);
 
