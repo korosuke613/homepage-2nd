@@ -1,3 +1,4 @@
+import { writeFile } from "node:fs/promises";
 import { Blogs, Posts, db, eq } from "astro:db";
 import type { BatchItem } from "drizzle-orm/batch";
 import { GA4DataFetcher } from "./utils/GA4DataFetcher";
@@ -39,6 +40,7 @@ const getQueryData = <T extends TableType["$inferSelect"]>(
 };
 
 export default async function () {
+  let isChange = false;
   const currentPostsData = await db.select().from(Posts);
   const currentBlogsData = await db.select().from(Blogs);
 
@@ -77,12 +79,14 @@ export default async function () {
         2,
       )}`,
     );
+    isChange = true;
   } else {
     console.log("[Posts / update]: No data to update.");
   }
   if (postsQueryData.insertData.length > 0) {
     const res = await db.insert(Posts).values(postsQueryData.insertData);
     console.log(`[Posts / insert]: ${JSON.stringify(res, null, 2)}`);
+    isChange = true;
   } else {
     console.log("[Posts / insert]: No data to insert.");
   }
@@ -118,13 +122,21 @@ export default async function () {
         2,
       )}`,
     );
+    isChange = true;
   } else {
     console.log("[Blogs / update]: No data to update.");
   }
   if (blogsQueryData.insertData.length > 0) {
     const res = await db.insert(Blogs).values(blogsQueryData.insertData);
     console.log(`[Blogs / insert]: ${JSON.stringify(res, null, 2)}`);
+    isChange = true;
   } else {
     console.log("[Blogs / insert]: No data to insert.");
+  }
+
+  if (isChange) {
+    await writeFile("db/isChange.txt", "true\n");
+  } else {
+    await writeFile("db/isChange.txt", "false\n");
   }
 }
