@@ -6,13 +6,13 @@ export default defineConfig({
     outputFile: {
       junit: new URL("./test-results/unit.xml", import.meta.url).pathname,
     },
-    include: ["src/tests/unit/**/*.{test,spec}.ts"],
+    include: ["src/tests/unit/**/*.{test,spec}.ts", "db/**/*.{test,spec}.ts"],
     cache: {
       dir: new URL("./.cache/.vitest", import.meta.url).pathname,
     },
     coverage: {
       all: true,
-      include: ["src/utils/*.{js,ts}"],
+      include: ["src/utils/*.{js,ts}", "db/utils/*.ts"],
       exclude: ["src/tests/**", "src/**/*.stories.tsx", "src/types/**"],
       reporter: ["text", "cobertura"],
       reportsDirectory: new URL("./coverage/unit", import.meta.url).pathname,

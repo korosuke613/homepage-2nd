@@ -10,9 +10,25 @@ const Playground = defineTable({
   },
 });
 
+const Posts = defineTable({
+  columns: {
+    pagePath: column.text({ unique: true, primaryKey: true }),
+    screenPageViews: column.number({ optional: false }),
+  },
+});
+
+const Blogs = defineTable({
+  columns: {
+    linkUrl: column.text({ unique: true, primaryKey: true }),
+    click: column.number({ optional: false }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
     Playground,
+    Posts,
+    Blogs,
   },
 });

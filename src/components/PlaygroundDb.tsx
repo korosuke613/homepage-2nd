@@ -1,35 +1,33 @@
-import type { Playground } from "astro:db";
 import { useState } from "react";
 
 type Props = {
-  playground: Array<typeof Playground.$inferSelect>;
+  dbs: Record<string, Array<unknown>>;
 };
 
-const PlaygroundDb = (props: Props) => {
-  const [filterText, setFilterText] = useState<string>("");
-
-  const playground = props.playground.filter((p) => {
-    if (filterText !== "") {
-      return p.text?.includes(filterText);
-    }
-    return true;
-  });
+const PlaygroundDb = ({ dbs }: Props) => {
+  const [dbName, setDbName] = useState<string>("playground");
 
   return (
     <>
       <label>
-        <code>text</code>:{" "}
-        <input
-          value={filterText}
-          onChange={(e) => setFilterText(e.target.value)}
+        <code>DB</code>:{" "}
+        <select
+          value={dbName}
+          onChange={(e) => {
+            setDbName(e.target.value);
+          }}
           className="bg-black"
-        />
+        >
+          {Object.keys(dbs).map((key) => (
+            <option value={key}>{key}</option>
+          ))}
+        </select>
       </label>
-      <p>Total: {playground.length}</p>
+      <p>Total: {dbs[dbName]?.length}</p>
       <br />
       <br />
       <pre>
-        <code>{JSON.stringify(playground, null, 2)}</code>
+        <code>{JSON.stringify(dbs[dbName], null, 2)}</code>
       </pre>
     </>
   );

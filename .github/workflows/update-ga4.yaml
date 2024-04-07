@@ -1,0 +1,58 @@
+name: Update GA4
+
+on:
+  schedule:
+    - cron: '33 5 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/update-ga4.yaml'
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    environment: google-analytics-4
+
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/github-oidc/providers/github-oidc'
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: update ga4
+        env:
+          ASTRO_STUDIO_APP_TOKEN: ${{ secrets.ASTRO_STUDIO_APP_TOKEN }}
+        run: npm run db:update
+
+  call-deploy-pages:
+    if: github.ref == 'refs/heads/main'
+    needs: update
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/pages.yml

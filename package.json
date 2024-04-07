@@ -9,6 +9,7 @@
   "scripts": {
     "build": "astro check && tsc --noEmit && astro build",
     "build-types": "tsc --noEmit --pretty",
+    "db:update": "astro db push --remote && astro db execute db/updateGA4Data.ts --remote",
     "dev": "astro dev",
     "lint": "concurrently -P 'npm:lint:*(!fix)'",
     "lint:astro": "eslint --ext .astro ./src",
@@ -39,6 +40,7 @@
     "@astrojs/tailwind": "5.1.0",
     "@docsearch/css": "3.6.0",
     "@docsearch/react": "3.6.0",
+    "@google-analytics/data": "4.4.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.12",
     "astro": "4.5.15",
