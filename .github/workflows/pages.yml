@@ -3,8 +3,8 @@ name: Deploy static content to Pages
 on:
   push:
     branches: ["main"]
-    paths-ignore:
-      - '.github/workflows/update-ga4.yaml'
+  schedule:
+    - cron: '33 5 * * *'
   workflow_dispatch:
   workflow_call:
 
@@ -26,7 +26,50 @@ jobs:
     steps:
       - uses: Kesin11/actions-timeline@b03a6aa289adef5534c84ccb6fbef7c975973574 # v2.1.0
 
+  update-astro-db:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    environment: google-analytics-4
+    
+    outputs:
+      is-change: ${{ steps.cat.outputs.isChange }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          filter: blob:none
+
+      - uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/github-oidc/providers/github-oidc'
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: update ga4
+        env:
+          ASTRO_STUDIO_APP_TOKEN: ${{ secrets.ASTRO_STUDIO_APP_TOKEN }}
+        run: npm run db:update
+
+      - name: output changed
+        id: cat
+        run: |
+          echo "isChange=$(cat db/isChange.txt)" >> $GITHUB_OUTPUT
+
   build:
+    needs: [update-astro-db]
     runs-on: ubuntu-latest
     outputs:
       artifacts_sha256: ${{ steps.sha256.outputs.artifacts }}
@@ -86,8 +129,9 @@ jobs:
           path: './dist'
 
   deploy:
-    if: vars.RECENT_ARTIFACTS_SHA256 != needs.build.outputs.artifacts_sha256
+    if: (vars.RECENT_ARTIFACTS_SHA256 != needs.build.outputs.artifacts_sha256) || (needs.update-astro-db.outputs.is-change == 'true')
     needs: 
+      - update-astro-db
       - build
     environment:
       name: github-pages

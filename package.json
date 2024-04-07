@@ -16,7 +16,7 @@
     "lint:js": "biome ci .",
     "lint:fix": "concurrently -P 'npm:lint:fix:*'",
     "lint:fix:astro": "concurrently -P 'npm:lint:astro -- {1}' -- --fix",
-    "lint:fix:js": "biome check --apply ./src",
+    "lint:fix:js": "biome check --apply ./src ./db",
     "preview": "astro preview",
     "start": "astro dev",
     "test": "concurrently -P npm:test:*",

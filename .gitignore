@@ -38,6 +38,7 @@ chromatic-diagnostics.json
 storybook-static/
 
 analytics-access-credential.json
+isChange.txt
 
 # Ignore generated credentials from google-github-actions/auth
 gha-creds-*.json
