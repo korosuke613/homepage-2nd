@@ -1,5 +1,5 @@
 ---
-import { Playground, db, desc } from "astro:db";
+import { Blogs, Playground, Posts, db, desc } from "astro:db";
 import { PlaygroundDb } from "@/components/PlaygroundDb";
 import { Section } from "@/components/Section";
 import Base from "@/templates/Base.astro";
@@ -12,12 +12,25 @@ const playground = await db
   .select()
   .from(Playground)
   .orderBy(desc(Playground.date));
+
+const posts = await db
+  .select()
+  .from(Posts)
+  .orderBy(desc(Posts.screenPageViews));
+
+const blogs = await db.select().from(Blogs).orderBy(desc(Blogs.click));
+
+const dbs: Record<string, Array<unknown>> = {
+  playground,
+  posts,
+  blogs,
+};
 ---
 
 <Base head={{ title, description }}>
 
 <Section>
-  <PlaygroundDb client:load playground={playground}/>
+  <PlaygroundDb client:load dbs={dbs}/>
 </Section>
 
 </Base>

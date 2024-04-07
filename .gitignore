@@ -36,3 +36,5 @@ snapshots/
 build-storybook.log
 chromatic-diagnostics.json
 storybook-static/
+
+analytics-access-credential.json
