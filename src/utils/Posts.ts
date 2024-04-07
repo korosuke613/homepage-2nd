@@ -27,9 +27,12 @@ export const getGitHubUrl = (
   collection: string,
   id: string,
 ) => {
-  if (id === "dormitory_introduction") {
-    // 国際交流宿舎の紹介はパスが異なるので特別扱い
-    return `https://${githubUrl}/blob/main/src/pages/posts/dormitory_introduction.astro`;
+  switch (id) {
+    // astro はパスが異なるので特別扱い
+    case "dormitory_introduction":
+      return `https://${githubUrl}/blob/main/src/pages/posts/dormitory_introduction.astro`;
+    case "ranking":
+      return `https://${githubUrl}/blob/main/src/pages/posts/ranking.astro`;
   }
 
   const baseUrl = `https://${githubUrl}/tree/main/src/content/`;
