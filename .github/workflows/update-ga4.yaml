@@ -3,9 +3,12 @@ name: Update GA4
 on:
   schedule:
     - cron: '33 5 * * *'
+  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/update-ga4.yaml'
+    branches:
+      - main
 
 jobs:
   update:
@@ -16,6 +19,8 @@ jobs:
       id-token: 'write'
 
     environment: google-analytics-4
+
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - uses: actions/checkout@v4

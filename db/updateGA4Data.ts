@@ -46,7 +46,7 @@ export default async function () {
   const { postAnalytics, blogAnalytics } = await fetchGA4Data();
   console.log(JSON.stringify({ postAnalytics, blogAnalytics }, null, 2));
 
-  // Posts 
+  // Posts
   const postsQueryData = getQueryData(
     "Posts",
     postAnalytics,
