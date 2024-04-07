@@ -12,7 +12,7 @@ export default defineConfig({
     },
     coverage: {
       all: true,
-      include: ["src/utils/*.{js,ts}", "db/**/*.{test,spec}.ts"],
+      include: ["src/utils/*.{js,ts}", "db/utils/*.ts"],
       exclude: ["src/tests/**", "src/**/*.stories.tsx", "src/types/**"],
       reporter: ["text", "cobertura"],
       reportsDirectory: new URL("./coverage/unit", import.meta.url).pathname,

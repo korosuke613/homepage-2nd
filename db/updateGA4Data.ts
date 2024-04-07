@@ -1,6 +1,6 @@
 import { Blogs, Posts, db, eq } from "astro:db";
 import type { BatchItem } from "drizzle-orm/batch";
-import { GA4DataFetcher } from "./GA4DataFetcher";
+import { GA4DataFetcher } from "./utils/GA4DataFetcher";
 
 const fetchGA4Data = async () => {
   const fetcher = new GA4DataFetcher();
