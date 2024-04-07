@@ -42,9 +42,11 @@ export default async function () {
   const currentPostsData = await db.select().from(Posts);
   const currentBlogsData = await db.select().from(Blogs);
 
+  // Fetch data from Google Analytics 4
   const { postAnalytics, blogAnalytics } = await fetchGA4Data();
   console.log(JSON.stringify({ postAnalytics, blogAnalytics }, null, 2));
 
+  // Posts 
   const postsQueryData = getQueryData(
     "Posts",
     postAnalytics,
@@ -75,12 +77,17 @@ export default async function () {
         2,
       )}`,
     );
+  } else {
+    console.log("[Posts / update]: No data to update.");
   }
   if (postsQueryData.insertData.length > 0) {
     const res = await db.insert(Posts).values(postsQueryData.insertData);
     console.log(`[Posts / insert]: ${JSON.stringify(res, null, 2)}`);
+  } else {
+    console.log("[Posts / insert]: No data to insert.");
   }
 
+  // Blogs
   const blogsQueryData = getQueryData(
     "Blogs",
     blogAnalytics,
@@ -111,9 +118,13 @@ export default async function () {
         2,
       )}`,
     );
+  } else {
+    console.log("[Blogs / update]: No data to update.");
   }
   if (blogsQueryData.insertData.length > 0) {
     const res = await db.insert(Blogs).values(blogsQueryData.insertData);
     console.log(`[Blogs / insert]: ${JSON.stringify(res, null, 2)}`);
+  } else {
+    console.log("[Blogs / insert]: No data to insert.");
   }
 }
