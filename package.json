@@ -68,7 +68,7 @@
     "unified": "11.0.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.3",
+    "@biomejs/biome": "1.6.4",
     "@chromatic-com/storybook": "1.2.25",
     "@playwright/experimental-ct-react": "1.42.1",
     "@playwright/test": "1.42.1",
