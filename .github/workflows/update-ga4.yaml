@@ -50,6 +50,7 @@ jobs:
   call-deploy-pages:
     if: github.ref == 'refs/heads/main'
     needs: update
+    secrets: inherit
     permissions:
       contents: read
       actions: read
