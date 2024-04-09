@@ -168,7 +168,7 @@ jobs:
           paths: "test-results/unit.xml"
         if: always()
 
-      - uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+      - uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
         with:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
