@@ -1,33 +1,33 @@
 :root {
-  --bg-slate-800: rgb(30 41 59);
-  --bg-indigo-900: rgb(49 46 129);
-  --bg-cyan-900: rgb(22 78 99);
-  --docsearch-searchbox-background: var(--bg-indigo-900);
-  --docsearch-modal-background: var(--bg-slate-800);
-  --docsearch-footer-background: var(--bg-slate-800);
-  --docsearch-searchbox-focus-background: var(--bg-slate-800);
-  --docsearch-text-color: white;
-  --docsearch-hit-background: var(--bg-indigo-900);
-  --docsearch-hit-color: white
+  --bg-slate-800: rgb(30 41 59) !important;
+  --bg-indigo-900: rgb(49 46 129) !important;
+  --bg-cyan-900: rgb(22 78 99) !important;
+  --docsearch-searchbox-background: var(--bg-indigo-900) !important;
+  --docsearch-modal-background: var(--bg-slate-800) !important;
+  --docsearch-footer-background: var(--bg-slate-800) !important;
+  --docsearch-searchbox-focus-background: var(--bg-slate-800) !important;
+  --docsearch-text-color: white !important;
+  --docsearch-hit-background: var(--bg-indigo-900) !important;
+  --docsearch-hit-color: white !important;
   
 }
 
 .DocSearch-Modal, .DocSearch-Footer, .DocSearch-Hit a, .DocSearch-Form{
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .DocSearch-Button-Keys, .DocSearch-Button-Placeholder {
-  display: none;
+  display: none !important;
 }
 
 .DocSearch-Button .DocSearch-Search-Icon {
-  color: white
+  color: white !important;
 }
 
 .DocSearch-Button:active, .DocSearch-Button:focus, .DocSearch-Button:hover {
-  background: var(--docsearch-searchbox-background);
+  background: var(--docsearch-searchbox-background) !important;
 }
 
 .DocSearch-Form {
-  padding: 0px;
+  padding: 0px !important;
 }
