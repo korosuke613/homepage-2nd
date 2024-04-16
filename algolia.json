@@ -13,17 +13,24 @@
   "stop_urls": ["/*/tag", "/*/year"],
   "selectors": {
     "default": {
-      "lvl0": "#contents_header",
-      "lvl1": "#contents_data h2",
-      "lvl2": "#contents_data h3",
-      "lvl3": "#contents_data h4",
-      "lvl4": "#contents_data h5",
+      "lvl0": {
+        "selector": "",
+        "default_value": "Posts"
+      },
+      "lvl1": "#contents_header",
+      "lvl2": "#contents_data h2",
+      "lvl3": "#contents_data h3",
+      "lvl4": "#contents_data h4",
       "lvl5": "#contents div.contents_tag",
       "text": "#contents_data li, #contents_data p, #contents_data span, #contents_data td"
     },
     "blogs": {
-      "lvl0": "h1",
-      "text": "span.font-semibold"
+      "lvl0": {
+        "selector": "",
+        "default_value": "Blogs"
+      },
+      "lvl1": "title",
+      "text": "p.font-semibold"
     }
   }
 }
