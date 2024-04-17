@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@astrojs/check": "0.5.10",
-    "@astrojs/db": "0.10.2",
+    "@astrojs/db": "0.10.3",
     "@astrojs/mdx": "2.2.4",
     "@astrojs/partytown": "2.0.4",
     "@astrojs/react": "3.2.0",
