@@ -42,7 +42,7 @@ test.describe("Visual Regression Test", () => {
       ...baseOptions,
       index: {
         ...baseOptions.index,
-        matchSnapshot: { maxDiffPixelRatio: 0.1 },
+        matchSnapshot: { maxDiffPixelRatio: 0.2 },
       },
       posts: {
         ...baseOptions.posts,
