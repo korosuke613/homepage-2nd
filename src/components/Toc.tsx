@@ -50,6 +50,7 @@ export const Toc = (props: TocProps) => {
         //     </li>
         //   );
         // }
+        // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
         return <></>;
       })}
     </ul>

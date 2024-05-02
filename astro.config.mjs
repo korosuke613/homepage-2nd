@@ -18,7 +18,7 @@ export default defineConfig({
   base: "/",
   site: "https://korosuke613.dev/",
   devToolbar: {
-    enabled: IS_TESTING ? false : true,
+    enabled: !IS_TESTING,
   },
   // Use to generate your sitemap and canonical URLs in your final build.
   // Important!

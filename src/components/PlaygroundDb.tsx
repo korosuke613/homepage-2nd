@@ -19,7 +19,9 @@ const PlaygroundDb = ({ dbs }: Props) => {
           className="bg-black"
         >
           {Object.keys(dbs).map((key) => (
-            <option value={key}>{key}</option>
+            <option key={key} value={key}>
+              {key}
+            </option>
           ))}
         </select>
       </label>
