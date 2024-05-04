@@ -1,4 +1,5 @@
 ---
+import { Zenns, db } from "astro:db";
 import { BlogGallery } from "@/components/BlogGallery";
 import { NewerOlderPagination } from "@/components/NewerOlderPagination";
 import { PaginationHeader } from "@/components/PaginationHeader";
@@ -37,6 +38,14 @@ const years = (await readYears()).blogs;
 if (years === undefined) {
   throw new Error("readed years is undefined");
 }
+
+const zennsDbData = await db.select().from(Zenns);
+
+const viewCounts: Record<string, number> = {};
+
+for (const zenn of zennsDbData) {
+  viewCounts[`https://zenn.dev${zenn.pagePath}`] = zenn.screenPageViews;
+}
 ---
 
 <Base head={{ title, description: contentDescription }}>
@@ -59,7 +68,7 @@ if (years === undefined) {
   </Section>
 
   <Section>
-    <BlogGallery postList={page.data} tags={tags} />
+    <BlogGallery postList={page.data} tags={tags} viewCounts={viewCounts}/>
   </Section>
 
   <Section>

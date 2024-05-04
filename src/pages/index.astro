@@ -6,6 +6,7 @@ import { RecentPickup } from "@/partials/RecentPickup";
 import { RecentPosts } from "@/partials/RecentPosts";
 import Base from "@/templates/Base.astro";
 
+import { Zenns, db } from "astro:db";
 import SelfIntroduction from "@/templates/SelfIntroduction.astro";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import { AppConfig } from "@/utils/AppConfig";
@@ -37,11 +38,19 @@ const lastThreeBlogs = allBlogs.slice(0, 3);
 
 const { title } = AppConfig;
 const { description } = AppConfig;
+
+const zennsDbData = await db.select().from(Zenns);
+
+const viewCounts: Record<string, number> = {};
+
+for (const zenn of zennsDbData) {
+  viewCounts[`https://zenn.dev${zenn.pagePath}`] = zenn.screenPageViews;
+}
 ---
 
 <Base head={{ title, description }}>
   <SelfIntroduction />
   <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />
-  <RecentBlogs postList={lastThreeBlogs} tags={tags.blogs} />
+  <RecentBlogs postList={lastThreeBlogs} tags={tags.blogs} viewCounts={viewCounts} />
 </Base>

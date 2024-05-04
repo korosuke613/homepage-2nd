@@ -11,7 +11,7 @@ const metaData: Meta<typeof BlogCard> = {
           width: "320px",
         }}
       >
-        <BlogCard elt={args.elt} tags={args.tags} />
+        <BlogCard elt={args.elt} tags={args.tags} viewCount={args.viewCount} />
       </div>
     );
   },
@@ -43,6 +43,16 @@ export const LongTitle: StoryObj<typeof BlogCard> = {
       title:
         "成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値成果物のハッシュ値",
     },
+    tags: baseTags,
+  },
+};
+
+export const WithViewCount: StoryObj<typeof BlogCard> = {
+  args: {
+    elt: {
+      ...baseElt,
+    },
+    viewCount: 10000,
     tags: baseTags,
   },
 };

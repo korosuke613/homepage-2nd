@@ -6,6 +6,7 @@ import type { Tags } from "@/utils/Tag";
 
 export type IRecentBlogsProps = {
   tags: Tags;
+  viewCounts: Record<string, number>;
   postList: BlogData[];
 };
 
@@ -25,7 +26,12 @@ export const RecentBlogs = (props: IRecentBlogsProps) => (
   >
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {props.postList.map((elt) => (
-        <BlogCard key={elt.id} elt={elt} tags={props.tags} />
+        <BlogCard
+          key={elt.id}
+          elt={elt}
+          tags={props.tags}
+          viewCount={props.viewCounts[elt.url]}
+        />
       ))}
     </div>
   </Section>
