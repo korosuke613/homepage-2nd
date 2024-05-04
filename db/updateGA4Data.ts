@@ -1,43 +1,63 @@
 import { writeFile } from "node:fs/promises";
 import { Blogs, Posts, Zenns, db, eq } from "astro:db";
 import type { BatchItem } from "drizzle-orm/batch";
-import { GA4DataFetcher } from "./utils/GA4DataFetcher";
+import { BlogFetcher, PostFetcher, ZennFetcher } from "./utils";
+import { getQueryData } from "./utils/dbHelper";
 
 const fetchGA4Data = async () => {
-  const fetcher = new GA4DataFetcher();
-  const postAnalytics = await fetcher.getPostAnalytics();
-  const blogAnalytics = await fetcher.getBlogAnalytics();
-  const zennAnalytics = await fetcher.getZennAnalytics();
+  const fetchers = {
+    zenn: new ZennFetcher(),
+    blog: new BlogFetcher(),
+    post: new PostFetcher(),
+  };
+
+  const postAnalytics = await fetchers.post.getAnalytics();
+  const blogAnalytics = await fetchers.blog.getAnalytics();
+  const zennAnalytics = await fetchers.zenn.getAnalytics();
   return { postAnalytics, blogAnalytics, zennAnalytics };
 };
 
 type TableType = typeof Blogs | typeof Posts | typeof Zenns;
 
-const getQueryData = <T extends TableType["$inferSelect"]>(
-  tableName: string,
-  latestData: T[],
-  currentData: T[],
-  primaryKey: keyof T,
-): { insertData: T[]; updateData: T[] } => {
-  const diffData = GA4DataFetcher.getDiffData(
-    latestData,
-    currentData,
-    primaryKey,
-  );
+const updateAstroDB = async <T extends TableType>(
+  table: T,
+  category: string,
+  latestData: T["$inferSelect"][],
+  currentData: T["$inferSelect"][],
+  primaryKey: keyof T["$inferSelect"],
+  updateFunc: (data: T["$inferSelect"]) => void,
+) => {
+  let isChange = false;
 
-  const insertData: T[] = [];
-  for (const item of diffData.newItems) {
-    console.log(`[${tableName}] insert: ${JSON.stringify(item)}`);
-    insertData.push(item);
+  const queryData = getQueryData(category, latestData, currentData, primaryKey);
+  const updateQuery = [];
+  if (updateQuery.length > 0) {
+    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
+      queryData.updateData.map(updateFunc) as unknown as [
+        BatchItem<"sqlite">,
+        ...BatchItem<"sqlite">[],
+      ],
+    );
+    console.log(
+      `[${category} / update]: ${JSON.stringify(
+        batchRes.flat().map((q) => q.updatedId),
+        null,
+        2,
+      )}`,
+    );
+    isChange = true;
+  } else {
+    console.log(`[${category} / update]: No data to update.`);
+  }
+  if (queryData.insertData.length > 0) {
+    const res = await db.insert(table).values(queryData.insertData);
+    console.log(`[${category} / insert]: ${JSON.stringify(res, null, 2)}`);
+    isChange = true;
+  } else {
+    console.log(`[${category} / insert]: No data to insert.`);
   }
 
-  const updateData: T[] = [];
-  for (const item of diffData.updateItems) {
-    console.log(`[${tableName}] update: ${JSON.stringify(item)}`);
-    updateData.push(item);
-  }
-
-  return { insertData, updateData };
+  return isChange;
 };
 
 export default async function () {
@@ -53,133 +73,49 @@ export default async function () {
   );
 
   // Posts
-  const postsQueryData = getQueryData(
+  isChange = await updateAstroDB(
+    Posts,
     "Posts",
     postAnalytics,
     currentPostsData,
     "pagePath",
-  );
-  const postsUpdateQuery = [];
-  for (const data of postsQueryData.updateData) {
-    postsUpdateQuery.push(
-      db
-        .update(Posts)
+    (data: typeof Posts.$inferSelect) => {
+      db.update(Posts)
         .set(data)
         .where(eq(Posts.pagePath, data.pagePath))
-        .returning({ updatedId: Posts.pagePath }),
-    );
-  }
-  if (postsUpdateQuery.length > 0) {
-    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
-      postsUpdateQuery as unknown as [
-        BatchItem<"sqlite">,
-        ...BatchItem<"sqlite">[],
-      ],
-    );
-    console.log(
-      `[Posts / update]: ${JSON.stringify(
-        batchRes.flat().map((q) => q.updatedId),
-        null,
-        2,
-      )}`,
-    );
-    isChange = true;
-  } else {
-    console.log("[Posts / update]: No data to update.");
-  }
-  if (postsQueryData.insertData.length > 0) {
-    const res = await db.insert(Posts).values(postsQueryData.insertData);
-    console.log(`[Posts / insert]: ${JSON.stringify(res, null, 2)}`);
-    isChange = true;
-  } else {
-    console.log("[Posts / insert]: No data to insert.");
-  }
+        .returning({ updatedId: Posts.pagePath });
+    },
+  );
 
   // Blogs
-  const blogsQueryData = getQueryData(
+  isChange = await updateAstroDB(
+    Blogs,
     "Blogs",
     blogAnalytics,
     currentBlogsData,
     "linkUrl",
-  );
-  const blogsUpdateQuery = [];
-  for (const data of blogsQueryData.updateData) {
-    blogsUpdateQuery.push(
-      db
-        .update(Blogs)
+    (data: typeof Blogs.$inferSelect) => {
+      db.update(Blogs)
         .set(data)
         .where(eq(Blogs.linkUrl, data.linkUrl))
-        .returning({ updatedId: Blogs.linkUrl }),
-    );
-  }
-  if (blogsUpdateQuery.length > 0) {
-    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
-      blogsUpdateQuery as unknown as [
-        BatchItem<"sqlite">,
-        ...BatchItem<"sqlite">[],
-      ],
-    );
-    console.log(
-      `[Blogs / update]: ${JSON.stringify(
-        batchRes.flat().map((q) => q.updatedId),
-        null,
-        2,
-      )}`,
-    );
-    isChange = true;
-  } else {
-    console.log("[Blogs / update]: No data to update.");
-  }
-  if (blogsQueryData.insertData.length > 0) {
-    const res = await db.insert(Blogs).values(blogsQueryData.insertData);
-    console.log(`[Blogs / insert]: ${JSON.stringify(res, null, 2)}`);
-    isChange = true;
-  } else {
-    console.log("[Blogs / insert]: No data to insert.");
-  }
+        .returning({ updatedId: Blogs.linkUrl });
+    },
+  );
 
   // Zenns
-  const zennsQueryData = getQueryData(
+  isChange = await updateAstroDB(
+    Zenns,
     "Zenns",
     zennAnalytics,
     currentZennsData,
     "pagePath",
-  );
-  const zennsUpdateQuery = [];
-  for (const data of zennsQueryData.updateData) {
-    zennsUpdateQuery.push(
-      db
-        .update(Zenns)
+    (data: typeof Zenns.$inferSelect) => {
+      db.update(Zenns)
         .set(data)
         .where(eq(Zenns.pagePath, data.pagePath))
-        .returning({ updatedId: Zenns.pagePath }),
-    );
-  }
-  if (zennsUpdateQuery.length > 0) {
-    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
-      zennsUpdateQuery as unknown as [
-        BatchItem<"sqlite">,
-        ...BatchItem<"sqlite">[],
-      ],
-    );
-    console.log(
-      `[Zenns / update]: ${JSON.stringify(
-        batchRes.flat().map((q) => q.updatedId),
-        null,
-        2,
-      )}`,
-    );
-    isChange = true;
-  } else {
-    console.log("[Zenns / update]: No data to update.");
-  }
-  if (zennsQueryData.insertData.length > 0) {
-    const res = await db.insert(Zenns).values(zennsQueryData.insertData);
-    console.log(`[Zenns / insert]: ${JSON.stringify(res, null, 2)}`);
-    isChange = true;
-  } else {
-    console.log("[Zenns / insert]: No data to insert.");
-  }
+        .returning({ updatedId: Zenns.pagePath });
+    },
+  );
 
   if (isChange) {
     await writeFile("db/isChange.txt", "true\n");
