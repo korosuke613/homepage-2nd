@@ -17,6 +17,13 @@ const Posts = defineTable({
   },
 });
 
+const Zenns = defineTable({
+  columns: {
+    pagePath: column.text({ unique: true, primaryKey: true }),
+    screenPageViews: column.number({ optional: false }),
+  },
+});
+
 const Blogs = defineTable({
   columns: {
     linkUrl: column.text({ unique: true, primaryKey: true }),
@@ -30,5 +37,6 @@ export default defineDb({
     Playground,
     Posts,
     Blogs,
+    Zenns,
   },
 });

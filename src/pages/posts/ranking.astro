@@ -1,7 +1,11 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Blogs, Posts, db, desc } from "astro:db";
+import { Blogs, Posts, Zenns, db, desc } from "astro:db";
 import { ExternalLink } from "@/components/ExternalLink";
+import {
+  MarkdownHeadingComponent,
+  convertMarkdownHeadingsToObject,
+} from "@/components/Headings";
 import { ContentPost } from "@/partials/ContentPost";
 import Base from "@/templates/Base.astro";
 import { AppConfig } from "@/utils/AppConfig";
@@ -10,6 +14,7 @@ import { getCommitHistories } from "@/utils/CommitHistories";
 import { Ranking as RankingStaticPage, StaticPages } from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
 import { getSimilarPosts } from "@/utils/TextSimilarity";
+import type { MarkdownHeading } from "astro";
 
 // ランキングの上限数
 const RANKING_LIMIT = 30;
@@ -31,6 +36,12 @@ const blogsData = await db
   .select()
   .from(Blogs)
   .orderBy(desc(Blogs.click))
+  .limit(RANKING_LIMIT);
+
+const zennsData = await db
+  .select()
+  .from(Zenns)
+  .orderBy(desc(Zenns.screenPageViews))
   .limit(RANKING_LIMIT);
 
 const tags = await readTags();
@@ -89,6 +100,33 @@ for (const b of blogsData) {
   });
   index += 1;
 }
+
+const zennsCollection = await getSortedBlogData();
+const zennsRanking: RankingItem[] = [];
+index = 1;
+for (const z of zennsData) {
+  const pageTitle = zennsCollection.find(
+    (zenn) => zenn.url.replace("https://zenn.dev", "") === z.pagePath,
+  )?.title;
+  if (!pageTitle) {
+    continue;
+  }
+  zennsRanking.push({
+    rank: index,
+    path: z.pagePath,
+    title: pageTitle,
+    views: z.screenPageViews,
+  });
+  index += 1;
+}
+
+const markdownHeadings: MarkdownHeading[] = [
+  { depth: 2, slug: "Posts", text: "Posts" },
+  { depth: 2, slug: "Zenn", text: "Zenn" },
+  { depth: 2, slug: "Blogs", text: "Blogs" },
+];
+
+const headings = convertMarkdownHeadingsToObject(markdownHeadings);
 ---
 <Base
   head={{
@@ -99,7 +137,7 @@ for (const b of blogsData) {
   <ContentPost
     frontmatter={RankingStaticPage as unknown as CollectionEntry<"posts">}
     contentCategory={"Posts"}
-    headings={[]}
+    headings={markdownHeadings}
     tags={tags.posts}
     similars={similars}
     histories={histories}
@@ -107,8 +145,10 @@ for (const b of blogsData) {
     <p>
       このページでは、アクセス数の多い記事やブログをランキング形式で紹介しています。
       大体毎日更新されます。
+      期間は最大 14 ヶ月間です。
+      各項目は、最大30位まで表示されます。
     </p>
-    <h2>Posts</h2>
+    <MarkdownHeadingComponent heading={headings.Posts} />
     <table>
       <thead>
         <tr>
@@ -131,7 +171,32 @@ for (const b of blogsData) {
       </tbody>
     </table>
 
-    <h2>Blogs</h2>
+    <MarkdownHeadingComponent heading={headings.Zenn} />
+    <table>
+      <thead>
+        <tr>
+          <th align="right">順位</th>
+          <th>タイトル</th>
+          <th align="right">Views</th>
+        </tr>
+      </thead>
+      <tbody>
+        {zennsRanking.map((z) => (
+            <tr>
+              <td style="width:2.5rem;" align="right">{z.rank}位</td>
+              <td>
+                <span class="line-clamp-1">
+                  <ExternalLink url={`https://zenn.dev${z.path}`} title={z.title}></ExternalLink>
+                </span>
+              </td>
+              <td align="right">{z.views}</td>
+            </tr>
+          ))
+      }
+      </tbody>
+    </table>
+
+    <MarkdownHeadingComponent heading={headings.Blogs} />
     <table>
       <thead>
         <tr>

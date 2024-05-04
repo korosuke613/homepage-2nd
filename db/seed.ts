@@ -1,4 +1,4 @@
-import { Blogs, Playground, Posts, db } from "astro:db";
+import { Blogs, Playground, Posts, Zenns, db } from "astro:db";
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -36,6 +36,21 @@ export default async function seed() {
       linkUrl:
         "https://zenn.dev/cybozu_ept/articles/practice-vrt-using-github-actions-cache",
       click: 600,
+    },
+  ]);
+
+  await db.insert(Zenns).values([
+    {
+      pagePath: "/korosuke613/scraps/703218980ddc5d",
+      screenPageViews: 460,
+    },
+    {
+      pagePath: "/korosuke613/scraps/c801cb634bb42c",
+      screenPageViews: 459,
+    },
+    {
+      pagePath: "/cybozu_ept/articles/productivity-weekly-20230927",
+      screenPageViews: 449,
     },
   ]);
 }

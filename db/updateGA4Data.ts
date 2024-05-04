@@ -1,5 +1,5 @@
 import { writeFile } from "node:fs/promises";
-import { Blogs, Posts, db, eq } from "astro:db";
+import { Blogs, Posts, Zenns, db, eq } from "astro:db";
 import type { BatchItem } from "drizzle-orm/batch";
 import { GA4DataFetcher } from "./utils/GA4DataFetcher";
 
@@ -7,10 +7,11 @@ const fetchGA4Data = async () => {
   const fetcher = new GA4DataFetcher();
   const postAnalytics = await fetcher.getPostAnalytics();
   const blogAnalytics = await fetcher.getBlogAnalytics();
-  return { postAnalytics, blogAnalytics };
+  const zennAnalytics = await fetcher.getZennAnalytics();
+  return { postAnalytics, blogAnalytics, zennAnalytics };
 };
 
-type TableType = typeof Blogs | typeof Posts;
+type TableType = typeof Blogs | typeof Posts | typeof Zenns;
 
 const getQueryData = <T extends TableType["$inferSelect"]>(
   tableName: string,
@@ -43,10 +44,13 @@ export default async function () {
   let isChange = false;
   const currentPostsData = await db.select().from(Posts);
   const currentBlogsData = await db.select().from(Blogs);
+  const currentZennsData = await db.select().from(Zenns);
 
   // Fetch data from Google Analytics 4
-  const { postAnalytics, blogAnalytics } = await fetchGA4Data();
-  console.log(JSON.stringify({ postAnalytics, blogAnalytics }, null, 2));
+  const { postAnalytics, blogAnalytics, zennAnalytics } = await fetchGA4Data();
+  console.log(
+    JSON.stringify({ postAnalytics, blogAnalytics, zennAnalytics }, null, 2),
+  );
 
   // Posts
   const postsQueryData = getQueryData(
@@ -132,6 +136,49 @@ export default async function () {
     isChange = true;
   } else {
     console.log("[Blogs / insert]: No data to insert.");
+  }
+
+  // Zenns
+  const zennsQueryData = getQueryData(
+    "Zenns",
+    zennAnalytics,
+    currentZennsData,
+    "pagePath",
+  );
+  const zennsUpdateQuery = [];
+  for (const data of zennsQueryData.updateData) {
+    zennsUpdateQuery.push(
+      db
+        .update(Zenns)
+        .set(data)
+        .where(eq(Zenns.pagePath, data.pagePath))
+        .returning({ updatedId: Zenns.pagePath }),
+    );
+  }
+  if (zennsUpdateQuery.length > 0) {
+    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
+      zennsUpdateQuery as unknown as [
+        BatchItem<"sqlite">,
+        ...BatchItem<"sqlite">[],
+      ],
+    );
+    console.log(
+      `[Zenns / update]: ${JSON.stringify(
+        batchRes.flat().map((q) => q.updatedId),
+        null,
+        2,
+      )}`,
+    );
+    isChange = true;
+  } else {
+    console.log("[Zenns / update]: No data to update.");
+  }
+  if (zennsQueryData.insertData.length > 0) {
+    const res = await db.insert(Zenns).values(zennsQueryData.insertData);
+    console.log(`[Zenns / insert]: ${JSON.stringify(res, null, 2)}`);
+    isChange = true;
+  } else {
+    console.log("[Zenns / insert]: No data to insert.");
   }
 
   if (isChange) {
