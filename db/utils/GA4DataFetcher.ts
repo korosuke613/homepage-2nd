@@ -11,12 +11,91 @@ type PostData = {
   screenPageViews: number;
 };
 
+type ZennData = {
+  pagePath: string;
+  screenPageViews: number;
+};
+
 export class GA4DataFetcher {
-  GA4_PROPERTY_ID = "properties/332682544";
+  GA4_PROPERTY_ID_KOROSUKE613_DEV = "properties/332682544";
+  GA4_PROPERTY_ID_ZENN = "properties/257999071";
   client: BetaAnalyticsDataClient;
 
   constructor() {
     this.client = new BetaAnalyticsDataClient();
+  }
+
+  formatZennAnalytics = (
+    runReportResult: google.analytics.data.v1beta.IRunReportResponse,
+  ): ZennData[] => {
+    if (!runReportResult.rows) {
+      return [];
+    }
+    // trailing slash の有無を結合する正規化処理
+    const normalizedPosts: Record<string, number> = {};
+
+    for (const row of runReportResult.rows ?? []) {
+      if (!row.dimensionValues || !row.metricValues) continue;
+      if (!row.dimensionValues[0]?.value || !row.metricValues[0]?.value)
+        continue;
+      const pagePath = row.dimensionValues[0].value;
+      const screenPageViews = Number.parseInt(row.metricValues[0].value);
+      // trailing slash の有無を結合する、?や#以降を丸める、正規化処理
+      const normalizedUrl = pagePath
+        ?.replace(/\/$/, "")
+        .replace(/%23.*$/, "")
+        .replace(/%3F.*$/, "");
+      normalizedPosts[normalizedUrl] =
+        (normalizedPosts[normalizedUrl] || 0) + screenPageViews;
+    }
+
+    const zenns = Object.entries(normalizedPosts).map(
+      ([pagePath, screenPageViews]) => ({
+        pagePath,
+        screenPageViews,
+      }),
+    );
+
+    return zenns;
+  };
+
+  public async getZennAnalytics(): Promise<ZennData[]> {
+    const [response] = await this.client.runReport({
+      property: this.GA4_PROPERTY_ID_ZENN,
+      dateRanges: [
+        {
+          startDate: "2023-09-01",
+          endDate: "today",
+        },
+      ],
+      dimensions: [
+        {
+          name: "pagePath",
+        },
+      ],
+      metrics: [
+        {
+          name: "screenPageViews",
+        },
+      ],
+      dimensionFilter: {
+        andGroup: {
+          expressions: [
+            {
+              filter: {
+                stringFilter: {
+                  matchType: "FULL_REGEXP",
+                  value: "^(/cybozu_ept/|/korosuke613/).*$",
+                },
+                fieldName: "pagePath",
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    return this.formatZennAnalytics(response);
   }
 
   formatBlogAnalytics = (
@@ -43,7 +122,7 @@ export class GA4DataFetcher {
 
   public async getBlogAnalytics(): Promise<BlogData[]> {
     const [response] = await this.client.runReport({
-      property: this.GA4_PROPERTY_ID,
+      property: this.GA4_PROPERTY_ID_KOROSUKE613_DEV,
       dateRanges: [
         {
           startDate: "2023-09-01",
@@ -120,7 +199,7 @@ export class GA4DataFetcher {
 
   public async getPostAnalytics() {
     const [response] = await this.client.runReport({
-      property: this.GA4_PROPERTY_ID,
+      property: this.GA4_PROPERTY_ID_KOROSUKE613_DEV,
       dateRanges: [
         {
           startDate: "2023-09-01",
