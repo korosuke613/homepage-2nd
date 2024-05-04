@@ -9,6 +9,7 @@ import { Tag } from "../Tag";
 
 type IBlogCard = {
   elt: BlogData;
+  viewCount?: number;
   tags: Tags;
 };
 
@@ -48,9 +49,12 @@ export const BlogCard = (props: IBlogCard) => {
                   </p>
                 </div>
                 <br />
-                <span className="align-middle text-xs text-gray-300	">
-                  {format(new Date(props.elt.pubDate), "LLL d, yyyy")}
-                </span>
+                <div className="text-xs text-gray-300 my-1.5 flex justify-between">
+                  <p>{format(new Date(props.elt.pubDate), "LLL d, yyyy")}</p>
+                  {props.viewCount !== undefined && props.viewCount > 0 && (
+                    <p>{props.viewCount} views</p>
+                  )}
+                </div>
               </div>
             }
             url={props.elt.url}
