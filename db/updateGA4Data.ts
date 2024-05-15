@@ -30,8 +30,7 @@ const updateAstroDB = async <T extends TableType>(
   let isChange = false;
 
   const queryData = getQueryData(category, latestData, currentData, primaryKey);
-  const updateQuery = [];
-  if (updateQuery.length > 0) {
+  if (queryData.updateData.length > 0) {
     const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
       queryData.updateData.map(updateFunc) as unknown as [
         BatchItem<"sqlite">,
