@@ -25,18 +25,19 @@ const updateAstroDB = async <T extends TableType>(
   latestData: T["$inferSelect"][],
   currentData: T["$inferSelect"][],
   primaryKey: keyof T["$inferSelect"],
-  updateFunc: (data: T["$inferSelect"]) => void,
+  updateFunc: (data: T["$inferSelect"]) => unknown,
 ) => {
   let isChange = false;
 
   const queryData = getQueryData(category, latestData, currentData, primaryKey);
   if (queryData.updateData.length > 0) {
-    const batchRes: Array<Array<{ updatedId: string }>> = await db.batch(
-      queryData.updateData.map(updateFunc) as unknown as [
-        BatchItem<"sqlite">,
-        ...BatchItem<"sqlite">[],
-      ],
-    );
+    const queries = queryData.updateData.map(updateFunc) as unknown as [
+      BatchItem<"sqlite">,
+      ...BatchItem<"sqlite">[],
+    ];
+
+    const batchRes: Array<Array<{ updatedId: string }>> =
+      await db.batch(queries);
     console.log(
       `[${category} / update]: ${JSON.stringify(
         batchRes.flat().map((q) => q.updatedId),
@@ -79,7 +80,8 @@ export default async function () {
     currentPostsData,
     "pagePath",
     (data: typeof Posts.$inferSelect) => {
-      db.update(Posts)
+      return db
+        .update(Posts)
         .set(data)
         .where(eq(Posts.pagePath, data.pagePath))
         .returning({ updatedId: Posts.pagePath });
@@ -94,7 +96,8 @@ export default async function () {
     currentBlogsData,
     "linkUrl",
     (data: typeof Blogs.$inferSelect) => {
-      db.update(Blogs)
+      return db
+        .update(Blogs)
         .set(data)
         .where(eq(Blogs.linkUrl, data.linkUrl))
         .returning({ updatedId: Blogs.linkUrl });
@@ -109,7 +112,8 @@ export default async function () {
     currentZennsData,
     "pagePath",
     (data: typeof Zenns.$inferSelect) => {
-      db.update(Zenns)
+      return db
+        .update(Zenns)
         .set(data)
         .where(eq(Zenns.pagePath, data.pagePath))
         .returning({ updatedId: Zenns.pagePath });
