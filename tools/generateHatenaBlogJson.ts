@@ -1,6 +1,5 @@
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
-// eslint-disable-next-line node/no-unpublished-import
 import type { HatenaArticle, HatenaJson } from "../src/types/IHatena";
 import type { HatenaXML } from "./HatenaXML";
 import { fetchHatenaOgpImageUrl } from "./utils";

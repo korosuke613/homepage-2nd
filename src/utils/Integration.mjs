@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-await-in-loop */
 import fs from "node:fs";
 import { glob } from "glob";
 import rehypeStringify from "rehype-stringify";
@@ -131,7 +129,6 @@ const getMarkdownData = async (pattern) => {
 
     const md = await parser.process(rawFile);
     if (md.data.frontMatter.draft === true) {
-      // eslint-disable-next-line no-continue
       continue;
     }
     tagNames = tagNames.concat(md.data.frontMatter.tags);
@@ -239,5 +236,4 @@ function setupKorosuke() {
   return integration;
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export { setupKorosuke };

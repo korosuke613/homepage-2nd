@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { resolve } from "node:path";
 
 import { defineConfig, devices } from "@playwright/experimental-ct-react";

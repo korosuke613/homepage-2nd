@@ -1,6 +1,5 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
-// eslint-disable-next-line node/no-unpublished-import
 import type { ZennScrapJson } from "../src/types/IZenn";
 
 const scrapIdsString = `

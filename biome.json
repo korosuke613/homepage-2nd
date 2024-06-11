@@ -19,5 +19,8 @@
     "rules": {
       "recommended": true
     }
+  },
+  "javascript": {
+    "globals": ["Astro"]
   }
 }
