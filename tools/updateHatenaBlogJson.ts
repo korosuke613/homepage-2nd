@@ -1,7 +1,6 @@
 import Parser from "rss-parser";
 const parser = new Parser();
 import fs from "node:fs";
-// eslint-disable-next-line node/no-unpublished-import
 import type { HatenaJson } from "../src/types/IHatena";
 import { fetchHatenaOgpImageUrl } from "./utils";
 

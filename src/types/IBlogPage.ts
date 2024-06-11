@@ -19,5 +19,4 @@ export type BlogData = {
   category: string[];
 };
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 export declare type BlogPage = Page<BlogData>;

@@ -8,7 +8,6 @@ import metaTags from "astro-meta-tags";
 import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
-// eslint-disable-next-line import/extensions
 import { setupKorosuke } from "./src/utils/Integration.mjs";
 const IS_TESTING = process.env.IS_TESTING === "true";
 

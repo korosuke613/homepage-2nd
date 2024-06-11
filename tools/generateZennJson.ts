@@ -1,6 +1,5 @@
 import axios from "axios";
 import { JSDOM } from "jsdom";
-// eslint-disable-next-line node/no-unpublished-import
 import type { ZennJson } from "../src/types/IZenn";
 
 // `/bin/ls -1 | grep .md` の結果
