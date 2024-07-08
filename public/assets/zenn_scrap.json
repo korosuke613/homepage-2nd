@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2024-05-04T14:26:24.420Z",
+  "lastUpdated": "2024-07-08T14:28:06.802Z",
   "articles": {
     "d7367ec10a8d04": {
       "title": "ホームページ更新",
@@ -156,6 +156,10 @@
     "6f307e8e565cec": {
       "title": "Self-hosted GitHub Actions runners in AWS CodeBuild を試す",
       "pubDate": "2024-05-04T05:27:12.000Z"
+    },
+    "244af7e2a97423": {
+      "title": "GitHub の Delegated bypass for push rules を試す",
+      "pubDate": "2024-07-05T06:04:08.000Z"
     }
   }
 }
