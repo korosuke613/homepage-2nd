@@ -81,7 +81,7 @@
     "@types/react": "18.3.3",
     "@vitest/coverage-v8": "1.6.0",
     "@vitest/ui": "1.6.0",
-    "chromatic": "11.5.4",
+    "chromatic": "11.5.5",
     "concurrently": "8.2.2",
     "playwright": "1.45.1",
     "storybook": "8.1.11",
