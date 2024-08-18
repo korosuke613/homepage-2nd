@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 
 import type { BlogData } from "@/types/IBlogPage";
-import { CardClass } from "@/utils/Css";
 import type { Tags } from "@/utils/Tag";
 
 import { ExternalLink } from "../ExternalLink";
@@ -17,39 +16,57 @@ export const BlogCard = (props: IBlogCard) => {
   return (
     <div
       key={props.elt.id}
-      className="overflow-hidden rounded-md bg-slate-800 bg-gradient-to-br from-violet-900 backdrop-blur-lg"
+      className="relative overflow-hidden rounded-md bg-slate-800"
     >
-      <div key={props.elt.title} style={CardClass}>
+      <div
+        key={props.elt.title}
+        className="aspect-h-2 aspect-w-5 xs:aspect-h-2 xs:aspect-w-7 sm:aspect-none"
+      >
         <ExternalLink
           title={
             <img
               className="h-full w-full object-cover object-center"
               src={props.elt.ogpImageUrl}
               alt={props.elt.title}
+              loading="lazy"
             />
           }
           url={props.elt.url}
         />
       </div>
-      <div key={props.elt.id} className="inset-0 flex flex-col justify-center">
-        <div key={props.elt.id} className="px-3 py-1.5">
+      {/* <div className="block xs:hidden">
+        <ExternalLink
+          title={
+            <img
+              className="h-full w-full object-cover object-center"
+              src={props.elt.ogpImageUrl}
+              alt={props.elt.title}
+              loading="lazy"
+            />
+          }
+          url={props.elt.url}
+        />
+      </div> */}
+      <div
+        key={props.elt.id}
+        className="absolute sm:static inset-0 flex flex-col justify-center"
+      >
+        <div
+          key={props.elt.id}
+          className="px-3 py-1.5 bg-gradient-to-br from-violet-900 to-violet-900/50 backdrop-blur-sm"
+        >
           <ExternalLink
             title={
               <div key={props.elt.id}>
-                <div
-                  style={{
-                    height: "3rem",
-                  }}
-                >
+                <div className="sm:h-12">
                   <p
-                    className="line-clamp-3 text-base font-semibold"
+                    className="line-clamp-1 xs:line-clamp-2 text-base font-semibold"
                     title={props.elt.title}
                   >
                     {props.elt.title}
                   </p>
                 </div>
-                <br />
-                <div className="text-xs text-gray-300 my-1.5 flex justify-between">
+                <div className="text-xs text-gray-100 my-1.5 flex justify-between">
                   <p>{format(new Date(props.elt.pubDate), "LLL d, yyyy")}</p>
                   {props.viewCount !== undefined && props.viewCount > 0 && (
                     <p>{props.viewCount} views</p>

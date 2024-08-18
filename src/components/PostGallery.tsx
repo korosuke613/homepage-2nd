@@ -11,7 +11,7 @@ type IRecentPostsProps = {
 
 export const PostGallery = (props: IRecentPostsProps) => {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       {props.postList.map((elt) => (
         <PostCard
           key={elt.id}

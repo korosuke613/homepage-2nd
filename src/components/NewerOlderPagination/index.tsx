@@ -66,7 +66,7 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
     <div className="flex justify-center gap-8">
       {props.page.url.prev && <a href={props.page.url.prev}>←</a>}
       {props.page.lastPage !== 1 && (
-        <div className="hidden justify-center gap-4 sm:flex">
+        <div className="hidden justify-center gap-4 xs:flex">
           {createPageNumberLink(props.page)}
         </div>
       )}
