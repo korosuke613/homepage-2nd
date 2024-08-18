@@ -16,7 +16,7 @@ export const PostCard = (props: IPostCardProps) => {
 
   return (
     <div className="relative overflow-hidden rounded-md bg-slate-800">
-      <div className="aspect-h-9 aspect-w-16">
+      <div className="aspect-h-2 aspect-w-5 xs:aspect-h-2 xs:aspect-w-7 sm:aspect-h-5 sm:aspect-w-9 md:aspect-h-9 md:aspect-w-16">
         {props.instance.data.imgSrc && (
           <img
             className="h-full w-full object-cover object-center"
@@ -34,7 +34,7 @@ export const PostCard = (props: IPostCardProps) => {
               <div>
                 <span>
                   <p
-                    className="text-lg font-bold line-clamp-4"
+                    className="text-lg font-bold line-clamp-1 xs:line-clamp-2 sm:line-clamp-3"
                     title={props.instance.data.title}
                   >
                     {props.instance.data.title}

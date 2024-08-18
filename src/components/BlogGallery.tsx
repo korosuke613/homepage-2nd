@@ -10,7 +10,7 @@ export const BlogGallery = (props: IRecentBlogsProps) => {
   const { tags, viewCounts } = props;
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       {props.postList.map((elt) => (
         <BlogCard
           key={elt.id}

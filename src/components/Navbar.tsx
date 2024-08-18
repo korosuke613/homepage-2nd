@@ -10,7 +10,7 @@ type INavbarProps = {
 };
 
 export const NavbarTwoColumns = (props: INavbarProps) => (
-  <div className="flex flex-col gap-y-3 sm:flex-row sm:items-center sm:justify-between">
+  <div className="flex flex-col gap-y-3 xs:flex-row xs:items-center xs:justify-between">
     {props.children}
   </div>
 );

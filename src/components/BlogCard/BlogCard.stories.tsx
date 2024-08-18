@@ -1,20 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { BlogCard } from "./index";
+import type { GlobalArgs } from ".storybook/preview";
 
 const metaData: Meta<typeof BlogCard> = {
   title: "BlogCard",
   component: BlogCard,
-  render: (args) => {
-    return (
-      <div
-        style={{
-          width: "320px",
-        }}
-      >
-        <BlogCard elt={args.elt} tags={args.tags} viewCount={args.viewCount} />
-      </div>
-    );
-  },
 };
 
 export default metaData;
@@ -37,6 +27,11 @@ const baseTags = {
 };
 
 export const LongTitle: StoryObj<typeof BlogCard> = {
+  parameters: {
+    viewport: {
+      defaultViewport: "desktop",
+    },
+  },
   args: {
     elt: {
       ...baseElt,
@@ -45,9 +40,25 @@ export const LongTitle: StoryObj<typeof BlogCard> = {
     },
     tags: baseTags,
   },
+  render: (args) => {
+    return (
+      <div
+        style={{
+          width: "320px",
+        }}
+      >
+        <BlogCard elt={args.elt} tags={args.tags} viewCount={args.viewCount} />
+      </div>
+    );
+  },
 };
 
 export const WithViewCount: StoryObj<typeof BlogCard> = {
+  parameters: {
+    viewport: {
+      defaultViewport: "desktop",
+    },
+  },
   args: {
     elt: {
       ...baseElt,
@@ -55,11 +66,66 @@ export const WithViewCount: StoryObj<typeof BlogCard> = {
     viewCount: 10000,
     tags: baseTags,
   },
+  render: (args) => {
+    return (
+      <div
+        style={{
+          width: "320px",
+        }}
+      >
+        <BlogCard elt={args.elt} tags={args.tags} viewCount={args.viewCount} />
+      </div>
+    );
+  },
 };
 
 export const Default: StoryObj<typeof BlogCard> = {
+  parameters: {
+    viewport: {
+      defaultViewport: "desktop",
+    },
+  },
   args: {
     elt: { ...baseElt, title: "成果物のハッシュ値" },
     tags: baseTags,
+  },
+  render: (args) => {
+    return (
+      <div
+        style={{
+          width: "320px",
+        }}
+      >
+        <BlogCard elt={args.elt} tags={args.tags} viewCount={args.viewCount} />
+      </div>
+    );
+  },
+};
+
+export const SmallMobile: StoryObj<typeof BlogCard & GlobalArgs> = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile1",
+    },
+  },
+  args: {
+    elt: { ...baseElt, title: "成果物のハッシュ値" },
+    viewCount: 10000,
+    tags: baseTags,
+    Global_disableDecorator: true,
+  },
+};
+
+export const LargeMobile: StoryObj<typeof BlogCard & GlobalArgs> = {
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile2",
+    },
+  },
+  args: {
+    elt: { ...baseElt, title: "成果物のハッシュ値" },
+    viewCount: 10000,
+    tags: baseTags,
+    Global_disableDecorator: true,
   },
 };
