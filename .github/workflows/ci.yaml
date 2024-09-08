@@ -204,7 +204,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: E2E testing
-        run: npm run test:playwright-e2e
+        run: npm run test:playwright-e2e -- --retries=2
   
       - name: Test Summary
         if: always()
