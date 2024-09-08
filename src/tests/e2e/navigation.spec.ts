@@ -15,6 +15,7 @@ test.describe("posts", async () => {
     // テキストに `OSS` が入ってかつ `.contents_tag` をクリックする
     await page.getByRole("link", { name: "OSS" }).first().click();
     await page.waitForURL(expectPagePath);
+    await page.waitForLoadState("networkidle");
 
     expect(page).toHaveURL(expectPagePath);
   });
@@ -25,6 +26,7 @@ test.describe("posts", async () => {
     // テキストに `2022` が入ってかつ `.contents_year` をクリックする
     await page.getByRole("link", { name: "2022" }).first().click();
     await page.waitForURL(expectPagePath);
+    await page.waitForLoadState("networkidle");
 
     expect(page).toHaveURL(expectPagePath);
   });
@@ -45,6 +47,7 @@ test.describe("blogs", async () => {
     // テキストに `Zenn` が入ってかつ `.contents_tag` をクリックする
     await page.getByRole("link", { name: "Zenn" }).first().click();
     await page.waitForURL(expectPagePath);
+    await page.waitForLoadState("networkidle");
 
     expect(page).toHaveURL(expectPagePath);
   });
@@ -55,6 +58,7 @@ test.describe("blogs", async () => {
     // テキストに `2022` が入ってかつ `.contents_year` をクリックする
     await page.getByRole("link", { name: "2022" }).first().click();
     await page.waitForURL(expectPagePath);
+    await page.waitForLoadState("networkidle");
 
     expect(page).toHaveURL(expectPagePath);
   });
