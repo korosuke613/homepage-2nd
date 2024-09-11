@@ -39,7 +39,7 @@
     "@google-analytics/data": "4.8.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.15",
-    "astro": "4.15.1",
+    "astro": "4.15.2",
     "astro-meta-tags": "0.3.0",
     "astro-robots-txt": "1.0.0",
     "date-fns": "3.6.0",
