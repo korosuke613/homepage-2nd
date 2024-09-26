@@ -28,7 +28,7 @@
   "dependencies": {
     "@astrojs/check": "0.9.3",
     "@astrojs/db": "0.14.1",
-    "@astrojs/mdx": "3.1.6",
+    "@astrojs/mdx": "3.1.7",
     "@astrojs/partytown": "2.1.2",
     "@astrojs/react": "3.6.2",
     "@astrojs/rss": "4.0.7",
@@ -39,7 +39,7 @@
     "@google-analytics/data": "4.8.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.15",
-    "astro": "4.15.7",
+    "astro": "4.15.8",
     "astro-meta-tags": "0.3.0",
     "astro-robots-txt": "1.0.0",
     "date-fns": "3.6.0",
