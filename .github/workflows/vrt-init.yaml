@@ -58,5 +58,5 @@ jobs:
           paths: "test-results/vrt.xml"
 
       - if: github.event.workflow == '.github/workflows/vrt-init.yaml'
-        uses: Kesin11/actions-timeline@da70beff098ff89b15d279e8bf2f60519a8dadd7 # v2.2.0
+        uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
         
