@@ -42,7 +42,7 @@
     "astro": "4.15.9",
     "astro-meta-tags": "0.3.1",
     "astro-robots-txt": "1.0.0",
-    "date-fns": "3.6.0",
+    "date-fns": "4.1.0",
     "emoji-regex": "10.4.0",
     "glob": "11.0.0",
     "natural": "8.0.1",
