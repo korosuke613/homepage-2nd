@@ -9,6 +9,7 @@ import robotsTxt from "astro-robots-txt";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import { setupKorosuke } from "./src/utils/Integration.mjs";
+import webVitals from "@astrojs/web-vitals";
 const IS_TESTING = process.env.IS_TESTING === "true";
 
 // https://astro.build/config
@@ -54,5 +55,6 @@ export default defineConfig({
     mdx(),
     metaTags(),
     db(),
+    webVitals(),
   ],
 });
