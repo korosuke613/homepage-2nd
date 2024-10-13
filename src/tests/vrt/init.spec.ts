@@ -9,9 +9,7 @@ test.describe.configure({ mode: "parallel" });
 
 test.describe("Init Visual Regression Test", () => {
   for (const targetPage of Object.values(p)) {
-    test(
-      targetPage.name,
-      async ({ page }, testInfo) => await init(page, testInfo, targetPage),
-    );
+    test(targetPage.name, async ({ page }, testInfo) =>
+      await init(page, testInfo, targetPage));
   }
 });
