@@ -63,9 +63,10 @@ const animationKeys = Object.keys(animations);
 export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [rotationComplete, setRotationComplete] = useState(true);
   const [isNoLimit, setIsNoLimit] = useState(false);
+  const [isInfinite, setIsInfinity] = useState(false);
   const [keyString, setKeyString] = useState("");
 
-  const toggleRotation = async () => {
+  const toggleRotation = useCallback(async () => {
     if (rotationComplete || isNoLimit) {
       setRotationComplete(false);
       const icon = document.getElementById(iconId);
@@ -86,27 +87,27 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         console.warn("animation not found");
         return;
       }
-      console.debug("animation: ", animationKey);
       await icon.animate(animation, {
         duration: 1500,
         composite: "accumulate",
       }).finished;
       setRotationComplete(true);
     }
-  };
+  }, [rotationComplete, isNoLimit, iconId]);
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
       const NO_LIMIT_MODE_KEY = "mugen";
+      const INFINITY_MODE_KEY = "eien";
+      const MAX_KEY_STRING_LENGTH = 10;
       let _keyString = keyString;
 
-      if (keyString.length > NO_LIMIT_MODE_KEY.length - 1) {
-        // keyString を NO_LIMIT_MODE_KEY の長さに合わせる
-        _keyString = _keyString.slice(-(NO_LIMIT_MODE_KEY.length - 1));
+      if (keyString.length > MAX_KEY_STRING_LENGTH - 1) {
+        // keyString を MAX_KEY_STRING_LENGTH の長さに合わせる
+        _keyString = _keyString.slice(-(MAX_KEY_STRING_LENGTH - 1));
       }
       _keyString = _keyString + event.key;
       console.debug("keyString", _keyString);
-      setKeyString(_keyString);
 
       const icon = document.getElementById(iconId);
       if (!icon) {
@@ -117,7 +118,18 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         return;
       }
 
-      switch (_keyString.toLocaleLowerCase()) {
+      // keyString の中にモード切替のキーワードが含まれているか
+      const getMode = () => {
+        if (_keyString.toLocaleLowerCase().includes(NO_LIMIT_MODE_KEY)) {
+          return NO_LIMIT_MODE_KEY;
+        }
+        if (_keyString.toLocaleLowerCase().includes(INFINITY_MODE_KEY)) {
+          return INFINITY_MODE_KEY;
+        }
+        return "";
+      };
+
+      switch (getMode()) {
         case NO_LIMIT_MODE_KEY:
           if (!isNoLimit) {
             console.log(
@@ -131,10 +143,29 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
             );
           }
           setIsNoLimit(!isNoLimit);
+          setKeyString("");
+          break;
+        case INFINITY_MODE_KEY:
+          if (!isInfinite) {
+            console.log(
+              "%c INFINITE MODE ",
+              "color: blue; background-color: black; border: 4px solid yellow; font-size: 90px",
+            );
+          } else {
+            console.log(
+              "%c FINITE MODE ",
+              "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
+            );
+          }
+          setIsInfinity(!isInfinite);
+          setKeyString("");
+          break;
+        default:
+          setKeyString(_keyString);
           break;
       }
     },
-    [isNoLimit, keyString, iconId],
+    [isNoLimit, isInfinite, keyString, iconId],
   );
 
   useEffect(() => {
@@ -143,6 +174,25 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
+
+  useEffect(() => {
+    // isInfinite モードの場合、アイコンを自動で回転させる
+    let interval: NodeJS.Timeout;
+    if (isInfinite && (rotationComplete || isNoLimit)) {
+      let intervalTime = 500;
+      if (isNoLimit) {
+        intervalTime = 800;
+      }
+      interval = setInterval(async () => {
+        await toggleRotation();
+      }, intervalTime);
+    }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isNoLimit, isInfinite, toggleRotation, rotationComplete]);
 
   return (
     <img
