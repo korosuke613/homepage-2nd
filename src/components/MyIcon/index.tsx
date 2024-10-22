@@ -65,6 +65,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [isNoLimit, setIsNoLimit] = useState(false);
   const [isInfinite, setIsInfinity] = useState(false);
   const [keyString, setKeyString] = useState("");
+  const [intervalTime, setIntervalTime] = useState(800);
 
   const toggleRotation = useCallback(async () => {
     if (rotationComplete || isNoLimit) {
@@ -99,6 +100,8 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
     (event: KeyboardEvent) => {
       const NO_LIMIT_MODE_KEY = "mugen";
       const INFINITY_MODE_KEY = "eien";
+      const CLOCK_UP = "clockup";
+      const CLOCK_UP_SHORT = "cu";
       const MAX_KEY_STRING_LENGTH = 10;
       let _keyString = keyString;
 
@@ -107,7 +110,6 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         _keyString = _keyString.slice(-(MAX_KEY_STRING_LENGTH - 1));
       }
       _keyString = _keyString + event.key;
-      console.debug("keyString", _keyString);
 
       const icon = document.getElementById(iconId);
       if (!icon) {
@@ -125,6 +127,12 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         }
         if (_keyString.toLocaleLowerCase().includes(INFINITY_MODE_KEY)) {
           return INFINITY_MODE_KEY;
+        }
+        if (
+          _keyString.toLocaleLowerCase().includes(CLOCK_UP) ||
+          _keyString.toLocaleLowerCase().includes(CLOCK_UP_SHORT)
+        ) {
+          return CLOCK_UP;
         }
         return "";
       };
@@ -160,12 +168,25 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           setIsInfinity(!isInfinite);
           setKeyString("");
           break;
+        case CLOCK_UP: {
+          if (!isNoLimit || !isInfinite) {
+            break;
+          }
+          const newIntervalTime = Math.round(Math.max(intervalTime * 0.8, 100));
+          setIntervalTime(newIntervalTime);
+          console.log(
+            `%c CLOCK UP: ${newIntervalTime}ms `,
+            "color: green; background-color: black; border: 4px solid yellow; font-size: 90px",
+          );
+          setKeyString("");
+          break;
+        }
         default:
           setKeyString(_keyString);
           break;
       }
     },
-    [isNoLimit, isInfinite, keyString, iconId],
+    [isNoLimit, isInfinite, intervalTime, keyString, iconId],
   );
 
   useEffect(() => {
@@ -179,20 +200,19 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
     // isInfinite モードの場合、アイコンを自動で回転させる
     let interval: NodeJS.Timeout;
     if (isInfinite && (rotationComplete || isNoLimit)) {
-      let intervalTime = 500;
-      if (isNoLimit) {
-        intervalTime = 800;
-      }
-      interval = setInterval(async () => {
-        await toggleRotation();
-      }, intervalTime);
+      interval = setInterval(
+        async () => {
+          await toggleRotation();
+        },
+        isNoLimit ? intervalTime : 500,
+      );
     }
     return () => {
       if (interval) {
         clearInterval(interval);
       }
     };
-  }, [isNoLimit, isInfinite, toggleRotation, rotationComplete]);
+  }, [isNoLimit, isInfinite, toggleRotation, rotationComplete, intervalTime]);
 
   return (
     <img
