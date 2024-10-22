@@ -36,7 +36,7 @@
     "@astrojs/tailwind": "5.1.2",
     "@docsearch/css": "3.6.2",
     "@docsearch/react": "3.6.2",
-    "@google-analytics/data": "4.8.0",
+    "@google-analytics/data": "4.9.0",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.15",
     "astro": "4.16.6",
