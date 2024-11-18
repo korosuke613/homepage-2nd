@@ -63,10 +63,17 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Determine current user
+        id: id
+        run: |
+          echo "user=$(id -u)" >> $GITHUB_OUTPUT
+          echo "group=$(id -g)" >> $GITHUB_OUTPUT
+
       - uses: renovatebot/github-action@180db1547505e30c02d41959fe65ada1523ee207 # v40.3.0
         with:
           configurationFile: renovate.json5
           token: ${{ steps.app-token.outputs.token }}
+          docker-user: "${{ steps.id.outputs.user }}:${{ steps.id.outputs.group }}"
         env:
           # This enables the cache -- if this is set, it's not necessary to add it to renovate.json.
           RENOVATE_REPOSITORY_CACHE: ${{ github.event.inputs.repoCache || 'enabled' }}
