@@ -74,6 +74,7 @@ jobs:
           configurationFile: renovate.json5
           token: ${{ steps.app-token.outputs.token }}
           docker-user: "${{ steps.id.outputs.user }}:${{ steps.id.outputs.group }}"
+          docker-volumes: /tmp/renovate:/tmp/renovate
         env:
           # This enables the cache -- if this is set, it's not necessary to add it to renovate.json.
           RENOVATE_REPOSITORY_CACHE: ${{ github.event.inputs.repoCache || 'enabled' }}
