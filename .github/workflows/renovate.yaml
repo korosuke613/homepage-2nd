@@ -55,11 +55,14 @@ jobs:
           key: renovate-cli-${{ runner.os }}-${{ steps.renovate-cache.outputs.date }}
 
       - name: Change permissions
+        id: change-permissions
         run: |
           mkdir -p $BASE_DIR
           mkdir -p $CACHE_DIR
           sudo chown -R runneradmin:root /tmp/renovate/
-          ls -R $BASE_DIR
+          ls -lR $BASE_DIR
+          echo "user=$(id -u runneradmin)" >> $GITHUB_OUTPUT
+          echo "group=$(id -g root)" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v4
 
@@ -67,6 +70,7 @@ jobs:
         with:
           configurationFile: renovate.json5
           token: ${{ steps.app-token.outputs.token }}
+          docker-user: ${{ steps.change-permissions.outputs.user }}:${{ steps.change-permissions.outputs.group }}
         env:
           # This enables the cache -- if this is set, it's not necessary to add it to renovate.json.
           RENOVATE_REPOSITORY_CACHE: ${{ github.event.inputs.repoCache || 'enabled' }}
