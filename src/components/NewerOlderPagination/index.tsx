@@ -10,24 +10,75 @@ const createPageNumberLink = (page: Page) => {
   let currentPageBaseUrl = page.url.current;
   if (page.currentPage !== 1) {
     currentPageBaseUrl = currentPageBaseUrl.split("/").slice(0, -1).join("/");
-    console.log(currentPageBaseUrl);
   }
 
-  for (let i = 1; i <= page.lastPage; i += 1) {
+  const createLink = (i: number) => {
     if (i === page.currentPage) {
-      items.push(
-        <span className="font-bold underline underline-offset-4">
+      return (
+        <span key={i} className="font-bold underline underline-offset-4">
           {i.toString()}
-        </span>,
+        </span>
       );
-    } else if (i === 1) {
-      items.push(<a href={currentPageBaseUrl}>{i}</a>);
-    } else {
-      items.push(
-        <a href={`${currentPageBaseUrl}/${i.toString()}`.replaceAll("//", "/")}>
+    }
+    if (i === 1) {
+      return (
+        <a key={i} href={currentPageBaseUrl}>
           {i}
-        </a>,
+        </a>
       );
+    }
+    return (
+      <a
+        key={i}
+        href={`${currentPageBaseUrl}/${i.toString()}`.replaceAll("//", "/")}
+      >
+        {i}
+      </a>
+    );
+  };
+
+  const createEllipsis = (key: string) => (
+    <span key={key} className="text-gray-400">
+      ...
+    </span>
+  );
+
+  // 表示するページ番号を決定
+  const current = page.currentPage;
+  const last = page.lastPage;
+  const delta = 3; // 現在のページの前後に表示するページ数
+
+  if (last <= 7) {
+    // ページ数が少ない場合は全て表示
+    for (let i = 1; i <= last; i++) {
+      items.push(createLink(i));
+    }
+  } else {
+    // 最初のページは常に表示
+    items.push(createLink(1));
+
+    // 現在のページの前後のページを表示
+    const leftBound = Math.max(2, current - delta);
+    const rightBound = Math.min(last - 1, current + delta);
+
+    // 左側の省略記号
+    if (leftBound > 2) {
+      items.push(createEllipsis("left"));
+    }
+
+    // 中央のページ番号
+    for (let i = leftBound; i <= rightBound; i++) {
+      items.push(createLink(i));
+    }
+
+    // 右側の省略記号
+    if (rightBound < last - 1) {
+      items.push(createEllipsis("right"));
+    }
+
+    // 最後のページは常に表示
+    if (rightBound < last) {
+      items.push(createLink(last));
     }
   }
 
