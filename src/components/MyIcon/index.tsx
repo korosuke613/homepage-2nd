@@ -1,9 +1,37 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type IMyIconProps = {
   iconPath: string;
   iconId: string;
 };
+
+type Position = {
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+};
+
+const INITIAL_MOVE_SPEED = 5;
+
+// ビビッドな色のリスト
+const VIVID_COLORS = [
+  undefined,
+  "#FF4500", // オレンジレッド
+  "#7B68EE", // ミディアムスレートブルー
+  "#32CD32", // ライムグリーン
+  "#00FF00", // ライム
+  "#4169E1", // ロイヤルブルー
+  "#00FFFF", // シアン
+  "#FF00FF", // マゼンタ
+  "#FFD700", // ゴールド
+  "#8A2BE2", // ブルーバイオレット
+  "#FF69B4", // ホットピンク
+  "#FF1493", // ディープピンク
+  "#FF6347", // トマト
+] as const;
+
+type VividColor = (typeof VIVID_COLORS)[number];
 
 const animations: Record<string, Array<{ transform: string }>> = {
   rotateXYZ: [
@@ -66,6 +94,30 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [isInfinite, setIsInfinity] = useState(false);
   const [keyString, setKeyString] = useState("");
   const [intervalTime, setIntervalTime] = useState(800);
+  const [isMoving, setIsMoving] = useState(false);
+  const [position, setPosition] = useState<Position>({
+    x: 0,
+    y: 0,
+    dx: INITIAL_MOVE_SPEED,
+    dy: INITIAL_MOVE_SPEED,
+  });
+  const [iconColor, setIconColor] = useState<VividColor>(VIVID_COLORS[0]);
+  const iconRef = useRef<HTMLImageElement>(null);
+  const [initialSize, setInitialSize] = useState({ width: 0, height: 0 });
+  const [moveSpeed, setMoveSpeed] = useState(INITIAL_MOVE_SPEED);
+
+  const changeColor = useCallback(() => {
+    const currentIndex = VIVID_COLORS.indexOf(iconColor);
+    const nextIndex = (currentIndex + 1) % VIVID_COLORS.length;
+    setIconColor(VIVID_COLORS[nextIndex]);
+  }, [iconColor]);
+
+  useEffect(() => {
+    if (iconRef.current) {
+      const rect = iconRef.current.getBoundingClientRect();
+      setInitialSize({ width: rect.width, height: rect.height });
+    }
+  }, []);
 
   const toggleRotation = useCallback(async () => {
     if (rotationComplete || isNoLimit) {
@@ -102,6 +154,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       const INFINITY_MODE_KEY = "eien";
       const CLOCK_UP = "clockup";
       const CLOCK_UP_SHORT = "cu";
+      const MOVE_MODE_KEY = "kakku";
       const MAX_KEY_STRING_LENGTH = 10;
       let _keyString = keyString;
 
@@ -122,17 +175,21 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
 
       // keyString の中にモード切替のキーワードが含まれているか
       const getMode = () => {
-        if (_keyString.toLocaleLowerCase().includes(NO_LIMIT_MODE_KEY)) {
+        const lowerKeyString = _keyString.toLocaleLowerCase();
+        if (lowerKeyString.includes(NO_LIMIT_MODE_KEY)) {
           return NO_LIMIT_MODE_KEY;
         }
-        if (_keyString.toLocaleLowerCase().includes(INFINITY_MODE_KEY)) {
+        if (lowerKeyString.includes(INFINITY_MODE_KEY)) {
           return INFINITY_MODE_KEY;
         }
         if (
-          _keyString.toLocaleLowerCase().includes(CLOCK_UP) ||
-          _keyString.toLocaleLowerCase().includes(CLOCK_UP_SHORT)
+          lowerKeyString.includes(CLOCK_UP) ||
+          lowerKeyString.includes(CLOCK_UP_SHORT)
         ) {
           return CLOCK_UP;
+        }
+        if (lowerKeyString.includes(MOVE_MODE_KEY)) {
+          return MOVE_MODE_KEY;
         }
         return "";
       };
@@ -169,15 +226,49 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           setKeyString("");
           break;
         case CLOCK_UP: {
-          if (!isNoLimit || !isInfinite) {
-            break;
-          }
+          console.log("CLOCK UP");
+          console.log({ isNoLimit, isInfinite, isMoving });
+
           const newIntervalTime = Math.round(Math.max(intervalTime * 0.8, 100));
+          const newMoveSpeed = moveSpeed * 1.2;
           setIntervalTime(newIntervalTime);
+          setMoveSpeed(newMoveSpeed);
+          setPosition((prev) => ({
+            ...prev,
+            dx: prev.dx > 0 ? newMoveSpeed : -newMoveSpeed,
+            dy: prev.dy > 0 ? newMoveSpeed : -newMoveSpeed,
+          }));
           console.log(
-            `%c CLOCK UP: ${newIntervalTime}ms `,
+            `%c CLOCK UP: ${newIntervalTime}ms, Speed: ${newMoveSpeed.toFixed(1)} `,
             "color: green; background-color: black; border: 4px solid yellow; font-size: 90px",
           );
+          setKeyString("");
+          break;
+        }
+        case MOVE_MODE_KEY: {
+          if (!isMoving && iconRef.current) {
+            const rect = iconRef.current.getBoundingClientRect();
+            setPosition((prev) => ({
+              ...prev,
+              x: rect.left,
+              y: rect.top,
+              dx: moveSpeed,
+              dy: moveSpeed,
+            }));
+          }
+          setIsMoving(!isMoving);
+          if (!isMoving) {
+            console.log(
+              "%c DVD MODE ",
+              "color: purple; background-color: black; border: 4px solid yellow; font-size: 90px",
+            );
+          } else {
+            setMoveSpeed(INITIAL_MOVE_SPEED);
+            console.log(
+              "%c NO DVD MODE ",
+              "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
+            );
+          }
           setKeyString("");
           break;
         }
@@ -186,7 +277,15 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           break;
       }
     },
-    [isNoLimit, isInfinite, intervalTime, keyString, iconId],
+    [
+      isNoLimit,
+      isInfinite,
+      intervalTime,
+      keyString,
+      iconId,
+      isMoving,
+      moveSpeed,
+    ],
   );
 
   useEffect(() => {
@@ -214,13 +313,91 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
     };
   }, [isNoLimit, isInfinite, toggleRotation, rotationComplete, intervalTime]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (!iconRef.current) return;
+      const icon = iconRef.current.getBoundingClientRect();
+
+      setPosition((prev) => {
+        const newX = Math.min(prev.x, window.innerWidth - icon.width);
+        const newY = Math.min(prev.y, window.innerHeight - icon.height);
+        return { ...prev, x: newX, y: newY };
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isMoving) return;
+
+    const moveIcon = () => {
+      if (!iconRef.current) return;
+      const icon = iconRef.current.getBoundingClientRect();
+
+      setPosition((prev) => {
+        let newX = prev.x + prev.dx;
+        let newY = prev.y + prev.dy;
+        let newDx = prev.dx;
+        let newDy = prev.dy;
+        let hasCollision = false;
+
+        const maxX = window.innerWidth;
+        const maxY = window.innerHeight;
+        const minX = 0;
+        const minY = 0;
+
+        // 壁との衝突判定
+        if (newX + icon.width > maxX || newX < minX) {
+          newDx = -newDx;
+          newX = newX + icon.width > maxX ? maxX - icon.width : minX;
+          hasCollision = true;
+        }
+
+        if (newY + icon.height > maxY || newY < minY) {
+          newDy = -newDy;
+          newY = newY + icon.height > maxY ? maxY - icon.height : minY;
+          hasCollision = true;
+        }
+
+        if (hasCollision) {
+          changeColor();
+        }
+
+        return { x: newX, y: newY, dx: newDx, dy: newDy };
+      });
+    };
+
+    // 60fps で動かす
+    const interval = setInterval(moveIcon, 1000 / 60);
+    return () => clearInterval(interval);
+  }, [isMoving, changeColor]);
+
   return (
-    <img
-      src={iconPath}
-      style={{ width: "100%" }}
-      alt="Avatar"
-      loading="lazy"
-      onMouseDown={toggleRotation}
-    />
+    <div style={{ position: "relative" }}>
+      <img
+        ref={iconRef}
+        id={iconId}
+        src={iconPath}
+        style={{
+          position: isMoving ? "fixed" : "relative",
+          left: isMoving ? `${position.x}px` : undefined,
+          top: isMoving ? `${position.y}px` : undefined,
+          height: isMoving ? `${initialSize.height}px` : undefined,
+          width: isMoving ? `${initialSize.width}px` : "100%",
+          transition: "transform 0.3s",
+          zIndex: 9999,
+          filter:
+            isMoving &&
+            VIVID_COLORS[VIVID_COLORS.indexOf(iconColor)] !== undefined
+              ? `hue-rotate(${VIVID_COLORS.indexOf(iconColor) * 30}deg) saturate(400%) brightness(1.2)`
+              : "none",
+        }}
+        alt="Avatar"
+        loading="lazy"
+        onMouseDown={toggleRotation}
+      />
+    </div>
   );
 };
