@@ -10,8 +10,10 @@ type INavbarProps = {
 };
 
 export const NavbarTwoColumns = (props: INavbarProps) => (
-  <div className="flex flex-col gap-y-3 xs:flex-row xs:items-center xs:justify-between">
-    {props.children}
+  <div className="fixed top-0 left-0 right-0 bg-gray-900 z-50 py-4">
+    <div className="mx-auto max-w-screen-lg w-full flex flex-col xs:flex-row xs:items-center xs:justify-between px-3">
+      {props.children}
+    </div>
   </div>
 );
 
