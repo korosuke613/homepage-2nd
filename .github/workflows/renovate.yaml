@@ -25,6 +25,10 @@ on:
     paths:
       - '.github/workflows/renovate.yaml'
 
+permissions: 
+  contents: read
+  packages: read
+
 concurrency:
   group: renovate
 
