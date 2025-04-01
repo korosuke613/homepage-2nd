@@ -11,6 +11,9 @@ jobs:
     uses: korosuke613/actions/.github/workflows/renovate.yaml@main
     secrets:
       GH_PAT_FOR_RENOVATE: ${{ secrets.GH_PAT_FOR_RENOVATE }}
+    permissions: 
+      contents: read
+      packages: read
 
   actions-timeline:
     needs: call

@@ -4,6 +4,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions: 
+  contents: read
+  packages: read
+
 jobs:
   actions-timeline:
     needs: [lint, build, unit-test, e2e-test, ct-test, vrt, tools, chromatic]
