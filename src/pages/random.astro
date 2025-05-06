@@ -1,4 +1,5 @@
 ---
+import { RandomArticleCard } from "@/components/RandomArticleCard";
 import { Section } from "@/components/Section";
 import Base from "@/templates/Base.astro";
 import { getRandomArticle } from "@/utils/Random";
@@ -7,73 +8,10 @@ import { getRandomArticle } from "@/utils/Random";
 const randomArticle = await getRandomArticle();
 ---
 
-<Base head={{ title: "ランダム記事", description: "ランダムな記事を表示します" }}>
+<Base head={{ title: "ランダム記事", description: "ランダムな記事を表示します", isNoIndex: true }}>
   <Section>
     <div class="flex flex-col items-center justify-center py-10">
-      <div class="text-center max-w-2xl w-full">
-        <h1 class="text-3xl font-bold mb-6">ランダム記事</h1>
-        
-        <div class="bg-slate-800 rounded-lg overflow-hidden shadow-lg mb-6">
-          <div class="relative w-full pb-[56.25%]">
-            {randomArticle.imageSrc ? (
-              <img 
-                src={randomArticle.imageSrc} 
-                alt={randomArticle.title}
-                class="absolute inset-0 w-full h-full object-cover"
-              />
-            ) : (
-              <div class="absolute inset-0 w-full h-full bg-slate-700 flex items-center justify-center">
-                <span class="text-slate-400">No image</span>
-              </div>
-            )}
-          </div>
-          
-          <div class="p-6">
-            <h2 class="text-2xl font-bold mb-3">{randomArticle.title}</h2>
-            
-            {randomArticle.pubDate && (
-              <div class="text-gray-400 text-sm mb-3">
-                投稿日: {new Date(randomArticle.pubDate).toLocaleDateString('ja-JP', {year: 'numeric', month: 'long', day: 'numeric'})}
-              </div>
-            )}
-            
-            {randomArticle.description && (
-              <p class="text-gray-300 mb-6">{randomArticle.description}</p>
-            )}
-            
-            <div class="flex items-center justify-between">
-              <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded text-sm">
-                {randomArticle.type === "post" ? "Post" : "Blog"}
-              </span>
-              
-              <a 
-                href={randomArticle.url} 
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition-colors"
-              >
-                記事を読む
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-4 text-gray-400">
-          <p>総記事数 <span class="font-bold text-white">{randomArticle.totalCount}</span> 件の中からランダムに表示しています</p>
-        </div>
-        
-        <button 
-          id="refresh-button"
-          class="mt-4 bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded transition-colors"
-        >
-          別の記事を表示
-        </button>
-      </div>
+      <RandomArticleCard initialArticle={randomArticle} client:load />
     </div>
   </Section>
 </Base>
-
-<script>
-  // 「別の記事を表示」ボタンをクリックしたときにページをリロード
-  document.getElementById('refresh-button')?.addEventListener('click', () => {
-    window.location.reload();
-  });
-</script>

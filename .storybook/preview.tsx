@@ -20,6 +20,7 @@ const preview: Preview = {
       sort: "requiredFirst",
     },
   },
+  tags: ["autodocs"],
   args: {
     Global_disableDecorator: false,
   } as __GlobalArgs,

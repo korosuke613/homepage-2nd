@@ -16,11 +16,12 @@ export interface Props {
     title: string;
     description: string;
     ogpUrl?: string;
+    isNoIndex?: boolean;
   };
 }
 
 const {
-  head: { title, description },
+  head: { title, description, isNoIndex = false },
 } = Astro.props as Props;
 
 const twitterCardType = Astro.props.head.ogpUrl
@@ -64,6 +65,11 @@ const faviconLink = path.join(AppConfig.base, "favicon.ico");
 
     <link rel="alternate" type="application/rss+xml" href={rssLink} />
     <link rel="icon" type="image/x-icon" href={faviconLink} />
+
+    {isNoIndex && (
+      // isNoIndex が true の場合、noindex を付与
+      <meta name="robots" content="noindex" />
+    )}
 
     <ViewTransitions />
   </head>
