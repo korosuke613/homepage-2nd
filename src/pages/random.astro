@@ -1,9 +1,9 @@
 ---
+import { getCollection } from "astro:content";
 import { RandomArticleCard } from "@/components/RandomArticleCard";
 import { Section } from "@/components/Section";
 import Base from "@/templates/Base.astro";
 import { getSortedBlogData } from "@/utils/Blog";
-import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
 const blogs = await getSortedBlogData();
