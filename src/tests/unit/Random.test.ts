@@ -1,24 +1,5 @@
-import path from "node:path";
-import { getCollection } from "astro:content";
-import { AppConfig } from "@/utils/AppConfig";
-import * as BlogModule from "@/utils/Blog";
 import { getRandomArticle } from "@/utils/Random";
-import { type Mock, beforeEach, describe, expect, test, vi } from "vitest";
-
-// Mock the external dependencies
-vi.mock("astro:content", () => ({
-  getCollection: vi.fn(),
-}));
-
-vi.mock("@/utils/Blog", () => ({
-  getSortedBlogData: vi.fn(),
-}));
-
-vi.mock("@/utils/AppConfig", () => ({
-  AppConfig: {
-    base: "/base",
-  },
-}));
+import { describe, expect, test } from "vitest";
 
 describe("getRandomArticle", () => {
   const mockPosts = [
@@ -26,11 +7,13 @@ describe("getRandomArticle", () => {
       id: "post1",
       slug: "test-post",
       collection: "posts",
+      url: "posts/test-post",
       data: {
         title: "Test Post",
         description: "Post description",
         pubDate: new Date("2023-01-01"),
         imgSrc: "/image.jpg",
+        tags: ["test"],
       },
     },
   ];
@@ -41,75 +24,54 @@ describe("getRandomArticle", () => {
       url: "https://example.com/blog",
       ogpImageUrl: "/blog-image.jpg",
       pubDate: "2023-02-01",
+      id: "blog1",
+      type: "hatena",
+      category: ["test"],
     },
   ];
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (getCollection as Mock).mockResolvedValue(mockPosts);
-    (BlogModule.getSortedBlogData as Mock).mockResolvedValue(mockBlogs);
-  });
-
-  test("returns a post article when selected randomly", async () => {
-    // Force selection of the post (index 0)
-    const result = await getRandomArticle({ articleIndex: 0 });
-
-    expect(result).toEqual({
-      title: "Test Post",
-      description: "Post description",
-      url: path.join(AppConfig.base, "posts", "test-post"),
-      type: "post",
-      imageSrc: "/image.jpg",
-      totalCount: 2,
-      pubDate: mockPosts[0]?.data.pubDate.toString(),
-    });
-
-    expect(getCollection).toHaveBeenCalledWith("posts");
-    expect(BlogModule.getSortedBlogData).toHaveBeenCalled();
-  });
-
-  test("returns a blog article when selected randomly", async () => {
-    // Force selection of the blog (index 1)
-    const result = await getRandomArticle({ articleIndex: 1 });
-
-    expect(result).toEqual({
-      title: "Test Blog",
-      description: "",
-      url: "https://example.com/blog",
-      type: "blog",
-      imageSrc: "/blog-image.jpg",
-      totalCount: 2,
-      pubDate: "2023-02-01",
-    });
-
-    expect(getCollection).toHaveBeenCalledWith("posts");
-    expect(BlogModule.getSortedBlogData).toHaveBeenCalled();
-  });
-
-  test("returns a fallback when no article is found", async () => {
-    (getCollection as Mock).mockResolvedValue([]);
-    (BlogModule.getSortedBlogData as Mock).mockResolvedValue([]);
-
-    const result = await getRandomArticle();
-
-    expect(result).toEqual({
-      title: "記事が見つかりませんでした",
-      description: "記事が見つかりませんでした",
-      url: "",
-      type: "post",
-      totalCount: 0,
-      pubDate: "",
-    });
-  });
 
   test("uses a random index when not specified", async () => {
     const mockMath = Object.create(global.Math);
     mockMath.random = () => 0.25; // Should select index 0 with 2 items
     global.Math = mockMath;
 
-    const result = await getRandomArticle();
+    const result = getRandomArticle(mockPosts, mockBlogs);
 
     expect(result.type).toBe("post");
     expect(result.title).toBe("Test Post");
+  });
+
+  test("selects a post when articleIndex is 0", () => {
+    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 0 });
+    expect(result.type).toBe("post");
+    expect(result.title).toBe("Test Post");
+    expect(result.url).toContain("posts/test-post");
+    expect(result.description).toBe("Post description");
+    expect(result.imageSrc).toBe("/image.jpg");
+    expect(result.totalCount).toBe(2);
+  });
+
+  test("selects a blog when articleIndex is 1", () => {
+    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 1 });
+    expect(result.type).toBe("blog");
+    expect(result.title).toBe("Test Blog");
+    expect(result.url).toBe("https://example.com/blog");
+    expect(result.imageSrc).toBe("/blog-image.jpg");
+    expect(result.totalCount).toBe(2);
+  });
+
+  test("returns error info when no articles are available", () => {
+    const result = getRandomArticle([], [], { articleIndex: 0 });
+    expect(result.type).toBe("post");
+    expect(result.title).toBe("記事が見つかりませんでした");
+    expect(result.url).toBe("");
+    expect(result.totalCount).toBe(0);
+  });
+
+  test("returns error info when index is out of bounds", () => {
+    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 10 });
+    expect(result.title).toBe("記事が見つかりませんでした");
+    expect(result.url).toBe("");
+    expect(result.totalCount).toBe(2);
   });
 });

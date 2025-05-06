@@ -1,9 +1,7 @@
 import path from "node:path";
-import { getCollection } from "astro:content";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
 import { AppConfig } from "./AppConfig";
-import { getSortedBlogData } from "./Blog";
 
 export type RandomArticle = {
   title: string;
@@ -20,20 +18,20 @@ type IPostOmitUrl = Omit<IPost, "url">;
 /**
  * PostsとBlogsからランダムな記事を1つ取得する
  */
-export const getRandomArticle = async (config?: {
-  articleIndex?: number;
-}): Promise<RandomArticle> => {
+export const getRandomArticle = (
+  posts: IPost[],
+  blogs: BlogData[],
+  config?: {
+    articleIndex?: number;
+  },
+): RandomArticle => {
   // Postsのデータを取得
-  const posts = await getCollection("posts");
   const postsData: IPostOmitUrl[] = posts.map((post) => ({
     data: post.data,
     slug: post.slug,
     collection: post.collection,
     id: post.id,
   }));
-
-  // Blogsのデータを取得
-  const blogsData = await getSortedBlogData();
 
   // 全ての記事を1つの配列に統合
   type MixedArticle = {
@@ -43,7 +41,7 @@ export const getRandomArticle = async (config?: {
 
   const allArticles: MixedArticle[] = [
     ...postsData.map((post): MixedArticle => ({ source: "post", data: post })),
-    ...blogsData.map((blog): MixedArticle => ({ source: "blog", data: blog })),
+    ...blogs.map((blog): MixedArticle => ({ source: "blog", data: blog })),
   ];
 
   const totalArticleCount = allArticles.length;
