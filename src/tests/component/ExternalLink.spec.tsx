@@ -7,7 +7,7 @@ test.use({ viewport: { width: 500, height: 500 } });
 test("should work", async ({ mount }) => {
   const component = await mount(
     <div className="text-gray-100">
-      <ExternalLink title="homepage" url="https://korosuke613.dev" />
+      <ExternalLink url="https://korosuke613.dev">homepage</ExternalLink>
     </div>,
   );
 

@@ -32,16 +32,17 @@ export const CommitHistoryPost: React.FC<ICommitHistoryPost> = (props) => {
                     <code>{dateWithoutTime}</code>:{" "}
                   </span>{" "}
                   <ExternalLink
-                    title={h.commitMessage}
                     url={`https://${AppConfig.github_url}/commit/${h.sha}`}
-                  />
+                  >
+                    {h.commitMessage}
+                  </ExternalLink>
                 </span>
               </li>
             );
           })
           .slice(0, 6)}
         <li className="m-0 list-inside pt-1 text-sm">
-          <ExternalLink title="全て表示" url={url} />
+          <ExternalLink url={url}>全て表示</ExternalLink>
         </li>
       </ul>
     </div>
