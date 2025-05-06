@@ -1,6 +1,6 @@
-import path from "node:path";
 import type { CollectionEntry } from "astro:content";
 import { AppConfig } from "./AppConfig";
+import { joinPaths } from "./PathUtils";
 
 export type StaticPost = {
   data: CollectionEntry<"posts">["data"];
@@ -24,7 +24,7 @@ export const DormitoryIntroduction: StaticPost = {
     tags: ["Pickup ⭐️", "大学"],
     draft: false,
   },
-  url: path.join(AppConfig.base, "posts", "dormitory_introduction"), // src/pages からの相対パス
+  url: joinPaths(AppConfig.base, "posts", "dormitory_introduction"), // src/pages からの相対パス
 };
 
 export const Ranking: StaticPost = {
@@ -39,7 +39,7 @@ export const Ranking: StaticPost = {
     tags: ["Pickup ⭐️"],
     draft: false,
   },
-  url: path.join(AppConfig.base, "posts", "ranking"), // src/pages からの相対パス
+  url: joinPaths(AppConfig.base, "posts", "ranking"), // src/pages からの相対パス
 };
 
 export const StaticPages = [DormitoryIntroduction, Ranking];

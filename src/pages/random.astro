@@ -1,17 +1,18 @@
 ---
+import { getCollection } from "astro:content";
 import { RandomArticleCard } from "@/components/RandomArticleCard";
 import { Section } from "@/components/Section";
 import Base from "@/templates/Base.astro";
-import { getRandomArticle } from "@/utils/Random";
+import { getSortedBlogData } from "@/utils/Blog";
 
-// ランダムな記事を取得
-const randomArticle = await getRandomArticle();
+const posts = await getCollection("posts");
+const blogs = await getSortedBlogData();
 ---
 
 <Base head={{ title: "ランダム記事", description: "ランダムな記事を表示します", isNoIndex: true }}>
   <Section>
     <div class="flex flex-col items-center justify-center py-10">
-      <RandomArticleCard initialArticle={randomArticle} client:load />
+      <RandomArticleCard client:load posts={posts} blogs={blogs}/>
     </div>
   </Section>
 </Base>
