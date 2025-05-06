@@ -1,7 +1,7 @@
-import path from "node:path";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
 import { AppConfig } from "./AppConfig";
+import { joinPaths } from "./PathUtils";
 
 export type RandomArticle = {
   title: string;
@@ -81,7 +81,7 @@ export const getRandomArticle = (
     return {
       title: post.data.title,
       description: post.data.description || "",
-      url: path.join(AppConfig.base, "posts", post.slug),
+      url: joinPaths(AppConfig.base, "posts", post.slug),
       type: "post",
       imageSrc: post.data.imgSrc,
       totalCount: totalArticleCount,
