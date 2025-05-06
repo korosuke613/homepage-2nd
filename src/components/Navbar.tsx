@@ -29,7 +29,7 @@ export const NavMenu = (props: INavMenuProps) => (
 
 type INavMenuItemProps = {
   href: string;
-  children: string;
+  children: ReactNode;
 };
 
 export const NavMenuItem = (props: INavMenuItemProps) => (
@@ -40,6 +40,8 @@ export const NavMenuItem = (props: INavMenuItemProps) => (
 
 export const NavMenuExternalLink = (props: IExternalLinkProps) => (
   <li className="hover:text-white">
-    <ExternalLink title={props.title} url={props.url} noClass={true} />
+    <ExternalLink url={props.url} noClass={true}>
+      {props.children}
+    </ExternalLink>
   </li>
 );

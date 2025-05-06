@@ -24,7 +24,7 @@ export const SimilarityPosts: React.FC<ISimilarityPosts> = (props) => {
                 )}
                 {s.meta.urlType === "external" && (
                   <span>
-                    <ExternalLink title={s.meta.title} url={s.meta.url} />{" "}
+                    <ExternalLink url={s.meta.url}>{s.meta.title}</ExternalLink>{" "}
                     <span className="text-xs">[外部リンク]</span>
                   </span>
                 )}

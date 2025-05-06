@@ -186,7 +186,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
               <td style="width:2.5rem;" align="right">{z.rank}位</td>
               <td>
                 <span class="line-clamp-1">
-                  <ExternalLink url={`https://zenn.dev${z.path}`} title={z.title}></ExternalLink>
+                  <ExternalLink url={`https://zenn.dev${z.path}`}>{z.title}</ExternalLink>
                 </span>
               </td>
               <td align="right">{z.views}</td>
@@ -211,7 +211,7 @@ const headings = convertMarkdownHeadingsToObject(markdownHeadings);
               <td style="width:2.5rem;" align="right">{b.rank}位</td>
               <td>
                 <span class="line-clamp-1">
-                  <ExternalLink url={b.path} title={b.title}></ExternalLink>
+                  <ExternalLink url={b.path}>{b.title}</ExternalLink>
                 </span>
               </td>
               <td align="right">{b.views}</td>

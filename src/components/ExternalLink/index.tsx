@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 
 export type IExternalLinkProps = {
-  title: ReactNode;
   url: string;
   noClass?: boolean;
+  children?: ReactNode;
 };
 
 export const ExternalLink: React.FC<IExternalLinkProps> = ({
-  title,
+  children,
   url,
   noClass,
 }) => {
@@ -24,7 +24,7 @@ export const ExternalLink: React.FC<IExternalLinkProps> = ({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {title}
+        {children}
       </a>
     </>
   );
