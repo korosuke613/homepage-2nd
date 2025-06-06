@@ -25,28 +25,29 @@ jobs:
         id: pr-details
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
           # Get PR information
-          PR_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body --jq '.body')
-          PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_BODY=$(gh pr view $PR_NUMBER --json body --jq '.body')
           
           # Get changed files
-          CHANGED_FILES=$(gh pr diff ${{ github.event.pull_request.number }} --name-only)
-          
+          CHANGED_FILES=$(gh pr diff $PR_NUMBER --name-only)
+
           # Get package.json changes if any
           PACKAGE_CHANGES=""
           if echo "$CHANGED_FILES" | grep -q "package.json\|package-lock.json"; then
-            PACKAGE_CHANGES=$(gh pr diff ${{ github.event.pull_request.number }} -- package.json package-lock.json || echo "No package changes visible")
+            PACKAGE_CHANGES=$(gh pr diff $PR_NUMBER -- package.json package-lock.json || echo "No package changes visible")
           fi
           
           # Save to files for AI analysis
-          echo "$PR_TITLE" > /tmp/pr-title.txt
-          echo "$PR_BODY" > /tmp/pr-body.txt
-          echo "$CHANGED_FILES" > /tmp/changed-files.txt
-          echo "$PACKAGE_CHANGES" > /tmp/package-changes.txt
+          echo "$PR_TITLE" > $GITHUB_WORKSPACE/pr-title.txt
+          echo "$PR_BODY" > $GITHUB_WORKSPACE/pr-body.txt
+          echo "$CHANGED_FILES" > $GITHUB_WORKSPACE/changed-files.txt
+          echo "$PACKAGE_CHANGES" > $GITHUB_WORKSPACE/package-changes.txt
           
           # Determine update type and severity
-          if [[ "$PR_TITLE" =~ major ]]; then
+          if [[ "$PR_TITLE" =~ \bmajor\b ]]; then
             echo "update-type=major" >> $GITHUB_OUTPUT
             echo "severity=high" >> $GITHUB_OUTPUT
           elif [[ "$PR_TITLE" =~ minor ]]; then
