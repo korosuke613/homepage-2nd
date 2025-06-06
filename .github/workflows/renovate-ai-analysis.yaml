@@ -62,7 +62,7 @@ jobs:
         id: ai-analysis
         uses: actions/ai-inference@v1
         with:
-          model: "gpt-4o"
+          model: openai/gpt-4o
           prompt: |
             You are a senior software engineer reviewing a dependency update PR created by Renovate.
             
