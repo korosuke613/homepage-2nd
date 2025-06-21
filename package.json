@@ -44,7 +44,7 @@
     "astro-robots-txt": "1.0.0",
     "date-fns": "4.1.0",
     "emoji-regex": "10.4.0",
-    "glob": "11.0.2",
+    "glob": "11.0.3",
     "natural": "8.0.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
