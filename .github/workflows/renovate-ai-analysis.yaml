@@ -41,11 +41,36 @@ jobs:
             PACKAGE_CHANGES=$(gh pr diff $PR_NUMBER -- package.json package-lock.json || echo "No package changes visible")
           fi
           
+          # Get project context information
+          PROJECT_TYPE="Unknown"
+          MAIN_DEPENDENCIES=""
+          
+          if [ -f "package.json" ]; then
+            PROJECT_TYPE="Node.js/JavaScript"
+            # Extract key dependencies for context
+            MAIN_DEPENDENCIES=$(jq -r '.dependencies // {} | keys | join(", ")' package.json 2>/dev/null | head -c 200)
+          elif [ -f "Cargo.toml" ]; then
+            PROJECT_TYPE="Rust"
+          elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
+            PROJECT_TYPE="Python"
+          elif [ -f "go.mod" ]; then
+            PROJECT_TYPE="Go"
+          fi
+          
+          # Get README snippet for project context (first 500 chars)
+          README_CONTEXT=""
+          if [ -f "README.md" ]; then
+            README_CONTEXT=$(head -c 500 README.md | tr '\n' ' ')
+          fi
+          
           # Save to files for AI analysis
           echo "$PR_TITLE" > $GITHUB_WORKSPACE/pr-title.txt
           echo "$PR_BODY" > $GITHUB_WORKSPACE/pr-body.txt
           echo "$CHANGED_FILES" > $GITHUB_WORKSPACE/changed-files.txt
           echo "$PACKAGE_CHANGES" > $GITHUB_WORKSPACE/package-changes.txt
+          echo "$PROJECT_TYPE" > $GITHUB_WORKSPACE/project-type.txt
+          echo "$MAIN_DEPENDENCIES" > $GITHUB_WORKSPACE/main-dependencies.txt
+          echo "$README_CONTEXT" > $GITHUB_WORKSPACE/readme-context.txt
           
           # Determine update type and severity
           if [[ "$PR_TITLE" =~ \bmajor\b ]]; then
@@ -77,6 +102,12 @@ jobs:
             **Changed Files:** $(cat $GITHUB_WORKSPACE/changed-files.txt)
             
             **Package Changes:** $(cat $GITHUB_WORKSPACE/package-changes.txt)
+            
+            **Project Type:** $(cat $GITHUB_WORKSPACE/project-type.txt)
+            
+            **Main Dependencies:** $(cat $GITHUB_WORKSPACE/main-dependencies.txt)
+            
+            **Project Context:** $(cat $GITHUB_WORKSPACE/readme-context.txt)
             
             **Update Type:** ${{ steps.pr-details.outputs.update-type }}
             
