@@ -91,6 +91,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Check for existing AI analysis comments to prevent duplicates
+          EXISTING_COMMENT_ID=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq '.comments[] | select(.body | contains("🤖 AI Analysis Summary")) | .id' | head -1)
+          
+          if [ -n "$EXISTING_COMMENT_ID" ]; then
+            echo "Found existing AI analysis comment (ID: $EXISTING_COMMENT_ID), will update it"
+            UPDATE_EXISTING=true
+          else
+            echo "No existing AI analysis comment found, will create new one"
+            UPDATE_EXISTING=false
+          fi
           # Parse AI response into structured variables with error handling
           AI_RESPONSE="${{ steps.ai-analysis.outputs.response }}"
           
@@ -166,12 +176,26 @@ jobs:
           EOF
           fi
           
-          # Post comment with error handling
-          if ! gh pr comment ${{ github.event.pull_request.number }} \
-            --body-file /tmp/ai-comment-final.md \
-            --repo ${{ github.repository }}; then
-            echo "Error: Failed to post PR comment"
-            exit 1
+          # Post comment or update existing comment with error handling
+          if [ "$UPDATE_EXISTING" = "true" ]; then
+            echo "Updating existing comment (ID: $EXISTING_COMMENT_ID)"
+            if ! gh api \
+              --method PATCH \
+              --header "Accept: application/vnd.github+json" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/${{ github.repository }}/issues/comments/$EXISTING_COMMENT_ID \
+              --field body="$(cat /tmp/ai-comment-final.md)"; then
+              echo "Error: Failed to update existing PR comment"
+              exit 1
+            fi
+          else
+            echo "Creating new comment"
+            if ! gh pr comment ${{ github.event.pull_request.number }} \
+              --body-file /tmp/ai-comment-final.md \
+              --repo ${{ github.repository }}; then
+              echo "Error: Failed to post PR comment"
+              exit 1
+            fi
           fi
 
       - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
