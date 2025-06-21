@@ -147,7 +147,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@main
 
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v2
         id: app-token
         with:
           app-id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
