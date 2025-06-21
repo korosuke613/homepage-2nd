@@ -1,0 +1,42 @@
+name: Review Dependency PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'レビューするPR番号'
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  pull-requests: write
+  models: read
+
+jobs:
+  get-pr-number:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.pr_number.outputs.pr_number }}
+    steps:
+      - name: PR番号を取得
+        id: pr_number
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "pr_number=${{ github.event.inputs.pr_number }}" >> $GITHUB_OUTPUT
+          else
+            echo "pr_number=${{ github.event.number }}" >> $GITHUB_OUTPUT
+          fi
+
+  review:
+    needs: get-pr-number
+    uses: korosuke613/review-dependency-pr/.github/workflows/reusable-review-dependency-pr.yml@v0.0.1
+    with:
+      pr_number: ${{ needs.get-pr-number.outputs.pr_number }}
+      review_language: 'ja'
+      ai_model: 'openai/gpt-4o'
+      max_tokens: 2000
+      diff_lines_limit: 3000
+    secrets: inherit
