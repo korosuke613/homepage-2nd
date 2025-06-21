@@ -4,6 +4,12 @@ set -euo pipefail
 # Logging utilities for Renovate AI Analysis workflow
 # Provides consistent emoji-based logging functions
 
+# Prevent multiple inclusions
+if [[ -n "${LOGGING_UTILS_LOADED:-}" ]]; then
+    return 0
+fi
+readonly LOGGING_UTILS_LOADED=1
+
 # Color codes for terminal output
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
