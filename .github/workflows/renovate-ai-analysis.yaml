@@ -106,21 +106,42 @@ jobs:
           # Export temp directory for next step
           echo "TEMP_DIR=$TEMP_DIR" >> $GITHUB_OUTPUT
           
-          # Determine update type and severity
+          # Determine update type and severity with improved logic
           echo "🔍 Analyzing update type from PR title..."
-          if [[ "$PR_TITLE" =~ \bmajor\b ]]; then
-            echo "update-type=major" >> $GITHUB_OUTPUT
-            echo "severity=high" >> $GITHUB_OUTPUT
+          UPDATE_TYPE="patch"
+          SEVERITY="low"
+          
+          # Check for major updates (more comprehensive patterns)
+          if [[ "$PR_TITLE" =~ (major|breaking|v[0-9]+\.0\.0|major\ version|breaking\ change) ]]; then
+            UPDATE_TYPE="major"
+            SEVERITY="high"
             echo "🚨 Detected MAJOR update (high severity)"
-          elif [[ "$PR_TITLE" =~ minor ]]; then
-            echo "update-type=minor" >> $GITHUB_OUTPUT
-            echo "severity=medium" >> $GITHUB_OUTPUT
+          # Check for minor updates (improved patterns)
+          elif [[ "$PR_TITLE" =~ (minor|feature|v[0-9]+\.[1-9][0-9]*\.0|minor\ version) ]]; then
+            UPDATE_TYPE="minor"
+            SEVERITY="medium"
             echo "⚠️  Detected MINOR update (medium severity)"
-          else
-            echo "update-type=patch" >> $GITHUB_OUTPUT
-            echo "severity=low" >> $GITHUB_OUTPUT
+          # Check for patch updates (specific patterns)
+          elif [[ "$PR_TITLE" =~ (patch|fix|bug|security|v[0-9]+\.[0-9]+\.[1-9][0-9]*|patch\ version) ]]; then
+            UPDATE_TYPE="patch"
+            SEVERITY="low"
             echo "✅ Detected PATCH update (low severity)"
+          # Additional checks for dev dependencies (lower severity)
+          elif [[ "$PR_TITLE" =~ (devDependencies|dev-dependencies|@types/) ]]; then
+            UPDATE_TYPE="dev"
+            SEVERITY="low"
+            echo "🔧 Detected DEV DEPENDENCY update (low severity)"
+          # Check for security updates (higher priority)
+          elif [[ "$PR_TITLE" =~ (security|vulnerability|CVE-|GHSA-) ]]; then
+            UPDATE_TYPE="security"
+            SEVERITY="high"
+            echo "🔒 Detected SECURITY update (high severity)"
+          else
+            echo "❓ Could not determine specific update type, defaulting to PATCH (low severity)"
           fi
+          
+          echo "update-type=$UPDATE_TYPE" >> $GITHUB_OUTPUT
+          echo "severity=$SEVERITY" >> $GITHUB_OUTPUT
           
           echo "🎯 PR details collection completed successfully"
 
