@@ -33,7 +33,7 @@ jobs:
 
   review:
     needs: get-pr-number
-    uses: korosuke613/review-dependency-pr/.github/workflows/reusable-review-dependency-pr.yml@v0.0.2
+    uses: korosuke613/review-dependency-pr/.github/workflows/reusable-review-dependency-pr.yml@v0
     with:
       pr_number: ${{ fromJson(needs.get-pr-number.outputs.pr_number) }}
       review_language: 'ja'
