@@ -97,6 +97,8 @@ jobs:
       - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
 
   notify-on-fail:
+    permissions:
+      contents: read
     needs:
       - update
     if: failure()
