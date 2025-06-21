@@ -29,43 +29,69 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
+          echo "🔍 Starting PR details collection for PR #$PR_NUMBER"
+          echo "📝 PR Title: $PR_TITLE"
+          
           # Get PR information
+          echo "📋 Fetching PR body..."
           PR_BODY=$(gh pr view $PR_NUMBER --json body --jq '.body')
+          echo "✅ PR body fetched (${#PR_BODY} characters)"
           
           # Get changed files
+          echo "📁 Fetching changed files..."
           CHANGED_FILES=$(gh pr diff $PR_NUMBER --name-only)
+          echo "✅ Found $(echo "$CHANGED_FILES" | wc -l) changed files"
 
           # Get package.json changes if any
+          echo "📦 Checking for package changes..."
           PACKAGE_CHANGES=""
           if echo "$CHANGED_FILES" | grep -q "package.json\|package-lock.json"; then
+            echo "📦 Package files detected, fetching changes..."
             PACKAGE_CHANGES=$(gh pr diff $PR_NUMBER -- package.json package-lock.json || echo "No package changes visible")
+            echo "✅ Package changes fetched (${#PACKAGE_CHANGES} characters)"
+          else
+            echo "ℹ️  No package files in changes"
           fi
           
           # Get project context information
+          echo "🔍 Detecting project type..."
           PROJECT_TYPE="Unknown"
           MAIN_DEPENDENCIES=""
           
           if [ -f "package.json" ]; then
             PROJECT_TYPE="Node.js/JavaScript"
+            echo "✅ Detected Node.js/JavaScript project"
             # Extract key dependencies for context
             MAIN_DEPENDENCIES=$(jq -r '.dependencies // {} | keys | join(", ")' package.json 2>/dev/null | head -c 200)
+            echo "📋 Found $(echo "$MAIN_DEPENDENCIES" | tr ',' '\n' | wc -l 2>/dev/null || echo "0") main dependencies"
           elif [ -f "Cargo.toml" ]; then
             PROJECT_TYPE="Rust"
+            echo "✅ Detected Rust project"
           elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
             PROJECT_TYPE="Python"
+            echo "✅ Detected Python project"
           elif [ -f "go.mod" ]; then
             PROJECT_TYPE="Go"
+            echo "✅ Detected Go project"
+          else
+            echo "⚠️  Could not determine project type"
           fi
           
           # Get README snippet for project context (first 500 chars)
+          echo "📖 Reading project context from README..."
           README_CONTEXT=""
           if [ -f "README.md" ]; then
             README_CONTEXT=$(head -c 500 README.md | tr '\n' ' ')
+            echo "✅ README context captured (${#README_CONTEXT} characters)"
+          else
+            echo "ℹ️  No README.md found"
           fi
           
           # Use GitHub Actions standard temp directory
+          echo "💾 Preparing temporary files for AI analysis..."
           TEMP_DIR="${{ runner.temp }}/ai-analysis"
           mkdir -p "$TEMP_DIR"
+          echo "✅ Created temp directory: $TEMP_DIR"
           
           # Save to files for AI analysis
           echo "$PR_TITLE" > "$TEMP_DIR/pr-title.txt"
@@ -75,21 +101,28 @@ jobs:
           echo "$PROJECT_TYPE" > "$TEMP_DIR/project-type.txt"
           echo "$MAIN_DEPENDENCIES" > "$TEMP_DIR/main-dependencies.txt"
           echo "$README_CONTEXT" > "$TEMP_DIR/readme-context.txt"
+          echo "✅ All context files saved to temp directory"
           
           # Export temp directory for next step
           echo "TEMP_DIR=$TEMP_DIR" >> $GITHUB_OUTPUT
           
           # Determine update type and severity
+          echo "🔍 Analyzing update type from PR title..."
           if [[ "$PR_TITLE" =~ \bmajor\b ]]; then
             echo "update-type=major" >> $GITHUB_OUTPUT
             echo "severity=high" >> $GITHUB_OUTPUT
+            echo "🚨 Detected MAJOR update (high severity)"
           elif [[ "$PR_TITLE" =~ minor ]]; then
             echo "update-type=minor" >> $GITHUB_OUTPUT
             echo "severity=medium" >> $GITHUB_OUTPUT
+            echo "⚠️  Detected MINOR update (medium severity)"
           else
             echo "update-type=patch" >> $GITHUB_OUTPUT
             echo "severity=low" >> $GITHUB_OUTPUT
+            echo "✅ Detected PATCH update (low severity)"
           fi
+          
+          echo "🎯 PR details collection completed successfully"
 
       - name: AI Analysis of Changes
         id: ai-analysis
@@ -132,33 +165,48 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "💬 Starting comment creation process..."
+          
           # Check for existing AI analysis comments to prevent duplicates
+          echo "🔍 Checking for existing AI analysis comments..."
           EXISTING_COMMENT_ID=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq '.comments[] | select(.body | contains("🤖 AI Analysis Summary")) | .id' | head -1)
           
           if [ -n "$EXISTING_COMMENT_ID" ]; then
-            echo "Found existing AI analysis comment (ID: $EXISTING_COMMENT_ID), will update it"
+            echo "✅ Found existing AI analysis comment (ID: $EXISTING_COMMENT_ID), will update it"
             UPDATE_EXISTING=true
           else
-            echo "No existing AI analysis comment found, will create new one"
+            echo "ℹ️  No existing AI analysis comment found, will create new one"
             UPDATE_EXISTING=false
           fi
+          
           # Parse AI response into structured variables with error handling
+          echo "🤖 Processing AI analysis response..."
           AI_RESPONSE="${{ steps.ai-analysis.outputs.response }}"
+          echo "📝 AI response length: ${#AI_RESPONSE} characters"
           
           # Check if AI response is empty or null
           if [ -z "$AI_RESPONSE" ] || [ "$AI_RESPONSE" = "null" ]; then
-            echo "Warning: AI response is empty or null"
+            echo "⚠️  Warning: AI response is empty or null, using fallback content"
             AI_RESPONSE="SUMMARY: 依存関係の更新
           IMPACT: AI分析が利用できませんでした
           ACTIONS: 手動でPRの内容を確認してください
           SECURITY: 手動でセキュリティ影響を確認してください"
+          else
+            echo "✅ AI response received successfully"
           fi
           
           # Extract each section using grep and sed with error handling
+          echo "🔍 Parsing AI response sections..."
           SUMMARY=$(echo "$AI_RESPONSE" | grep "^SUMMARY:" | sed 's/^SUMMARY: *//' | head -1 | tr -d '\r')
           IMPACT=$(echo "$AI_RESPONSE" | grep "^IMPACT:" | sed 's/^IMPACT: *//' | head -1 | tr -d '\r')
           ACTIONS=$(echo "$AI_RESPONSE" | grep "^ACTIONS:" | sed 's/^ACTIONS: *//' | head -1 | tr -d '\r')
           SECURITY=$(echo "$AI_RESPONSE" | grep "^SECURITY:" | sed 's/^SECURITY: *//' | head -1 | tr -d '\r')
+          
+          echo "📋 Extracted sections:"
+          echo "  - Summary: ${#SUMMARY} chars"
+          echo "  - Impact: ${#IMPACT} chars"
+          echo "  - Actions: ${#ACTIONS} chars"
+          echo "  - Security: ${#SECURITY} chars"
           
           # Set default values if sections are empty or contain only whitespace
           SUMMARY=$(echo "$SUMMARY" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
@@ -221,25 +269,30 @@ jobs:
           fi
           
           # Post comment or update existing comment with error handling
+          echo "💬 Publishing comment to PR..."
           if [ "$UPDATE_EXISTING" = "true" ]; then
-            echo "Updating existing comment (ID: $EXISTING_COMMENT_ID)"
+            echo "🔄 Updating existing comment (ID: $EXISTING_COMMENT_ID)"
             if ! gh api \
               --method PATCH \
               --header "Accept: application/vnd.github+json" \
               --header "X-GitHub-Api-Version: 2022-11-28" \
               /repos/${{ github.repository }}/issues/comments/$EXISTING_COMMENT_ID \
               --field body="$(cat "$TEMP_COMMENT_FILE")"; then
-              echo "Error: Failed to update existing PR comment"
+              echo "❌ Error: Failed to update existing PR comment"
               exit 1
             fi
+            echo "✅ Successfully updated existing comment"
           else
-            echo "Creating new comment"
+            echo "➕ Creating new comment"
             if ! gh pr comment ${{ github.event.pull_request.number }} \
               --body-file "$TEMP_COMMENT_FILE" \
               --repo ${{ github.repository }}; then
-              echo "Error: Failed to post PR comment"
+              echo "❌ Error: Failed to post PR comment"
               exit 1
             fi
+            echo "✅ Successfully created new comment"
           fi
+          
+          echo "🎉 AI analysis comment published successfully!"
 
       - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
