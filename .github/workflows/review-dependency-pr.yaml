@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   get-pr-number:
-    if: github.actor == 'renovate[bot]' || github.event_name == 'workflow_dispatch'
+    if: github.actor == 'renovate[bot]' || github.actor == 'dependabot[bot]' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       pr_number: ${{ steps.pr_number.outputs.pr_number }}
