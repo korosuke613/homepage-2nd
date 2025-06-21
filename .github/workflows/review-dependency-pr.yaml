@@ -17,6 +17,7 @@ permissions:
 
 jobs:
   get-pr-number:
+    if: github.actor == 'renovate[bot]' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       pr_number: ${{ steps.pr_number.outputs.pr_number }}
@@ -32,11 +33,12 @@ jobs:
 
   review:
     needs: get-pr-number
-    uses: korosuke613/review-dependency-pr/.github/workflows/reusable-review-dependency-pr.yml@v0.0.1
+    uses: korosuke613/review-dependency-pr/.github/workflows/reusable-review-dependency-pr.yml@v0.0.2
     with:
       pr_number: ${{ needs.get-pr-number.outputs.pr_number }}
       review_language: 'ja'
       ai_model: 'openai/gpt-4o'
       max_tokens: 2000
       diff_lines_limit: 3000
-    secrets: inherit
+    secrets: 
+      token: ${{ secrets.GITHUB_TOKEN }}
