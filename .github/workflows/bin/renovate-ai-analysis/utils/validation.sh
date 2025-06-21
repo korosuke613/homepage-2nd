@@ -4,9 +4,9 @@ set -euo pipefail
 # Validation utilities for Renovate AI Analysis workflow
 # Provides input validation and environment checks
 
-# Source logging utilities
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/logging.sh"
+# Source logging utilities (use relative path to avoid SCRIPT_DIR conflicts)
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${CURRENT_DIR}/logging.sh"
 
 # Validate required environment variables
 validate_env_vars() {

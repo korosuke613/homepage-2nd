@@ -4,9 +4,9 @@ set -euo pipefail
 # File utilities for Renovate AI Analysis workflow
 # Provides secure file operations and cleanup functions
 
-# Source logging utilities
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/logging.sh"
+# Source logging utilities (use relative path to avoid SCRIPT_DIR conflicts)
+CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${CURRENT_DIR}/logging.sh"
 
 # Create secure temporary directory using GitHub Actions runner.temp
 create_temp_dir() {
