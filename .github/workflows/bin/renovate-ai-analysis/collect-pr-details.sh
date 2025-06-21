@@ -20,7 +20,7 @@ main() {
     
     # Create temporary directory
     TEMP_DIR=$(create_temp_dir)
-    setup_cleanup_trap
+    # Note: cleanup is handled by GitHub Actions runner, not by trap
     
     # Collect PR information
     collect_pr_info
