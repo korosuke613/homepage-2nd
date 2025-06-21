@@ -1,3 +1,34 @@
+# Renovate AI 分析ワークフロー
+#
+# このワークフローは、Renovateの依存関係更新PRに対してAIを活用した自動分析を提供します。
+# 開発者がマージ前に依存関係更新の影響とリスクを理解するのに役立ちます。
+#
+# 責務:
+# - RenovateのPRが開かれた、または更新された際に自動で分析を実行
+# - PR情報（変更内容、プロジェクトタイプ、依存関係）を抽出
+# - GitHub Models AIを使用して以下の項目を含む構造化された分析を提供:
+#   * 更新されるパッケージの概要
+#   * 潜在的な影響とリスクの評価
+#   * マージ前の推奨アクション
+#   * セキュリティ考慮事項
+# - 構造化されたマークダウンテンプレートでPRコメントに分析結果を投稿
+# - PRが変更された際は既存の分析を更新して重複コメントを防止
+# - デバッグと監視のための包括的なログを提供
+#
+# トリガー:
+# - kiba-renovate[bot]によって作成されたmainブランチ対象のPRでのみ実行
+# - PRのopenとsynchronizeイベントで起動
+#
+# セキュリティ:
+# - 安全な一時ファイル処理にrunner.tempを使用
+# - ハング防止のための適切なタイムアウト制御を実装
+# - 最小権限の原則に従った権限モデル
+#
+# 依存関係:
+# - GitHub CLI (gh) - PR操作用
+# - GitHub Models AI - 分析生成用
+# - jq - Node.jsプロジェクトでのJSON処理用
+
 name: Renovate AI Analysis
 
 on:
@@ -21,87 +52,70 @@ jobs:
           fetch-depth: 0
           filter: blob:none
 
-      - name: Get PR details
+      - name: Collect PR Details
         id: pr-details
+        timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_TITLE: ${{ github.event.pull_request.title }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          # Get PR information
-          PR_BODY=$(gh pr view $PR_NUMBER --json body --jq '.body')
-          
-          # Get changed files
-          CHANGED_FILES=$(gh pr diff $PR_NUMBER --name-only)
-
-          # Get package.json changes if any
-          PACKAGE_CHANGES=""
-          if echo "$CHANGED_FILES" | grep -q "package.json\|package-lock.json"; then
-            PACKAGE_CHANGES=$(gh pr diff $PR_NUMBER -- package.json package-lock.json || echo "No package changes visible")
-          fi
-          
-          # Save to files for AI analysis
-          echo "$PR_TITLE" > $GITHUB_WORKSPACE/pr-title.txt
-          echo "$PR_BODY" > $GITHUB_WORKSPACE/pr-body.txt
-          echo "$CHANGED_FILES" > $GITHUB_WORKSPACE/changed-files.txt
-          echo "$PACKAGE_CHANGES" > $GITHUB_WORKSPACE/package-changes.txt
-          
-          # Determine update type and severity
-          if [[ "$PR_TITLE" =~ \bmajor\b ]]; then
-            echo "update-type=major" >> $GITHUB_OUTPUT
-            echo "severity=high" >> $GITHUB_OUTPUT
-          elif [[ "$PR_TITLE" =~ minor ]]; then
-            echo "update-type=minor" >> $GITHUB_OUTPUT
-            echo "severity=medium" >> $GITHUB_OUTPUT
-          else
-            echo "update-type=patch" >> $GITHUB_OUTPUT
-            echo "severity=low" >> $GITHUB_OUTPUT
-          fi
+          .github/workflows/bin/renovate-ai-analysis/collect-pr-details.sh
 
       - name: AI Analysis of Changes
         id: ai-analysis
+        timeout-minutes: 5
         uses: actions/ai-inference@v1
         with:
           model: openai/gpt-4o
           prompt: |
             You are a senior software engineer reviewing a dependency update PR created by Renovate.
             
-            Analyze the following PR details and provide a concise summary:
+            Analyze the following PR details and provide a structured response:
             
             **PR Title:** ${{ github.event.pull_request.title }}
             
-            **PR Description:** $(cat $GITHUB_WORKSPACE/pr-body.txt)
+            **PR Description:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/pr-body.txt)
             
-            **Changed Files:** $(cat $GITHUB_WORKSPACE/changed-files.txt)
+            **Changed Files:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/changed-files.txt)
             
-            **Package Changes:** $(cat $GITHUB_WORKSPACE/package-changes.txt)
+            **Package Changes:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/package-changes.txt)
+                        
+            **Main Dependencies:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/main-dependencies.txt)
             
-            **Update Type:** ${{ steps.pr-details.outputs.update-type }}
+            **Project Context:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/readme-context.txt)
             
-            Please provide:
-            1. A brief summary of what packages are being updated
-            2. Potential impact and risks (especially for major updates)
-            3. Recommended actions before merging
-            4. Any security considerations
+            **Update Type:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/update-type.txt)
             
-            Keep the response concise and actionable. Format as markdown.
+            Please provide your analysis in the following structured format (use plain text without markdown formatting):
+            
+            SUMMARY: [Brief summary of what packages are being updated]
+            IMPACT: [Potential impact and risks, especially for major updates]
+            ACTIONS: [Recommended actions before merging]
+            SECURITY: [Any security considerations]
+            
+            Keep each section concise and actionable. Use plain text only without any markdown formatting.
 
-      - name: Comment AI Analysis
+      - name: Process AI Analysis
+        timeout-minutes: 2
+        env:
+          AI_RESPONSE_INPUT: ${{ steps.ai-analysis.outputs.response }}
+        run: |
+          .github/workflows/bin/renovate-ai-analysis/analyze-with-ai.sh "${{ steps.pr-details.outputs.TEMP_DIR }}"
+
+      - name: Generate Comment
+        timeout-minutes: 1
+        run: |
+          .github/workflows/bin/renovate-ai-analysis/generate-comment.sh "${{ steps.pr-details.outputs.TEMP_DIR }}"
+
+      - name: Post Comment
+        timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          # Create comment with AI analysis, properly handling special characters
-          cat > /tmp/ai-comment-final.md << 'EOF'
-          ## 🤖 AI Analysis Summary
-
-          ${{ steps.ai-analysis.outputs.response }}
-
-          ---
-          *Generated by GitHub Models AI*
-          EOF
-          
-          gh pr comment ${{ github.event.pull_request.number }} \
-            --body-file /tmp/ai-comment-final.md \
-            --repo ${{ github.repository }}
+          .github/workflows/bin/renovate-ai-analysis/post-comment.sh "${{ steps.pr-details.outputs.TEMP_DIR }}"
 
       - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
