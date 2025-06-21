@@ -67,35 +67,8 @@ collect_pr_info() {
 # Collect project context information
 collect_project_context() {
     log_detect "Detecting project type..."
-    PROJECT_TYPE="Unknown"
     MAIN_DEPENDENCIES=""
-    
-    if [[ -f "package.json" ]]; then
-        PROJECT_TYPE="Node.js/JavaScript"
-        log_success "Detected Node.js/JavaScript project"
-        
-        # Extract key dependencies for context if jq is available
-        if command -v jq &> /dev/null; then
-            MAIN_DEPENDENCIES=$(jq -r '.dependencies // {} | keys | join(", ")' package.json 2>/dev/null | head -c 200)
-            local dep_count
-            dep_count=$(echo "${MAIN_DEPENDENCIES}" | tr ',' '\n' | wc -l | tr -d ' ')
-            log_info "Found ${dep_count} main dependencies"
-        else
-            log_warning "jq not available, skipping dependency extraction"
-        fi
-    elif [[ -f "Cargo.toml" ]]; then
-        PROJECT_TYPE="Rust"
-        log_success "Detected Rust project"
-    elif [[ -f "requirements.txt" ]] || [[ -f "pyproject.toml" ]]; then
-        PROJECT_TYPE="Python"
-        log_success "Detected Python project"
-    elif [[ -f "go.mod" ]]; then
-        PROJECT_TYPE="Go"
-        log_success "Detected Go project"
-    else
-        log_warning "Could not determine project type"
-    fi
-    
+
     # Get README snippet for project context
     log_readme "Reading project context from README..."
     README_CONTEXT=""
@@ -155,7 +128,6 @@ save_context_files() {
     write_file "${TEMP_DIR}/pr-body.txt" "${PR_BODY}" "PR body"
     write_file "${TEMP_DIR}/changed-files.txt" "${CHANGED_FILES}" "Changed files list"
     write_file "${TEMP_DIR}/package-changes.txt" "${PACKAGE_CHANGES}" "Package changes"
-    write_file "${TEMP_DIR}/project-type.txt" "${PROJECT_TYPE}" "Project type"
     write_file "${TEMP_DIR}/main-dependencies.txt" "${MAIN_DEPENDENCIES}" "Main dependencies"
     write_file "${TEMP_DIR}/readme-context.txt" "${README_CONTEXT}" "README context"
     write_file "${TEMP_DIR}/update-type.txt" "${UPDATE_TYPE}" "Update type"

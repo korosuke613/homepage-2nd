@@ -62,7 +62,6 @@ validate_inputs() {
         "${temp_dir}/pr-title.txt"
         "${temp_dir}/pr-body.txt"
         "${temp_dir}/changed-files.txt"
-        "${temp_dir}/project-type.txt"
         "${temp_dir}/update-type.txt"
     )
     
@@ -75,14 +74,13 @@ load_context_files() {
     
     log_process "Loading context information..."
     
-    local pr_title pr_body changed_files package_changes project_type
+    local pr_title pr_body changed_files package_changes
     local main_dependencies readme_context update_type
     
     pr_title=$(read_file "${temp_dir}/pr-title.txt" "PR title")
     pr_body=$(read_file "${temp_dir}/pr-body.txt" "PR body")
     changed_files=$(read_file "${temp_dir}/changed-files.txt" "Changed files")
     package_changes=$(read_file "${temp_dir}/package-changes.txt" "Package changes" || echo "No package changes")
-    project_type=$(read_file "${temp_dir}/project-type.txt" "Project type")
     main_dependencies=$(read_file "${temp_dir}/main-dependencies.txt" "Main dependencies" || echo "No dependencies info")
     readme_context=$(read_file "${temp_dir}/readme-context.txt" "README context" || echo "No README context")
     update_type=$(read_file "${temp_dir}/update-type.txt" "Update type")
@@ -91,7 +89,6 @@ load_context_files() {
     
     # Log context summary for debugging
     log_info "Context summary:"
-    log_info "  - Project Type: ${project_type}"
     log_info "  - Update Type: ${update_type}"
     log_info "  - Changed Files: $(echo "${changed_files}" | wc -l | tr -d ' ') files"
     log_info "  - Has Package Changes: $(if [[ -n "${package_changes}" && "${package_changes}" != "No package changes" ]]; then echo "Yes"; else echo "No"; fi)"
@@ -168,14 +165,13 @@ save_parsed_sections() {
 construct_ai_prompt() {
     local temp_dir="$1"
     
-    local pr_title pr_body changed_files package_changes project_type
+    local pr_title pr_body changed_files package_changes
     local main_dependencies readme_context update_type
     
     pr_title=$(read_file "${temp_dir}/pr-title.txt")
     pr_body=$(read_file "${temp_dir}/pr-body.txt")
     changed_files=$(read_file "${temp_dir}/changed-files.txt")
     package_changes=$(read_file "${temp_dir}/package-changes.txt")
-    project_type=$(read_file "${temp_dir}/project-type.txt")
     main_dependencies=$(read_file "${temp_dir}/main-dependencies.txt")
     readme_context=$(read_file "${temp_dir}/readme-context.txt")
     update_type=$(read_file "${temp_dir}/update-type.txt")
@@ -192,8 +188,6 @@ Analyze the following PR details and provide a structured response:
 **Changed Files:** ${changed_files}
 
 **Package Changes:** ${package_changes}
-
-**Project Type:** ${project_type}
 
 **Main Dependencies:** ${main_dependencies}
 
