@@ -23,6 +23,7 @@ jobs:
 
       - name: Get PR details
         id: pr-details
+        timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -60,6 +61,7 @@ jobs:
 
       - name: AI Analysis of Changes
         id: ai-analysis
+        timeout-minutes: 5
         uses: actions/ai-inference@v1
         with:
           model: openai/gpt-4o
@@ -88,6 +90,7 @@ jobs:
             Keep each section concise and actionable. Use plain text only without any markdown formatting.
 
       - name: Comment AI Analysis
+        timeout-minutes: 3
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
