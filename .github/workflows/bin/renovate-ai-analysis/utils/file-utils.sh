@@ -26,7 +26,11 @@ write_file() {
     local content="$2"
     local description="${3:-file}"
     
-    echo "${content}" > "${file_path}"
+    if ! echo "${content}" > "${file_path}"; then
+        log_error "Failed to write ${description} to ${file_path}"
+        return 1
+    fi
+    
     local char_count=${#content}
     log_success "${description} saved (${char_count} characters)"
 }

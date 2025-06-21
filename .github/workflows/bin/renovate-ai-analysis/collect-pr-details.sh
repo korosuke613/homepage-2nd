@@ -58,17 +58,6 @@ collect_pr_info() {
     local file_count
     file_count=$(echo "${CHANGED_FILES}" | wc -l | tr -d ' ')
     log_success "Found ${file_count} changed files"
-    
-    # Get package changes if any
-    log_package "Checking for package changes..."
-    PACKAGE_CHANGES=""
-    if echo "${CHANGED_FILES}" | grep -q "package.json\|package-lock.json"; then
-        log_package "Package files detected, fetching changes..."
-        PACKAGE_CHANGES=$(gh pr diff "${PR_NUMBER}" -- package.json package-lock.json || echo "No package changes visible")
-        log_success "Package changes fetched (${#PACKAGE_CHANGES} characters)"
-    else
-        log_info "No package files in changes"
-    fi
 }
 
 # Collect project context information
@@ -134,7 +123,6 @@ save_context_files() {
     write_file "${TEMP_DIR}/pr-title.txt" "${PR_TITLE}" "PR title"
     write_file "${TEMP_DIR}/pr-body.txt" "${PR_BODY}" "PR body"
     write_file "${TEMP_DIR}/changed-files.txt" "${CHANGED_FILES}" "Changed files list"
-    write_file "${TEMP_DIR}/package-changes.txt" "${PACKAGE_CHANGES}" "Package changes"
     write_file "${TEMP_DIR}/main-dependencies.txt" "${MAIN_DEPENDENCIES}" "Main dependencies"
     write_file "${TEMP_DIR}/readme-context.txt" "${README_CONTEXT}" "README context"
     write_file "${TEMP_DIR}/update-type.txt" "${UPDATE_TYPE}" "Update type"

@@ -86,8 +86,6 @@ jobs:
             
             **Changed Files:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/changed-files.txt)
             
-            **Package Changes:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/package-changes.txt)
-                        
             **Main Dependencies:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/main-dependencies.txt)
             
             **Project Context:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/readme-context.txt)
