@@ -42,6 +42,13 @@ main() {
 
 # Collect basic PR information
 collect_pr_info() {
+    # Get PR title if not provided (e.g., for workflow_dispatch)
+    if [[ -z "${PR_TITLE:-}" ]]; then
+        log_info "Fetching PR title..."
+        PR_TITLE=$(gh pr view "${PR_NUMBER}" --json title --jq '.title')
+        log_success "PR title fetched: ${PR_TITLE}"
+    fi
+    
     log_info "Fetching PR body..."
     PR_BODY=$(gh pr view "${PR_NUMBER}" --json body --jq '.body')
     log_success "PR body fetched (${#PR_BODY} characters)"

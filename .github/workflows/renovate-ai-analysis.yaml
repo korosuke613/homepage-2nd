@@ -35,6 +35,12 @@ on:
   pull_request:
     types: [opened, synchronize]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to analyze'
+        required: true
+        type: string
 
 jobs:
   ai-analysis:
@@ -43,7 +49,7 @@ jobs:
       pull-requests: write
       models: read
 
-    if: startsWith(github.head_ref, 'renovate/') && github.actor == 'kiba-renovate[bot]'
+    if: (github.event_name == 'pull_request' && startsWith(github.head_ref, 'renovate/') && github.actor == 'kiba-renovate[bot]') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -57,8 +63,8 @@ jobs:
         timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
+          PR_TITLE: ${{ github.event.pull_request.title || '' }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           .github/workflows/bin/renovate-ai-analysis/collect-pr-details.sh
@@ -74,7 +80,7 @@ jobs:
             
             Analyze the following PR details and provide a structured response:
             
-            **PR Title:** ${{ github.event.pull_request.title }}
+            **PR Title:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/pr-title.txt)
             
             **PR Description:** $(cat ${{ steps.pr-details.outputs.TEMP_DIR }}/pr-body.txt)
             
@@ -113,7 +119,7 @@ jobs:
         timeout-minutes: 2
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr_number }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           .github/workflows/bin/renovate-ai-analysis/post-comment.sh "${{ steps.pr-details.outputs.TEMP_DIR }}"
