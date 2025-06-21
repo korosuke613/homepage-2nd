@@ -13,9 +13,9 @@ create_temp_dir() {
     local subdir="${1:-ai-analysis}"
     local temp_dir="${RUNNER_TEMP:-/tmp}/${subdir}"
     
-    log_process "Creating temporary directory: ${temp_dir}"
+    log_process "Creating temporary directory: ${temp_dir}" >&2
     mkdir -p "${temp_dir}"
-    log_success "Created temp directory: ${temp_dir}"
+    log_success "Created temp directory: ${temp_dir}" >&2
     
     echo "${temp_dir}"
 }
