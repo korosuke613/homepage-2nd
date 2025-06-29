@@ -3,6 +3,7 @@ import "@/components/DocSearch.css";
 import "@docsearch/css/dist/style.css";
 
 import path from "node:path";
+import { ClientRouter } from "astro:transitions";
 
 import { Footer } from "@/partials/Footer";
 import Navbar from "@/templates/Navbar.astro";
@@ -70,8 +71,7 @@ const faviconLink = path.join(AppConfig.base, "favicon.ico");
       <meta name="robots" content="noindex" />
     )}
 
-    <meta name="astro-view-transitions-enabled" content="true" />
-    <meta name="astro-view-transitions-fallback" content="animate" />
+    <ClientRouter />
   </head>
 
   <body>
