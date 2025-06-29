@@ -27,6 +27,21 @@ export const DormitoryIntroduction: StaticPost = {
   url: joinPaths(AppConfig.base, "posts", "dormitory_introduction"), // src/pages からの相対パス
 };
 
+export const History: StaticPost = {
+  collection: "posts",
+  slug: "history",
+  id: "history",
+  data: {
+    title: "自己紹介",
+    description: "平木場ヒストリー",
+    pubDate: new Date("2022-08-21T00:00:00Z"),
+    order: 0,
+    tags: ["Pickup ⭐️", "ポエム"],
+    draft: false,
+  },
+  url: joinPaths(AppConfig.base, "posts", "history"), // src/pages からの相対パス
+};
+
 export const Ranking: StaticPost = {
   collection: "posts",
   slug: "ranking",
@@ -42,4 +57,4 @@ export const Ranking: StaticPost = {
   url: joinPaths(AppConfig.base, "posts", "ranking"), // src/pages からの相対パス
 };
 
-export const StaticPages = [DormitoryIntroduction, Ranking];
+export const StaticPages = [History, DormitoryIntroduction, Ranking];

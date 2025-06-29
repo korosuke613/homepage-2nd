@@ -20,7 +20,7 @@ export const SocialLinks: React.FC<ISocialLinksProps> = ({
         return true;
       })
       .map((link) => (
-        <SocialLink key={link.name} {...link} />
+        <SocialLink key={link?.name || "unknown"} {...link} />
       ))}
   </div>
 );
