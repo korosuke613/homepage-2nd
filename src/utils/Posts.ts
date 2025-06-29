@@ -29,6 +29,8 @@ export const getGitHubUrl = (
 ) => {
   switch (id) {
     // astro はパスが異なるので特別扱い
+    case "history":
+      return `https://${githubUrl}/blob/main/src/pages/posts/history.astro`;
     case "dormitory_introduction":
       return `https://${githubUrl}/blob/main/src/pages/posts/dormitory_introduction.astro`;
     case "ranking":
