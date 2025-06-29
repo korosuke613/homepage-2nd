@@ -84,7 +84,7 @@
     "textlint-rule-preset-ja-technical-writing": "10.0.2",
     "textlint-rule-spellcheck-tech-word": "5.0.0",
     "vite-plugin-turbosnap": "1.0.3",
-    "vitest": "2.1.8",
+    "vitest": "2.1.9",
     "@storybook/addon-docs": "9.0.14"
   }
 }
