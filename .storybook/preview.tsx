@@ -1,5 +1,5 @@
 import "@/styles/global.css";
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 
 type __GlobalArgs = {
   // アルファベット順で最後に表示されるように頭に Global をつけている
@@ -19,6 +19,10 @@ const preview: Preview = {
       },
       sort: "requiredFirst",
     },
+
+    docs: {
+      codePanel: true
+    }
   },
   tags: ["autodocs"],
   args: {

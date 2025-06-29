@@ -4,21 +4,19 @@ import turbosnap from "vite-plugin-turbosnap";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-storysource",
     "@storybook/addon-a11y",
     "@chromatic-com/storybook",
+    "@storybook/addon-docs"
   ],
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
+
   viteFinal: async (config, { configType }) => {
     return mergeConfig(config, {
       plugins:
@@ -38,8 +36,9 @@ const config: StorybookConfig = {
       },
     });
   },
+
   typescript: {
     reactDocgen: "react-docgen",
-  },
+  }
 };
 export default config;
