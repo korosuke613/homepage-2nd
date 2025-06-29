@@ -1,6 +1,6 @@
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RandomArticleCard } from "./RandomArticleCard";
 
 const meta: Meta<typeof RandomArticleCard> = {

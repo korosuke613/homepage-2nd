@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
+    if: always()  # 他のジョブが失敗してもタイムラインを表示
     steps:
       - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
 
@@ -45,8 +46,10 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .astro/cache
-          key: astro-build-
-          restore-keys: astro-build-
+          key: astro-build-${{ hashFiles('**/astro.config.mjs', '**/package-lock.json') }}
+          restore-keys: |
+            astro-build-${{ hashFiles('**/astro.config.mjs') }}-
+            astro-build-
 
       - uses: actions/setup-node@v4
         with:
@@ -93,10 +96,15 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr edit ${{ github.event.number }} --add-label '${{ steps.calcurate-hash.outputs.add_label }}'
-          gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            gh pr edit ${{ github.event.number }} --add-label '${{ steps.calcurate-hash.outputs.add_label }}'
+            gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
+          else
+            echo "Skipping label update (not a pull request)"
+          fi
 
       - name: Comment artifacts hash to pull request
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@fabd468d3a1a0b97feee5f6b9e499eab0dd903f6 # v2.5.0
         with:
           filePath: ${{ runner.temp }}/tmp_artifacts_result.txt
@@ -208,7 +216,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: E2E testing
-        run: npm run test:playwright-e2e -- --retries=2
+        run: npm run test:playwright-e2e -- --retries=2 --workers=2
   
       - name: Test Summary
         if: always()
@@ -256,6 +264,8 @@ jobs:
 
   chromatic:
     runs-on: ubuntu-latest
+    needs: [pre-vrt]
+    if: needs.pre-vrt.outputs.skip_vrt != 'true'
     steps:
       - uses: actions/checkout@v4
         with: 
