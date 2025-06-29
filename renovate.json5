@@ -104,5 +104,19 @@
       ],
       automerge: true,
     },
+    // Storybookはメジャーバージョンアップを無効化
+    {
+      matchManagers: [
+        'npm',
+      ],
+      matchPackageNames: [
+        '/^@storybook/',
+        '/^storybook/',
+      ],
+      matchUpdateTypes: [
+        'major',
+      ],
+      enabled: false,
+    },
   ],
 }
