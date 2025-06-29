@@ -3,7 +3,7 @@ import { SocialLinkData, type SocialTypes } from "@/utils/SocialLinkData";
 
 type ISocialLinksProps = {
   type: SocialTypes;
-  topOnly: boolean;
+  topOnly?: boolean;
 };
 
 export const SocialLinks: React.FC<ISocialLinksProps> = ({

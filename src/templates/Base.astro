@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import "@/components/DocSearch.css";
 import "@docsearch/css/dist/style.css";
 
@@ -41,7 +40,7 @@ const faviconLink = path.join(AppConfig.base, "favicon.ico");
 <html lang="ja">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CJQ7CKRTGR"
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-CJQ7CKRTGR"
     ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -71,7 +70,8 @@ const faviconLink = path.join(AppConfig.base, "favicon.ico");
       <meta name="robots" content="noindex" />
     )}
 
-    <ViewTransitions />
+    <meta name="astro-view-transitions-enabled" content="true" />
+    <meta name="astro-view-transitions-fallback" content="animate" />
   </head>
 
   <body>
