@@ -9,7 +9,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-a11y",
     "@chromatic-com/storybook",
-    "@storybook/addon-docs"
+    "@storybook/addon-docs",
   ],
 
   framework: {
@@ -39,6 +39,6 @@ const config: StorybookConfig = {
 
   typescript: {
     reactDocgen: "react-docgen",
-  }
+  },
 };
 export default config;

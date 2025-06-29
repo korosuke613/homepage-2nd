@@ -12,7 +12,7 @@
     "db:update": "astro db push --remote && astro db execute db/updateGA4Data.ts --remote",
     "dev": "astro dev",
     "lint": "biome ci .",
-    "lint:fix": "biome check --write ./src ./db",
+    "lint:fix": "biome check --write ./src ./db ./.storybook",
     "preview": "astro preview",
     "start": "astro dev",
     "test": "concurrently -P npm:test:*",

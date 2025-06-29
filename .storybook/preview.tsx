@@ -21,8 +21,8 @@ const preview: Preview = {
     },
 
     docs: {
-      codePanel: true
-    }
+      codePanel: true,
+    },
   },
   tags: ["autodocs"],
   args: {
