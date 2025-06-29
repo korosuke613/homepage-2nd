@@ -265,7 +265,7 @@ jobs:
   chromatic:
     runs-on: ubuntu-latest
     needs: [pre-vrt]
-    if: needs.pre-vrt.outputs.skip_vrt == 'true'
+    if: needs.pre-vrt.outputs.skip_vrt != 'true'
     steps:
       - uses: actions/checkout@v4
         with: 
