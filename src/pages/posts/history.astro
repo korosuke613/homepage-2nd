@@ -1,15 +1,15 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import type { MarkdownHeading } from "astro";
 import { getCollection } from "astro:content";
-import { SocialLinks } from '@/components/SocialLinks/index';
+import { SocialLinks } from "@/components/SocialLinks/index";
 import { ContentPost } from "@/partials/ContentPost";
-import Base from '@/templates/Base.astro';
+import Base from "@/templates/Base.astro";
 import { AppConfig } from "@/utils/AppConfig";
 import { getCommitHistories } from "@/utils/CommitHistories";
 import * as Static from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
 import { getSimilarPosts } from "@/utils/TextSimilarity";
+import type { MarkdownHeading } from "astro";
 
 const tags = await readTags();
 
