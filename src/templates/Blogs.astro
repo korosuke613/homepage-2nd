@@ -27,7 +27,7 @@ const titleBase = preTitle
   ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
   : `${contentCategory} p. ${page.currentPage}`;
 const title = titleBase + titleSuffix;
-const sectionTitle = Title({ preTitle, contentCategory });
+const sectionTitle = await Title({ preTitle, contentCategory });
 
 const tags = (await readTags()).blogs;
 if (tags === undefined) {
