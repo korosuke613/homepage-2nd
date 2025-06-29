@@ -44,3 +44,5 @@ isChange.txt
 gha-creds-*.json
 
 db.timestamp-*
+
+.claude/settings.local.json
