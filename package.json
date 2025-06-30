@@ -79,7 +79,7 @@
     "concurrently": "9.2.0",
     "playwright": "1.46.1",
     "storybook": "9.0.14",
-    "textlint": "14.4.2",
+    "textlint": "14.8.4",
     "textlint-filter-rule-comments": "1.2.2",
     "textlint-rule-preset-ja-spacing": "2.4.3",
     "textlint-rule-preset-ja-technical-writing": "10.0.2",
