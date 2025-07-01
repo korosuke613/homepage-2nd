@@ -123,7 +123,7 @@ jobs:
         with:
           paths: "test-results/vrt.xml"
 
-      - uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
+      - uses: Kesin11/actions-timeline@427ee2cf860166e404d0d69b4f2b24012bb7af4f # v2.2.3
         if: ${{ !inputs.skip && github.event.workflow == '.github/workflows/vrt-regression.yaml' }} 
 
       - name: Skipped
