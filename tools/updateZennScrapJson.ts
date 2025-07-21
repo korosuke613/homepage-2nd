@@ -1,5 +1,7 @@
 import Parser from "rss-parser";
+
 const parser = new Parser();
+
 import fs from "node:fs";
 import type { ZennScrapJson } from "../src/types/IZenn";
 
