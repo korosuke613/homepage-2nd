@@ -1,6 +1,10 @@
 @tailwind base;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-slate-900 text-gray-100;
   }
@@ -10,7 +14,9 @@
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  a[id] /* 見出しリンクに付与された id 属性 */,
+  li[id] /* TOC などのリスト内アンカー */ {
     scroll-margin-top: 5rem;
   }
 }
