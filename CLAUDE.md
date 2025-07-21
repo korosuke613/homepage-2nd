@@ -25,6 +25,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run lint:fix` - Biomeでリンティング問題を修正
 - `npm run build-types` - ファイル出力なしで型チェック
 
+**重要**: ソースコードを変更した際は、必ず `npm run lint:fix` を実行してコードフォーマットとリンティング問題を修正してください。
+
 ### データベース
 - `npm run db:update` - データベーススキーマをプッシュしてGA4データをリモート更新
 

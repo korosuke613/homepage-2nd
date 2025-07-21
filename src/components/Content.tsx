@@ -4,6 +4,7 @@ import type { MarkdownHeading } from "astro";
 import type { ReactNode } from "react";
 
 import { EditGitHub } from "@/components/EditGitHub";
+import { MobileToc } from "@/components/MobileToc";
 import { Toc } from "@/components/Toc";
 import { TweetButton } from "@/components/TweetButton";
 import { AppConfig } from "@/utils/AppConfig";
@@ -33,7 +34,13 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
           />
         </div>
       )}
-      <div className="invisible fixed right-10 top-40 float-right max-w-[12%] lg:visible xl:max-w-xs">
+      {/* モバイル・タブレット用インライン目次 */}
+      <div className="block lg:hidden mb-4 mt-4">
+        <MobileToc headings={props.headings} />
+      </div>
+
+      {/* デスクトップ用固定目次 */}
+      <div className="hidden lg:block lg:fixed lg:right-4 lg:top-40 lg:max-w-[200px] lg:z-10 xl:right-10 xl:max-w-xs">
         <Toc headings={props.headings} />
       </div>
       <div
