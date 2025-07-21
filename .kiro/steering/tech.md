@@ -1,93 +1,83 @@
-# 技術スタック
+---
+inclusion: always
+---
+
+# 技術スタック・開発規約
 
 ## コアフレームワーク
-- [Astro](https://astro.build/) - メインWebフレームワーク
-- [React](https://react.dev/) - コンポーネントライブラリ
-- [TypeScript](https://www.typescriptlang.org/) - プログラミング言語
+- **Astro** - 静的サイト生成、ファイルベースルーティング
+- **React** - UIコンポーネント（.tsx拡張子）
+- **TypeScript** - 厳密な型チェック必須
 
-## スタイリング
-- [Tailwind CSS](https://tailwindcss.com/) - ユーティリティファーストCSSフレームワーク
-- [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin) - 文章スタイリング
-- [@tailwindcss/aspect-ratio](https://github.com/tailwindlabs/tailwindcss-aspect-ratio) - アスペクト比ユーティリティ
+## スタイリング規約
+- **Tailwind CSS** - ユーティリティクラス優先、カスタムCSSは最小限
+- **@tailwindcss/typography** - 記事コンテンツのスタイリング
+- **@tailwindcss/aspect-ratio** - 画像・動画のアスペクト比制御
+- **レスポンシブ設計** - モバイルファーストアプローチ
 
-## データベース
-- [Astro DB](https://docs.astro.build/en/guides/astro-db/) - データベース統合
+## データ・コンテンツ管理
+- **Astro DB** - 構造化データ（GA4データ、外部記事情報）
+- **MDX** - ブログ投稿、JSXコンポーネント埋め込み可能
+- **Content Collections** - 型安全なコンテンツ管理
 
-## コンテンツ
-- [MDX](https://mdxjs.com/) - JSXサポート付きMarkdown
-- [Rehype](https://github.com/rehypejs/rehype) - HTMLプロセッサ
-- [Remark](https://github.com/remarkjs/remark) - Markdownプロセッサ
+## テスト戦略
+- **Vitest** - ユニットテスト（`*.test.ts`）
+- **Playwright** - E2E（`*.spec.ts`）・コンポーネントテスト（`*.spec.tsx`）
+- **VRT** - ビジュアルリグレッションテスト
+- **Storybook** - コンポーネント単体テスト・ドキュメント
 
-## テスト
-- [Playwright](https://playwright.dev/) - E2Eおよびコンポーネントテスト
-- [Vitest](https://vitest.dev/) - ユニットテスト
-- Visual Regression Testing (VRT) - カスタム実装
+## コード品質
+- **Biome** - リンター・フォーマッター（ESLint/Prettier代替）
+- **TypeScript strict mode** - 型安全性の徹底
+- **アクセシビリティ** - ARIA属性、キーボード操作対応必須
 
-## 開発ツール
-- [Biome](https://biomejs.dev/) - リンターとフォーマッター
-- [Storybook](https://storybook.js.org/) - コンポーネント開発環境
-- [Chromatic](https://www.chromatic.com/) - ビジュアルテストプラットフォーム
+## 開発ワークフロー
 
-## その他の統合
-- [Google Analytics](https://analytics.google.com/) - アナリティクス
-- [Algolia DocSearch](https://docsearch.algolia.com/) - 検索機能
-- [RSS](https://www.rssboard.org/rss-specification) - フィード生成
-
-## よく使うコマンド
-
-### 開発
+### 基本開発コマンド
 ```bash
-# 開発サーバー起動
-npm run dev
-
-# リンティング実行
-npm run lint
-
-# リンティング問題の修正
-npm run lint:fix
+npm run dev          # 開発サーバー起動（http://localhost:4321）
+npm run lint         # コード品質チェック
+npm run lint:fix     # 自動修正可能な問題を修正
+npm run build        # 本番ビルド（型チェック含む）
+npm run preview      # ビルド結果のプレビュー
 ```
 
-### テスト
+### テスト実行
 ```bash
-# 全テスト実行
-npm test
-
-# 特定のテストスイート実行
-npm run test:unit
-npm run test:playwright-ct
-npm run test:playwright-e2e
-
-# ビジュアルリグレッションテスト
-npm run vrt:init
-npm run vrt:regression
+npm test                    # 全テストスイート実行
+npm run test:unit          # ユニットテスト（Vitest）
+npm run test:playwright-ct # コンポーネントテスト
+npm run test:playwright-e2e # E2Eテスト
+npm run vrt:regression     # ビジュアルリグレッションテスト
 ```
 
-### ビルド
+### コンポーネント開発
 ```bash
-# 型チェックとビルド
-npm run build
-
-# 型チェックのみ
-npm run build-types
-
-# ビルドプレビュー
-npm run preview
+npm run storybook          # Storybook起動（http://localhost:6006）
+npm run build-storybook    # Storybookビルド
+npm run chromatic          # ビジュアルテスト実行
 ```
 
-### Storybook
+### データ管理
 ```bash
-# Storybook実行
-npm run storybook
-
-# Storybookビルド
-npm run build-storybook
-
-# Chromaticにデプロイ
-npm run chromatic
+npm run db:update          # 外部データ取得・DB更新
 ```
 
-### データベース
-```bash
-# リモートデータベース更新
-npm run db:update
-```
+## 技術的制約・ベストプラクティス
+
+### ファイル構成
+- **コンポーネント**: `src/components/ComponentName/index.tsx` + `ComponentName.stories.tsx`
+- **ページ**: `src/pages/*.astro`（ファイルベースルーティング）
+- **ユーティリティ**: `src/utils/*.ts`（純粋関数、副作用なし）
+- **型定義**: `src/types/*.ts`（インターフェース・型エイリアス）
+
+### コーディング規約
+- **インポート順序**: 外部ライブラリ → 内部モジュール → 相対パス
+- **型定義**: `interface` 優先、`type` は複合型・ユニオン型で使用
+- **Props**: デフォルト値設定、必須プロパティの明確化
+- **エラーハンドリング**: 適切な例外処理とユーザーフィードバック
+
+### パフォーマンス
+- **画像最適化**: WebP/AVIF形式、適切なサイズ指定
+- **コード分割**: 動的インポート活用
+- **SEO**: メタデータ、構造化データの適切な設定
