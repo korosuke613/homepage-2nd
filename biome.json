@@ -1,7 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.2.2/schema.json",
-  "organizeImports": {
-    "enabled": true
+  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "vcs": {
     "enabled": true,
@@ -9,7 +13,12 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [".vscode", "generated", "public/assets/*.json"]
+    "includes": [
+      "**",
+      "!**/.vscode",
+      "!**/generated",
+      "!**/public/assets/**/*.json"
+    ]
   },
   "formatter": {
     "indentStyle": "space"
@@ -22,5 +31,22 @@
   },
   "javascript": {
     "globals": ["Astro"]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    }
+  ]
 }

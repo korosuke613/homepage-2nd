@@ -1,12 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-
+import { db, Zenns } from "astro:db";
 import { RecentBlogs } from "@/partials/RecentBlogs";
 import { RecentPickup } from "@/partials/RecentPickup";
 import { RecentPosts } from "@/partials/RecentPosts";
 import Base from "@/templates/Base.astro";
-
-import { Zenns, db } from "astro:db";
 import SelfIntroduction from "@/templates/SelfIntroduction.astro";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import { AppConfig } from "@/utils/AppConfig";

@@ -6,11 +6,11 @@ type TocProps = {
 
 export const Toc = (props: TocProps) => {
   if (props.headings.length === 0) {
-    return <></>;
+    return null;
   }
   const baseLevel = props.headings[0]?.depth;
   if (baseLevel === undefined) {
-    return <></>;
+    return null;
   }
   return (
     <ul className="list-disc">
@@ -50,8 +50,7 @@ export const Toc = (props: TocProps) => {
         //     </li>
         //   );
         // }
-        // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-        return <></>;
+        return null;
       })}
     </ul>
   );

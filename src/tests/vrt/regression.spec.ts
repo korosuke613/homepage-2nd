@@ -1,7 +1,7 @@
 import { defineConfig, test } from "@playwright/test";
 import playwrightConfig from "../../../playwright-vrt.config";
 import { targetPages as p } from "./testdata";
-import { type Option, compare } from "./utils";
+import { compare, type Option } from "./utils";
 
 defineConfig(playwrightConfig);
 

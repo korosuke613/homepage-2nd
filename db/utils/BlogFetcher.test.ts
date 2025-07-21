@@ -1,6 +1,5 @@
-import { describe, expect, test } from "vitest";
-
 import type { google } from "@google-analytics/data/build/protos/protos";
+import { describe, expect, test } from "vitest";
 import { BlogFetcher } from "./BlogFetcher";
 
 const methodName = new BlogFetcher();

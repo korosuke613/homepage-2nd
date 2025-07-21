@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import { getSortedBlogData } from "@/utils/Blog";
 import { describe, expect, it, vi } from "vitest";
+import { getSortedBlogData } from "@/utils/Blog";
 
 describe("getSortedBlogData", () => {
   it("returns an array of blog data sorted by publication date", async () => {

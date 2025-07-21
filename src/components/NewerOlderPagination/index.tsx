@@ -86,12 +86,12 @@ const createPageNumberLink = (page: Page) => {
 };
 
 export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
-  // Check the existence of props since they are sometimes undefined during astro dev.
-  // ref: https://github.com/withastro/astro/issues/9110
-  if (props === undefined) return <></>;
-
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
+      // Check the existence of props since they are sometimes undefined during astro dev.
+      // ref: https://github.com/withastro/astro/issues/9110
+      if (props === undefined) return;
+
       switch (event.key) {
         case "ArrowLeft":
           // 左キーが押されたら前のページに遷移する
@@ -103,7 +103,7 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
           break;
       }
     },
-    [props.page.url.prev, props.page.url.next],
+    [props],
   );
 
   useEffect(() => {
@@ -112,6 +112,10 @@ export const NewerOlderPagination = (props: INewerOlderPaginationProps) => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
+
+  // Check the existence of props since they are sometimes undefined during astro dev.
+  // ref: https://github.com/withastro/astro/issues/9110
+  if (props === undefined) return null;
 
   return (
     <div className="flex justify-center gap-8">

@@ -7,13 +7,13 @@ type MobileTocProps = {
 export const MobileToc = (props: MobileTocProps) => {
   // 空の見出しリストの場合は何も表示しない
   if (props.headings.length === 0) {
-    return <></>;
+    return null;
   }
 
   // 基本レベルの見出しを取得
   const baseLevel = props.headings[0]?.depth;
   if (baseLevel === undefined) {
-    return <></>;
+    return null;
   }
 
   return (

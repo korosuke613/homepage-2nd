@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Panel } from ".";
 import type { GlobalArgs } from "../../../.storybook/preview";
+import { Panel } from ".";
 
 const metaData: Meta = {
   title: "Panel",

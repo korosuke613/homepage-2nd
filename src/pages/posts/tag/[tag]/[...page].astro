@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-
+import type { GetStaticPathsOptions } from "astro";
 import Post from "@/pages/posts/[...page].astro";
 import type {
   ArticleFrontmatterPage,
@@ -9,7 +9,6 @@ import type {
 import { sortByDate } from "@/utils/Posts";
 import { StaticPages } from "@/utils/StaticPages";
 import { generateTagsFromMarkdowns } from "@/utils/Tag";
-import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const allPosts: IPost[] = await getCollection(

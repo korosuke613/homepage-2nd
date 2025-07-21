@@ -1,15 +1,14 @@
 ---
-import path from "node:path";
-import type { CollectionEntry } from "astro:content";
-import type { MarkdownHeading } from "astro";
-
 import { Picture } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
+import path from "node:path";
+import type { MarkdownHeading } from "astro";
 import { ImageAndDescription } from "@/components/Columns";
 import { ExternalLink } from "@/components/ExternalLink/index";
 import {
-  MarkdownHeadingComponent,
   convertMarkdownHeadingsToObject,
+  MarkdownHeadingComponent,
 } from "@/components/Headings";
 import { Panel } from "@/components/Panel/index";
 import { ContentPost } from "@/partials/ContentPost";

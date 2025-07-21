@@ -18,7 +18,7 @@ export const MarkdownHeadingComponent = (props: {
   heading?: MarkdownHeading;
 }) => {
   if (props.heading === undefined) {
-    return <></>;
+    return null;
   }
 
   const h = props.heading;

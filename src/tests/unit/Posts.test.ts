@@ -1,6 +1,6 @@
+import { describe, expect, test } from "vitest";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import { getGitHubUrl, sortByDate, sortByOrder } from "@/utils/Posts";
-import { describe, expect, test } from "vitest";
 
 test("sortByDate", () => {
   const testData = ["2023-02-01", "2023-01-01", "2023-04-01", "2023-03-01"].map(

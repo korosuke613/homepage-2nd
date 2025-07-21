@@ -1,10 +1,11 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import { Blogs, Posts, Zenns, db, desc } from "astro:db";
+import { Blogs, db, desc, Posts, Zenns } from "astro:db";
+import type { MarkdownHeading } from "astro";
 import { ExternalLink } from "@/components/ExternalLink";
 import {
-  MarkdownHeadingComponent,
   convertMarkdownHeadingsToObject,
+  MarkdownHeadingComponent,
 } from "@/components/Headings";
 import { ContentPost } from "@/partials/ContentPost";
 import Base from "@/templates/Base.astro";
@@ -14,7 +15,6 @@ import { getCommitHistories } from "@/utils/CommitHistories";
 import { Ranking as RankingStaticPage, StaticPages } from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
 import { getSimilarPosts } from "@/utils/TextSimilarity";
-import type { MarkdownHeading } from "astro";
 
 // ランキングの上限数
 const RANKING_LIMIT = 30;

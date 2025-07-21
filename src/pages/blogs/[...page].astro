@@ -1,8 +1,8 @@
 ---
+import type { GetStaticPathsOptions } from "astro";
 import Blogs from "@/templates/Blogs.astro";
 import type { BlogPage } from "@/types/IBlogPage";
 import { getSortedBlogData } from "@/utils/Blog";
-import type { GetStaticPathsOptions } from "astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sortedBlogs = await getSortedBlogData();

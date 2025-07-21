@@ -1,8 +1,8 @@
-import type { IPost } from "@/types/IArticleFrontmatter";
-import type { BlogData } from "@/types/IBlogPage";
-import { type RandomArticle, getRandomArticle } from "@/utils/Random";
 import type React from "react";
 import { useEffect, useState } from "react";
+import type { IPost } from "@/types/IArticleFrontmatter";
+import type { BlogData } from "@/types/IBlogPage";
+import { getRandomArticle, type RandomArticle } from "@/utils/Random";
 
 interface RandomArticleCardProps {
   posts: IPost[];
