@@ -162,7 +162,11 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        id: npm-install
+        run: |
+          npm ci
+          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Cache Vitest
         uses: actions/cache@v4
@@ -170,6 +174,18 @@ jobs:
           path: .cache/.vitest
           key: vitest-${{ github.sha }}
           restore-keys: vitest-
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          restore-keys: playwright-
+
+      - name: Install playwright
+        run: npx playwright install chromium --with-deps
+    
 
       - name: Unit testing
         run: npm run test:unit
