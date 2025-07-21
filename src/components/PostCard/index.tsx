@@ -1,9 +1,7 @@
 import { format } from "date-fns";
-
+import { Tag } from "@/components/Tag";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { Tags } from "@/utils/Tag";
-
-import { Tag } from "@/components/Tag";
 
 type IPostCardProps = {
   instance: IPost;

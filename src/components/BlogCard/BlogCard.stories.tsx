@@ -1,6 +1,6 @@
+import type { GlobalArgs } from ".storybook/preview";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { BlogCard } from "./index";
-import type { GlobalArgs } from ".storybook/preview";
 
 const metaData: Meta<typeof BlogCard> = {
   title: "BlogCard",

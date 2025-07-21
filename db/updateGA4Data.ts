@@ -1,5 +1,5 @@
+import { Blogs, db, eq, Posts, Zenns } from "astro:db";
 import { writeFile } from "node:fs/promises";
-import { Blogs, Posts, Zenns, db, eq } from "astro:db";
 import type { BatchItem } from "drizzle-orm/batch";
 import { BlogFetcher, PostFetcher, ZennFetcher } from "./utils";
 import { getQueryData } from "./utils/dbHelper";

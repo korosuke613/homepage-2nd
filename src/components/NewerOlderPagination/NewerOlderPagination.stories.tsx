@@ -1,7 +1,7 @@
+import type { GlobalArgs } from ".storybook/preview";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "storybook/test";
 import { NewerOlderPagination } from ".";
-import type { GlobalArgs } from ".storybook/preview";
 
 const metaData: Meta<typeof NewerOlderPagination> & GlobalArgs = {
   title: "NewerOlderPagination",

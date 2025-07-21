@@ -1,5 +1,5 @@
-import path from "node:path";
 import type { CollectionEntry } from "astro:content";
+import path from "node:path";
 import type { MarkdownHeading } from "astro";
 import type { ReactNode } from "react";
 

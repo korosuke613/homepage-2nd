@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-
+import type { GetStaticPathsOptions } from "astro";
 import Post from "@/pages/posts/[...page].astro";
 import type {
   ArticleFrontmatterPage,
@@ -9,7 +9,6 @@ import type {
 import { sortByDate } from "@/utils/Posts";
 import { StaticPages } from "@/utils/StaticPages";
 import { readYears } from "@/utils/Year";
-import type { GetStaticPathsOptions } from "astro";
 
 export async function getNonDraftPosts() {
   const allPosts: IPost[] = await getCollection("posts");

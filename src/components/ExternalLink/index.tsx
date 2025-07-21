@@ -17,15 +17,13 @@ export const ExternalLink: React.FC<IExternalLinkProps> = ({
   }
 
   return (
-    <>
-      <a
-        className={cssClass}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {children}
-      </a>
-    </>
+    <a
+      className={cssClass}
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
   );
 };

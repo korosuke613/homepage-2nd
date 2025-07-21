@@ -1,5 +1,5 @@
-import { listSimilarities } from "@/utils/TextSimilarity";
 import { expect, test } from "vitest";
+import { listSimilarities } from "@/utils/TextSimilarity";
 
 test("listSimilarities", () => {
   const base = "イーハトーヴォ";

@@ -1,5 +1,5 @@
-import { readYears } from "@/utils/Year";
 import { beforeAll, describe, expect, it } from "vitest";
+import { readYears } from "@/utils/Year";
 
 describe("readYears", () => {
   let years: Awaited<ReturnType<typeof readYears>>;

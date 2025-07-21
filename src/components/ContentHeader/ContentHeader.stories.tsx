@@ -1,8 +1,8 @@
+import type { GlobalArgs } from ".storybook/preview";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { MarkdownHeading } from "astro";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import { ContentHeader } from ".";
-import type { GlobalArgs } from ".storybook/preview";
 
 const metaData: Meta = {
   title: "ContentHeader",

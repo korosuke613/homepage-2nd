@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import {
   escapeTag,
@@ -5,7 +6,6 @@ import {
   generateTagsFromMarkdowns,
   readTags,
 } from "@/utils/Tag";
-import { describe, expect, it } from "vitest";
 
 describe("Tag", () => {
   describe("generateTags", () => {

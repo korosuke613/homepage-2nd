@@ -1,5 +1,5 @@
-import { getRandomArticle } from "@/utils/Random";
 import { describe, expect, test } from "vitest";
+import { getRandomArticle } from "@/utils/Random";
 
 describe("getRandomArticle", () => {
   const mockPosts = [

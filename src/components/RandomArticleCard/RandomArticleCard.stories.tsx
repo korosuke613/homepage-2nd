@@ -1,6 +1,6 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
-import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RandomArticleCard } from "./RandomArticleCard";
 
 const meta: Meta<typeof RandomArticleCard> = {
@@ -71,10 +71,7 @@ const noDescriptionBlog: BlogData = {
 const emptyPosts: IPost[] = [];
 const emptyBlogs: BlogData[] = [];
 
-const defaultRender = (args: {
-  posts: IPost[];
-  blogs: BlogData[];
-}) => {
+const defaultRender = (args: { posts: IPost[]; blogs: BlogData[] }) => {
   return (
     <div
       style={{
