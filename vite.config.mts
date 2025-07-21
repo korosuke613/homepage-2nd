@@ -20,10 +20,14 @@ export default defineConfig({
     outputFile: {
       junit: new URL("./test-results/unit.xml", import.meta.url).pathname,
     },
-    exclude: ["src/tests/component/**", "src/tests/e2e/**", "src/tests/vrt/**"],
+    exclude: ["src/tests/e2e/**", "src/tests/vrt/**"],
     coverage: {
       all: true,
-      include: ["src/utils/*.{js,ts}", "db/utils/*.ts"],
+      include: [
+        "src/utils/*.{js,ts}",
+        "src/components/**/*.{js,ts,tsx}",
+        "db/utils/*.ts",
+      ],
       exclude: ["src/tests/**", "src/**/*.stories.tsx", "src/types/**"],
       reporter: ["text", "cobertura"],
       reportsDirectory: new URL("./coverage/unit", import.meta.url).pathname,
