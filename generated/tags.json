@@ -17,6 +17,7 @@
     "Deno": "bg-teal-400 text-teal-900",
     "Renovate": "bg-indigo-400 text-indigo-900",
     "GitHub Actions": "bg-sky-400 text-sky-900",
+    "GitHub": "bg-gray-400 text-green-600",
     "ホムペ": "bg-neutral-400 text-neutral-900",
     "React": "bg-violet-400 text-violet-900",
     "HTML": "bg-yellow-400 text-yellow-900",
