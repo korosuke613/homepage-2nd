@@ -27,8 +27,7 @@ export const MobileToc = (props: MobileTocProps) => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            role="img"
-            aria-label="目次を展開/折りたたみ"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -42,34 +41,27 @@ export const MobileToc = (props: MobileTocProps) => {
         {/* 目次内容 */}
         <div className="pt-3 px-3 pb-2 bg-slate-800 rounded-b-lg border-x border-b border-slate-600">
           <ul className="list-disc pl-4 space-y-2 marker:text-gray-400">
-            {props.headings.map((h) => {
-              if (baseLevel === h.depth) {
-                return (
-                  <li key={h.slug} className="text-sm">
-                    <a
-                      href={`#${h.slug}`}
-                      className="font-bold no-underline text-blue-400 hover:text-blue-300 transition-colors duration-150 block py-1"
-                    >
-                      {h.text}
-                    </a>
-                  </li>
-                );
-              }
-              if (baseLevel + 1 === h.depth) {
-                return (
-                  <li key={h.slug} className="list-none ml-4 text-sm">
-                    <a
-                      href={`#${h.slug}`}
-                      className="font-normal no-underline text-gray-300 hover:text-gray-100 transition-colors duration-150 block py-1"
-                    >
-                      {h.text}
-                    </a>
-                  </li>
-                );
-              }
-              // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-              return <></>;
-            })}
+            {props.headings
+              .filter((h) => h.depth === baseLevel || h.depth === baseLevel + 1)
+              .map((h) => (
+                <li
+                  key={h.slug}
+                  className={`${
+                    h.depth === baseLevel ? "text-sm" : "list-none ml-4 text-sm"
+                  }`}
+                >
+                  <a
+                    href={`#${h.slug}`}
+                    className={`${
+                      h.depth === baseLevel
+                        ? "font-bold no-underline text-blue-400 hover:text-blue-300"
+                        : "font-normal no-underline text-gray-300 hover:text-gray-100"
+                    } transition-colors duration-150 block py-1`}
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
           </ul>
         </div>
       </details>
