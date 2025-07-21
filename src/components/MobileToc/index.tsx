@@ -27,6 +27,8 @@ export const MobileToc = (props: MobileTocProps) => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            role="img"
+            aria-label="目次を展開/折りたたみ"
           >
             <path
               strokeLinecap="round"
