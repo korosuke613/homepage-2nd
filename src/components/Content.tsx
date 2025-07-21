@@ -33,7 +33,7 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
           />
         </div>
       )}
-      <div className="invisible fixed right-10 top-40 float-right max-w-[12%] lg:visible xl:max-w-xs">
+      <div className="invisible lg:visible lg:fixed lg:right-4 lg:top-40 lg:max-w-[200px] lg:z-10 xl:right-10 xl:max-w-xs">
         <Toc headings={props.headings} />
       </div>
       <div
