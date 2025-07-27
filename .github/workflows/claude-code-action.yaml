@@ -1,0 +1,56 @@
+name: Claude Code Action
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude-code-action:
+    if: |
+      contains(fromJson('["korosuke613"]'), github.event.comment.user.login) &&
+      (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+        (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
+      )
+    runs-on: ubuntu-latest
+    environment: claude-code-action
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      actions: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: "blob:none"
+
+      - name: Login GitHub App
+        id: login-gh-app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.KIBA_CLAUDE_CODE_GH_APP_ID }}
+          private-key: ${{ secrets.KIBA_CLAUDE_CODE_GH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - name: Run Claude PR Action
+        uses: anthropics/claude-code-action@v0
+        with:
+          github_token: ${{ steps.login-gh-app.outputs.token }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          timeout_minutes: "30"
+          additional_permissions: |
+            actions: read
+          allowed_tools: Bash,WebFetch,WebSearch,mcp__playwright__browser_click,mcp__playwright__browser_close,mcp__playwright__browser_console_messages,mcp__playwright__browser_drag,mcp__playwright__browser_evaluate,mcp__playwright__browser_file_upload,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_hover,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_navigate_forward,mcp__playwright__browser_network_requests,mcp__playwright__browser_press_key,mcp__playwright__browser_resize,mcp__playwright__browser_select_option,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_type,mcp__playwright__browser_wait_for,mcp__playwright__browser_tab_close,mcp__playwright__browser_tab_list,mcp__playwright__browser_tab_new,mcp__playwright__browser_tab_select,mcp__playwright__browser_install,mcp__playwright__browser_mouse_click_xy,mcp__playwright__browser_mouse_drag_xy,mcp__playwright__browser_mouse_move_xy,mcp__playwright__browser_pdf_save
+          mcp_config: '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}'
