@@ -108,7 +108,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [initialSize, setInitialSize] = useState({ width: 0, height: 0 });
   const [moveSpeed, setMoveSpeed] = useState(INITIAL_MOVE_SPEED);
   const [chaseMode, setChaseMode] = useState<ChaseMode>("none");
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mousePositionRef = useRef({ x: 0, y: 0 });
 
   const changeColor = useCallback(() => {
     const currentIndex = VIVID_COLORS.indexOf(iconColor);
@@ -126,7 +126,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   // マウス位置追跡
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
+      mousePositionRef.current = { x: event.clientX, y: event.clientY };
     };
 
     if (chaseMode !== "none") {
@@ -417,8 +417,8 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         if (chaseMode !== "none") {
           const iconCenterX = prev.x + icon.width / 2;
           const iconCenterY = prev.y + icon.height / 2;
-          const deltaX = mousePosition.x - iconCenterX;
-          const deltaY = mousePosition.y - iconCenterY;
+          const deltaX = mousePositionRef.current.x - iconCenterX;
+          const deltaY = mousePositionRef.current.y - iconCenterY;
           const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
           if (distance > 0) {
@@ -482,7 +482,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
     // 60fps で動かす
     const interval = setInterval(moveIcon, 1000 / 60);
     return () => clearInterval(interval);
-  }, [isMoving, changeColor, chaseMode, mousePosition, moveSpeed]);
+  }, [isMoving, changeColor, chaseMode, moveSpeed]);
 
   return (
     <div style={{ position: "relative" }}>
