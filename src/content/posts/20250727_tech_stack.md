@@ -21,8 +21,8 @@ tags:
 
 サイトトップに配置されたアバター画像は、単なる装飾ではなく高度にインタラクティブなコンポーネントです。
 
-**ソースコード**: [`src/components/MyIcon/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/index.tsx)  
-**仕様書**: [`src/components/MyIcon/SPEC.md`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/SPEC.md)
+**ソースコード**: [`src/components/MyIcon/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/MyIcon/index.tsx)  
+**仕様書**: [`src/components/MyIcon/SPEC.md`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/MyIcon/SPEC.md)
 
 #### 隠しキーボードコマンド機能
 
@@ -141,7 +141,7 @@ sequenceDiagram
 
 **実装の技術的特徴**:
 
-- **循環バッファ**: 最大10文字の制限で古い入力を自動削除（[`src/components/MyIcon/index.tsx:207-211`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/index.tsx#L207-L211)）
+- **循環バッファ**: 最大10文字の制限で古い入力を自動削除（[`src/components/MyIcon/index.tsx:207-211`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/MyIcon/index.tsx#L207-L211)）
 - **部分文字列マッチング**: `includes()`による柔軟なコマンド検出で、連続入力や前後の文字を無視
 - **アイコン表示状態チェック**: 非表示時（`display: none`）はコマンド無効化で意図しない動作を防止
 - **自然な日本語キーワード**: `oikake`（追いかけ）など、偶然の発動を防ぐ絶妙な長さと自然さ
@@ -160,15 +160,15 @@ const nextMode: ChaseMode =
 - **7種類の3D回転アニメーション**: Web Animations APIによる滑らかな回転
 - **DVD Mode**: 画面端での跳ね返り動作＋13種類ビビッドカラー変更
 - **60fpsアニメーション**: `requestAnimationFrame`による最適化
-- **壁衝突検出**: [`handleCollision`関数](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/index.tsx#L93-L118)による物理演算
+- **壁衝突検出**: [`handleCollision`関数](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/MyIcon/index.tsx#L93-L118)による物理演算
 
 ### 2. Algolia DocSearchによる全文検索システム
 
 ナビゲーションバーの検索アイコンから利用できる、高速な全文検索機能です。
 
-**ソースコード**: [`src/templates/Navbar.astro`](https://github.com/korosuke613/homepage-2nd/blob/main/src/templates/Navbar.astro#L39-L44)  
-**設定ファイル**: [`algolia.json`](https://github.com/korosuke613/homepage-2nd/blob/main/algolia.json)  
-**CI/CD**: [`.github/workflows/scraping.yaml`](https://github.com/korosuke613/homepage-2nd/blob/main/.github/workflows/scraping.yaml)
+**ソースコード**: [`src/templates/Navbar.astro`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/templates/Navbar.astro#L39-L44)  
+**設定ファイル**: [`algolia.json`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/algolia.json)  
+**CI/CD**: [`.github/workflows/scraping.yaml`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/.github/workflows/scraping.yaml)
 
 #### GitHub Actionsによる自動クローリングシステム
 
@@ -243,15 +243,15 @@ sequenceDiagram
 #### フロントエンド統合
 
 - **React コンポーネント**: `@docsearch/react`による検索UI
-- **カスタムCSS**: [`DocSearch.css`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/DocSearch.css)でダークテーマ対応
+- **カスタムCSS**: [`DocSearch.css`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/DocSearch.css)でダークテーマ対応
 - **レスポンシブ対応**: 遅延ロード対策とサイズ固定レイアウト
 
 ### 3. 類似記事推薦システム
 
 記事下部に表示される「あわせて読む」は、自然言語処理による類似度計算システムです。
 
-**ソースコード**: [`src/utils/TextSimilarity.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/utils/TextSimilarity.ts)  
-**コンポーネント**: [`src/components/SimilarityPosts/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/SimilarityPosts/index.tsx)
+**ソースコード**: [`src/utils/TextSimilarity.ts`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/utils/TextSimilarity.ts)  
+**コンポーネント**: [`src/components/SimilarityPosts/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/components/SimilarityPosts/index.tsx)
 
 #### Jaro-Winkler距離アルゴリズムによる類似度計算
 
@@ -265,7 +265,7 @@ graph TD
     D --> F[各記事に対してJaro-Winkler距離計算]
     B --> F
     
-    F --> G{natural.JaroWinklerDistance}
+    F --> G{Jaro-Winkler距離計算<br/>文字列の文字一致度と位置関係を評価}
     G --> H[類似度スコア<br/>0.0 - 1.0]
     
     H --> I[スコア順ソート<br/>降順]
@@ -276,7 +276,7 @@ graph TD
 #### 技術的特徴
 
 - **マルチソース対応**: ローカルMarkdown投稿とHatenaBlog記事を統合分析
-- **自然言語処理**: [`natural.js`](https://github.com/NaturalNode/natural)のJaro-Winkler距離アルゴリズムを使用
+- **文字列類似度計算**: [`natural.js`](https://github.com/NaturalNode/natural)のJaro-Winkler距離アルゴリズムによる類似度計算。文字一致度（共通文字数/総文字数）と位置関係（文字の順序とずれ）を組み合わせて0.0-1.0のスコアを算出
 - **類似度可視化**: 計算結果のスコア（0.00-1.00）を併せて表示
 - **外部リンク区別**: 内部記事と外部ブログの視覚的区別
 
@@ -284,8 +284,8 @@ graph TD
 
 Astroの`astro:config:setup`フックを活用した、カスタムビルド時処理システムです。
 
-**ソースコード**: [`src/utils/Integration.mjs`](https://github.com/korosuke613/homepage-2nd/blob/main/src/utils/Integration.mjs)  
-**設定**: [`astro.config.mjs`](https://github.com/korosuke613/homepage-2nd/blob/main/astro.config.mjs#L52)
+**ソースコード**: [`src/utils/Integration.mjs`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/utils/Integration.mjs)  
+**設定**: [`astro.config.mjs`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/astro.config.mjs#L52)
 
 #### 動的タグ色生成アルゴリズム
 
@@ -334,8 +334,8 @@ graph TD
 
 Playwrightを活用した、2段階の閾値設定による柔軟なVRTシステムです。
 
-**ソースコード**: [`src/tests/vrt/`](https://github.com/korosuke613/homepage-2nd/tree/main/src/tests/vrt)  
-**設定**: [`playwright-vrt.config.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/playwright-vrt.config.ts)
+**ソースコード**: [`src/tests/vrt/`](https://github.com/korosuke613/homepage-2nd/tree/d69ae8eaec9e32669a61c699848d654c51676b21/src/tests/vrt)  
+**設定**: [`playwright-vrt.config.ts`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/playwright-vrt.config.ts)
 
 #### VRTワークフロー
 
@@ -395,7 +395,7 @@ sequenceDiagram
 #### 技術的特徴
 
 - **2段階閾値**: 依存関係更新時（厳密）とコンテンツ追加時（緩和）で異なる許容度
-- **画像同期**: [`waitImagesLoaded`関数](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/vrt/utils.ts#L5-L16)による非同期画像読み込みの完全同期
+- **画像同期**: [`waitImagesLoaded`関数](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/tests/vrt/utils.ts#L5-L16)による非同期画像読み込みの完全同期
 - **CI/CD統合**: GitHub Actionsでの自動実行とスナップショット初期化
 - **フルページ**: 縦スクロール全体のスクリーンショット比較
 
@@ -403,7 +403,7 @@ sequenceDiagram
 
 高度な最適化を施したGitHub ActionsベースのCI/CDシステムです。
 
-**ワークフロー**: [`.github/workflows/`](https://github.com/korosuke613/homepage-2nd/tree/main/.github/workflows)
+**ワークフロー**: [`.github/workflows/`](https://github.com/korosuke613/homepage-2nd/tree/d69ae8eaec9e32669a61c699848d654c51676b21/.github/workflows)
 
 #### デプロイフロー全体像
 
@@ -513,7 +513,7 @@ sequenceDiagram
 
 #### 技術的特徴
 
-- **デプロイ最適化**: [`ci.yaml`](https://github.com/korosuke613/homepage-2nd/blob/main/.github/workflows/ci.yaml#L89-L95)でビルド成果物の変更検出
+- **デプロイ最適化**: [`ci.yaml`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/.github/workflows/ci.yaml#L89-L95)でビルド成果物の変更検出
 - **VRT自動初期化**: mainブランチ更新時のスナップショット自動更新
 - **リソース節約**: 変更がない場合のデプロイスキップによるGitHub Actions使用量削減
 - **ゼロダウンタイム**: GitHub Pagesによる瞬時切り替えデプロイ
@@ -523,7 +523,7 @@ sequenceDiagram
 
 品質保証の要として、4層のテスト戦略を構築し、企業レベルの信頼性を実現しています。
 
-**テスト構成**: [`package.json`](https://github.com/korosuke613/homepage-2nd/blob/main/package.json#L18-L27)、[`vite.config.mts`](https://github.com/korosuke613/homepage-2nd/blob/main/vite.config.mts)  
+**テスト構成**: [`package.json`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/package.json#L18-L27)、[`vite.config.mts`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/vite.config.mts)  
 **設定ファイル**: [`playwright-*.config.ts`](https://github.com/korosuke613/homepage-2nd/tree/main)
 
 #### 4層テスト戦略アーキテクチャ
@@ -563,19 +563,19 @@ graph TD
 - **対象**: ユーティリティ関数、データ処理ロジック、GA4データフェッチャー
 - **実行環境**: Node.js（`vite.config.mts`のunitプロジェクト）
 - **カバレッジ**: `src/utils/`、`src/components/`、`db/utils/`を包括
-- **テストファイル例**: [`src/tests/unit/TextSimilarity.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/unit/TextSimilarity.spec.ts)
+- **テストファイル例**: [`src/tests/unit/TextSimilarity.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/tests/unit/TextSimilarity.spec.ts)
 
 **2. コンポーネントテスト（Playwright CT）**
 - **対象**: Reactコンポーネントの単体動作
 - **実行環境**: Chromiumブラウザ（`playwright-ct.config.ts`）
 - **独立性**: 外部依存なしのコンポーネント検証
-- **テストファイル例**: [`src/tests/component/TweetButton.spec.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/component/TweetButton.spec.tsx)
+- **テストファイル例**: [`src/tests/component/TweetButton.spec.tsx`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/tests/component/TweetButton.spec.tsx)
 
 **3. E2Eテスト（Playwright）**
 - **対象**: 完全なユーザーフロー検証
 - **実行環境**: 開発サーバー（port 4321）統合（`playwright-e2e.config.ts`）
 - **範囲**: ナビゲーション、ページ遷移、インタラクション
-- **テストファイル例**: [`src/tests/e2e/navigation.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/e2e/navigation.spec.ts)
+- **テストファイル例**: [`src/tests/e2e/navigation.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/d69ae8eaec9e32669a61c699848d654c51676b21/src/tests/e2e/navigation.spec.ts)
 
 **4. Storybookテスト（Vitest + Storybook）**
 - **対象**: 全ストーリーの自動実行テスト
@@ -663,7 +663,7 @@ sequenceDiagram
 
 このプロジェクトの開発において、AI支援ツール「Claude Code」の本格的な活用環境を構築しています。
 
-**ソースコード**: [`.claude/`](https://github.com/korosuke613/homepage-2nd/tree/main/.claude)、[`.devcontainer/`](https://github.com/korosuke613/homepage-2nd/tree/main/.devcontainer)  
+**ソースコード**: [`.claude/`](https://github.com/korosuke613/homepage-2nd/tree/d69ae8eaec9e32669a61c699848d654c51676b21/.claude)、[`.devcontainer/`](https://github.com/korosuke613/homepage-2nd/tree/d69ae8eaec9e32669a61c699848d654c51676b21/.devcontainer)  
 **Claude Code**: [https://claude.ai/code](https://claude.ai/code)
 
 #### 専用開発環境の構築
