@@ -133,6 +133,8 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       document.addEventListener("mousemove", handleMouseMove);
       return () => document.removeEventListener("mousemove", handleMouseMove);
     }
+
+    return undefined; // Explicitly return undefined for 'none' chase mode
   }, [chaseMode]);
 
   const toggleRotation = useCallback(async () => {
@@ -266,28 +268,58 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           break;
         }
         case MOVE_MODE_KEY: {
-          if (!isMoving && iconRef.current) {
-            const rect = iconRef.current.getBoundingClientRect();
-            setPosition((prev) => ({
-              ...prev,
-              x: rect.left,
-              y: rect.top,
-              dx: moveSpeed,
-              dy: moveSpeed,
-            }));
-          }
-          setIsMoving(!isMoving);
-          if (!isMoving) {
+          // Chase Modeがオンの場合は、まずそれをオフにしてからDVD Modeをオンにする
+          if (chaseMode !== "none") {
+            setChaseMode("none");
+            console.log(
+              "%c CHASE MODE AUTO OFF (DVD Mode activated) ",
+              "color: white; background-color: #8B4513; border: 4px solid yellow; font-size: 60px",
+            );
+            // Chase Modeをオフにした後、DVD Modeをオンにする
+            if (iconRef.current) {
+              const rect = iconRef.current.getBoundingClientRect();
+              setPosition((prev) => ({
+                ...prev,
+                x: rect.left,
+                y: rect.top,
+                dx: moveSpeed,
+                dy: moveSpeed,
+              }));
+            }
+            setIsMoving(true);
             console.log(
               "%c DVD MODE ",
               "color: purple; background-color: black; border: 4px solid yellow; font-size: 90px",
             );
           } else {
-            setMoveSpeed(INITIAL_MOVE_SPEED);
-            console.log(
-              "%c NO DVD MODE ",
-              "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
-            );
+            // 通常のDVD MODEトグル処理
+            const willStartDvdMode = !isMoving;
+
+            if (willStartDvdMode && iconRef.current) {
+              const rect = iconRef.current.getBoundingClientRect();
+              setPosition((prev) => ({
+                ...prev,
+                x: rect.left,
+                y: rect.top,
+                dx: moveSpeed,
+                dy: moveSpeed,
+              }));
+            }
+
+            setIsMoving(willStartDvdMode);
+
+            if (willStartDvdMode) {
+              console.log(
+                "%c DVD MODE ",
+                "color: purple; background-color: black; border: 4px solid yellow; font-size: 90px",
+              );
+            } else {
+              setMoveSpeed(INITIAL_MOVE_SPEED);
+              console.log(
+                "%c NO DVD MODE ",
+                "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
+              );
+            }
           }
           setKeyString("");
           break;
@@ -303,17 +335,28 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
 
           setChaseMode(nextMode);
 
-          // Chase Mode起動時はDVD MODEを開始
-          if (nextMode !== "none" && !isMoving && iconRef.current) {
-            const rect = iconRef.current.getBoundingClientRect();
-            setPosition((prev) => ({
-              ...prev,
-              x: rect.left,
-              y: rect.top,
-              dx: moveSpeed,
-              dy: moveSpeed,
-            }));
-            setIsMoving(true);
+          // Chase Mode起動時は既存のDVD MODEを停止してから開始
+          if (nextMode !== "none") {
+            if (isMoving) {
+              // 既存のDVD MODEを停止
+              setIsMoving(false);
+              setMoveSpeed(INITIAL_MOVE_SPEED);
+              console.log(
+                "%c DVD MODE AUTO OFF (Chase Mode activated) ",
+                "color: white; background-color: #FF6B35; border: 4px solid yellow; font-size: 60px",
+              );
+            }
+            if (iconRef.current) {
+              const rect = iconRef.current.getBoundingClientRect();
+              setPosition((prev) => ({
+                ...prev,
+                x: rect.left,
+                y: rect.top,
+                dx: moveSpeed,
+                dy: moveSpeed,
+              }));
+              setIsMoving(true);
+            }
           } else if (nextMode === "none" && isMoving) {
             // Chase Mode無効時はDVD MODEも停止
             setIsMoving(false);
