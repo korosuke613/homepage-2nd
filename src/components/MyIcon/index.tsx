@@ -12,6 +12,8 @@ type Position = {
   dy: number;
 };
 
+type ChaseMode = "none" | "follow" | "avoid";
+
 const INITIAL_MOVE_SPEED = 5;
 
 // ビビッドな色のリスト
@@ -105,6 +107,8 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const iconRef = useRef<HTMLImageElement>(null);
   const [initialSize, setInitialSize] = useState({ width: 0, height: 0 });
   const [moveSpeed, setMoveSpeed] = useState(INITIAL_MOVE_SPEED);
+  const [chaseMode, setChaseMode] = useState<ChaseMode>("none");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const changeColor = useCallback(() => {
     const currentIndex = VIVID_COLORS.indexOf(iconColor);
@@ -118,6 +122,18 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       setInitialSize({ width: rect.width, height: rect.height });
     }
   }, []);
+
+  // マウス位置追跡
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    if (chaseMode !== "none") {
+      document.addEventListener("mousemove", handleMouseMove);
+      return () => document.removeEventListener("mousemove", handleMouseMove);
+    }
+  }, [chaseMode]);
 
   const toggleRotation = useCallback(async () => {
     if (rotationComplete || isNoLimit) {
@@ -155,6 +171,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       const CLOCK_UP = "clockup";
       const CLOCK_UP_SHORT = "cu";
       const MOVE_MODE_KEY = "kakku";
+      const CHASE_MODE_KEY = "oikake";
       const MAX_KEY_STRING_LENGTH = 10;
       let _keyString = keyString;
 
@@ -190,6 +207,9 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         }
         if (lowerKeyString.includes(MOVE_MODE_KEY)) {
           return MOVE_MODE_KEY;
+        }
+        if (lowerKeyString.includes(CHASE_MODE_KEY)) {
+          return CHASE_MODE_KEY;
         }
         return "";
       };
@@ -272,6 +292,55 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           setKeyString("");
           break;
         }
+        case CHASE_MODE_KEY: {
+          // Mode cycling: none → follow → avoid → none
+          const nextMode: ChaseMode =
+            chaseMode === "none"
+              ? "follow"
+              : chaseMode === "follow"
+                ? "avoid"
+                : "none";
+
+          setChaseMode(nextMode);
+
+          // Chase Mode起動時はDVD MODEを開始
+          if (nextMode !== "none" && !isMoving && iconRef.current) {
+            const rect = iconRef.current.getBoundingClientRect();
+            setPosition((prev) => ({
+              ...prev,
+              x: rect.left,
+              y: rect.top,
+              dx: moveSpeed,
+              dy: moveSpeed,
+            }));
+            setIsMoving(true);
+          } else if (nextMode === "none" && isMoving) {
+            // Chase Mode無効時はDVD MODEも停止
+            setIsMoving(false);
+            setMoveSpeed(INITIAL_MOVE_SPEED);
+          }
+
+          // Console logs
+          if (nextMode === "follow") {
+            console.log(
+              "%c CHASE MODE: FOLLOW ",
+              "color: white; background-color: #FF8C00; border: 4px solid yellow; font-size: 90px",
+            );
+          } else if (nextMode === "avoid") {
+            console.log(
+              "%c CHASE MODE: AVOID ",
+              "color: white; background-color: #DC143C; border: 4px solid yellow; font-size: 90px",
+            );
+          } else {
+            console.log(
+              "%c CHASE MODE OFF ",
+              "color: black; background-color: white; border: 4px solid lightblue; font-size: 90px",
+            );
+          }
+
+          setKeyString("");
+          break;
+        }
         default:
           setKeyString(_keyString);
           break;
@@ -285,6 +354,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       iconId,
       isMoving,
       moveSpeed,
+      chaseMode,
     ],
   );
 
@@ -337,11 +407,39 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       const icon = iconRef.current.getBoundingClientRect();
 
       setPosition((prev) => {
-        let newX = prev.x + prev.dx;
-        let newY = prev.y + prev.dy;
+        let newX = prev.x;
+        let newY = prev.y;
         let newDx = prev.dx;
         let newDy = prev.dy;
         let hasCollision = false;
+
+        // Chase Mode処理
+        if (chaseMode !== "none") {
+          const iconCenterX = prev.x + icon.width / 2;
+          const iconCenterY = prev.y + icon.height / 2;
+          const deltaX = mousePosition.x - iconCenterX;
+          const deltaY = mousePosition.y - iconCenterY;
+          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+          if (distance > 0) {
+            // 正規化されたベクトル
+            const normalizedX = deltaX / distance;
+            const normalizedY = deltaY / distance;
+
+            if (chaseMode === "follow") {
+              // マウスに向かって移動
+              newDx = normalizedX * moveSpeed;
+              newDy = normalizedY * moveSpeed;
+            } else if (chaseMode === "avoid") {
+              // マウスから逃げるように移動
+              newDx = -normalizedX * moveSpeed;
+              newDy = -normalizedY * moveSpeed;
+            }
+          }
+        }
+
+        newX = prev.x + newDx;
+        newY = prev.y + newDy;
 
         const maxX = window.innerWidth;
         const maxY = window.innerHeight;
@@ -350,15 +448,27 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
 
         // 壁との衝突判定
         if (newX + icon.width > maxX || newX < minX) {
-          newDx = -newDx;
-          newX = newX + icon.width > maxX ? maxX - icon.width : minX;
-          hasCollision = true;
+          if (chaseMode !== "none") {
+            // Chase Mode中は跳ね返らず壁で停止
+            newX = newX + icon.width > maxX ? maxX - icon.width : minX;
+          } else {
+            // 通常のDVD MODEでは跳ね返り
+            newDx = -newDx;
+            newX = newX + icon.width > maxX ? maxX - icon.width : minX;
+            hasCollision = true;
+          }
         }
 
         if (newY + icon.height > maxY || newY < minY) {
-          newDy = -newDy;
-          newY = newY + icon.height > maxY ? maxY - icon.height : minY;
-          hasCollision = true;
+          if (chaseMode !== "none") {
+            // Chase Mode中は跳ね返らず壁で停止
+            newY = newY + icon.height > maxY ? maxY - icon.height : minY;
+          } else {
+            // 通常のDVD MODEでは跳ね返り
+            newDy = -newDy;
+            newY = newY + icon.height > maxY ? maxY - icon.height : minY;
+            hasCollision = true;
+          }
         }
 
         if (hasCollision) {
@@ -372,7 +482,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
     // 60fps で動かす
     const interval = setInterval(moveIcon, 1000 / 60);
     return () => clearInterval(interval);
-  }, [isMoving, changeColor]);
+  }, [isMoving, changeColor, chaseMode, mousePosition, moveSpeed]);
 
   return (
     <div style={{ position: "relative" }}>
