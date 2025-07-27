@@ -22,12 +22,6 @@ jobs:
       )
     runs-on: ubuntu-latest
     environment: claude-code-action
-    permissions:
-      contents: read
-      pull-requests: read
-      issues: read
-      actions: read
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
