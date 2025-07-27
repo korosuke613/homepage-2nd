@@ -161,7 +161,7 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
       return () => document.removeEventListener("mousemove", handleMouseMove);
     }
 
-    return undefined; // Explicitly return undefined for 'none' chase mode
+    return undefined;
   }, [chaseMode]);
 
   const toggleRotation = useCallback(async () => {
@@ -489,12 +489,15 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           const iconCenterY = prev.y + icon.height / 2;
           const deltaX = mousePositionRef.current.x - iconCenterX;
           const deltaY = mousePositionRef.current.y - iconCenterY;
-          const squaredDistance = deltaX * deltaX + deltaY * deltaY;
+          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-          if (squaredDistance > 0) {
+          // 最小距離閾値を設定（振動を防ぐ）
+          const MIN_DISTANCE = 50;
+
+          if (distance > MIN_DISTANCE) {
             // 正規化されたベクトル
-            const normalizedX = deltaX / Math.sqrt(squaredDistance);
-            const normalizedY = deltaY / Math.sqrt(squaredDistance);
+            const normalizedX = deltaX / distance;
+            const normalizedY = deltaY / distance;
 
             if (chaseMode === "follow") {
               // マウスに向かって移動
@@ -504,6 +507,31 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
               // マウスから逃げるように移動
               newDx = -normalizedX * moveSpeed;
               newDy = -normalizedY * moveSpeed;
+            }
+          } else {
+            // 近距離での処理
+            if (chaseMode === "follow") {
+              // followモードでは減速して停止
+              const speedFactor = Math.max(
+                0,
+                (distance - 10) / (MIN_DISTANCE - 10),
+              );
+              newDx = prev.dx * speedFactor * 0.9;
+              newDy = prev.dy * speedFactor * 0.9;
+            } else if (chaseMode === "avoid") {
+              // avoidモードでは近くにいても逃げ続ける
+              if (distance > 0) {
+                const normalizedX = deltaX / distance;
+                const normalizedY = deltaY / distance;
+                // 近距離でも一定速度で逃げる
+                newDx = -normalizedX * moveSpeed * 0.7;
+                newDy = -normalizedY * moveSpeed * 0.7;
+              } else {
+                // 完全に重なった場合はランダムな方向に逃げる
+                const randomAngle = Math.random() * 2 * Math.PI;
+                newDx = Math.cos(randomAngle) * moveSpeed * 0.7;
+                newDy = Math.sin(randomAngle) * moveSpeed * 0.7;
+              }
             }
           }
         }
