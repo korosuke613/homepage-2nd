@@ -90,6 +90,33 @@ const animations: Record<string, Array<{ transform: string }>> = {
 };
 const animationKeys = Object.keys(animations);
 
+const handleCollision = (
+  position: number,
+  velocity: number,
+  size: number,
+  min: number,
+  max: number,
+  chaseMode: ChaseMode,
+) => {
+  let newPos = position;
+  let newVel = velocity;
+  let hasCollision = false;
+
+  if (newPos + size > max || newPos < min) {
+    if (chaseMode !== "none") {
+      // Chase Mode中は跳ね返らず壁で停止
+      newPos = newPos + size > max ? max - size : min;
+    } else {
+      // 通常のDVD MODEでは跳ね返り
+      newVel = -newVel;
+      newPos = newPos + size > max ? max - size : min;
+      hasCollision = true;
+    }
+  }
+
+  return { newPos, newVel, hasCollision };
+};
+
 export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
   const [rotationComplete, setRotationComplete] = useState(true);
   const [isNoLimit, setIsNoLimit] = useState(false);
@@ -490,29 +517,29 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
         const minY = 0;
 
         // 壁との衝突判定
-        if (newX + icon.width > maxX || newX < minX) {
-          if (chaseMode !== "none") {
-            // Chase Mode中は跳ね返らず壁で停止
-            newX = newX + icon.width > maxX ? maxX - icon.width : minX;
-          } else {
-            // 通常のDVD MODEでは跳ね返り
-            newDx = -newDx;
-            newX = newX + icon.width > maxX ? maxX - icon.width : minX;
-            hasCollision = true;
-          }
-        }
+        const collisionX = handleCollision(
+          newX,
+          newDx,
+          icon.width,
+          minX,
+          maxX,
+          chaseMode,
+        );
+        newX = collisionX.newPos;
+        newDx = collisionX.newVel;
+        if (collisionX.hasCollision) hasCollision = true;
 
-        if (newY + icon.height > maxY || newY < minY) {
-          if (chaseMode !== "none") {
-            // Chase Mode中は跳ね返らず壁で停止
-            newY = newY + icon.height > maxY ? maxY - icon.height : minY;
-          } else {
-            // 通常のDVD MODEでは跳ね返り
-            newDy = -newDy;
-            newY = newY + icon.height > maxY ? maxY - icon.height : minY;
-            hasCollision = true;
-          }
-        }
+        const collisionY = handleCollision(
+          newY,
+          newDy,
+          icon.height,
+          minY,
+          maxY,
+          chaseMode,
+        );
+        newY = collisionY.newPos;
+        newDy = collisionY.newVel;
+        if (collisionY.hasCollision) hasCollision = true;
 
         if (hasCollision) {
           changeColor();
