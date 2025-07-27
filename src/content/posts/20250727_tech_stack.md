@@ -519,6 +519,279 @@ sequenceDiagram
 - **ゼロダウンタイム**: GitHub Pagesによる瞬時切り替えデプロイ
 - **自動ロールバック**: デプロイ失敗時の前バージョン自動復帰
 
+### 7. 包括的テスト戦略システム
+
+品質保証の要として、4層のテスト戦略を構築し、企業レベルの信頼性を実現しています。
+
+**テスト構成**: [`package.json`](https://github.com/korosuke613/homepage-2nd/blob/main/package.json#L18-L27)、[`vite.config.mts`](https://github.com/korosuke613/homepage-2nd/blob/main/vite.config.mts)  
+**設定ファイル**: [`playwright-*.config.ts`](https://github.com/korosuke613/homepage-2nd/tree/main)
+
+#### 4層テスト戦略アーキテクチャ
+
+```mermaid
+graph TD
+    A[コード変更] --> B{テスト戦略選択}
+    
+    B --> C[Unit Tests<br/>ユニットテスト]
+    B --> D[Component Tests<br/>コンポーネントテスト] 
+    B --> E[E2E Tests<br/>エンドツーエンドテスト]
+    B --> F[Storybook Tests<br/>ストーリーテスト]
+    B --> G[VRT<br/>ビジュアルリグレッション]
+    
+    C --> H[Vitest実行<br/>Node.js環境]
+    D --> I[Playwright CT実行<br/>ブラウザ環境]
+    E --> J[Playwright E2E実行<br/>開発サーバー統合]
+    F --> K[Storybook Vitest実行<br/>ブラウザ環境]
+    G --> L[Playwright VRT実行<br/>視覚比較]
+    
+    H --> M[カバレッジ生成<br/>cobertura形式]
+    I --> N[コンポーネント動作確認]
+    J --> O[ユーザーフロー検証]
+    K --> P[ストーリー自動テスト]
+    L --> Q[スクリーンショット比較]
+    
+    M --> R[CI/CD統合]
+    N --> R
+    O --> R
+    P --> R
+    Q --> R
+```
+
+#### テスト層別詳細
+
+**1. ユニットテスト（Vitest）**
+- **対象**: ユーティリティ関数、データ処理ロジック、GA4データフェッチャー
+- **実行環境**: Node.js（`vite.config.mts`のunitプロジェクト）
+- **カバレッジ**: `src/utils/`、`src/components/`、`db/utils/`を包括
+- **テストファイル例**: [`src/tests/unit/TextSimilarity.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/unit/TextSimilarity.spec.ts)
+
+**2. コンポーネントテスト（Playwright CT）**
+- **対象**: Reactコンポーネントの単体動作
+- **実行環境**: Chromiumブラウザ（`playwright-ct.config.ts`）
+- **独立性**: 外部依存なしのコンポーネント検証
+- **テストファイル例**: [`src/tests/component/TweetButton.spec.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/component/TweetButton.spec.tsx)
+
+**3. E2Eテスト（Playwright）**
+- **対象**: 完全なユーザーフロー検証
+- **実行環境**: 開発サーバー（port 4321）統合（`playwright-e2e.config.ts`）
+- **範囲**: ナビゲーション、ページ遷移、インタラクション
+- **テストファイル例**: [`src/tests/e2e/navigation.spec.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/e2e/navigation.spec.ts)
+
+**4. Storybookテスト（Vitest + Storybook）**
+- **対象**: 全ストーリーの自動実行テスト
+- **実行環境**: ブラウザ環境（`@storybook/addon-vitest`）
+- **統合性**: Storybookの設定と完全連携
+- **自動化**: 全`.stories.tsx`ファイルを自動検出・実行
+
+#### テスト実行戦略
+
+**並列実行による高速化**:
+```json
+{
+  "test": "concurrently -P npm:test:*",
+  "test:unit": "vitest run --project=unit --coverage",
+  "test:playwright-ct": "playwright test -c playwright-ct.config.ts",
+  "test:playwright-e2e": "playwright test -c playwright-e2e.config.ts", 
+  "test:storybook": "vitest run --project=storybook --coverage"
+}
+```
+
+**CI/CD統合フロー**:
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant CI as GitHub Actions
+    participant Unit as Unit Tests
+    participant CT as Component Tests
+    participant E2E as E2E Tests
+    participant SB as Storybook Tests
+    participant VRT as Visual Tests
+    
+    Dev->>CI: git push
+    CI->>CI: 並列テスト開始
+    
+    par ユニットテスト
+        CI->>Unit: vitest run --project=unit
+        Unit->>Unit: カバレッジ生成
+        Unit-->>CI: 結果 + coverage/unit/
+    and コンポーネントテスト
+        CI->>CT: playwright test -c playwright-ct.config.ts
+        CT->>CT: ブラウザでコンポーネント実行
+        CT-->>CI: 結果 + test-results/ct.xml
+    and E2Eテスト
+        CI->>E2E: 開発サーバー起動
+        E2E->>E2E: フルブラウザテスト
+        E2E-->>CI: 結果 + test-results/e2e.xml
+    and Storybookテスト
+        CI->>SB: vitest run --project=storybook
+        SB->>SB: 全ストーリー実行
+        SB-->>CI: 結果 + coverage/storybook/
+    end
+    
+    alt 全テスト成功
+        CI->>VRT: デプロイ後ビジュアルテスト
+        VRT->>VRT: スクリーンショット比較
+        VRT-->>CI: 視覚回帰結果
+    end
+    
+    CI-->>Dev: 統合テスト結果
+```
+
+#### テスト戦略の技術的特徴
+
+**1. カバレッジ統合管理**
+- **単体**: `coverage/unit/` - ユーティリティ関数とコンポーネントロジック
+- **統合**: `coverage/storybook/` - Storybookストーリーによるコンポーネントカバレッジ
+- **フォーマット**: Cobertura形式でCI/CD統合
+
+**2. ブラウザ環境最適化**
+- **Headless実行**: `--headless=new`フラグによる高速化
+- **並列実行制限**: CI環境で`workers: 1`によるリソース最適化
+- **リトライ戦略**: CI環境で`retries: 2`による安定性確保
+
+**3. レポート統合**
+- **JUnit XML**: 各テスト層でJUnit形式レポート生成
+- **統一出力**: `test-results/`ディレクトリに集約
+- **CI/CD連携**: GitHub Actionsでテスト結果可視化
+
+**4. 設定分離と再利用性**
+- **設定ファイル分離**: 各テスト種別で独立した設定ファイル
+- **共通設定**: Vitestエイリアス設定の統一（`@/`パス）
+- **環境固有最適化**: 開発・CI環境での動作差分対応
+
+### 8. Claude Code統合開発環境
+
+このプロジェクトの開発において、AI支援ツール「Claude Code」の本格的な活用環境を構築しています。
+
+**ソースコード**: [`.claude/`](https://github.com/korosuke613/homepage-2nd/tree/main/.claude)、[`.devcontainer/`](https://github.com/korosuke613/homepage-2nd/tree/main/.devcontainer)  
+**Claude Code**: [https://claude.ai/code](https://claude.ai/code)
+
+#### 専用開発環境の構築
+
+**DevContainer統合**:
+```json
+{
+  "name": "Claude Code Sandbox",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Anthropic.claude-code",
+        "biomejs.biome"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "CLAUDE_CONFIG_DIR": "/home/node/.claude"
+  }
+}
+```
+
+- **コンテナ化**: Docker環境でのClaude Code実行環境を構築
+- **VS Code統合**: Claude Code拡張とBiome（リンター）の同時利用
+- **セキュリティ**: NET_ADMIN/NET_RAW権限による制限付きネットワークアクセス
+
+#### 専門エージェントシステム
+
+`.claude/agents/`ディレクトリに6つの専門エージェントを定義：
+
+**1. blog-content-reviewer**: ブログコンテンツレビュー専門家
+```markdown
+- 技術的正確性レビュー（コード例、API情報の検証）
+- リンクと参照の検証（404エラー、古い情報の検出）
+- コンテンツの新規性と価値評価
+- 日本語技術文書の品質チェック
+```
+
+**2. repository-architect**: プロジェクト構造の理解専門家
+```markdown
+- Astroベースの個人ホームページプロジェクトの設計思想理解
+- コンポーネント構造、データフロー分析
+- 技術スタック間の整合性確認
+```
+
+**3. その他専門エージェント**:
+- **tdd-refactoring-coach**: TDD・リファクタリング指導
+- **decision-recorder**: 技術決定の文書化
+- **code-reviewer**: コード品質レビュー
+- **debugger**: エラー・テスト失敗の調査
+
+#### カスタムコマンドシステム
+
+`.claude/commands/`でプロジェクト固有のコマンドを定義：
+
+```bash
+/create-branch    # Git ブランチ作成の自動化
+/create-commit    # コミットメッセージ生成とコミット実行
+/update-readme    # README.md の構造化更新
+```
+
+#### セキュリティ・権限制御
+
+`.claude/hooks/`による高度な制御システム：
+
+**block-file-edits.sh**: ファイル編集制限
+```bash
+# GitHub Actions ワークフローファイルの編集をブロック
+if [[ "$file_path" == *".github/workflows"* ]]; then
+    echo "❌ エラー: workflow:write 権限が必要です"
+    exit 2
+fi
+
+# Claude設定ファイルの編集をブロック  
+if [[ "$file_path" == *".claude/hooks"* ]]; then
+    echo "❌ エラー: Claude設定は編集できません"
+    exit 2
+fi
+```
+
+**権限設定**:
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)", 
+      "Bash(gh pr diff:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": ["block-file-edits.sh"],
+    "Notification": ["notify-require.sh"],
+    "Stop": ["notify-finish.sh"]
+  }
+}
+```
+
+#### 開発フローでの実活用
+
+**1. 機能開発時**:
+- `repository-architect`エージェント: 既存アーキテクチャとの整合性確認
+- カスタムコマンド: `/create-branch feature/new-component`
+- 自動リンティング: Biome連携による品質保証
+
+**2. コンテンツ作成時**:
+- `blog-content-reviewer`エージェント: 技術記事の網羅的品質チェック
+- リンク検証: 外部リンクの生存確認と関連性評価
+- メタデータ検証: フロントマターとタグ付け規約の確認
+
+**3. コードレビュー時**:
+- `code-reviewer`エージェント: セキュリティ・保守性・品質の3観点評価
+- `tdd-refactoring-coach`エージェント: テスト設計とリファクタリング提案
+
+#### Claude Code統合の技術的メリット
+
+**コンテキスト保持**:
+- プロジェクト全体の構造と設計思想を理解したAI支援
+- 既存コードベースの規約に従った実装提案
+
+**品質保証の自動化**:
+- 専門エージェントによる多角的レビュー
+- セキュリティ制約下での安全な開発環境
+
+**開発効率の向上**:
+- 自然言語による要件記述から実装コード生成
+- 複雑なアルゴリズム（MyIconのChase Mode等）の段階的実装支援
+
 ## まとめ
 
 これらの特筆すべき技術実装により、単なる静的サイトを超えたインタラクティブで高品質な個人ホームページを実現しています：
@@ -530,5 +803,7 @@ sequenceDiagram
 - **ビルドシステム**: 複数ソース統合とタグ色自動管理
 - **VRT**: 用途別閾値設定による実用的な視覚回帰テスト
 - **自動デプロイ**: 変更検出最適化と品質保証の完全自動化
+- **テスト戦略**: 4層の包括的テスト環境による企業レベルの品質保証
+- **AI統合開発**: Claude Code専門エージェントとセキュリティ制御による次世代開発環境
 
-これらの実装は、個人サイトでありながら企業レベルの技術的複雑さと品質保証を実現し、訪問者に独特なユーザーエクスペリエンスを提供しています。
+これらの実装は、個人サイトでありながら企業レベルの技術的複雑さと品質保証を実現し、AI支援ツールとの深い統合により、現代的な開発手法で訪問者に独特なユーザーエクスペリエンスを提供しています。
