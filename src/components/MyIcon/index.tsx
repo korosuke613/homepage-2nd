@@ -462,12 +462,12 @@ export const MyIcon: React.FC<IMyIconProps> = ({ iconId, iconPath }) => {
           const iconCenterY = prev.y + icon.height / 2;
           const deltaX = mousePositionRef.current.x - iconCenterX;
           const deltaY = mousePositionRef.current.y - iconCenterY;
-          const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+          const squaredDistance = deltaX * deltaX + deltaY * deltaY;
 
-          if (distance > 0) {
+          if (squaredDistance > 0) {
             // 正規化されたベクトル
-            const normalizedX = deltaX / distance;
-            const normalizedY = deltaY / distance;
+            const normalizedX = deltaX / Math.sqrt(squaredDistance);
+            const normalizedY = deltaY / Math.sqrt(squaredDistance);
 
             if (chaseMode === "follow") {
               // マウスに向かって移動
