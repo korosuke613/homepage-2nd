@@ -1,3 +1,5 @@
+.envrc
+
 # build output
 dist/
 .output/

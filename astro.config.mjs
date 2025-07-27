@@ -8,6 +8,7 @@ import { defineConfig } from "astro/config";
 import metaTags from "astro-meta-tags";
 import robotsTxt from "astro-robots-txt";
 import rehypeExternalLinks from "rehype-external-links";
+import rehypeMermaid from "rehype-mermaid";
 import { setupKorosuke } from "./src/utils/Integration.mjs";
 
 const IS_TESTING = process.env.IS_TESTING === "true";
@@ -38,7 +39,21 @@ export default defineConfig({
           rel: ["noopener", "noreferrer"],
         },
       ],
+      [
+        rehypeMermaid,
+        {
+          strategy: "img-svg",
+          dark: {
+            theme: "dark",
+            fontFamily: "sans-serif",
+          },
+        },
+      ],
     ],
+    syntaxHighlight: {
+      type: "shiki",
+      excludeLangs: ["mermaid"],
+    },
   },
   vite: {
     optimizeDeps: {
