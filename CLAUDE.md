@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run test:unit` - カバレッジ付きでユニットテスト実行
 - `npm run test:playwright-ct` - コンポーネントテスト実行
 - `npm run test:playwright-e2e` - E2Eテスト実行
+- `npm run test:storybook` - Storybookテスト実行
 - `npm run vrt:init` - ビジュアルリグレッションテストのスナップショットを初期化
 - `npm run vrt:regression` - ビジュアルリグレッションテスト実行
 
@@ -35,41 +36,62 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build-storybook` - Storybookビルド
 - `npm run chromatic` - Chromaticビジュアルテスト実行
 
+### 外部コンテンツ更新（toolsディレクトリ）
+外部ブログコンテンツの更新は `tools/` ディレクトリで実行：
+- `cd tools && npm run update:hatena` - HatenaBlogデータを更新
+- `cd tools && npm run update:zenn` - Zennデータを更新
+- `cd tools && npm run update:zenn-scrap` - Zenn Scrapデータを更新
+
 ## アーキテクチャ
 
 複数のソースからコンテンツを集約するAstroベースの個人ホームページです。
 
 ### コンテンツ構造
-- **投稿**: `src/content/posts/`内のローカルmarkdownファイル。フロントマターのスキーマは`src/content/config.ts`で定義
-- **外部ブログ**: HatenaBlogとZennの記事を取得して`public/assets/`に保存
+- **ローカル投稿**: `src/content/posts/`内のMarkdownファイル。フロントマターのスキーマは`src/content/config.ts`で定義
+- **外部ブログ**: HatenaBlogとZennの記事を取得して`public/assets/`にJSONとして保存
 - **データベース**: Astro DBがページビューとクリック数のGA4分析データを保存
 
-### 主要なインテグレーション
-- **カスタムsetupKorosukeインテグレーション** (`src/utils/Integration.mjs`): ビルド時にタグの色を生成してmarkdownフロントマターを処理
-- **外部コンテンツ取得**: `tools/`ディレクトリのツールがHatenaBlogとZennのコンテンツを取得・処理
-- **GA4インテグレーション**: `db/updateGA4Data.ts`がGoogle Analyticsデータを取得・保存
+### ビルド時データ生成の仕組み
+`src/utils/Integration.mjs`の`setupKorosuke`インテグレーションが核心的な役割を果たす：
+1. **タグ色生成**: 全投稿・ブログのタグに対してランダムなTailwindカラーを割り当て
+2. **年度集計**: 投稿とブログの年度別データを生成
+3. **JSONファイル生成**: `generated/tags.json`と`generated/years.json`を出力
 
-### コンポーネント構成
-- コンポーネントは`index.tsx` + `ComponentName.stories.tsx`のStorybookパターンに従う
-- `src/partials/`のPartialsは大きなページセクション
-- `src/templates/`のTemplatesはレイアウトコンポーネント
+### データ統合アーキテクチャ
+3つのコンテンツソースの統合処理：
+- **ローカルMarkdown**: `src/utils/Posts.ts`で処理、frontmatterから投稿データを抽出
+- **外部ブログ**: `src/utils/Blog.ts`で処理、HatenaBlog/Zenn/ZennScrapのJSONデータを変換
+- **統合表示**: 日付順ソート、タグシステム、カテゴリ分類で統一的に表示
 
-### データフロー
-1. ビルド時: `setupKorosuke`インテグレーションがmarkdownを処理して`generated/tags.json`と`generated/years.json`を生成
-2. 外部コンテンツはツールで取得して`public/assets/`に保存
-3. GA4データはAstro DBで定期的に更新
-4. ページは全ソースからコンテンツを動的に集約
+### コンポーネント設計パターン
+- **Storybookパターン**: 全コンポーネントは`index.tsx` + `ComponentName.stories.tsx`のペア
+- **階層構造**: 
+  - `src/components/` - 再利用可能な小コンポーネント
+  - `src/partials/` - ページレベルの大きなセクション
+  - `src/templates/` - レイアウトテンプレート
+
+### データベーススキーマ詳細
+Astro DBテーブル構成（`db/config.ts`）：
+- `Posts`: ローカル投稿のページビュー数追跡
+- `Blogs`: 外部ブログリンクのクリック数追跡  
+- `Zenns`: Zenn記事のページビュー数追跡
+- `Playground`: 開発・テスト用テーブル
+
+### 外部コンテンツ取得システム
+`tools/`ディレクトリの独立したNode.jsツール群：
+- **HatenaBlog**: AtomXMLフィードから記事情報を取得・パース
+- **Zenn**: 記事URLからOGP情報をスクレイピング
+- **ZennScrap**: スクラップ情報を専用APIから取得
 
 ### テスト戦略
-- ユーティリティのVitestによるユニットテスト
-- ReactコンポーネントのPlaywright CTによるコンポーネントテスト
-- 完全なユーザーフローのPlaywrightによるE2Eテスト
-- UI一貫性のためのビジュアルリグレッションテスト
-- コンポーネント開発とビジュアルテストのためのStorybook
+- **ユニットテスト**: Vitestによるユーティリティ関数のテスト
+- **コンポーネントテスト**: Playwright CTによるReactコンポーネントの動作テスト
+- **E2Eテスト**: Playwrightによる完全なユーザーフロー検証
+- **ビジュアルリグレッション**: Playwrightによるスクリーンショット比較
+- **Storybook**: コンポーネントの視覚的開発とドキュメント
 
-### データベーススキーマ
-Astro DBテーブルが分析データを追跡:
-- `Posts`: ローカル投稿のページビュー
-- `Blogs`: 外部ブログリンクのクリック数
-- `Zenns`: Zenn記事のページビュー
-- `Playground`: DB操作のテストテーブル
+### 重要な設定ファイル
+- `astro.config.mjs`: Astro設定、インテグレーション定義、リハイププラグイン設定
+- `biome.json`: リンター・フォーマッター設定、Astroファイル特別ルール含む
+- `tailwind.config.mjs`: Tailwind CSS設定、カスタムスクリーンサイズ定義
+- `tsconfig.json`: 厳密なTypeScript設定、エイリアスパス設定
