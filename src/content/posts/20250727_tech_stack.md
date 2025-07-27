@@ -2,8 +2,6 @@
 title: 'korosuke613/homepage-2ndを構成する技術スタック全解剖'
 description: 'Astroベースの個人ホームページを支える、フロントエンド・バックエンド・インフラ・CI/CDのすべての技術を詳しく解説します'
 pubDate: 2025-07-27T09:00:00Z
-imgSrc: '/assets/images/cover/tech_stack.webp'
-imgAlt: 'homepage-2ndの技術スタック図'
 tags: 
   - Astro
   - React
@@ -15,500 +13,247 @@ tags:
 
 ## はじめに
 
-このブログサイト（korosuke613/homepage-2nd）で使用している技術スタックについて、フロントエンド・バックエンド・インフラ・CI/CDの全てを網羅的に解説します。複数のソースからコンテンツを集約する個人ホームページとして、どのような技術選択をし、どう組み合わせているのかを詳しく紹介します。
+このブログサイト（korosuke613/homepage-2nd）の技術スタックの中でも、特に特筆すべき技術的実装について解説します。インタラクティブなアバター機能、類似記事推薦システム、独自ビルドシステム、ビジュアルリグレッションテストなど、一般的なサイトとは異なる独自の工夫を中心に紹介します。
 
-## アーキテクチャ概要
+## 特筆すべき技術実装
 
-このサイトは**Astro**をベースとした静的サイトジェネレータで、以下の特徴を持っています：
+### 1. インタラクティブアバター「MyIcon」
 
-- **複数コンテンツソース**: ローカルMarkdown、HatenaBlog、Zenn記事の統合表示
-- **データ駆動**: Astro DBによるページビュー・クリック数の分析データ保存
-- **モダンフロントエンド**: React + TypeScript + Tailwind CSSでのコンポーネント開発
-- **品質保証**: 多層テスト戦略とビジュアルリグレッションテスト
-- **自動化**: GitHub Actionsによる包括的CI/CD
+サイトトップに配置されたアバター画像は、単なる装飾ではなく高度にインタラクティブなコンポーネントです。
 
-## フロントエンド技術
+**ソースコード**: [`src/components/MyIcon/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/index.tsx)  
+**仕様書**: [`src/components/MyIcon/SPEC.md`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/SPEC.md)
 
-### Core Framework
+#### 隠しキーボードコマンド機能
 
-**Astro 5.10.1**
-- 静的サイト生成の中核技術
-- Islands Architecture採用でハイドレーション最適化
-- ビルド時データ生成による高パフォーマンス
+以下のコマンドをキーボードで入力することで、様々なモードを発動できます：
 
-**React 19.1.0**
-- インタラクティブコンポーネントの開発
-- サーバーコンポーネントとクライアントコンポーネントの使い分け
-- Astroのアイランドアーキテクチャと組み合わせた部分的ハイドレーション
+- **`mugen`**: No Limit Mode - 回転制限解除
+- **`eien`**: Infinity Mode - 自動回転開始  
+- **`clockup`**: 速度とインターバル加速
+- **`kakku`**: DVD Mode - 跳ね返り移動
+- **`oikake`**: Chase Mode - マウス追跡/回避
 
-### スタイリング・UI
+#### Chase Modeアルゴリズム
 
-**Tailwind CSS 3.4.17**
-```javascript
-// tailwind.config.mjs
-export default {
-  content: ["./src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}"],
-  theme: {
-    extend: {},
-    screens: {
-      xs: "460px",  // カスタムブレークポイント
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      "2xl": "1536px",
-    },
-  },
-  plugins: [
-    require("@tailwindcss/aspect-ratio"),
-    require("@tailwindcss/typography"),
-  ],
-};
+マウス追跡システムの動作フロー：
+
+```mermaid
+graph TD
+    A[キーボード入力 'oikake'] --> B{現在のモード}
+    B -->|none| C[Follow Mode]
+    B -->|follow| D[Avoid Mode]  
+    B -->|avoid| E[Chase Mode OFF]
+    
+    C --> F[マウス位置取得]
+    D --> F
+    F --> G[距離計算: √((mx-ix)² + (my-iy)²)]
+    G --> H{距離 > 50px?}
+    
+    H -->|Yes| I{Follow Mode?}
+    H -->|No| J{Follow Mode?}
+    
+    I -->|Yes| K[正規化ベクトル * 速度<br/>→ マウスに向かって移動]
+    I -->|No| L[正規化ベクトル * -速度<br/>→ マウスから逃避]
+    
+    J -->|Yes| M[減速して停止]
+    J -->|No| N[ランダム方向に逃避]
+    
+    K --> O[壁衝突判定]
+    L --> O
+    M --> O
+    N --> O
+    O --> P[次フレーム]
+    P --> F
 ```
 
-**Storybook 9.0.14**
-- コンポーネント駆動開発
-- 全コンポーネントが`index.tsx` + `ComponentName.stories.tsx`のペアで構成
-- アクセシビリティテスト（@storybook/addon-a11y）
-- Chromatic連携によるビジュアルリグレッションテスト
+- **Follow**: マウスに向かって移動、近距離で減速停止
+- **Avoid**: マウスから逃避、重複時はランダム方向
+- **相互排他制御**: DVD ModeとChase Modeの自動切り替え
 
-### TypeScript設定
+#### 技術的特徴
 
-**厳密なTypeScript設定**
-```json
-{
-  "extends": "astro/tsconfigs/strictest",
-  "compilerOptions": {
-    "exactOptionalPropertyTypes": false,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]  // パスエイリアス設定
-    },
-    "types": ["astro/client", "@astrojs/db"]
-  }
-}
+- **7種類の3D回転アニメーション**: Web Animations APIによる滑らかな回転
+- **DVD Mode**: 画面端での跳ね返り動作＋13種類ビビッドカラー変更
+- **60fpsアニメーション**: `requestAnimationFrame`による最適化
+- **壁衝突検出**: [`handleCollision`関数](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/MyIcon/index.tsx#L93-L118)による物理演算
+
+### 2. 類似記事推薦システム
+
+記事下部に表示される「あわせて読む」は、自然言語処理による類似度計算システムです。
+
+**ソースコード**: [`src/utils/TextSimilarity.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/src/utils/TextSimilarity.ts)  
+**コンポーネント**: [`src/components/SimilarityPosts/index.tsx`](https://github.com/korosuke613/homepage-2nd/blob/main/src/components/SimilarityPosts/index.tsx)
+
+#### Jaro-Winkler距離アルゴリズムによる類似度計算
+
+```mermaid
+graph TD
+    A[現在の記事] --> B[統合コンテンツ作成<br/>title + tags + body]
+    
+    C[ローカル投稿] --> D[記事リスト準備]
+    E[HatenaBlog記事] --> D
+    
+    D --> F[各記事に対してJaro-Winkler距離計算]
+    B --> F
+    
+    F --> G{natural.JaroWinklerDistance}
+    G --> H[類似度スコア<br/>0.0 - 1.0]
+    
+    H --> I[スコア順ソート<br/>降順]
+    I --> J[上位6件抽出]
+    J --> K[表示: タイトル + 類似度]
+    
+    style G fill:#e1f5fe
+    style H fill:#f3e5f5
 ```
 
-### コンポーネントアーキテクチャ
+#### 技術的特徴
 
-**階層化されたコンポーネント設計**
-- `src/components/` - 再利用可能な小コンポーネント
-- `src/partials/` - ページレベルの大きなセクション
-- `src/templates/` - レイアウトテンプレート
+- **マルチソース対応**: ローカルMarkdown投稿とHatenaBlog記事を統合分析
+- **自然言語処理**: [`natural.js`](https://github.com/NaturalNode/natural)のJaro-Winkler距離アルゴリズムを使用
+- **類似度可視化**: 計算結果のスコア（0.00-1.00）を併せて表示
+- **外部リンク区別**: 内部記事と外部ブログの視覚的区別
 
-**主要コンポーネント例**
-- `BlogCard` - 外部ブログ記事表示
-- `PostCard` - ローカル投稿表示
-- `RandomArticleCard` - ランダム記事表示機能
-- `SimilarityPosts` - 類似記事推薦
+### 3. 独自ビルドシステム「setupKorosukeインテグレーション」
 
-## バックエンド・データ層
+Astroの`astro:config:setup`フックを活用した、カスタムビルド時処理システムです。
 
-### データベース
+**ソースコード**: [`src/utils/Integration.mjs`](https://github.com/korosuke613/homepage-2nd/blob/main/src/utils/Integration.mjs)  
+**設定**: [`astro.config.mjs`](https://github.com/korosuke613/homepage-2nd/blob/main/astro.config.mjs#L52)
 
-**Astro DB**
-```typescript
-// db/config.ts
-const Posts = defineTable({
-  columns: {
-    pagePath: column.text({ unique: true, primaryKey: true }),
-    screenPageViews: column.number({ optional: false }),
-  },
-});
+#### 動的タグ色生成アルゴリズム
 
-const Blogs = defineTable({
-  columns: {
-    linkUrl: column.text({ unique: true, primaryKey: true }),
-    click: column.number({ optional: false }),
-  },
-});
-
-const Zenns = defineTable({
-  columns: {
-    pagePath: column.text({ unique: true, primaryKey: true }),
-    screenPageViews: column.number({ optional: false }),
-  },
-});
+```mermaid
+graph TD
+    A[ビルド開始] --> B[setupKorosukeインテグレーション実行]
+    
+    B --> C[Markdownファイル解析<br/>src/content/posts/**/*.md]
+    B --> D[外部ブログJSON読み込み<br/>public/assets/*.json]
+    
+    C --> E[タグ抽出]
+    D --> E
+    C --> F[年度抽出]
+    D --> F
+    
+    E --> G[既存tags.json読み込み]
+    G --> H{タグごとに色設定チェック}
+    
+    H -->|既存| I[既存色を保持]
+    H -->|新規| J{特別タグ?}
+    
+    J -->|Pickup ⭐️| K[専用色設定<br/>bg-indigo-900]
+    J -->|一般| L[22色からランダム選択]
+    
+    L --> M{色枯渇?}
+    M -->|Yes| N[色リセット＋再選択]
+    M -->|No| O[選択色を削除]
+    
+    I --> P[generated/tags.json生成]
+    K --> P
+    O --> P
+    N --> P
+    
+    F --> Q[generated/years.json生成]
+    
+    style K fill:#3f51b5
+    style L fill:#ff9800
 ```
 
-**Google Analytics 4統合**
-- `@google-analytics/data`によるGA4データ取得
-- ページビュー数・クリック数の自動収集・更新
-- データベース更新は日次バッチで実行
+#### 技術的特徴
 
-### コンテンツ管理
+- **ビルド時実行**: Astroの`astro:config:setup`フックで自動実行
+- **状態保持**: 既存のタグ色設定を保持しつつ新規タグにのみ色割り当て
+- **枯渇対策**: 22色Tailwindカラー使い切った場合の再利用ロジック
+- **特別扱い**: "Pickup ⭐️"タグの専用スタイル（`bg-indigo-900`）設定
+- **マルチソース統合**: ローカルMarkdownと外部ブログの統合データ生成
 
-**ローカルコンテンツ**
-```typescript
-// src/content/config.ts
-const postCollection = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    pubDate: z.date(),
-    tags: z.array(z.string()),
-    order: z.number().optional(),
-    imgSrc: z.string().optional(),
-    imgAlt: z.string().optional(),
-    draft: z.boolean().optional(),
-  }),
-});
+### 4. 高度なビジュアルリグレッションテスト（VRT）
+
+Playwrightを活用した、2段階の閾値設定による柔軟なVRTシステムです。
+
+**ソースコード**: [`src/tests/vrt/`](https://github.com/korosuke613/homepage-2nd/tree/main/src/tests/vrt)  
+**設定**: [`playwright-vrt.config.ts`](https://github.com/korosuke613/homepage-2nd/blob/main/playwright-vrt.config.ts)
+
+#### VRTワークフロー
+
+```mermaid
+graph TD
+    A[VRTトリガー] --> B{テスト種別}
+    
+    B -->|依存関係更新| C[厳密テスト<br/>デフォルト閾値]
+    B -->|コンテンツ追加| D[緩和テスト<br/>maxDiffPixelRatio設定]
+    
+    C --> E[対象ページ一覧取得]
+    D --> E
+    
+    E --> F[各ページに対してテスト実行]
+    F --> G[ページ読み込み<br/>waitUntil: domcontentloaded]
+    
+    G --> H[全画像読み込み完了待機<br/>waitImagesLoaded]
+    H --> I[フルページスクリーンショット]
+    
+    I --> J{初期化モード?}
+    J -->|Yes| K[新しいベースライン生成<br/>updateSnapshots: all]
+    J -->|No| L[既存スナップショットと比較]
+    
+    L --> M{差分チェック}
+    M -->|許容範囲内| N[テスト成功]
+    M -->|閾値超過| O[テスト失敗<br/>差分画像生成]
+    
+    K --> P[CI/CD完了]
+    N --> P
+    O --> Q[失敗通知]
+    
+    style C fill:#ffcdd2
+    style D fill:#c8e6c9
+    style H fill:#e1f5fe
 ```
 
-**外部コンテンツ取得（tools/ディレクトリ）**
+#### 技術的特徴
 
-**HatenaBlog取得**
-```bash
-cd tools && npm run update:hatena
-```
-- AtomXMLフィードからのデータパース
-- `HatenaXML.ts`での構造化データ変換
+- **2段階閾値**: 依存関係更新時（厳密）とコンテンツ追加時（緩和）で異なる許容度
+- **画像同期**: [`waitImagesLoaded`関数](https://github.com/korosuke613/homepage-2nd/blob/main/src/tests/vrt/utils.ts#L5-L16)による非同期画像読み込みの完全同期
+- **CI/CD統合**: GitHub Actionsでの自動実行とスナップショット初期化
+- **フルページ**: 縦スクロール全体のスクリーンショット比較
 
-**Zenn記事取得**
-```bash
-cd tools && npm run update:zenn      # 記事データ
-cd tools && npm run update:zenn-scrap  # スクラップデータ
-```
-- OGP情報スクレイピング
-- 専用APIからのスクラップ情報取得
+### 5. CI/CDでの特殊な最適化
 
-### ビルド時データ生成
+**ワークフロー**: [`.github/workflows/`](https://github.com/korosuke613/homepage-2nd/tree/main/.github/workflows)
 
-**setupKorosukeインテグレーション**
-`src/utils/Integration.mjs`で以下を自動生成：
+#### アーティファクト変更検出システム
 
-1. **タグ色生成**: 全投稿・ブログのタグに対してランダムなTailwindカラーを割り当て
-2. **年度集計**: 投稿とブログの年度別データを生成
-3. **JSONファイル生成**: `generated/tags.json`と`generated/years.json`を出力
-
-```javascript
-// astro.config.mjs
-integrations: [
-  react(),
-  tailwind({}),
-  sitemap(),
-  robotsTxt(),
-  partytown(),
-  setupKorosuke(),  // カスタムインテグレーション
-  mdx(),
-  metaTags(),
-  db(),
-],
+```mermaid
+graph LR
+    A[ビルド成果物<br/>dist/] --> B[SHA256ハッシュ計算<br/>全ファイル対象]
+    B --> C[前回デプロイ時のハッシュと比較]
+    C --> D{変更あり?}
+    
+    D -->|Yes| E[デプロイ実行]
+    D -->|No| F[デプロイスキップ<br/>リソース節約]
+    
+    E --> G[新しいハッシュを保存]
+    F --> H[CI/CD完了]
+    G --> H
+    
+    style F fill:#c8e6c9
+    style E fill:#ffcdd2
 ```
 
-## インフラストラクチャ
+#### 技術的特徴
 
-### ホスティング
-
-**GitHub Pages**
-- 静的サイト配信
-- カスタムドメイン（korosuke613.dev）
-- HTTPS自動対応
-
-**デプロイメント戦略**
-```yaml
-# .github/workflows/pages.yml
-- name: Build
-  env: 
-    ASTRO_DB_REMOTE_URL: ${{ secrets.ASTRO_DB_REMOTE_URL }}
-    ASTRO_DB_APP_TOKEN: ${{ secrets.ASTRO_DB_APP_TOKEN }}
-  run: npm run build -- --remote
-```
-
-### 外部サービス連携
-
-**Google Cloud Platform**
-- Workload Identity連携による認証
-- Google Analytics 4データアクセス
-- サービスアカウントベースのセキュア認証
-
-**Chromatic**
-- Storybookの自動ビルド・公開
-- ビジュアルリグレッションテストの実行
-- UIレビューフローの自動化
-
-## CI/CD パイプライン
-
-### GitHub Actions構成
-
-**メインワークフロー**
-
-**CI Pipeline（ci.yaml）**
-```yaml
-jobs:
-  lint: # Biomeリンティング
-  build: # Astroビルド + アーティファクトハッシュ計算
-  unit-test: # Vitestユニットテスト
-  e2e-test: # Playwright E2Eテスト 
-  ct-test: # Playwrightコンポーネントテスト
-  vrt: # ビジュアルリグレッションテスト
-  chromatic: # Chromaticビジュアルテスト
-  tools: # 外部コンテンツ取得ツールのテスト
-```
-
-**Pages Deploy（pages.yml）**
-```yaml
-jobs:
-  update-astro-db: # GA4データ更新
-  build: # リモートDB接続でのビルド
-  deploy: # GitHub Pagesデプロイ
-  call-scraping-workflow: # 外部コンテンツ更新
-  call-vrt-init: # VRTスナップショット初期化
-```
-
-### 自動化されたコンテンツ更新
-
-**定期実行スケジュール**
-```yaml
-on:
-  schedule:
-    - cron: '33 5 * * *'  # 日次でGA4データ・外部コンテンツ更新
-```
-
-**更新対象**
-- HatenaBlogフィード（update-blogs-data.yaml）
-- Zenn記事データ（scraping.yaml）
-- GA4分析データ（pages.yml内のupdate-astro-db）
-
-### パフォーマンス最適化
-
-**ビルドキャッシュ戦略**
-```yaml
-- name: Restore astro build cache
-  uses: actions/cache/restore@v4
-  with:
-    path: .astro/cache
-    key: astro-build-${{ hashFiles('**/astro.config.mjs', '**/package-lock.json') }}
-    restore-keys: |
-      astro-build-${{ hashFiles('**/astro.config.mjs') }}-
-      astro-build-
-```
-
-**アーティファクト変更検出**
-- ビルド成果物のSHA256ハッシュ計算
-- 変更がない場合はデプロイスキップ
-- PRラベル自動付与による可視化
-
-## テスト戦略
-
-### 多層テストアプローチ
-
-**1. ユニットテスト（Vitest）**
-```json
-"test:unit": "vitest run --project=unit --coverage"
-```
-- ユーティリティ関数のテスト
-- ビジネスロジックの検証
-- カバレッジレポート生成
-
-**2. コンポーネントテスト（Playwright CT）**
-```json
-"test:playwright-ct": "playwright test -c playwright-ct.config.ts"
-```
-- Reactコンポーネントの単体テスト
-- ブラウザ環境での実際の動作確認
-
-**3. E2Eテスト（Playwright）**
-```json
-"test:playwright-e2e": "playwright test -c playwright-e2e.config.ts"
-```
-- 完全なユーザーフロー検証
-- ナビゲーション・ページ遷移のテスト
-
-**4. ビジュアルリグレッションテスト**
-```json
-"vrt:init": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/init.spec.ts"
-"vrt:regression": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/regression.spec.ts"
-```
-- スクリーンショット比較による視覚的変更検出
-- CI/CD内での自動回帰テスト
-
-**5. Storybookテスト**
-```json
-"test:storybook": "vitest run --project=storybook --coverage"
-```
-- コンポーネントストーリーの検証
-- アクセシビリティテスト統合
-
-### テスト最適化
-
-**並列実行・キャッシュ戦略**
-```yaml
-- name: E2E testing
-  run: npm run test:playwright-e2e -- --retries=2 --workers=2
-  
-- name: Cache playwright binaries
-  uses: actions/cache@v4
-  with:
-    path: ~/.cache/ms-playwright
-    key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
-```
-
-## 品質保証・開発体験
-
-### コード品質管理
-
-**Biome統合**
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  },
-  "formatter": {
-    "indentStyle": "space"
-  },
-  "overrides": [
-    {
-      "includes": ["**/*.astro"],
-      "linter": {
-        "rules": {
-          "style": {
-            "useConst": "off",
-            "useImportType": "off"
-          }
-        }
-      }
-    }
-  ]
-}
-```
-
-**実行コマンド**
-```bash
-npm run lint      # CIモードでのリンティング
-npm run lint:fix  # 自動修正付きリンティング
-```
-
-### 依存関係管理
-
-**Renovate自動更新**
-- 依存関係の定期的な自動更新
-- セキュリティパッチの迅速適用
-- テスト結果に基づく自動マージ
-
-**パッケージ管理戦略**
-- npm ci による確定的インストール
-- package-lock.json による厳密なバージョン管理
-- セキュリティ監査の定期実行
-
-### 開発効率化
-
-**Hot Module Replacement**
-```bash
-npm run dev  # 開発サーバーでのライブリロード
-```
-
-**型安全性**
-- 厳密TypeScript設定
-- Astro型サポート
-- ビルド時型チェック
-
-## セキュリティ対策
-
-### 認証・認可
-
-**GitHub Actions Secrets管理**
-- GA4アクセス用認証情報
-- Astro DB接続情報
-- 外部サービス連携トークン
-
-**Workload Identity**
-- パスワードレス認証
-- 最小権限の原則
-- トークン自動ローテーション
-
-### コンテンツセキュリティ
-
-**外部リンク処理**
-```javascript
-rehypePlugins: [
-  [
-    rehypeExternalLinks,
-    {
-      target: "_blank",
-      rel: ["noopener", "noreferrer"],
-    },
-  ],
-],
-```
-
-**XSS対策**
-- Astroの自動エスケープ
-- CSPヘッダー設定
-- ユーザー入力の適切なサニタイゼーション
-
-## パフォーマンス最適化
-
-### ビルド時最適化
-
-**Islands Architecture**
-- 必要な部分のみJavaScript配信
-- 静的コンテンツの最大化
-- ハイドレーション最小化
-
-**アセット最適化**
-- 画像の最適化・遅延読み込み
-- CSS/JSの最小化
-- CDN活用による配信最適化
-
-### ランタイム最適化
-
-**キャッシュ戦略**
-- ビルドキャッシュによる高速ビルド
-- ブラウザキャッシュ最適化
-- CDNエッジキャッシュ活用
-
-**パフォーマンス監視**
-- Core Web Vitalsの追跡
-- ビルド時間監視
-- デプロイサイズ監視
-
-## 運用・監視
-
-### 分析・メトリクス
-
-**Google Analytics 4統合**
-- ページビュー自動追跡
-- カスタムイベント設定
-- リアルタイムデータ分析
-
-**GitHub Actions監視**
-- actions-timelineによる実行時間可視化
-- 失敗通知のSlack連携
-- メトリクス収集・分析
-
-### 継続的改善
-
-**A/Bテスト基盤**
-- 機能フラグ対応
-- パフォーマンス比較
-- ユーザーエクスペリエンス最適化
-
-**アクセシビリティ**
-- Storybook a11yアドオン
-- セマンティックHTML
-- スクリーンリーダー対応
+- **デプロイ最適化**: [`ci.yaml`](https://github.com/korosuke613/homepage-2nd/blob/main/.github/workflows/ci.yaml#L89-L95)でビルド成果物の変更検出
+- **VRT自動初期化**: mainブランチ更新時のスナップショット自動更新
+- **リソース節約**: 変更がない場合のデプロイスキップによるGitHub Actions使用量削減
 
 ## まとめ
 
-korosuke613/homepage-2ndは、モダンな技術スタックを活用した包括的な個人ホームページシステムです。主な技術的成果：
+これらの特筆すべき技術実装により、単なる静的サイトを超えたインタラクティブで高品質な個人ホームページを実現しています：
 
-### 技術的成果
-- **フロントエンド**: Astro + React + TypeScript + Tailwind CSSによるモダンな開発体験
-- **バックエンド**: Astro DB + GA4統合による分析データ駆動型サイト
-- **インフラ**: GitHub Pages + GitHub Actionsによるフルマネージド運用
-- **品質保証**: 多層テスト戦略による高品質コード維持
+### 技術的独自性
+- **MyIcon**: 隠しコマンドによる多彩なインタラクション
+- **類似記事推薦**: 自然言語処理による高精度なコンテンツマッチング
+- **ビルドシステム**: 複数ソース統合とタグ色自動管理
+- **VRT**: 用途別閾値設定による実用的な視覚回帰テスト
 
-### 特徴的な実装
-- 複数コンテンツソースの統合アーキテクチャ
-- Islands Architectureによるパフォーマンス最適化
-- 包括的CI/CDパイプライン
-- ビジュアルリグレッションテストによる品質保証
-
-このような技術構成により、高パフォーマンス・高品質・運用効率を両立した個人ホームページを実現しています。各技術の選択理由や組み合わせ方法が、同様のプロジェクトを構築する際の参考になれば幸いです。
-
-今後も新しい技術の採用や既存システムの改善を通じて、より良いユーザーエクスペリエンスと開発者エクスペリエンスの実現を目指していきます。
+これらの実装は、個人サイトでありながら企業レベルの技術的複雑さと品質保証を実現し、訪問者に独特なユーザーエクスペリエンスを提供しています。
