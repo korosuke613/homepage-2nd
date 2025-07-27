@@ -38,6 +38,14 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: ${{ github.event.repository.name }}
 
+      - name: Get Github App permissions
+        id: get-gh-app-permissions
+        env:
+          GH_TOKEN: ${{ steps.login-gh-app.outputs.token }}
+        run: |
+          gh api /apps/${{ steps.login-gh-app.outputs.app-slug }} | tee ${{ runner.temp }}/gh-app-permissions.json
+          echo "permissions=$(jq -c '.permissions' ${{ runner.temp }}/gh-app-permissions.json)" >> $GITHUB_OUTPUT
+
       - name: Run Claude PR Action
         uses: anthropics/claude-code-action@v0
         with:
@@ -48,3 +56,9 @@ jobs:
             actions: read
           allowed_tools: Bash,WebFetch,WebSearch,mcp__playwright__browser_click,mcp__playwright__browser_close,mcp__playwright__browser_console_messages,mcp__playwright__browser_drag,mcp__playwright__browser_evaluate,mcp__playwright__browser_file_upload,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_hover,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_navigate_forward,mcp__playwright__browser_network_requests,mcp__playwright__browser_press_key,mcp__playwright__browser_resize,mcp__playwright__browser_select_option,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_type,mcp__playwright__browser_wait_for,mcp__playwright__browser_tab_close,mcp__playwright__browser_tab_list,mcp__playwright__browser_tab_new,mcp__playwright__browser_tab_select,mcp__playwright__browser_install,mcp__playwright__browser_mouse_click_xy,mcp__playwright__browser_mouse_drag_xy,mcp__playwright__browser_mouse_move_xy,mcp__playwright__browser_pdf_save
           mcp_config: '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}'
+          custom_instructions: |
+            あなたは GitHub Actions 上で動作する Claude Code Action です。
+            あなたは GitHub App の権限を持ちます。付与されている権限は以下の通りです。
+            ```json
+            ${{ steps.get-gh-app-permissions.outputs.permissions }}
+            ```
