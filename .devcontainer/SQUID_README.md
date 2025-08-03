@@ -118,19 +118,217 @@ sudo squid -k reconfigure
 ### アクセスログの確認
 ```bash
 # リアルタイムでアクセスログを監視
-sudo tail -f /var/log/squid/access.log
+docker exec -u root $CONTAINER_ID tail -f /var/log/squid/access.log
 
 # 特定のドメインへのアクセス確認
-sudo grep "visualstudio.com" /var/log/squid/access.log
+docker exec -u root $CONTAINER_ID bash -c "grep 'visualstudio.com' /var/log/squid/access.log"
 
 # アクセス拒否ログの確認
-sudo grep "TCP_DENIED" /var/log/squid/access.log
+docker exec -u root $CONTAINER_ID bash -c "grep 'TCP_DENIED' /var/log/squid/access.log"
 ```
 
 ### エラーログの確認
 ```bash
 # Squidエラーログ
-sudo tail -f /var/log/squid/cache.log
+docker exec -u root $CONTAINER_ID tail -f /var/log/squid/cache.log
+```
+
+## デバッグ方法
+
+### 基本的なデバッグワークフロー
+
+#### 事前準備: コンテナIDの確認
+```bash
+# 実行中のコンテナを確認
+docker ps
+
+# VS Codeのdevcontainerを特定
+CONTAINER_ID=$(docker ps --format "{{.ID}}\t{{.Image}}" | grep vsc- | head -1 | cut -f1)
+echo "Container ID: $CONTAINER_ID"
+
+# または手動でコンテナIDを設定
+# CONTAINER_ID="4d4a25f829c2"
+```
+
+#### 1. Squidプロセス状態の確認
+```bash
+# Squidプロセスの実行状況
+docker exec -u root $CONTAINER_ID bash -c "ps aux | grep squid"
+
+# 期待される出力:
+# proxy        729  0.0  0.1  74424 18068 ?  S  20:24  0:00 squid -N -d1
+
+# プロセスのPIDを記録
+docker exec -u root $CONTAINER_ID bash -c "pgrep squid && echo 'Squid is running' || echo 'Squid is not running'"
+```
+
+#### 2. ポート・接続状況の確認
+```bash
+# Squidが3128ポートでリッスンしているか確認
+docker exec -u root $CONTAINER_ID bash -c "netstat -tlnp | grep 3128"
+# 期待される出力: tcp ... 127.0.0.1:3128 ... LISTEN
+
+# プロキシ経由での基本接続テスト
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 --connect-timeout 5 -I https://github.com"
+```
+
+#### 3. リアルタイムログ監視
+```bash
+# アクセスログをリアルタイムで監視（別ターミナルで実行）
+docker exec -u root $CONTAINER_ID tail -f /var/log/squid/access.log
+
+# ログの書式理解:
+# [timestamp] [duration] [client] [status] [bytes] [method] [url] [user] [hierarchy] [content-type]
+# 例: 1754220739.594  83 127.0.0.1 TCP_TUNNEL/200 570338 CONNECT github.com:443 - HIER_DIRECT/20.27.177.113 -
+```
+
+### 詳細なデバッグ手順
+
+#### ステップ1: 設定ファイルの確認
+```bash
+# Squid設定の構文チェック
+docker exec -u root $CONTAINER_ID bash -c "squid -k parse"
+
+# 使用中の設定ファイルを確認
+docker exec -u root $CONTAINER_ID bash -c "cat /etc/squid/squid.conf | grep -E '(acl|http_access)' | head -20"
+
+# ACL定義の確認
+docker exec -u root $CONTAINER_ID bash -c "grep -A 5 -B 2 'container_clients' /etc/squid/squid.conf"
+docker exec -u root $CONTAINER_ID bash -c "grep -A 5 -B 2 'github_domains' /etc/squid/squid.conf"
+```
+
+#### ステップ2: 接続テストの実行
+```bash
+# 許可されるべきドメインのテスト
+echo "=== 許可ドメインテスト ==="
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 --connect-timeout 5 -s https://github.com >/dev/null 2>&1; tail -1 /var/log/squid/access.log | cut -d' ' -f4"
+echo "GitHub接続結果: 上記"
+
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 --connect-timeout 5 -s https://marketplace.visualstudio.com >/dev/null 2>&1; tail -1 /var/log/squid/access.log | cut -d' ' -f4"
+echo "VS Code Marketplace接続結果: 上記"
+
+# ブロックされるべきドメインのテスト
+echo "=== 拒否ドメインテスト ==="
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 --connect-timeout 5 -s https://example.com >/dev/null 2>&1; tail -1 /var/log/squid/access.log | cut -d' ' -f4"
+echo "example.com接続結果: 上記"
+```
+
+#### ステップ3: ログ分析
+```bash
+# 最近の接続結果をまとめて確認
+echo "=== 最近のアクセス状況 ==="
+docker exec -u root $CONTAINER_ID bash -c "tail -10 /var/log/squid/access.log | while read line; do
+    status=\$(echo \"\$line\" | cut -d' ' -f4)
+    url=\$(echo \"\$line\" | cut -d' ' -f7)
+    echo \"\$status -> \$url\"
+done"
+
+# アクセス拒否されたドメインの一覧
+echo "=== 拒否されたドメイン ==="
+docker exec -u root $CONTAINER_ID bash -c "grep 'TCP_DENIED' /var/log/squid/access.log | cut -d' ' -f7 | sort | uniq -c | sort -nr"
+
+# 成功したアクセスの一覧
+echo "=== 成功したアクセス ==="
+docker exec -u root $CONTAINER_ID bash -c "grep 'TCP_TUNNEL/200' /var/log/squid/access.log | cut -d' ' -f7 | sort | uniq -c | sort -nr | head -10"
+```
+
+### 共通問題の診断と修正
+
+#### 問題1: 全てのドメインが403で拒否される
+```bash
+# 症状: github.comなど許可されるべきドメインも TCP_DENIED/403
+# 原因: container_clientsのACLが正しく定義されていない
+
+# 診断:
+echo "クライアントIP確認:"
+docker exec -u root $CONTAINER_ID bash -c "ip addr show | grep -E 'inet.*127|inet.*192\.168|inet.*172\.'"
+
+# 修正: container_clientsにlocalhostを追加
+docker exec -u root $CONTAINER_ID bash -c "grep 'container_clients.*127.0.0.1' /etc/squid/squid.conf || echo 'localhost設定が不足'"
+```
+
+#### 問題2: HTTPSサイトに接続できない
+```bash
+# 症状: curlで接続タイムアウトやCONNECT tunnel failed
+# 原因: CONNECTメソッドのACL順序問題
+
+# 診断:
+docker exec -u root $CONTAINER_ID bash -c "grep -n 'CONNECT.*container_clients' /etc/squid/squid.conf"
+echo "↑の行でcontainer_clients, SSL_ports, domain_name の順序を確認"
+
+# 正しい順序例:
+# http_access allow CONNECT container_clients SSL_ports github_domains
+```
+
+#### 問題3: Squidプロセスが起動しない
+```bash
+# 症状: Squidが起動直後に停止する
+# 診断手順:
+
+# 1. 設定ファイルの構文エラー確認
+docker exec -u root $CONTAINER_ID bash -c "squid -k parse 2>&1 | grep -i error"
+
+# 2. 権限問題の確認
+docker exec -u root $CONTAINER_ID bash -c "ls -la /var/log/squid/"
+docker exec -u root $CONTAINER_ID bash -c "ls -la /var/spool/squid/"
+
+# 3. ポート競合の確認
+docker exec -u root $CONTAINER_ID bash -c "netstat -tlnp | grep 3128"
+
+# 4. ログディレクトリの作成
+docker exec -u root $CONTAINER_ID bash -c "mkdir -p /var/log/squid /var/spool/squid"
+docker exec -u root $CONTAINER_ID bash -c "chown -R proxy:proxy /var/log/squid /var/spool/squid"
+
+# 5. 手動での詳細起動テスト
+docker exec -u root $CONTAINER_ID bash -c "squid -N -d9 2>&1 | head -20"
+```
+
+### デバッグコマンド集
+
+#### ワンライナーでの状態確認
+```bash
+# 全体状況の一括確認
+docker exec -u root $CONTAINER_ID bash -c "echo '=== Squid Status ==='; ps aux | grep squid | grep -v grep; echo '=== Port Status ==='; netstat -tlnp | grep 3128; echo '=== Recent Access ==='; tail -3 /var/log/squid/access.log 2>/dev/null || echo 'No logs'; echo '=== Config Check ==='; squid -k parse 2>&1 | grep -i error || echo 'Config OK'"
+```
+
+#### 特定ドメインの接続テスト関数
+```bash
+# ホスト側での関数定義（.bashrcなどに追加可能）
+test_domain() {
+    local domain=$1
+    local container_id=${CONTAINER_ID:-$(docker ps --format "{{.ID}}\t{{.Image}}" | grep vsc- | head -1 | cut -f1)}
+    
+    echo "Testing $domain..."
+    docker exec -u root $container_id bash -c "curl -x http://127.0.0.1:3128 --connect-timeout 5 -s 'https://$domain' >/dev/null 2>&1"
+    local result=$(docker exec -u root $container_id bash -c "tail -1 /var/log/squid/access.log | cut -d' ' -f4")
+    echo "$domain: $result"
+}
+
+# 使用例
+test_domain "github.com"
+test_domain "marketplace.visualstudio.com"
+test_domain "example.com"
+```
+
+#### ログ解析スクリプト
+```bash
+# アクセス状況の統計
+analyze_access() {
+    local container_id=${CONTAINER_ID:-$(docker ps --format "{{.ID}}\t{{.Image}}" | grep vsc- | head -1 | cut -f1)}
+    
+    docker exec -u root $container_id bash -c "
+        echo '=== Access Statistics ==='
+        echo 'Total requests:' \$(wc -l < /var/log/squid/access.log)
+        echo 'Successful (200):' \$(grep -c 'TCP_TUNNEL/200' /var/log/squid/access.log)
+        echo 'Denied (403):' \$(grep -c 'TCP_DENIED/403' /var/log/squid/access.log)
+        echo ''
+        echo 'Top denied domains:'
+        grep 'TCP_DENIED' /var/log/squid/access.log | cut -d' ' -f7 | sort | uniq -c | sort -nr | head -5
+        echo ''
+        echo 'Top allowed domains:'
+        grep 'TCP_TUNNEL/200' /var/log/squid/access.log | cut -d' ' -f7 | sort | uniq -c | sort -nr | head -5
+    "
+}
 ```
 
 ## トラブルシューティング
@@ -138,35 +336,35 @@ sudo tail -f /var/log/squid/cache.log
 ### 1. プロキシ接続の問題
 ```bash
 # Squidプロセス確認
-ps aux | grep squid
+docker exec -u root $CONTAINER_ID bash -c "ps aux | grep squid"
 
 # ポート確認
-netstat -tlnp | grep 3128
+docker exec -u root $CONTAINER_ID bash -c "netstat -tlnp | grep 3128"
 
 # 手動接続テスト
-curl -x http://127.0.0.1:3128 -v https://www.google.com
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 -v https://www.google.com"
 ```
 
 ### 2. VS Code拡張機能の問題
 ```bash
-# VS Code設定確認
+# VS Code設定確認（ホスト側）
 cat ~/.vscode/settings.json | grep proxy
 
 # 拡張機能関連ドメインテスト
-curl -x http://127.0.0.1:3128 https://marketplace.visualstudio.com
+docker exec -u root $CONTAINER_ID bash -c "curl -x http://127.0.0.1:3128 https://marketplace.visualstudio.com"
 ```
 
 ### 3. 設定変更が反映されない
 ```bash
 # Squid設定の構文チェック
-sudo squid -k parse
+docker exec -u root $CONTAINER_ID bash -c "squid -k parse"
 
 # 設定の再読み込み
-sudo squid -k reconfigure
+docker exec -u root $CONTAINER_ID bash -c "squid -k reconfigure"
 
 # 完全再起動
-sudo pkill squid
-sudo .devcontainer/init-firewall-squid.sh
+docker exec -u root $CONTAINER_ID bash -c "pkill squid"
+docker exec -u root $CONTAINER_ID bash -c "/workspace/.devcontainer/init-firewall-squid.sh"
 ```
 
 ## 高度な機能
