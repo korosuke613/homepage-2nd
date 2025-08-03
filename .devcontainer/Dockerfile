@@ -1,9 +1,14 @@
-FROM node:20
+FROM node:22@sha256:2fa6c977460b56d4d8278947ab56faeb312bc4cc6c4cf78920c6de27812f51c5
 
 ARG TZ
 ENV TZ="$TZ"
 
-# Install basic development tools and iptables/ipset
+# Fastly CDN のミラーに変更
+RUN echo "deb http://cdn-fastly.deb.debian.org/debian stable main" > /etc/apt/sources.list && \
+    echo "deb http://cdn-fastly.deb.debian.org/debian-security stable-security main" >> /etc/apt/sources.list && \
+    echo "deb http://cdn-fastly.deb.debian.org/debian-security-debug stable-security-debug main" >> /etc/apt/sources.list
+
+# Install basic development tools and Squid proxy
 RUN apt update && apt install -y less \
   git \
   procps \
@@ -14,12 +19,15 @@ RUN apt update && apt install -y less \
   unzip \
   gnupg2 \
   gh \
+  squid \
   iptables \
   ipset \
   iproute2 \
   dnsutils \
   aggregate \
-  jq
+  jq \
+  curl \
+  wget
 
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \
@@ -64,15 +72,30 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -a "source /usr/share/doc/fzf/examples/key-bindings.zsh" \
   -a "source /usr/share/doc/fzf/examples/completion.zsh" \
   -a "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+  -a "[ -f /etc/proxy.conf ] && source /etc/proxy.conf" \
   -x
 
 # Install Claude
 RUN npm install -g @anthropic-ai/claude-code
 
-# Copy and set up firewall script
-COPY init-firewall.sh /usr/local/bin/
+# Set proxy environment variables (will be overwritten by init script)
+ENV http_proxy=""
+ENV https_proxy=""
+ENV HTTP_PROXY=""
+ENV HTTPS_PROXY=""
+ENV no_proxy="localhost,127.0.0.1,::1"
+ENV NO_PROXY="localhost,127.0.0.1,::1"
+
+# Copy and set up Squid firewall scripts
+COPY init-firewall-squid.sh /usr/local/bin/
+COPY squid.conf /usr/local/bin/
 USER root
-RUN chmod +x /usr/local/bin/init-firewall.sh && \
-  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
-  chmod 0440 /etc/sudoers.d/node-firewall
+
+# Set up Squid directories and permissions
+RUN mkdir -p /var/log/squid /var/spool/squid && \
+  chown -R proxy:proxy /var/log/squid /var/spool/squid && \
+  chmod +x /usr/local/bin/init-firewall-squid.sh && \
+  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall-squid.sh" > /etc/sudoers.d/node-squid && \
+  chmod 0440 /etc/sudoers.d/node-squid
+
 USER node

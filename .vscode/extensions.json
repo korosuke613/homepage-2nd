@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "astro-build.astro-vscode",
-    "mikestead.dotenv",
     "bradlc.vscode-tailwindcss"
   ],
   "unwantedRecommendations": []
