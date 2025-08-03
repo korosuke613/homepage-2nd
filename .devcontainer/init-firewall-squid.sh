@@ -56,37 +56,54 @@ echo "Using Squid-only domain filtering (no iptables restrictions)"
 
 # Stop any existing Squid processes
 echo "Checking for existing Squid processes..."
-if pgrep squid > /dev/null; then
+if pgrep squid > /dev/null 2>&1; then
+    echo "Found running Squid processes: $(pgrep squid | tr '\n' ' ')"
     echo "Stopping existing Squid processes..."
-    pkill squid
+    pkill squid 2>/dev/null || true
     sleep 2
     
     # Force kill if still running
-    if pgrep squid > /dev/null; then
+    if pgrep squid > /dev/null 2>&1; then
         echo "Force killing remaining Squid processes..."
-        pkill -9 squid
+        pkill -9 squid 2>/dev/null || true
         sleep 1
     fi
+    echo "Squid processes stopped successfully"
+else
+    echo "No existing Squid processes found"
 fi
 
 # Remove existing PID file if present
-rm -f /run/squid.pid /var/run/squid.pid
+echo "Cleaning up PID files..."
+rm -f /run/squid.pid /var/run/squid.pid 2>/dev/null || true
 
 # Start Squid in foreground mode with logging
 echo "Starting Squid proxy server..."
 squid -N -d1 &
 SQUID_PID=$!
 
-# Wait for Squid to start
-sleep 3
-
-# Verify Squid is running
-if ! kill -0 $SQUID_PID 2>/dev/null; then
-    echo "ERROR: Failed to start Squid"
+if [ -n "$SQUID_PID" ]; then
+    echo "Squid process started with PID: $SQUID_PID"
+else
+    echo "ERROR: Failed to start Squid process"
+    echo "Checking for configuration errors..."
+    squid -k parse || echo "Configuration has syntax errors"
     exit 1
 fi
 
-echo "Squid started successfully (PID: $SQUID_PID)"
+# Wait for Squid to start
+echo "Waiting for Squid to initialize..."
+sleep 5
+
+# Verify Squid is running
+if kill -0 $SQUID_PID 2>/dev/null; then
+    echo "Squid started successfully (PID: $SQUID_PID)"
+else
+    echo "ERROR: Squid process died after startup"
+    echo "Checking Squid error logs..."
+    tail -10 /var/log/squid/cache.log 2>/dev/null || echo "No cache log available"
+    exit 1
+fi
 
 # Set up proxy environment variables
 echo "Setting up proxy environment..."
