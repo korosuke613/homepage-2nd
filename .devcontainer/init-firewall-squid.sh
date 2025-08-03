@@ -23,45 +23,11 @@ mkdir -p /etc/squid
 chown -R proxy:proxy /var/log/squid
 chown -R proxy:proxy /var/spool/squid
 
-# Generate dynamic Squid configuration with GitHub IP ranges
-echo "Generating dynamic Squid configuration..."
+# Use static Squid configuration (domain-based filtering only)
+echo "Using domain-based filtering only..."
 
-# Fetch GitHub IP ranges
-echo "Fetching GitHub IP ranges from API..."
-gh_ranges=$(curl -s https://api.github.com/meta)
-if [ -z "$gh_ranges" ]; then
-    echo "ERROR: Failed to fetch GitHub IP ranges"
-    exit 1
-fi
-
-if ! echo "$gh_ranges" | jq -e '.web and .api and .git' >/dev/null; then
-    echo "ERROR: GitHub API response missing required fields"
-    exit 1
-fi
-
-# Extract GitHub IP ranges (IPv4 only for simplicity)
-echo "Processing GitHub IP ranges..."
-github_ips_v4=$(echo "$gh_ranges" | jq -r '(.web + .api + .git)[]' | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/' | sort -u)
-
-# Create base configuration
+# Copy base configuration
 cp /workspace/.devcontainer/squid.conf /etc/squid/squid.conf
-
-# Add GitHub IP ACLs to configuration
-echo "" >> /etc/squid/squid.conf
-echo "# GitHub IP ranges from api.github.com/meta (auto-generated)" >> /etc/squid/squid.conf
-
-# Add IPv4 GitHub ranges
-if [ -n "$github_ips_v4" ]; then
-    echo "acl github_ips dst" $(echo "$github_ips_v4" | tr '\n' ' ') >> /etc/squid/squid.conf
-    echo "" >> /etc/squid/squid.conf
-    echo "# Allow access to GitHub IPs" >> /etc/squid/squid.conf
-    echo "http_access allow container_clients github_ips" >> /etc/squid/squid.conf
-    echo "http_access allow CONNECT SSL_ports container_clients github_ips" >> /etc/squid/squid.conf
-    
-    echo "Added $(echo "$github_ips_v4" | wc -l) IPv4 ranges for GitHub"
-else
-    echo "WARNING: No GitHub IPv4 ranges found"
-fi
 
 # GitHub IP ranges are now added to Squid configuration
 
@@ -85,61 +51,26 @@ grep "container_clients" /etc/squid/squid.conf
 echo "Initializing Squid cache..."
 squid -z 2>/dev/null || true
 
-# Set up iptables for traffic redirection
-echo "Setting up iptables rules..."
+# Skip iptables configuration - using Squid-only approach
+echo "Using Squid-only domain filtering (no iptables restrictions)"
 
-# Flush existing rules
-iptables -F
-iptables -X 2>/dev/null || true
-iptables -t nat -F
-iptables -t nat -X 2>/dev/null || true
+# Stop any existing Squid processes
+echo "Checking for existing Squid processes..."
+if pgrep squid > /dev/null; then
+    echo "Stopping existing Squid processes..."
+    pkill squid
+    sleep 2
+    
+    # Force kill if still running
+    if pgrep squid > /dev/null; then
+        echo "Force killing remaining Squid processes..."
+        pkill -9 squid
+        sleep 1
+    fi
+fi
 
-# Allow loopback and established connections
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A OUTPUT -o lo -j ACCEPT
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-# Allow SSH
-iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
-
-# Allow DNS queries (for Squid)
-iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
-
-# Allow Squid proxy port
-iptables -A INPUT -p tcp --dport 3128 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 3128 -j ACCEPT
-
-# Allow local network communication (Docker host)
-iptables -A INPUT -s 172.16.0.0/12 -j ACCEPT
-iptables -A OUTPUT -d 172.16.0.0/12 -j ACCEPT
-iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
-iptables -A OUTPUT -d 192.168.0.0/16 -j ACCEPT
-iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
-iptables -A OUTPUT -d 10.0.0.0/8 -j ACCEPT
-
-# Allow direct outbound traffic from Squid
-iptables -A OUTPUT -p tcp --sport 3128 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
-
-# Do not redirect localhost traffic to avoid loops
-iptables -t nat -A OUTPUT -d 127.0.0.0/8 -j ACCEPT
-
-# Note: Transparent proxy for HTTPS (443) is complex and can cause SSL issues
-# Only redirect HTTP traffic (port 80) to avoid SSL/TLS problems
-iptables -t nat -A OUTPUT -p tcp --dport 80 ! -d 127.0.0.0/8 -j REDIRECT --to-port 3128
-# HTTPS (443) traffic will use explicit proxy via environment variables
-
-# Allow all outbound traffic (Squid needs to connect to external servers)
-iptables -A OUTPUT -j ACCEPT
-
-# Set default policies (INPUT/FORWARD restrictive, OUTPUT permissive)
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
+# Remove existing PID file if present
+rm -f /run/squid.pid /var/run/squid.pid
 
 # Start Squid in foreground mode with logging
 echo "Starting Squid proxy server..."
