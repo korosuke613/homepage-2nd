@@ -46,3 +46,5 @@ gha-creds-*.json
 db.timestamp-*
 
 .claude/settings.local.json
+
+.envrc
