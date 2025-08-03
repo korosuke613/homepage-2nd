@@ -1,0 +1,123 @@
+#!/usr/sbin/nft -f
+
+# Flush existing rules
+flush ruleset
+
+table inet firewall {
+    # Static IP sets for manually resolved domains
+    set allowed_static_v4 {
+        type ipv4_addr
+        flags constant
+        elements = {}
+    }
+
+    set allowed_static_v6 {
+        type ipv6_addr
+        flags constant  
+        elements = {}
+    }
+
+    # Dynamic IP sets managed by dnsmasq for wildcard domains
+    set allowed_domains_v4 {
+        type ipv4_addr
+        flags dynamic,timeout
+        timeout 1h
+        size 65536
+    }
+
+    set allowed_domains_v6 {
+        type ipv6_addr
+        flags dynamic,timeout
+        timeout 1h
+        size 65536
+    }
+
+    # GitHub IP ranges set (CIDR ranges)
+    set github_ranges_v4 {
+        type ipv4_addr
+        flags interval
+        elements = {}
+    }
+
+    set github_ranges_v6 {
+        type ipv6_addr
+        flags interval
+        elements = {}
+    }
+
+    # Chain for input traffic
+    chain input {
+        type filter hook input priority filter; policy drop;
+        
+        # Allow established and related connections
+        ct state established,related accept
+        
+        # Allow loopback traffic
+        iifname "lo" accept
+        
+        # Allow ICMP
+        ip protocol icmp accept
+        ip6 nexthdr ipv6-icmp accept
+        
+        # Allow SSH responses
+        tcp sport 22 ct state established accept
+        
+        # Allow DNS responses
+        udp sport 53 accept
+        tcp sport 53 accept
+        
+        # Allow local network traffic (Docker host communication)
+        ip saddr 172.16.0.0/12 accept
+        ip saddr 192.168.0.0/16 accept
+        ip saddr 10.0.0.0/8 accept
+        ip6 saddr fe80::/10 accept
+    }
+
+    # Chain for output traffic
+    chain output {
+        type filter hook output priority filter; policy drop;
+        
+        # Allow established and related connections
+        ct state established,related accept
+        
+        # Allow loopback traffic
+        oifname "lo" accept
+        
+        # Allow ICMP
+        ip protocol icmp accept
+        ip6 nexthdr ipv6-icmp accept
+        
+        # Allow DNS queries
+        udp dport 53 accept
+        tcp dport 53 accept
+        
+        # Allow SSH connections
+        tcp dport 22 accept
+        
+        # Allow local network traffic (Docker host communication)
+        ip daddr 172.16.0.0/12 accept
+        ip daddr 192.168.0.0/16 accept
+        ip daddr 10.0.0.0/8 accept
+        ip6 daddr fe80::/10 accept
+        
+        # Allow connections to GitHub IP ranges
+        ip daddr @github_ranges_v4 accept
+        ip6 daddr @github_ranges_v6 accept
+        
+        # Allow connections to static allowed IPs
+        ip daddr @allowed_static_v4 accept
+        ip6 daddr @allowed_static_v6 accept
+        
+        # Allow connections to dynamically resolved domains (dnsmasq managed)
+        ip daddr @allowed_domains_v4 accept
+        ip6 daddr @allowed_domains_v6 accept
+        
+        # Log dropped packets for debugging
+        limit rate 1/minute log prefix "nft-firewall-drop: "
+    }
+
+    # Chain for forwarding (drop all)
+    chain forward {
+        type filter hook forward priority filter; policy drop;
+    }
+}

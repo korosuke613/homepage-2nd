@@ -3,7 +3,7 @@ FROM node:22@sha256:2fa6c977460b56d4d8278947ab56faeb312bc4cc6c4cf78920c6de27812f
 ARG TZ
 ENV TZ="$TZ"
 
-# Install basic development tools and iptables/ipset
+# Install basic development tools and nftables/dnsmasq
 RUN apt update && apt install -y less \
   git \
   procps \
@@ -14,6 +14,8 @@ RUN apt update && apt install -y less \
   unzip \
   gnupg2 \
   gh \
+  nftables \
+  dnsmasq \
   iptables \
   ipset \
   iproute2 \
@@ -69,10 +71,12 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 # Install Claude
 RUN npm install -g @anthropic-ai/claude-code
 
-# Copy and set up firewall script
-COPY init-firewall.sh /usr/local/bin/
+# Copy and set up firewall scripts
+COPY init-firewall-nftables.sh /usr/local/bin/
+COPY vscode-extension-resolver.sh /usr/local/bin/
 USER root
-RUN chmod +x /usr/local/bin/init-firewall.sh && \
-  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
+RUN chmod +x /usr/local/bin/init-firewall-nftables.sh /usr/local/bin/vscode-extension-resolver.sh && \
+  echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall-nftables.sh" > /etc/sudoers.d/node-firewall && \
+  echo "node ALL=(root) NOPASSWD: /usr/local/bin/vscode-extension-resolver.sh" >> /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
 USER node
