@@ -91,9 +91,19 @@ else
     exit 1
 fi
 
-# Wait for Squid to start
-echo "Waiting for Squid to initialize..."
-sleep 5
+# Verify Squid is actually ready by testing a simple connection
+echo "Verifying Squid readiness..."
+for i in {1..5}; do
+    if curl -x http://127.0.0.1:3128 --connect-timeout 20 -s https://api.github.com >/dev/null 2>&1; then
+        echo "Squid connectivity verified on attempt $i"
+        break
+    else
+        echo "Squid not ready yet, waiting 5 more seconds..."
+        sleep 5
+    fi
+done
+
+echo "Squid initialization complete - ready for testing"
 
 # Verify Squid is running
 if kill -0 $SQUID_PID 2>/dev/null; then
@@ -149,7 +159,7 @@ echo "Debug: Testing example.com access through proxy..."
 > /var/log/squid/access.log
 
 echo "Command: curl -x http://127.0.0.1:3128 https://example.com"
-if timeout 5 curl -x http://127.0.0.1:3128 https://example.com 2>&1; then
+if timeout 15 curl -x http://127.0.0.1:3128 https://example.com 2>&1; then
     echo ""
     echo "ERROR: Firewall verification failed - was able to reach https://example.com"
     echo ""
@@ -165,7 +175,7 @@ if timeout 5 curl -x http://127.0.0.1:3128 https://example.com 2>&1; then
     # For now, let's continue but warn - don't exit
     echo "WARNING: Domain blocking may not be working correctly"
     echo "However, the system will still provide domain filtering for allowed sites"
-    echo "Continuing with setup..."
+    exit 1
 else
     echo "Firewall verification passed - unable to reach https://example.com as expected"
 fi
@@ -179,7 +189,7 @@ echo "Running: curl -x http://127.0.0.1:3128 https://api.github.com/zen"
 # Temporarily unset no_proxy to force proxy usage
 unset no_proxy
 unset NO_PROXY
-if timeout 10 curl -x http://127.0.0.1:3128 -s https://api.github.com/zen >/dev/null 2>&1; then
+if timeout 15 curl -x http://127.0.0.1:3128 -s https://api.github.com/zen >/dev/null 2>&1; then
     echo "Direct proxy access to GitHub: SUCCESS"
 else
     echo "Direct proxy access to GitHub: FAILED"
@@ -192,6 +202,7 @@ else
     echo ""
     echo "Squid is working - GitHub access logs show successful connections"
     echo "The issue was with the test configuration, not Squid itself"
+    exit 1
 fi
 
 # Skip complex transparent proxy tests - Squid is working correctly
