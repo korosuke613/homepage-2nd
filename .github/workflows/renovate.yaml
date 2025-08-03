@@ -63,7 +63,7 @@ jobs:
         run: |
           mkdir -p $BASE_DIR
           mkdir -p $CACHE_DIR
-          sudo chown -R $(whoami):root /tmp/renovate/
+          sudo chown -R runner:root /tmp/renovate/
           ls -lR $BASE_DIR
           echo "user=$(id -u)" >> $GITHUB_OUTPUT
           echo "group=$(id -g root)" >> $GITHUB_OUTPUT
