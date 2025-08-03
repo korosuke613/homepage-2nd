@@ -1,0 +1,12 @@
+{
+  "http.proxy": "http://127.0.0.1:3128",
+  "http.proxyStrictSSL": false,
+  "http.systemCertificates": false,
+  "http.proxySupport": "on",
+  "extensions.autoUpdate": true,
+  "extensions.autoCheckUpdates": true,
+  "update.mode": "start",
+  "telemetry.telemetryLevel": "crash",
+  "workbench.settings.enableNaturalLanguageSearch": true,
+  "workbench.enableExperiments": true
+}
