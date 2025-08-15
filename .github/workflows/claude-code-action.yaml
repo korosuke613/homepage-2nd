@@ -47,7 +47,7 @@ jobs:
           echo "permissions=$(jq -c '.permissions' ${{ runner.temp }}/gh-app-permissions.json)" >> $GITHUB_OUTPUT
 
       - name: Run Claude PR Action
-        uses: anthropics/claude-code-action@v0
+        uses: anthropics/claude-code-action@a1507aefdc04f00f278407dba905d158ac62399e # v0
         with:
           github_token: ${{ steps.login-gh-app.outputs.token }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
