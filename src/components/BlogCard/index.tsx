@@ -16,7 +16,7 @@ export const BlogCard = (props: IBlogCard) => {
   return (
     <div
       key={props.elt.id}
-      className="relative overflow-hidden rounded-md bg-slate-800"
+      className="relative overflow-hidden rounded-md bg-white border border-gray-200 dark:bg-slate-800 dark:border-slate-700"
     >
       <div
         key={props.elt.title}
@@ -50,7 +50,7 @@ export const BlogCard = (props: IBlogCard) => {
       >
         <div
           key={props.elt.id}
-          className="px-3 py-1.5 bg-gradient-to-br from-violet-900 to-violet-900/50 backdrop-blur-sm"
+          className="px-3 py-1.5 bg-gradient-to-br from-white/90 to-gray-100/90 dark:from-violet-900 dark:to-violet-900/50 backdrop-blur-sm"
         >
           <ExternalLink url={props.elt.url} noClass={true}>
             <div key={props.elt.id}>
@@ -62,7 +62,7 @@ export const BlogCard = (props: IBlogCard) => {
                   {props.elt.title}
                 </p>
               </div>
-              <div className="text-xs text-gray-100 my-1.5 flex justify-between">
+              <div className="text-xs text-gray-800 dark:text-gray-100 my-1.5 flex justify-between">
                 <p>{format(new Date(props.elt.pubDate), "LLL d, yyyy")}</p>
                 {props.viewCount !== undefined && props.viewCount > 0 && (
                   <p>{props.viewCount} views</p>

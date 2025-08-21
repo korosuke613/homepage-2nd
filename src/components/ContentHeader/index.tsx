@@ -18,7 +18,7 @@ export const ContentHeader = (props: IContentHeaderProps) => (
       {props.content.data.title.replace("\\n", "")}
     </h1>
 
-    <div className="mt-2 text-center text-sm text-gray-400">
+    <div className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
       By {props.author} on{" "}
       {format(new Date(props.content.data.pubDate), "LLL d, yyyy")}
     </div>
