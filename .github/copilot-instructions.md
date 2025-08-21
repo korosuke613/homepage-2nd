@@ -2,6 +2,14 @@
 
 **ALWAYS follow these instructions first and only fallback to additional search and context gathering if the information here is incomplete or found to be in error.**
 
+## Language Requirements
+
+**日本語での回答必須 (Japanese Response Required)**
+
+このリポジトリで作業する際は、**必ず日本語で回答してください**。技術的な説明、エラーメッセージの解釈、提案などすべてのコミュニケーションを日本語で行ってください。
+
+When working in this repository, **always respond in Japanese**. All technical explanations, error message interpretations, suggestions, and communications must be in Japanese.
+
 ## Working Effectively
 
 ### Required Environment
