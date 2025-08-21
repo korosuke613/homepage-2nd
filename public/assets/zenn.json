@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-02-28T14:28:51.094Z",
+  "lastUpdated": "2025-08-21T14:30:20.999Z",
   "articles": {
     "e82445a43782b1": {
       "title": "Productivity Weekly (2020-12-23号)",
@@ -1110,6 +1110,12 @@
       "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--9HxnNjUa--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:GitHub%2520Copilot%2520Agent%25E3%2583%25A2%25E3%2583%25BC%25E3%2583%2589%25E7%2599%25BB%25E5%25A0%25B4%25E3%2581%25AA%25E3%2581%25A9%25EF%25BD%259CProductivity%2520Weekly%25282025-02-12%2529%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:Futa%2520Hirakoba%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2RmZGEyOTIyNDQuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%259C%25E3%2582%25A6%25E3%2582%25BA%2520%25E7%2594%259F%25E7%2594%25A3%25E6%2580%25A7%25E5%2590%2591%25E4%25B8%258A%25E3%2583%2581%25E3%2583%25BC%25E3%2583%25A0%2520%2520%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png",
       "pubDate": "2025-02-28T01:00:01.000Z",
       "url": "https://zenn.dev/cybozu_ept/articles/productivity-weekly-20250212"
+    },
+    "org-use-claude-code-action": {
+      "title": "組織で使うためのClaude Code Action via Amazon Bedrock（認証・ログ分析・クラウド破産防止）",
+      "ogpImageUrl": "https://res.cloudinary.com/zenn/image/upload/s--KEImo0Yw--/c_fit%2Cg_north_west%2Cl_text:notosansjp-medium.otf_55:%25E7%25B5%2584%25E7%25B9%2594%25E3%2581%25A7%25E4%25BD%25BF%25E3%2581%2586%25E3%2581%259F%25E3%2582%2581%25E3%2581%25AEClaude%2520Code%2520Action%2520via%2520Amazon%2520Bedrock%25EF%25BC%2588%25E8%25AA%258D%25E8%25A8%25BC%25E3%2583%25BB%25E3%2583%25AD%25E3%2582%25B0%25E5%2588%2586%25E6%259E%2590%25E3%2583%25BB%25E3%2582%25AF%25E3%2583%25A9%25E3%2582%25A6...%2Cw_1010%2Cx_90%2Cy_100/g_south_west%2Cl_text:notosansjp-medium.otf_34:Futa%2520Hirakoba%2Cx_220%2Cy_108/bo_3px_solid_rgb:d6e3ed%2Cg_south_west%2Ch_90%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyL2RmZGEyOTIyNDQuanBlZw==%2Cr_20%2Cw_90%2Cx_92%2Cy_102/co_rgb:6e7b85%2Cg_south_west%2Cl_text:notosansjp-medium.otf_30:%25E3%2582%25B5%25E3%2582%25A4%25E3%2583%259C%25E3%2582%25A6%25E3%2582%25BA%2520%25E7%2594%259F%25E7%2594%25A3%25E6%2580%25A7%25E5%2590%2591%25E4%25B8%258A%25E3%2583%2581%25E3%2583%25BC%25E3%2583%25A0%2520%2520%2Cx_220%2Cy_160/bo_4px_solid_white%2Cg_south_west%2Ch_50%2Cl_fetch:aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3plbm4tdXNlci11cGxvYWQvYXZhdGFyLzdjOTZjZGNlNTguanBlZw==%2Cr_max%2Cw_50%2Cx_139%2Cy_84/v1627283836/default/og-base-w1200-v2.png",
+      "pubDate": "2025-08-19T23:00:06.000Z",
+      "url": "https://zenn.dev/cybozu_ept/articles/org-use-claude-code-action"
     }
   }
 }
