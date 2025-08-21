@@ -40,6 +40,20 @@ const faviconLink = path.join(AppConfig.base, "favicon.ico");
 
 <html lang="ja">
   <head>
+    <!-- テーマ初期化スクリプト（flash防止のため最初に実行） -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-CJQ7CKRTGR"
     ></script>

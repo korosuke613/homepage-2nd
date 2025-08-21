@@ -10,6 +10,7 @@ import {
   NavMenuItem,
 } from "@/components/Navbar";
 import { Section } from "@/components/Section";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppConfig } from "@/utils/AppConfig";
 ---
 
@@ -19,7 +20,8 @@ import { AppConfig } from "@/utils/AppConfig";
       <Logo icon={"💪"} name="korosuke613" />
     </a>
 
-    <div class="flex items-center gap-x-0 font-medium text-gray-200">
+    <div class="flex items-center gap-x-3 font-medium text-gray-600 dark:text-gray-200">
+      <ThemeToggle client:load />
       <NavMenu>
         <NavMenuItem href="posts">Posts</NavMenuItem>
         <NavMenuItem href="blogs">Blogs</NavMenuItem>
