@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2024-07-08T14:28:06.802Z",
+  "lastUpdated": "2025-08-21T14:30:23.545Z",
   "articles": {
     "d7367ec10a8d04": {
       "title": "ホームページ更新",
@@ -160,6 +160,14 @@
     "244af7e2a97423": {
       "title": "GitHub の Delegated bypass for push rules を試す",
       "pubDate": "2024-07-05T06:04:08.000Z"
+    },
+    "0f119dc92d9d83": {
+      "title": "GitHub Copilot coding agent のドキュメントを読む",
+      "pubDate": "2025-08-19T07:36:52.000Z"
+    },
+    "640ef1ad4b7004": {
+      "title": "Raspberry PI 4 で UGREEN NASync iSCSI 自動マウント",
+      "pubDate": "2025-08-16T05:29:24.000Z"
     }
   }
 }
