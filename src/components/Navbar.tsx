@@ -10,7 +10,7 @@ type INavbarProps = {
 };
 
 export const NavbarTwoColumns = (props: INavbarProps) => (
-  <div className="fixed top-0 left-0 right-0 bg-gray-900 z-50 py-2 md:py-4">
+  <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700 z-50 py-2 md:py-4">
     <div className="mx-auto max-w-screen-lg w-full flex flex-col xs:flex-row xs:items-center xs:justify-between px-3">
       {props.children}
     </div>
@@ -23,7 +23,9 @@ type INavMenuProps = {
 
 export const NavMenu = (props: INavMenuProps) => (
   <nav>
-    <ul className="flex gap-x-3 font-medium text-gray-200">{props.children}</ul>
+    <ul className="flex gap-x-3 font-medium text-gray-600 dark:text-gray-200">
+      {props.children}
+    </ul>
   </nav>
 );
 
@@ -33,13 +35,13 @@ type INavMenuItemProps = {
 };
 
 export const NavMenuItem = (props: INavMenuItemProps) => (
-  <li className="hover:text-white">
+  <li className="hover:text-gray-900 dark:hover:text-white">
     <a href={path.join(AppConfig.base, props.href)}>{props.children}</a>
   </li>
 );
 
 export const NavMenuExternalLink = (props: IExternalLinkProps) => (
-  <li className="hover:text-white">
+  <li className="hover:text-gray-900 dark:hover:text-white">
     <ExternalLink url={props.url} noClass={true}>
       {props.children}
     </ExternalLink>

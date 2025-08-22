@@ -1,4 +1,25 @@
+/* Light mode styles */
 :root {
+  --bg-white: rgb(255 255 255) !important;
+  --bg-gray-100: rgb(243 244 246) !important;
+  --bg-blue-50: rgb(239 246 255) !important;
+  --bg-blue-600: rgb(37 99 235) !important;
+  --text-gray-900: rgb(17 24 39) !important;
+  --text-gray-600: rgb(75 85 99) !important;
+  --border-gray-200: rgb(229 231 235) !important;
+
+  --docsearch-searchbox-background: var(--bg-gray-100) !important;
+  --docsearch-modal-background: var(--bg-white) !important;
+  --docsearch-footer-background: var(--bg-gray-100) !important;
+  --docsearch-searchbox-focus-background: var(--bg-white) !important;
+  --docsearch-text-color: var(--text-gray-900) !important;
+  --docsearch-hit-background: var(--bg-blue-50) !important;
+  --docsearch-hit-color: var(--text-gray-900) !important;
+  --docsearch-searchbox-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dark mode styles */
+.dark {
   --bg-slate-800: rgb(30 41 59) !important;
   --bg-indigo-900: rgb(49 46 129) !important;
   --bg-cyan-900: rgb(22 78 99) !important;
@@ -9,13 +30,14 @@
   --docsearch-text-color: white !important;
   --docsearch-hit-background: var(--bg-indigo-900) !important;
   --docsearch-hit-color: white !important;
+  --docsearch-searchbox-shadow: none !important;
 }
 
 .DocSearch-Modal,
 .DocSearch-Footer,
 .DocSearch-Hit a,
 .DocSearch-Form {
-  box-shadow: none !important;
+  box-shadow: var(--docsearch-searchbox-shadow) !important;
 }
 
 .DocSearch-Button-Keys,
@@ -24,6 +46,10 @@
 }
 
 .DocSearch-Button .DocSearch-Search-Icon {
+  color: var(--text-gray-600) !important;
+}
+
+.dark .DocSearch-Button .DocSearch-Search-Icon {
   color: white !important;
 }
 
