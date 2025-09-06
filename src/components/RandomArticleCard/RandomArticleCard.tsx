@@ -1,5 +1,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
+import { ExternalLink } from "@/components/ExternalLink";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
 import type { SlideData } from "@/types/ISlide";
@@ -88,12 +89,11 @@ export const RandomArticleCard: React.FC<RandomArticleCardProps> = ({
                     : "Slide"}
               </span>
 
-              <a
-                href={article.url}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 sm:py-2 px-4 sm:px-6 rounded transition-colors w-full sm:w-auto text-center"
-              >
-                {article.type === "slide" ? "スライドを見る" : "記事を読む"}
-              </a>
+              <ExternalLink url={article.url} noClass={true}>
+                <span className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 sm:py-2 px-4 sm:px-6 rounded transition-colors w-full sm:w-auto text-center block">
+                  {article.type === "slide" ? "スライドを見る" : "記事を読む"}
+                </span>
+              </ExternalLink>
             </div>
           </div>
         </div>
