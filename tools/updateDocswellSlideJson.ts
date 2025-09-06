@@ -1,6 +1,10 @@
 import Parser from "rss-parser";
 
-const parser = new Parser();
+const parser = new Parser({
+  customFields: {
+    item: ["media:thumbnail"],
+  },
+});
 
 import fs from "node:fs";
 import type { DocswellJson } from "../src/types/ISlide";
@@ -11,10 +15,17 @@ type DocswellRssJson = Array<{
   isoDate: string;
   content?: string;
   contentSnippet?: string;
+  "media:thumbnail"?: {
+    "$": {
+      "url": string;
+    }
+  };
 }>;
 
 const convertXmlToJson = async (url: string) => {
   const feed = await parser.parseURL(url);
+
+  console.log(JSON.stringify(feed, null, 2))
   const items = feed.items.map((data) => {
     return data;
   });
@@ -26,7 +37,7 @@ const readLocalDocswellJson = async (path: string) => {
     const file = await fs.promises.readFile(path, "utf8");
     const docswellJson: DocswellJson = JSON.parse(file);
     return docswellJson;
-  } catch (error) {
+  } catch (_error) {
     // ファイルが存在しない場合は空の構造を返す
     return {
       lastUpdated: "1970-01-01T00:00:00Z",
@@ -60,13 +71,20 @@ const updateDocswellJson = (
 
     // URLからスライドIDを抽出
     const urlParts = r.link.split("/");
-    const slideId = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];
-    
+    const slideId =
+      urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];
+
+    // タイトルの頭に `[スライド]` とついてしまうので取り除く
+    const title = r.title.replace(/^\[スライド\] /, "");
+
     docswellJson.slides[slideId] = {
-      title: r.title,
+      title: title,
       pubDate: r.isoDate,
+      thumbnailUrl: r["media:thumbnail"].$.url,
       url: r.link,
-      embedUrl: r.link.includes("/s/") ? r.link.replace("/s/", "/slide/").replace(/\/[^\/]+$/, "/embed") : undefined,
+      embedUrl: r.link.includes("/s/")
+        ? r.link.replace("/s/", "/slide/").replace(/\/[^/]+$/, "/embed")
+        : undefined,
     };
   }
 
@@ -79,14 +97,16 @@ const updateDocswellJson = (
   const localDocswellJsonPath = "../public/assets/docswell_slides.json";
 
   try {
-    const localDocswellJson = await readLocalDocswellJson(localDocswellJsonPath);
-    
+    const localDocswellJson = await readLocalDocswellJson(
+      localDocswellJsonPath,
+    );
+
     // DocswellのRSS URL（推定）
     const rssUrl = "https://www.docswell.com/user/korosuke613/feed";
-    
+
     console.info(`Fetching RSS from: ${rssUrl}`);
     const rss = await convertXmlToJson(rssUrl);
-    
+
     const updatedDocswellJson = updateDocswellJson(
       localDocswellJson.lastUpdated,
       rss,
@@ -102,7 +122,7 @@ const updateDocswellJson = (
       localDocswellJsonPath,
       `${JSON.stringify(updatedDocswellJson, null, 2)}\n`,
     );
-    
+
     console.info(`Successfully updated ${updateItemCount} slides`);
   } catch (error) {
     console.error("Error updating Docswell slides:", error);

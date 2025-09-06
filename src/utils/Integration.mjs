@@ -221,22 +221,8 @@ const getSlideData = async () => {
       console.warn("Docswell slides JSON not found, using static data only");
     }
 
-    // Static slide data
-    const staticSlides = {
-      "dd3ecf4be4604ccfb0997af775118ee4": {
-        title: "Git/GitHub を使う上で知っておくと嬉しいかも Tips【サイボウズ新人研修2025】",
-        pubDate: "2025-07-08T00:00:00Z",
-        category: ["SpeakerDeck"],
-      },
-      "ZLLQJQ": {
-        title: "カチカチするたびランダムに回転する僕の作り方 with Astro",
-        pubDate: "2023-06-30T00:00:00Z",
-        category: ["Docswell"],
-      },
-    };
-
     // Combine all slides
-    const allSlides = { ...staticSlides };
+    const allSlides = {};
     for (const [slideId, slide] of Object.entries(docswellSlides)) {
       if (!allSlides[slideId]) {
         allSlides[slideId] = {
