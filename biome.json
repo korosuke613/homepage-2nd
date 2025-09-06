@@ -19,7 +19,8 @@
       "!**/generated",
       "!**/public/assets/**/*.json",
       "!.devcontainer",
-      "!.claude"
+      "!.claude",
+      "!algolia.json"
     ]
   },
   "formatter": {
