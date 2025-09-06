@@ -4,15 +4,17 @@ import { RandomArticleCard } from "@/components/RandomArticleCard";
 import { Section } from "@/components/Section";
 import Base from "@/templates/Base.astro";
 import { getSortedBlogData } from "@/utils/Blog";
+import { getSortedSlideData } from "@/utils/Slide";
 
 const posts = await getCollection("posts");
 const blogs = await getSortedBlogData();
+const slides = await getSortedSlideData();
 ---
 
-<Base head={{ title: "ランダム記事", description: "ランダムな記事を表示します", isNoIndex: true }}>
+<Base head={{ title: "ランダムコンテンツ", description: "ランダムなコンテンツ（記事・ブログ・スライド）を表示します", isNoIndex: true }}>
   <Section>
     <div class="flex flex-col items-center justify-center py-10">
-      <RandomArticleCard client:load posts={posts} blogs={blogs}/>
+      <RandomArticleCard client:load posts={posts} blogs={blogs} slides={slides}/>
     </div>
   </Section>
 </Base>
