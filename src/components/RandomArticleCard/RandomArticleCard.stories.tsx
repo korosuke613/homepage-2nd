@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
+import type { SlideData } from "@/types/ISlide";
 import { RandomArticleCard } from "./RandomArticleCard";
 
 const meta: Meta<typeof RandomArticleCard> = {
@@ -67,11 +68,35 @@ const noDescriptionBlog: BlogData = {
   category: ["ブログ"],
 };
 
+const sampleSlide: SlideData = {
+  id: "sample-slide",
+  type: "docswell",
+  title: "サンプルスライド発表",
+  pubDate: "2023-09-10",
+  url: "https://example.com/slides/sample",
+  thumbnailUrl: "https://placehold.jp/ff6600/ffffff/800x450.png",
+  category: ["Docswell"],
+};
+
+const noThumbnailSlide: SlideData = {
+  id: "no-thumbnail-slide",
+  type: "speakerdeck",
+  title: "サムネイルなしのスライド",
+  pubDate: "2023-10-01",
+  url: "https://example.com/slides/no-thumbnail",
+  category: ["SpeakerDeck"],
+};
+
 // 空のモックデータ
 const emptyPosts: IPost[] = [];
 const emptyBlogs: BlogData[] = [];
+const emptySlides: SlideData[] = [];
 
-const defaultRender = (args: { posts: IPost[]; blogs: BlogData[] }) => {
+const defaultRender = (args: {
+  posts: IPost[];
+  blogs: BlogData[];
+  slides: SlideData[];
+}) => {
   return (
     <div
       style={{
@@ -87,6 +112,7 @@ export const Post: Story = {
   args: {
     posts: [samplePost],
     blogs: [],
+    slides: [],
   },
   parameters: {
     docs: {
@@ -100,6 +126,7 @@ export const Blog: Story = {
   args: {
     posts: [],
     blogs: [sampleBlog],
+    slides: [],
   },
   parameters: {
     docs: {
@@ -109,10 +136,25 @@ export const Blog: Story = {
   render: defaultRender,
 };
 
+export const Slide: Story = {
+  args: {
+    posts: [],
+    blogs: [],
+    slides: [sampleSlide],
+  },
+  parameters: {
+    docs: {
+      description: "スライドのみを表示する例",
+    },
+  },
+  render: defaultRender,
+};
+
 export const NoImage: Story = {
   args: {
     posts: [noImagePost],
     blogs: [],
+    slides: [],
   },
   parameters: {
     docs: {
@@ -122,10 +164,25 @@ export const NoImage: Story = {
   render: defaultRender,
 };
 
+export const NoThumbnail: Story = {
+  args: {
+    posts: [],
+    blogs: [],
+    slides: [noThumbnailSlide],
+  },
+  parameters: {
+    docs: {
+      description: "サムネイルがないスライドを表示する例",
+    },
+  },
+  render: defaultRender,
+};
+
 export const NoDescription: Story = {
   args: {
     posts: [],
     blogs: [noDescriptionBlog],
+    slides: [],
   },
   parameters: {
     docs: {
@@ -139,10 +196,11 @@ export const None: Story = {
   args: {
     posts: emptyPosts,
     blogs: emptyBlogs,
+    slides: emptySlides,
   },
   parameters: {
     docs: {
-      description: "記事がない場合の表示",
+      description: "コンテンツがない場合の表示",
     },
   },
   render: defaultRender,
@@ -152,10 +210,11 @@ export const Multiple: Story = {
   args: {
     posts: [samplePost, noImagePost],
     blogs: [sampleBlog, noDescriptionBlog],
+    slides: [sampleSlide, noThumbnailSlide],
   },
   parameters: {
     docs: {
-      description: "複数の記事からランダムに表示する例",
+      description: "複数のコンテンツからランダムに表示する例",
     },
   },
   render: defaultRender,

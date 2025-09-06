@@ -2,11 +2,13 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
+import type { SlideData } from "@/types/ISlide";
 import { getRandomArticle, type RandomArticle } from "@/utils/Random";
 
 interface RandomArticleCardProps {
   posts: IPost[];
   blogs: BlogData[];
+  slides: SlideData[];
 }
 
 const initialArticle: RandomArticle = {
@@ -22,23 +24,24 @@ const initialArticle: RandomArticle = {
 export const RandomArticleCard: React.FC<RandomArticleCardProps> = ({
   posts,
   blogs,
+  slides,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [article, setArticle] = useState<RandomArticle>(initialArticle);
 
   useEffect(() => {
-    setArticle(getRandomArticle(posts, blogs));
-  }, [posts, blogs]);
+    setArticle(getRandomArticle(posts, blogs, slides));
+  }, [posts, blogs, slides]);
 
   const handleRefresh = () => {
     setIsLoading(true);
-    setArticle(getRandomArticle(posts, blogs));
+    setArticle(getRandomArticle(posts, blogs, slides));
     setIsLoading(false);
   };
   return (
     <div className="text-center w-full max-w-2xl mx-auto px-4 sm:px-6">
       <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
-        ランダム記事
+        ランダムコンテンツ
       </h1>
 
       <div className="min-h-[400px] sm:min-h-[520px]">
@@ -78,14 +81,18 @@ export const RandomArticleCard: React.FC<RandomArticleCardProps> = ({
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-auto gap-3 sm:gap-0">
               <span className="bg-blue-900 text-blue-300 px-2 py-1 rounded text-xs sm:text-sm">
-                {article.type === "post" ? "Post" : "Blog"}
+                {article.type === "post"
+                  ? "Post"
+                  : article.type === "blog"
+                    ? "Blog"
+                    : "Slide"}
               </span>
 
               <a
                 href={article.url}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 sm:py-2 px-4 sm:px-6 rounded transition-colors w-full sm:w-auto text-center"
               >
-                記事を読む
+                {article.type === "slide" ? "スライドを見る" : "記事を読む"}
               </a>
             </div>
           </div>
@@ -94,9 +101,9 @@ export const RandomArticleCard: React.FC<RandomArticleCardProps> = ({
 
       <div className="mb-4 text-gray-400 text-sm">
         <p>
-          総記事数{" "}
+          総コンテンツ数{" "}
           <span className="font-bold text-white">{article.totalCount}</span>{" "}
-          件の中からランダムに表示しています
+          件（記事・ブログ・スライド）の中からランダムに表示しています
         </p>
       </div>
 
@@ -106,7 +113,7 @@ export const RandomArticleCard: React.FC<RandomArticleCardProps> = ({
         disabled={isLoading}
         className={`mt-2 sm:mt-4 bg-slate-700 hover:bg-slate-600 text-white py-2 px-4 rounded transition-colors w-full sm:w-auto ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
       >
-        {isLoading ? "読み込み中..." : "別の記事を表示"}
+        {isLoading ? "読み込み中..." : "別のコンテンツを表示"}
       </button>
     </div>
   );

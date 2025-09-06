@@ -1,5 +1,6 @@
 import type { IPost } from "@/types/IArticleFrontmatter";
 import type { BlogData } from "@/types/IBlogPage";
+import type { SlideData } from "@/types/ISlide";
 import { AppConfig } from "./AppConfig";
 import { joinPaths } from "./PathUtils";
 
@@ -7,7 +8,7 @@ export type RandomArticle = {
   title: string;
   description: string;
   url: string;
-  type: "post" | "blog" | "none";
+  type: "post" | "blog" | "slide" | "none";
   imageSrc?: string;
   totalCount: number; // 総記事数を追加
   pubDate: string; // 投稿日を追加
@@ -16,11 +17,12 @@ export type RandomArticle = {
 type IPostOmitUrl = Omit<IPost, "url">;
 
 /**
- * PostsとBlogsからランダムな記事を1つ取得する
+ * Posts、Blogs、Slidesからランダムな記事を1つ取得する
  */
 export const getRandomArticle = (
   posts: IPost[],
   blogs: BlogData[],
+  slides: SlideData[],
   config?: {
     articleIndex?: number;
   },
@@ -35,13 +37,14 @@ export const getRandomArticle = (
 
   // 全ての記事を1つの配列に統合
   type MixedArticle = {
-    source: "post" | "blog";
-    data: IPostOmitUrl | BlogData;
+    source: "post" | "blog" | "slide";
+    data: IPostOmitUrl | BlogData | SlideData;
   };
 
   const allArticles: MixedArticle[] = [
     ...postsData.map((post): MixedArticle => ({ source: "post", data: post })),
     ...blogs.map((blog): MixedArticle => ({ source: "blog", data: blog })),
+    ...slides.map((slide): MixedArticle => ({ source: "slide", data: slide })),
   ];
 
   const totalArticleCount = allArticles.length;
@@ -65,14 +68,27 @@ export const getRandomArticle = (
   }
 
   // 型ガード関数
-  function isPostArticle(article: IPostOmitUrl | BlogData): article is IPost {
+  function isPostArticle(
+    article: IPostOmitUrl | BlogData | SlideData,
+  ): article is IPost {
     return "slug" in article && "data" in article;
   }
 
   function isBlogArticle(
-    article: IPostOmitUrl | BlogData,
+    article: IPostOmitUrl | BlogData | SlideData,
   ): article is BlogData {
-    return "title" in article && "url" in article;
+    return "title" in article && "url" in article && "ogpImageUrl" in article;
+  }
+
+  function isSlideArticle(
+    article: IPostOmitUrl | BlogData | SlideData,
+  ): article is SlideData {
+    return (
+      "title" in article &&
+      "url" in article &&
+      "type" in article &&
+      "thumbnailUrl" in article
+    );
   }
 
   // 選択された記事を適切な形式に変換
@@ -98,6 +114,18 @@ export const getRandomArticle = (
       imageSrc: blog.ogpImageUrl,
       totalCount: totalArticleCount,
       pubDate: blog.pubDate,
+    };
+  }
+  if (isSlideArticle(randomArticle.data)) {
+    const slide = randomArticle.data;
+    return {
+      title: slide.title,
+      description: "",
+      url: slide.url,
+      type: "slide",
+      imageSrc: slide.thumbnailUrl,
+      totalCount: totalArticleCount,
+      pubDate: slide.pubDate,
     };
   }
 
