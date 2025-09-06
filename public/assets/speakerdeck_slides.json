@@ -1,11 +1,75 @@
 {
-  "lastUpdated": "2025-09-06T09:31:02.727Z",
+  "lastUpdated": "2025-09-07T00:00:00.000Z",
   "slides": {
-    "dd3ecf4be4604ccfb0997af775118ee4": {
+    "git-github-tips": {
       "title": "Git/GitHub を使う上で知っておくと嬉しいかも Tips【サイボウズ新人研修2025】",
-      "pubDate": "2025-07-08T00:00:00Z",
-      "url": "https://speakerdeck.com/korosuke613/dd3ecf4be4604ccfb0997af775118ee4",
-      "embedUrl": "https://speakerdeck.com/player/dd3ecf4be4604ccfb0997af775118ee4"
+      "pubDate": "2025-05-01T04:00:00Z",
+      "url": "https://speakerdeck.com/cybozuinsideout/git-github-tips",
+      "embedUrl": "https://speakerdeck.com/player/dd3ecf4be4604ccfb0997af775118ee4",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/dd3ecf4be4604ccfb0997af775118ee4/slide_0.jpg?35729332"
+    },
+    "testing-terraform-plan-with-conftest": {
+      "title": "terraform plan 結果の検証を自動化するぞ！ with Conftest / Testing terraform plan with Conftest",
+      "pubDate": "2021-11-02T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/testing-terraform-plan-with-conftest",
+      "embedUrl": "https://speakerdeck.com/player/518bd55636d54637adfd153a24df6512",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/518bd55636d54637adfd153a24df6512/preview_slide_0.jpg?19450037"
+    },
+    "sheng-chan-xing-xiang-shang-timutoha": {
+      "title": "生産性向上チームとは？",
+      "pubDate": "2021-08-28T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/sheng-chan-xing-xiang-shang-timutoha",
+      "embedUrl": "https://speakerdeck.com/player/4042d147394c493985b42b88e83021f3",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/4042d147394c493985b42b88e83021f3/preview_slide_0.jpg?18848961"
+    },
+    "development-culture-and-ept-in-cybozu": {
+      "title": "サイボウズの生産性を高める生産性向上チームと開発文化 / Development culture and EPT in Cybozu",
+      "pubDate": "2021-02-18T05:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/development-culture-and-ept-in-cybozu",
+      "embedUrl": "https://speakerdeck.com/player/10d8b7fab80846e7a8b0995276ef1d08",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/10d8b7fab80846e7a8b0995276ef1d08/preview_slide_0.jpg?17406661"
+    },
+    "tesutolou-rewowu-kusitai-wakuhurodan-wei-detorigawozi-you-nishe-ding-sitaiyao-wang": {
+      "title": "テスト漏れを無くしたい！ワークフロー単位でトリガーを自由に設定したい要望",
+      "pubDate": "2020-08-05T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/tesutolou-rewowu-kusitai-wakuhurodan-wei-detorigawozi-you-nishe-ding-sitaiyao-wang",
+      "embedUrl": "https://speakerdeck.com/player/7aff72849fc24639a716f4d552574344",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/7aff72849fc24639a716f4d552574344/preview_slide_0.jpg?15990780"
+    },
+    "etrobokon2019-csda-hui-moderu-da-k-lab-586f9b23-fa25-4da2-9208-f1d048c29468": {
+      "title": "ETロボコン2019 CS大会モデル[DA] - K-Lab",
+      "pubDate": "2019-11-20T05:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/etrobokon2019-csda-hui-moderu-da-k-lab-586f9b23-fa25-4da2-9208-f1d048c29468",
+      "embedUrl": "https://speakerdeck.com/player/facf26712ca541989d6dbd6c885ebb0c",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/facf26712ca541989d6dbd6c885ebb0c/preview_slide_0.jpg?14452473"
+    },
+    "etrobokon2019-di-qu-da-hui-moderu-da-k-lab": {
+      "title": "ETロボコン2019 地区大会モデル[DA] - K-Lab",
+      "pubDate": "2019-09-28T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/etrobokon2019-di-qu-da-hui-moderu-da-k-lab",
+      "embedUrl": "https://speakerdeck.com/player/f4b81e5ce7fb49e3aa1667fc8796f251",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/f4b81e5ce7fb49e3aa1667fc8796f251/preview_slide_0.jpg?14451824"
+    },
+    "ren-yue-falseshen-hua-shao-jie": {
+      "title": "人月の神話紹介",
+      "pubDate": "2019-09-18T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/ren-yue-falseshen-hua-shao-jie",
+      "embedUrl": "https://speakerdeck.com/player/199d8e55b7ec42cda3db29d4af3b02c0",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/199d8e55b7ec42cda3db29d4af3b02c0/preview_slide_0.jpg?14020507"
+    },
+    "pian-shan-che-lang-yan-jiu-shi-shao-jie-suraido2019": {
+      "title": "片山徹郎研究室紹介スライド2019",
+      "pubDate": "2019-07-09T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/pian-shan-che-lang-yan-jiu-shi-shao-jie-suraido2019",
+      "embedUrl": "https://speakerdeck.com/player/1c7a33fcc5c9415e8323892ded7abd90",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/1c7a33fcc5c9415e8323892ded7abd90/preview_slide_0.jpg?14063630"
+    },
+    "mei-siiwebapifalsezuo-rifang": {
+      "title": "美しいWebAPIの作り方.pdf",
+      "pubDate": "2017-09-14T04:00:00.000Z",
+      "url": "https://speakerdeck.com/korosuke613/mei-siiwebapifalsezuo-rifang",
+      "embedUrl": "https://speakerdeck.com/player/5f3833bfb88542c5b0fea54e835da64d",
+      "thumbnailUrl": "https://files.speakerdeck.com/presentations/5f3833bfb88542c5b0fea54e835da64d/preview_slide_0.jpg?15990710"
     }
   }
 }

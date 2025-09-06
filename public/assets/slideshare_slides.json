@@ -1,4 +1,83 @@
 {
-  "lastUpdated": "2025-09-06T09:31:02.727Z",
-  "slides": {}
+  "lastUpdated": "2025-09-07T00:00:00.000Z",
+  "slides": {
+    "226842700": {
+      "title": "VDM++仕様を対象としたテストケース自動生成ツールBWDMにおけるペアワイズ法とドメイン分析テストの適用のための機能拡張",
+      "pubDate": "2020-02-04T03:00:00.000Z",
+      "url": "https://www.slideshare.net/slideshow/vdmbwdm/226842700",
+      "thumbnailUrl": "https://image.slidesharecdn.com/master-thesis119-200204032719/85/VDM-BWDM-1-638.jpg?cb=1669638810"
+    },
+    "79932849": {
+      "title": "院進学して思うこと",
+      "pubDate": "2019-07-09T04:30:16.000Z",
+      "url": "https://www.slideshare.net/slideshow/ss-154436672/154436672",
+      "thumbnailUrl": "https://image.slidesharecdn.com/inshingakuhaihu-190709043016/85/-1-638.jpg?cb=1668788571"
+    },
+    "79932897": {
+      "title": "CI/CDのすすめ",
+      "pubDate": "2019-03-19T07:24:39.000Z",
+      "url": "https://www.slideshare.net/slideshow/cicd-171473601/171473601",
+      "thumbnailUrl": "https://image.slidesharecdn.com/recuruitlthirakoba-190913072439/85/cicd-1-638.jpg?cb=1668819619"
+    },
+    "79932796": {
+      "title": "Agri Hack Day 2019 in 宮崎大学 〜マンゴーチーム〜",
+      "pubDate": "2019-02-03T16:06:33.000Z",
+      "url": "https://www.slideshare.net/slideshow/agri-hack-day-2019-in-131032334/131032334",
+      "thumbnailUrl": "https://image.slidesharecdn.com/prezen20190203-190208160633/85/agri-hack-day-2019-in-1-638.jpg?cb=1669154180"
+    },
+    "79932653": {
+      "title": "量子コンピュータを触ってみる",
+      "pubDate": "2019-01-29T05:48:23.000Z",
+      "url": "https://www.slideshare.net/slideshow/ss-129798695/129798695",
+      "thumbnailUrl": "https://image.slidesharecdn.com/usequantamcomputer-190130040223/85/-1-638.jpg?cb=1669901767"
+    },
+    "79932699": {
+      "title": "これからどう学生時代を過ごせば良いか",
+      "pubDate": "2019-01-21T08:50:23.000Z",
+      "url": "https://fr.slideshare.net/slideshow/ss-130454742/130454742",
+      "thumbnailUrl": "https://image.slidesharecdn.com/korekara-190204085023/85/-1-638.jpg?cb=1668589183"
+    },
+    "79932605": {
+      "title": "レーダーってなあに",
+      "pubDate": "2019-01-15T05:47:46.000Z",
+      "url": "https://www.slideshare.net/slideshow/ss-128027690/128027690",
+      "thumbnailUrl": "https://image.slidesharecdn.com/reder-190114225025/85/-1-638.jpg?cb=1667939909"
+    },
+    "79932511": {
+      "title": "VDM++仕様を対象としたテストケース自動生成ツール BWDM における境界値分析結果へのペアワイズ法の適用",
+      "pubDate": "2018-09-27T05:46:27.000Z",
+      "url": "https://fr.slideshare.net/slideshow/vdm-bwdm/118282402",
+      "thumbnailUrl": "https://image.slidesharecdn.com/jceee2018hirakoba-181005091030/85/VDM-BWDM-1-638.jpg?cb=1670677322"
+    },
+    "79932481": {
+      "title": "機械学習を用いた仕様書からのテストケース自動生成ツールSpec2Testの試作",
+      "pubDate": "2018-02-19T05:46:03.000Z",
+      "url": "https://www.slideshare.net/slideshow/spec2test/118281893",
+      "thumbnailUrl": "https://image.slidesharecdn.com/20180219graduate-181005090528/85/Spec2Test-1-638.jpg?cb=1668146186"
+    },
+    "79932415": {
+      "title": "近年の仮面ライダーに感じる不満を解消するトゲのある仮面ライダー、アマゾンズの紹介",
+      "pubDate": "2017-06-14T05:45:20.000Z",
+      "url": "https://www.slideshare.net/slideshow/ss-79932952/79932952",
+      "thumbnailUrl": "https://image.slidesharecdn.com/random-170919111632/85/-1-638.jpg?cb=1668310240"
+    },
+    "79932449": {
+      "title": "デジタル一眼レフカメラとSNSを利用したインドア派から脱却する方法",
+      "pubDate": "2017-04-26T05:45:42.000Z",
+      "url": "https://www.slideshare.net/slideshow/sns-79932981/79932981",
+      "thumbnailUrl": "https://image.slidesharecdn.com/random-170919111738/85/SNS-1-638.jpg?cb=1668562023"
+    },
+    "79932359": {
+      "title": "ETロボについて",
+      "pubDate": "2014-11-10T05:44:40.000Z",
+      "url": "https://www.slideshare.net/FutaHirakoba/et-79932849",
+      "thumbnailUrl": "https://image.slidesharecdn.com/67140390-170919111317/85/et-1-638.jpg?cb=1668310240"
+    },
+    "79932387": {
+      "title": "自己紹介 平木場風太",
+      "pubDate": "2014-05-22T05:44:59.000Z",
+      "url": "https://www.slideshare.net/slideshow/ss-79932897/79932897",
+      "thumbnailUrl": "https://image.slidesharecdn.com/67140390-170919111446/85/-1-638.jpg?cb=1668310240"
+    }
+  }
 }

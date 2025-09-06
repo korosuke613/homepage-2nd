@@ -53,8 +53,8 @@
     "Hatena": "bg-rose-400 text-neutral-900"
   },
   "slides": {
+    "SlideShare": "bg-orange-400 text-neutral-900",
     "Docswell": "bg-blue-400 text-neutral-900",
-    "SpeakerDeck": "bg-green-400 text-neutral-900",
-    "SlideShare": "bg-orange-400 text-neutral-900"
+    "SpeakerDeck": "bg-green-400 text-neutral-900"
   }
 }
