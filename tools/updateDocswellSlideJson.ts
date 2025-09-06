@@ -56,7 +56,18 @@ const updateDocswellJson = (
   const updatedAt = new Date(updatedAtString);
 
   for (const r of rss) {
-    if (!r.link.includes("docswell.com")) {
+    let urlObj;
+    try {
+      urlObj = new URL(r.link);
+    } catch (e) {
+      console.info(`info: skip ${r.title}, invalid URL`);
+      continue;
+    }
+    const allowedHosts = [
+      "docswell.com",
+      "www.docswell.com"
+    ];
+    if (!allowedHosts.includes(urlObj.hostname)) {
       console.info(`info: skip ${r.title}, because not docswell`);
       continue;
     }
