@@ -35,3 +35,29 @@ export interface DocswellJson {
     };
   };
 }
+
+export interface SpeakerDeckJson {
+  lastUpdated: string;
+  slides: {
+    [key: string]: {
+      title: string;
+      pubDate: string;
+      url: string;
+      embedUrl?: string;
+      thumbnailUrl?: string;
+    };
+  };
+}
+
+export interface SlideShareJson {
+  lastUpdated: string;
+  slides: {
+    [key: string]: {
+      title: string;
+      pubDate: string;
+      url: string;
+      embedUrl?: string;
+      thumbnailUrl?: string;
+    };
+  };
+}

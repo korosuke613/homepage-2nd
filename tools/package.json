@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update:docswell": "npx ts-node updateDocswellSlideJson.ts"
+    "update:docswell": "npx ts-node updateDocswellSlideJson.ts",
+    "update:speakerdeck": "npx ts-node updateSpeakerDeckSlideJson.ts",
+    "update:slideshare": "npx ts-node updateSlideShareSlideJson.ts"
   },
   "keywords": [],
   "author": "",

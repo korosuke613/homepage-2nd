@@ -1,0 +1,45 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import Slides from "@/templates/Slides.astro";
+import type { SlidePage } from "@/types/ISlide";
+import { getSortedSlideData } from "@/utils/Slide";
+import { readYears } from "@/utils/Year";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedSlides = await getSortedSlideData();
+
+  const years = await readYears();
+
+  if (!years.slides) {
+    return [];
+  }
+
+  return years.slides.flatMap((year) => {
+    const filteredSlides = sortedSlides.filter((slide) => {
+      const publishYear = new Date(slide.pubDate).getFullYear();
+      return publishYear === year;
+    });
+
+    return paginate(filteredSlides, {
+      params: { year: year.toString() },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: SlidePage;
+}
+
+const { page } = Astro.props as Props;
+const { year } = Astro.params;
+---
+
+<meta name="robots" content="noindex" />
+
+<Slides
+  page={page}
+  contentCategory="Slides"
+  contentDescription="スライド資料（SlideShare、SpeakerDeck、Docswell）"
+  preTitle={year}
+/>

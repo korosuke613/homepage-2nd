@@ -218,16 +218,70 @@ const getSlideData = async () => {
       const docswellJson = JSON.parse(rawDocswellJson);
       docswellSlides = docswellJson.slides || {};
     } catch (error) {
-      console.warn("Docswell slides JSON not found, using static data only");
+      console.warn("Docswell slides JSON not found, skipping");
+    }
+
+    // Try to read SpeakerDeck slides data
+    let speakerDeckSlides = {};
+    try {
+      const rawSpeakerDeckJson = await fs.promises.readFile(
+        "./public/assets/speakerdeck_slides.json",
+        "utf-8",
+      );
+      /**
+       * @type { import("../types/ISlide").SpeakerDeckJson; }
+       */
+      const speakerDeckJson = JSON.parse(rawSpeakerDeckJson);
+      speakerDeckSlides = speakerDeckJson.slides || {};
+    } catch (error) {
+      console.warn("SpeakerDeck slides JSON not found, skipping");
+    }
+
+    // Try to read SlideShare slides data
+    let slideShareSlides = {};
+    try {
+      const rawSlideShareJson = await fs.promises.readFile(
+        "./public/assets/slideshare_slides.json",
+        "utf-8",
+      );
+      /**
+       * @type { import("../types/ISlide").SlideShareJson; }
+       */
+      const slideShareJson = JSON.parse(rawSlideShareJson);
+      slideShareSlides = slideShareJson.slides || {};
+    } catch (error) {
+      console.warn("SlideShare slides JSON not found, skipping");
     }
 
     // Combine all slides
     const allSlides = {};
+    
+    // Add Docswell slides
     for (const [slideId, slide] of Object.entries(docswellSlides)) {
       if (!allSlides[slideId]) {
         allSlides[slideId] = {
           ...slide,
           category: ["Docswell"],
+        };
+      }
+    }
+
+    // Add SpeakerDeck slides
+    for (const [slideId, slide] of Object.entries(speakerDeckSlides)) {
+      if (!allSlides[slideId]) {
+        allSlides[slideId] = {
+          ...slide,
+          category: ["SpeakerDeck"],
+        };
+      }
+    }
+
+    // Add SlideShare slides
+    for (const [slideId, slide] of Object.entries(slideShareSlides)) {
+      if (!allSlides[slideId]) {
+        allSlides[slideId] = {
+          ...slide,
+          category: ["SlideShare"],
         };
       }
     }

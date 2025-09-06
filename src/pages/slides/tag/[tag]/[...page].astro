@@ -1,0 +1,46 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import Slides from "@/templates/Slides.astro";
+import type { SlidePage } from "@/types/ISlide";
+import { getSortedSlideData } from "@/utils/Slide";
+import { escapeTag, readTags } from "@/utils/Tag";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedSlides = await getSortedSlideData();
+
+  const tags = (await readTags()).slides;
+  if (tags === undefined) {
+    return [];
+  }
+
+  return Object.keys(tags).flatMap((tagName) => {
+    const filteredSlides = sortedSlides.filter(
+      (slide) =>
+        slide.type === tagName.toLowerCase() || slide.category.includes(tagName),
+    );
+    const escapeTagName = escapeTag(tagName);
+    return paginate(filteredSlides, {
+      params: { tag: escapeTagName },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: SlidePage;
+}
+
+const { page } = Astro.props as Props;
+const { tag } = Astro.params;
+
+const originTag = (tag as string).replace("_", "/");
+---
+
+<meta name="robots" content="noindex" />
+
+<Slides
+  page={page}
+  contentCategory="Slides"
+  contentDescription="スライド資料（SlideShare、SpeakerDeck、Docswell）"
+  preTitle={originTag}
+/>
