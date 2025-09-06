@@ -6,7 +6,6 @@ export interface ISlide {
   title: string;
   pubDate: string;
   url: string;
-  embedUrl?: string;
   thumbnailUrl?: string;
 }
 
@@ -16,7 +15,6 @@ export type SlideData = {
   title: string;
   pubDate: string;
   url: string;
-  embedUrl?: string;
   thumbnailUrl?: string;
   category: string[];
 };
@@ -30,7 +28,6 @@ export interface DocswellJson {
       title: string;
       pubDate: string;
       url: string;
-      embedUrl?: string;
       thumbnailUrl?: string;
     };
   };
@@ -43,7 +40,6 @@ export interface SpeakerDeckJson {
       title: string;
       pubDate: string;
       url: string;
-      embedUrl?: string;
       thumbnailUrl?: string;
     };
   };
@@ -56,7 +52,6 @@ export interface SlideShareJson {
       title: string;
       pubDate: string;
       url: string;
-      embedUrl?: string;
       thumbnailUrl?: string;
     };
   };

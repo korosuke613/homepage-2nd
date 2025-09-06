@@ -17,7 +17,6 @@ export const createDocswellData = (slides: DocswellJson["slides"]) => {
       title: slide.title,
       pubDate: slide.pubDate,
       url: slide.url,
-      embedUrl: slide.embedUrl,
       thumbnailUrl: slide.thumbnailUrl,
       category: ["Docswell"],
     };
@@ -39,7 +38,6 @@ export const createSpeakerDeckData = (slides: SpeakerDeckJson["slides"]) => {
       title: slide.title,
       pubDate: slide.pubDate,
       url: slide.url,
-      embedUrl: slide.embedUrl,
       thumbnailUrl: slide.thumbnailUrl,
       category: ["SpeakerDeck"],
     };
@@ -61,7 +59,6 @@ export const createSlideShareData = (slides: SlideShareJson["slides"]) => {
       title: slide.title,
       pubDate: slide.pubDate,
       url: slide.url,
-      embedUrl: slide.embedUrl,
       thumbnailUrl: slide.thumbnailUrl,
       category: ["SlideShare"],
     };

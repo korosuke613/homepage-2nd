@@ -16,16 +16,16 @@ type DocswellRssJson = Array<{
   content?: string;
   contentSnippet?: string;
   "media:thumbnail"?: {
-    "$": {
-      "url": string;
-    }
+    $: {
+      url: string;
+    };
   };
 }>;
 
 const convertXmlToJson = async (url: string) => {
   const feed = await parser.parseURL(url);
 
-  console.log(JSON.stringify(feed, null, 2))
+  console.log(JSON.stringify(feed, null, 2));
   const items = feed.items.map((data) => {
     return data;
   });
@@ -59,14 +59,11 @@ const updateDocswellJson = (
     let urlObj;
     try {
       urlObj = new URL(r.link);
-    } catch (e) {
+    } catch (_e) {
       console.info(`info: skip ${r.title}, invalid URL`);
       continue;
     }
-    const allowedHosts = [
-      "docswell.com",
-      "www.docswell.com"
-    ];
+    const allowedHosts = ["docswell.com", "www.docswell.com"];
     if (!allowedHosts.includes(urlObj.hostname)) {
       console.info(`info: skip ${r.title}, because not docswell`);
       continue;
@@ -93,9 +90,6 @@ const updateDocswellJson = (
       pubDate: r.isoDate,
       thumbnailUrl: r["media:thumbnail"].$.url,
       url: r.link,
-      embedUrl: r.link.includes("/s/")
-        ? r.link.replace("/s/", "/slide/").replace(/\/[^/]+$/, "/embed")
-        : undefined,
     };
   }
 
