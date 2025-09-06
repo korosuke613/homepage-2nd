@@ -16,7 +16,8 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   return Object.keys(tags).flatMap((tagName) => {
     const filteredSlides = sortedSlides.filter(
       (slide) =>
-        slide.type === tagName.toLowerCase() || slide.category.includes(tagName),
+        slide.type === tagName.toLowerCase() ||
+        slide.category.includes(tagName),
     );
     const escapeTagName = escapeTag(tagName);
     return paginate(filteredSlides, {

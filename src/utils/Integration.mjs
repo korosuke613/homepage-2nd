@@ -217,7 +217,7 @@ const getSlideData = async () => {
        */
       const docswellJson = JSON.parse(rawDocswellJson);
       docswellSlides = docswellJson.slides || {};
-    } catch (error) {
+    } catch (_error) {
       console.warn("Docswell slides JSON not found, skipping");
     }
 
@@ -233,7 +233,7 @@ const getSlideData = async () => {
        */
       const speakerDeckJson = JSON.parse(rawSpeakerDeckJson);
       speakerDeckSlides = speakerDeckJson.slides || {};
-    } catch (error) {
+    } catch (_error) {
       console.warn("SpeakerDeck slides JSON not found, skipping");
     }
 
@@ -249,13 +249,13 @@ const getSlideData = async () => {
        */
       const slideShareJson = JSON.parse(rawSlideShareJson);
       slideShareSlides = slideShareJson.slides || {};
-    } catch (error) {
+    } catch (_error) {
       console.warn("SlideShare slides JSON not found, skipping");
     }
 
     // Combine all slides
     const allSlides = {};
-    
+
     // Add Docswell slides
     for (const [slideId, slide] of Object.entries(docswellSlides)) {
       if (!allSlides[slideId]) {
@@ -330,12 +330,20 @@ const setupData = async () => {
   }
   await fs.promises.writeFile(
     tagJsonPath,
-    JSON.stringify({ posts: posts.tags, blogs: blogs.tags, slides: slides.tags }, null, 2),
+    JSON.stringify(
+      { posts: posts.tags, blogs: blogs.tags, slides: slides.tags },
+      null,
+      2,
+    ),
   );
 
   await fs.promises.writeFile(
     yearJsonPath,
-    JSON.stringify({ posts: posts.years, blogs: blogs.years, slides: slides.years }, null, 2),
+    JSON.stringify(
+      { posts: posts.years, blogs: blogs.years, slides: slides.years },
+      null,
+      2,
+    ),
   );
 };
 

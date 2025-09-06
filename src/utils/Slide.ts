@@ -1,7 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import type { DocswellJson, SlideData, SpeakerDeckJson, SlideShareJson } from "@/types/ISlide";
+import type {
+  DocswellJson,
+  SlideData,
+  SlideShareJson,
+  SpeakerDeckJson,
+} from "@/types/ISlide";
 import { AppConfig } from "@/utils/AppConfig";
 
 export const createDocswellData = (slides: DocswellJson["slides"]) => {
@@ -127,7 +132,11 @@ export const getSortedSlideData = async () => {
     const existingIds = new Set(staticData.map((slide) => slide.id));
 
     // 各プラットフォームのデータを追加（重複チェック）
-    for (const slide of [...docswellData, ...speakerDeckData, ...slideShareData]) {
+    for (const slide of [
+      ...docswellData,
+      ...speakerDeckData,
+      ...slideShareData,
+    ]) {
       if (!existingIds.has(slide.id)) {
         allSlides.push(slide);
         existingIds.add(slide.id);

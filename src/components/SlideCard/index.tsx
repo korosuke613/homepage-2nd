@@ -13,8 +13,9 @@ type ISlideCard = {
 
 export const SlideCard = (props: ISlideCard) => {
   // サムネイル画像のデフォルト
-  const thumbnailUrl = props.elt.thumbnailUrl || "/assets/images/default-slide-thumbnail.webp";
-  
+  const thumbnailUrl =
+    props.elt.thumbnailUrl || "/assets/images/default-slide-thumbnail.webp";
+
   return (
     <div
       key={props.elt.id}

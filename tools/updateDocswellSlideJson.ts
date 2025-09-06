@@ -56,7 +56,7 @@ const updateDocswellJson = (
   const updatedAt = new Date(updatedAtString);
 
   for (const r of rss) {
-    let urlObj;
+    let urlObj: URL;
     try {
       urlObj = new URL(r.link);
     } catch (_e) {

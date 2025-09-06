@@ -18,11 +18,7 @@ export const SlideGallery = (props: ISlideGalleryProps) => {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
       {props.postList.map((elt) => (
-        <SlideCard
-          key={elt.id}
-          elt={elt}
-          tags={tags}
-        />
+        <SlideCard key={elt.id} elt={elt} tags={tags} />
       ))}
     </div>
   );
