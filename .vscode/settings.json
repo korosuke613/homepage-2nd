@@ -11,7 +11,7 @@
     "editor.codeActionsOnSave": {
       "quickfix.biome": "explicit",
       "source.organizeImports.biome": "explicit"
-    },
+    }
   },
   // Multiple language settings for json and jsonc files
   "[json][jsonc]": {
@@ -20,14 +20,17 @@
   },
   "[astro]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "terminal.integrated.defaultProfile.linux": "zsh",
   "[xml]": {
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
   "cSpell.words": [
-    "cobertura"
+    "cobertura",
+    "speakerdeck",
+    "slideshare",
+    "frontmatter"
   ],
   "files.autoSave": "afterDelay",
   "[html]": {
