@@ -4,11 +4,13 @@ import { db, Zenns } from "astro:db";
 import { RecentBlogs } from "@/partials/RecentBlogs";
 import { RecentPickup } from "@/partials/RecentPickup";
 import { RecentPosts } from "@/partials/RecentPosts";
+import { RecentSlides } from "@/partials/RecentSlides";
 import Base from "@/templates/Base.astro";
 import SelfIntroduction from "@/templates/SelfIntroduction.astro";
 import type { IPost } from "@/types/IArticleFrontmatter";
 import { AppConfig } from "@/utils/AppConfig";
 import { getSortedBlogData } from "@/utils/Blog";
+import { getSortedSlideData } from "@/utils/Slide";
 import { sortByDate, sortByOrder } from "@/utils/Posts";
 import { StaticPages } from "@/utils/StaticPages";
 import { readTags } from "@/utils/Tag";
@@ -34,6 +36,9 @@ const lastThreePickup = sortedPickup.slice(0, 3);
 const allBlogs = await getSortedBlogData();
 const lastThreeBlogs = allBlogs.slice(0, 3);
 
+const allSlides = await getSortedSlideData();
+const lastThreeSlides = allSlides.slice(0, 3);
+
 const { title } = AppConfig;
 const { description } = AppConfig;
 
@@ -51,4 +56,5 @@ for (const zenn of zennsDbData) {
   <RecentPickup postList={lastThreePickup} tags={tags.posts} />
   <RecentPosts postList={lastThreePosts} tags={tags.posts} />
   <RecentBlogs postList={lastThreeBlogs} tags={tags.blogs} viewCounts={viewCounts} />
+  <RecentSlides postList={lastThreeSlides} tags={tags.slides || {}} />
 </Base>

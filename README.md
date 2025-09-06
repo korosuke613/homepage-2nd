@@ -112,6 +112,9 @@ npm run update:zenn
 
 # Zenn Scrapデータ更新
 npm run update:zenn-scrap
+
+# Docswellスライドデータ更新
+npm run update:docswell
 ```
 
 ## アーキテクチャ概要

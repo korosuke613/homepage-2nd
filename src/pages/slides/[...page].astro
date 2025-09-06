@@ -1,0 +1,28 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import Slides from "@/templates/Slides.astro";
+import type { SlidePage } from "@/types/ISlide";
+import { getSortedSlideData } from "@/utils/Slide";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedSlides = await getSortedSlideData();
+
+  return paginate(sortedSlides, { pageSize: 9 });
+}
+
+interface Props {
+  page: SlidePage;
+  preTitle?: string | number;
+}
+
+const { page, preTitle } = Astro.props as Props;
+---
+
+<meta name="robots" content="noindex" />
+
+<Slides
+  page={page}
+  contentCategory="Slides"
+  contentDescription="スライド資料（SlideShare、SpeakerDeck、Docswell）"
+  preTitle={preTitle}
+/>

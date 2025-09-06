@@ -203,21 +203,99 @@ const getBlogData = async () => {
   return { tags, years: uniqYears };
 };
 
+const getSlideData = async () => {
+  try {
+    // Try to read Docswell slides data
+    let docswellSlides = {};
+    try {
+      const rawDocswellJson = await fs.promises.readFile(
+        "./public/assets/docswell_slides.json",
+        "utf-8",
+      );
+      /**
+       * @type { import("../types/ISlide").DocswellJson; }
+       */
+      const docswellJson = JSON.parse(rawDocswellJson);
+      docswellSlides = docswellJson.slides || {};
+    } catch (error) {
+      console.warn("Docswell slides JSON not found, using static data only");
+    }
+
+    // Static slide data
+    const staticSlides = {
+      "dd3ecf4be4604ccfb0997af775118ee4": {
+        title: "Git/GitHub を使う上で知っておくと嬉しいかも Tips【サイボウズ新人研修2025】",
+        pubDate: "2025-07-08T00:00:00Z",
+        category: ["SpeakerDeck"],
+      },
+      "ZLLQJQ": {
+        title: "カチカチするたびランダムに回転する僕の作り方 with Astro",
+        pubDate: "2023-06-30T00:00:00Z",
+        category: ["Docswell"],
+      },
+    };
+
+    // Combine all slides
+    const allSlides = { ...staticSlides };
+    for (const [slideId, slide] of Object.entries(docswellSlides)) {
+      if (!allSlides[slideId]) {
+        allSlides[slideId] = {
+          ...slide,
+          category: ["Docswell"],
+        };
+      }
+    }
+
+    /** @type {string[]} */
+    let tagNames = [];
+    const years = [];
+    for (const a of Object.keys(allSlides)) {
+      if (allSlides[a].category !== undefined) {
+        tagNames = tagNames.concat(allSlides[a].category);
+      }
+      const year = new Date(allSlides[a].pubDate).getFullYear();
+      years.push(year);
+    }
+
+    const uniqTagNames = Array.from(new Set(tagNames));
+    const uniqYears = Array.from(new Set(years));
+
+    const tagJsonFile = await fs.promises.readFile(tagJsonPath, "utf-8");
+
+    /**
+     * @type { import("../utils/Tag").Tags; }
+     */
+    const existingTags = JSON.parse(tagJsonFile);
+    const tagJson = existingTags.slides || {};
+
+    const tags = await generateTags(tagJson, uniqTagNames);
+    tags.SpeakerDeck = "bg-green-400 text-neutral-900";
+    tags.Docswell = "bg-blue-400 text-neutral-900";
+    tags.SlideShare = "bg-orange-400 text-neutral-900";
+
+    return { tags, years: uniqYears };
+  } catch (error) {
+    console.warn("Error processing slide data:", error);
+    return { tags: {}, years: [] };
+  }
+};
+
 const setupData = async () => {
   const posts = await getMarkdownData("./src/content/posts/**.md");
   const blogs = await getBlogData();
+  const slides = await getSlideData();
 
   if (!fs.existsSync(generatedDir)) {
     await fs.promises.mkdir(generatedDir);
   }
   await fs.promises.writeFile(
     tagJsonPath,
-    JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2),
+    JSON.stringify({ posts: posts.tags, blogs: blogs.tags, slides: slides.tags }, null, 2),
   );
 
   await fs.promises.writeFile(
     yearJsonPath,
-    JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2),
+    JSON.stringify({ posts: posts.years, blogs: blogs.years, slides: slides.years }, null, 2),
   );
 };
 

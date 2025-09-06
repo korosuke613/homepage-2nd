@@ -1,0 +1,65 @@
+---
+import { NewerOlderPagination } from "@/components/NewerOlderPagination";
+import { PaginationHeader } from "@/components/PaginationHeader";
+import { Section } from "@/components/Section";
+import { Tag } from "@/components/Tag";
+import { Title } from "@/components/Title/index";
+import { Year } from "@/components/Year";
+import { SlideGallery } from "@/components/SlideGallery";
+import Base from "@/templates/Base.astro";
+import type { SlidePage } from "@/types/ISlide";
+import { AppConfig } from "@/utils/AppConfig";
+import { readTags } from "@/utils/Tag";
+import { readYears } from "@/utils/Year";
+
+interface Props {
+  page: SlidePage;
+  preTitle?: string | number;
+  contentCategory: string;
+  contentDescription: string;
+}
+
+const { page, preTitle, contentCategory, contentDescription } =
+  Astro.props as Props;
+const titleSuffix = ` - ${AppConfig.site_name}`;
+const titleBase = preTitle
+  ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
+  : `${contentCategory} p. ${page.currentPage}`;
+const title = titleBase + titleSuffix;
+const sectionTitle = await Title({ preTitle, contentCategory });
+
+const tags = (await readTags()).slides || {};
+const years = (await readYears()).slides || [];
+---
+
+<Base head={{ title, description: contentDescription }}>
+  <Section>
+    <PaginationHeader title={sectionTitle} description={contentDescription} />
+    {Object.keys(tags).length > 0 && (
+      <div class="mt-4 flex flex-wrap justify-center gap-2">
+        {
+          Object.keys(tags).map((tagName) => (
+            <Tag name={tagName} color={tags[tagName]} contentCategory={"Slides"} />
+          ))
+        }
+      </div>
+    )}
+    {years.length > 0 && (
+      <div class="mt-4 flex flex-wrap justify-center gap-2">
+        {
+          years.map((year) => (
+            <Year year={year.toString()} contentCategory={"Slides"} />
+          ))
+        }
+      </div>
+    )}
+  </Section>
+
+  <Section>
+    <SlideGallery postList={page.data} tags={tags} />
+  </Section>
+
+  <Section>
+    <NewerOlderPagination client:load page={page} />
+  </Section>
+</Base>
