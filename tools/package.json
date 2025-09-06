@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update:hatena": "ts-node updateHatenaBlogJson.ts > ../public/assets/hatena_blog.json",
+    "update:zenn": "ts-node updateZennJson.ts > ../public/assets/zenn.json",
+    "update:zenn-scrap": "ts-node updateZennScrapJson.ts > ../public/assets/zenn_scrap.json",
+    "update:slide": "ts-node updateSlideJson.ts > ../public/assets/slides.json"
   },
   "keywords": [],
   "author": "",

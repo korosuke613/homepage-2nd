@@ -1,0 +1,43 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import Slides from "@/templates/Slides.astro";
+import type { SlidePage } from "@/types/ISlidePage";
+import { getSortedSlideData } from "@/utils/Slide";
+import { readYears } from "@/utils/Year";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedSlides = await getSortedSlideData();
+  const years = (await readYears()).slides;
+  if (years === undefined) {
+    throw new Error("readed years is undefined");
+  }
+
+  return years.flatMap((year) => {
+    const filteredSlides = sortedSlides.filter((slide) => {
+      const publishYear = new Date(slide.pubDate).getFullYear();
+      return publishYear === year;
+    });
+
+    return paginate(filteredSlides, {
+      params: { year: year.toString() },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: SlidePage;
+  preTitle?: string | number;
+}
+
+const { page, preTitle } = Astro.props as Props;
+---
+
+<meta name="robots" content="noindex" />
+
+<Slides
+  page={page}
+  contentCategory="Slides"
+  contentDescription="発表したスライド（自動更新）"
+  preTitle={preTitle ?? Astro.params.year}
+/>

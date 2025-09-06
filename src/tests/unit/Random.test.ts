@@ -35,14 +35,16 @@ describe("getRandomArticle", () => {
     mockMath.random = () => 0.25; // Should select index 0 with 2 items
     global.Math = mockMath;
 
-    const result = getRandomArticle(mockPosts, mockBlogs);
+    const result = getRandomArticle(mockPosts, mockBlogs, []);
 
     expect(result.type).toBe("post");
     expect(result.title).toBe("Test Post");
   });
 
   test("selects a post when articleIndex is 0", () => {
-    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 0 });
+    const result = getRandomArticle(mockPosts, mockBlogs, [], {
+      articleIndex: 0,
+    });
     expect(result.type).toBe("post");
     expect(result.title).toBe("Test Post");
     expect(result.url).toContain("posts/test-post");
@@ -52,7 +54,9 @@ describe("getRandomArticle", () => {
   });
 
   test("selects a blog when articleIndex is 1", () => {
-    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 1 });
+    const result = getRandomArticle(mockPosts, mockBlogs, [], {
+      articleIndex: 1,
+    });
     expect(result.type).toBe("blog");
     expect(result.title).toBe("Test Blog");
     expect(result.url).toBe("https://example.com/blog");
@@ -61,15 +65,17 @@ describe("getRandomArticle", () => {
   });
 
   test("returns error info when no articles are available", () => {
-    const result = getRandomArticle([], [], { articleIndex: 0 });
-    expect(result.type).toBe("post");
+    const result = getRandomArticle([], [], [], { articleIndex: 0 });
+    expect(result.type).toBe("none");
     expect(result.title).toBe("記事が見つかりませんでした");
     expect(result.url).toBe("");
     expect(result.totalCount).toBe(0);
   });
 
   test("returns error info when index is out of bounds", () => {
-    const result = getRandomArticle(mockPosts, mockBlogs, { articleIndex: 10 });
+    const result = getRandomArticle(mockPosts, mockBlogs, [], {
+      articleIndex: 10,
+    });
     expect(result.title).toBe("記事が見つかりませんでした");
     expect(result.url).toBe("");
     expect(result.totalCount).toBe(2);

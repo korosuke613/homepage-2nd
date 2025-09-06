@@ -1,0 +1,42 @@
+---
+import type { GetStaticPathsOptions } from "astro";
+import Slides from "@/templates/Slides.astro";
+import type { SlidePage } from "@/types/ISlidePage";
+import { getSortedSlideData } from "@/utils/Slide";
+import { readTags } from "@/utils/Tag";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const sortedSlides = await getSortedSlideData();
+  const tags = (await readTags()).slides;
+  if (tags === undefined) {
+    throw new Error("readed tags is undefined");
+  }
+
+  return Object.keys(tags).flatMap((tagName) => {
+    const filteredSlides = sortedSlides.filter((slide) =>
+      slide.category.includes(tagName),
+    );
+
+    return paginate(filteredSlides, {
+      params: { tag: tagName },
+      pageSize: 9,
+    });
+  });
+}
+
+interface Props {
+  page: SlidePage;
+  preTitle?: string | number;
+}
+
+const { page, preTitle } = Astro.props as Props;
+---
+
+<meta name="robots" content="noindex" />
+
+<Slides
+  page={page}
+  contentCategory="Slides"
+  contentDescription="発表したスライド（自動更新）"
+  preTitle={preTitle ?? Astro.params.tag}
+/>

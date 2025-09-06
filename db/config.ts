@@ -31,6 +31,13 @@ const Blogs = defineTable({
   },
 });
 
+const Slides = defineTable({
+  columns: {
+    url: column.text({ unique: true, primaryKey: true }),
+    clickCounts: column.number({ optional: false }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
@@ -38,5 +45,6 @@ export default defineDb({
     Posts,
     Blogs,
     Zenns,
+    Slides,
   },
 });

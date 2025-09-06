@@ -41,6 +41,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `cd tools && npm run update:hatena` - HatenaBlogデータを更新
 - `cd tools && npm run update:zenn` - Zennデータを更新
 - `cd tools && npm run update:zenn-scrap` - Zenn Scrapデータを更新
+- `cd tools && npm run update:slide` - スライドデータを更新
 
 ## アーキテクチャ
 

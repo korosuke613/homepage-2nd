@@ -1,0 +1,77 @@
+---
+import { db, Slides as SlidesDb } from "astro:db";
+import { BlogGallery } from "@/components/BlogGallery";
+import { NewerOlderPagination } from "@/components/NewerOlderPagination";
+import { PaginationHeader } from "@/components/PaginationHeader";
+import { Section } from "@/components/Section";
+import { Tag } from "@/components/Tag";
+import { Title } from "@/components/Title/index";
+import { Year } from "@/components/Year";
+import Base from "@/templates/Base.astro";
+import type { SlidePage } from "@/types/ISlidePage";
+import { AppConfig } from "@/utils/AppConfig";
+import { readTags } from "@/utils/Tag";
+import { readYears } from "@/utils/Year";
+
+interface Props {
+  page: SlidePage;
+  preTitle?: string | number;
+  contentCategory: string;
+  contentDescription: string;
+}
+
+const { page, preTitle, contentCategory, contentDescription } =
+  Astro.props as Props;
+const titleSuffix = ` - ${AppConfig.site_name}`;
+const titleBase = preTitle
+  ? `${preTitle} / ${contentCategory} p.${page.currentPage}`
+  : `${contentCategory} p. ${page.currentPage}`;
+const title = titleBase + titleSuffix;
+const sectionTitle = await Title({ preTitle, contentCategory });
+
+const tags = (await readTags()).slides;
+if (tags === undefined) {
+  throw new Error("readed tags is undefined");
+}
+
+const years = (await readYears()).slides;
+if (years === undefined) {
+  throw new Error("readed years is undefined");
+}
+
+const slidesDbData = await db.select().from(SlidesDb);
+
+const viewCounts: Record<string, number> = {};
+
+for (const slide of slidesDbData) {
+  viewCounts[slide.url] = slide.clickCounts;
+}
+---
+
+<Base head={{ title, description: contentDescription }}>
+  <Section>
+    <PaginationHeader title={sectionTitle} description={contentDescription} />
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        Object.keys(tags).map((tagName) => (
+          <Tag name={tagName} color={tags[tagName]} contentCategory={"Slides"} />
+        ))
+      }
+    </div>
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      {
+        years.map((year) => (
+          <Year year={year.toString()} contentCategory={"Slides"} />
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section>
+    <BlogGallery postList={page.data} tags={tags} viewCounts={viewCounts}/>
+  </Section>
+
+  <Section>
+    <NewerOlderPagination client:load page={page} />
+  </Section>
+</Base>

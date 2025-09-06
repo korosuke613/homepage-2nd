@@ -203,21 +203,75 @@ const getBlogData = async () => {
   return { tags, years: uniqYears };
 };
 
+const getSlideData = async () => {
+  try {
+    const rawSlideJson = await fs.promises.readFile(
+      "./public/assets/slides.json",
+      "utf-8",
+    );
+
+    /**
+     * @type { import("../types/ISlide").SlideJson; }
+     */
+    const slideJson = JSON.parse(rawSlideJson);
+
+    const articles = slideJson.articles;
+    /** @type {string[]} */
+    let tagNames = [];
+    const years = [];
+    for (const a of Object.keys(articles)) {
+      if (articles[a].category !== undefined) {
+        tagNames = tagNames.concat(articles[a].category);
+      }
+      const year = new Date(articles[a].pubDate).getFullYear();
+      years.push(year);
+    }
+
+    const uniqTagNames = Array.from(new Set(tagNames));
+    const uniqYears = Array.from(new Set(years));
+
+    const tagJsonFile = await fs.promises.readFile(tagJsonPath, "utf-8");
+
+    /**
+     * @type { import("../utils/Tag").Tags; }
+     */
+    const tagJson = JSON.parse(tagJsonFile).slides || {};
+
+    const tags = await generateTags(tagJson, uniqTagNames);
+    tags.Docswell = "bg-green-400 text-neutral-900";
+
+    return { tags, years: uniqYears };
+  } catch (error) {
+    // スライドデータが存在しない場合は空のデータを返す
+    console.warn("Slides data not found, returning empty data");
+    return { tags: {}, years: [] };
+  }
+};
+
 const setupData = async () => {
   const posts = await getMarkdownData("./src/content/posts/**.md");
   const blogs = await getBlogData();
+  const slides = await getSlideData();
 
   if (!fs.existsSync(generatedDir)) {
     await fs.promises.mkdir(generatedDir);
   }
   await fs.promises.writeFile(
     tagJsonPath,
-    JSON.stringify({ posts: posts.tags, blogs: blogs.tags }, null, 2),
+    JSON.stringify(
+      { posts: posts.tags, blogs: blogs.tags, slides: slides.tags },
+      null,
+      2,
+    ),
   );
 
   await fs.promises.writeFile(
     yearJsonPath,
-    JSON.stringify({ posts: posts.years, blogs: blogs.years }, null, 2),
+    JSON.stringify(
+      { posts: posts.years, blogs: blogs.years, slides: slides.years },
+      null,
+      2,
+    ),
   );
 };
 

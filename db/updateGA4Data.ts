@@ -1,4 +1,4 @@
-import { Blogs, db, eq, Posts, Zenns } from "astro:db";
+import { Blogs, db, eq, Posts, type Slides, Zenns } from "astro:db";
 import { writeFile } from "node:fs/promises";
 import type { BatchItem } from "drizzle-orm/batch";
 import { BlogFetcher, PostFetcher, ZennFetcher } from "./utils";
@@ -17,7 +17,7 @@ const fetchGA4Data = async () => {
   return { postAnalytics, blogAnalytics, zennAnalytics };
 };
 
-type TableType = typeof Blogs | typeof Posts | typeof Zenns;
+type TableType = typeof Blogs | typeof Posts | typeof Slides | typeof Zenns;
 
 const updateAstroDB = async <T extends TableType>(
   table: T,
