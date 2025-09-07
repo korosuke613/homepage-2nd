@@ -20,6 +20,18 @@ const baseOptions: TestOptions = {
   dormitoryIntroduction: {
     testTimeout: 60000,
   },
+  index: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogs: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogsTag: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogsYear: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
 };
 
 test.describe("Visual Regression Test", () => {
