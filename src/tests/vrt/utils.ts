@@ -44,8 +44,9 @@ export const init = async (
     updateSnapshots: "all",
   });
   await page.goto(url, {
-    waitUntil: "domcontentloaded",
+    waitUntil: "networkidle",
   });
+  await page.waitForLoadState("networkidle");
   await waitImagesLoaded(page);
   await page.screenshot({
     fullPage: true,
@@ -65,12 +66,14 @@ export const compare = async (
     updateSnapshots: "missing",
   });
   await page.goto(url, {
-    waitUntil: "domcontentloaded",
+    waitUntil: "networkidle",
   });
+  await page.waitForLoadState("networkidle");
 
   if (option?.reload) {
     await page.waitForTimeout(1000);
     await page.reload();
+    await page.waitForLoadState("networkidle");
   }
 
   await waitImagesLoaded(page);

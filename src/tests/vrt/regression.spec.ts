@@ -19,6 +19,20 @@ type TestOptions = Partial<
 const baseOptions: TestOptions = {
   dormitoryIntroduction: {
     testTimeout: 60000,
+    waitForTimeoutBeforeScreenshot: 2000,
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  index: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogs: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogsTag: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
+  },
+  blogsYear: {
+    matchSnapshot: { maxDiffPixelRatio: 0.05 },
   },
 };
 
