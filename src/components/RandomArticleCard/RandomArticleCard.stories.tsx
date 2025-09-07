@@ -216,6 +216,7 @@ export const Multiple: Story = {
     docs: {
       description: "複数のコンテンツからランダムに表示する例",
     },
+    chromatic: { disableSnapshot: true },
   },
   render: defaultRender,
 };
