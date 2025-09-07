@@ -1,0 +1,71 @@
+name: Setup Playwright action
+description: "Install Playwright browsers with caching"
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get Playwright version
+      id: get-playwright-version
+      shell: bash
+      run: |
+        PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Cache playwright binaries
+      uses: actions/cache@v4
+      id: playwright-cache
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ steps.get-playwright-version.outputs.PLAYWRIGHT_VERSION }}
+        restore-keys: playwright-
+
+    - name: Configure multiple high-speed mirrors
+      shell: bash
+      run: |     
+        # 既存の設定を確認
+        echo "=== Current mirror configuration ==="
+        cat /etc/apt/sources.list.d/ubuntu.sources
+        echo "------------------------------------"
+
+        # GitHub Actionsに最適化されたミラー設定
+        sudo tee /etc/apt/sources.list.d/ubuntu.sources << EOF
+        Types: deb
+        URIs: http://mirrors.kernel.org/ubuntu/ http://mirror.math.princeton.edu/pub/ubuntu/ http://ftp.ussg.iu.edu/linux/ubuntu/ http://archive.ubuntu.com/ubuntu/
+        Suites: $(lsb_release -cs) $(lsb_release -cs)-updates $(lsb_release -cs)-backports
+        Components: main restricted universe multiverse
+        Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+        
+        Types: deb
+        URIs: http://archive.ubuntu.com/ubuntu/
+        Suites: $(lsb_release -cs)-security
+        Components: main restricted universe multiverse
+        Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+        EOF
+        
+        # ネットワーク最適化
+        sudo tee /etc/apt/apt.conf.d/99-github-actions << EOF
+        Acquire::http::Timeout "3";
+        Acquire::https::Timeout "3";
+        Acquire::Retries "1";
+        Acquire::Queue-Mode "access";
+        EOF
+        
+        echo "=== New mirror configuration ==="
+        cat /etc/apt/sources.list.d/ubuntu.sources | head -5
+        
+        sudo apt-get update
+
+    - name: Install playwright
+      shell: bash
+      run: |
+        # Skip installing package docs (makes the man-db trigger much faster) 
+        # (I disabled `/doc` and `/info` too, just in case.)
+        # ref: https://github.com/actions/runner-images/issues/10977#issuecomment-2810713336
+        sudo tee /etc/dpkg/dpkg.cfg.d/01_nodoc > /dev/null << 'EOF'
+        path-exclude /usr/share/doc/*
+        path-exclude /usr/share/man/*
+        path-exclude /usr/share/info/*
+        EOF
+
+        npx playwright install chromium --with-deps
