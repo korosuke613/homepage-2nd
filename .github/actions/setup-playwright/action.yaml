@@ -23,7 +23,7 @@ runs:
     - name: Install playwright
       shell: bash
       run: |
-        # Skip installing pacakge docs {makes the man-db trigger much faster) 
+        # Skip installing package docs (makes the man-db trigger much faster) 
         # (I disabled `/doc` and `/info` too, just in case.)
         # ref: https://github.com/actions/runner-images/issues/10977#issuecomment-2810713336
         sudo tee /etc/dpkg/dpkg.cfg.d/01_nodoc > /dev/null << 'EOF'
