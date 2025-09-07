@@ -16,6 +16,12 @@ When working in this repository, **always respond in Japanese**. All technical e
 - Node.js 20+ (validated: v20.19.4)
 - npm 10+ (validated: v10.8.2)
 
+### Current Version Information
+- **Astro**: v5.10.1+ (main framework)
+- **React**: v19.1.1 (UI components)
+- **TypeScript**: v5.2.2+ (strict mode enabled)
+- **Biome**: v2.1.1 (linting and formatting)
+
 ### Bootstrap, Build, and Test
 Execute these commands in sequence for a fresh setup:
 
@@ -82,17 +88,20 @@ npx playwright install chromium --with-deps
 
 #### External Content Updates
 ```bash
-# Update external blog data (in tools directory)
+# Update external blog and slide data (in tools directory)
 cd tools
 
 # Update Zenn articles (requires internet access)
-npm run update:zenn
+npx ts-node updateZennJson.ts
 
 # Update HatenaBlog articles (requires HATENA_NAME and HATENA_PASS env vars)
-npm run update:hatena
+npx ts-node updateHatenaBlogJson.ts
 
 # Update Zenn Scraps
-npm run update:zenn-scrap
+npx ts-node updateZennScrapJson.ts
+
+# Update Docswell slides (requires internet access)
+npx ts-node updateDocswellSlideJson.ts
 
 cd ..
 ```
@@ -134,7 +143,7 @@ After making changes, ALWAYS test these user scenarios:
 ## Architecture Overview
 
 ### Data Integration
-This is an Astro-based personal homepage that integrates content from 3 sources:
+This is an Astro-based personal homepage that integrates content from 4 sources:
 
 1. **Local Markdown Posts** (`src/content/posts/`)
    - Schema defined in `src/content/config.ts`
@@ -145,15 +154,21 @@ This is an Astro-based personal homepage that integrates content from 3 sources:
    - Zenn: OGP scraping → JSON
    - Processed by `src/utils/Blog.ts`
 
-3. **Analytics Data** (Astro DB)
+3. **External Slides** (`public/assets/*.json`)
+   - Docswell: RSS API → JSON (automated via tools/updateDocswellSlideJson.ts)
+   - SpeakerDeck: Manual JSON creation
+   - SlideShare: Manual JSON creation
+   - Processed by `src/utils/Slide.ts`
+
+4. **Analytics Data** (Astro DB)
    - GA4 page views and click tracking
    - Database schema in `db/config.ts`
 
 ### Build-Time Data Generation
 The `src/utils/Integration.mjs` → `setupKorosuke` integration runs during `astro:config:setup` and:
-1. Analyzes all Markdown files and external blog JSON
+1. Analyzes all Markdown files, external blog JSON, and slide JSON
 2. Generates tag system with automatic Tailwind colors
-3. Creates yearly data aggregations
+3. Creates yearly data aggregations for posts, blogs, and slides
 4. Outputs `generated/tags.json` and `generated/years.json`
 
 ### Component Architecture
@@ -219,7 +234,7 @@ src/tests/
 1. Update tools in `tools/` directory
 2. Test with: `cd tools && npx ts-node [script].ts`
 3. Update type definitions in `src/types/` if needed
-4. Update processing logic in `src/utils/Blog.ts`
+4. Update processing logic in `src/utils/Blog.ts` or `src/utils/Slide.ts`
 
 ### Database Schema Changes
 1. Modify `db/config.ts`
@@ -241,6 +256,7 @@ src/tests/
 ### External Content Issues
 - **Zenn/HatenaBlog update fails**: Check network connectivity and credentials
 - **JSON parsing errors**: Validate JSON files in `public/assets/`
+- **Slide data issues**: Check Docswell RSS feed and manual slide JSON files
 
 ### Performance Issues
 - **Slow builds**: Normal for image optimization (20+ seconds for images)
@@ -258,6 +274,38 @@ The `.github/workflows/ci.yaml` runs:
 7. Chromatic visual testing
 
 **Always ensure your changes pass**: `npm run lint:fix && npm run build && npm run test:unit`
+
+## Conventional Commits
+
+このプロジェクトでは**Conventional Commits**に従ったコミットメッセージを使用してください。
+
+### コミットタイプ
+- `feat:` - 新機能追加
+- `fix:` - バグ修正
+- `docs:` - ドキュメントのみの変更
+- `style:` - コードの意味に影響しない変更（空白、フォーマット、セミコロンなど）
+- `refactor:` - バグ修正や機能追加ではないコードの変更
+- `perf:` - パフォーマンス改善
+- `test:` - テストの追加や修正
+- `chore:` - その他の変更（ビルドプロセス、補助ツールなど）
+- `ci:` - CI/CD設定ファイルやスクリプトの変更
+- `build:` - ビルドシステムや外部依存関係に影響する変更
+
+### 重要な判断基準
+- **GitHub ActionsやCI/CDパイプライン**に関する変更は `ci:`
+- **Chromatic、Playwright、テスト設定**の変更は `ci:`
+- **パッケージの依存関係更新**は `build:`
+- **ソースコードのバグや動作不良の修正**は `fix:`
+- **記事投稿**は `feat:` または `docs:`（内容に応じて）
+
+### コミットメッセージ例
+```bash
+feat: スライド一覧ページを追加
+fix: ナビゲーションバーの位置ずれを修正
+docs: READMEにセットアップ手順を追加
+ci: Playwrightテストのタイムアウト設定を調整
+build: Astroを5.13.2にアップデート
+```
 
 ## Environment Variables
 
