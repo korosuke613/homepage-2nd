@@ -28,6 +28,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **重要**: ソースコードを変更した際は、必ず `npm run lint:fix` を実行してコードフォーマットとリンティング問題を修正してください。
 
+## コミットタイプガイドライン
+
+コミットメッセージには以下のConventional Commitsに従った適切なプレフィックスを使用すること：
+
+- `feat:` - 新機能追加
+- `fix:` - バグ修正
+- `docs:` - ドキュメントのみの変更
+- `style:` - コードの意味に影響しない変更（空白、フォーマット、セミコロンなど）
+- `refactor:` - バグ修正や機能追加ではないコードの変更
+- `perf:` - パフォーマンス改善
+- `test:` - テストの追加や修正
+- `chore:` - その他の変更（ビルドプロセス、補助ツールなど）
+- `ci:` - CI/CD設定ファイルやスクリプトの変更
+- `build:` - ビルドシステムや外部依存関係に影響する変更
+
+**重要な判断基準**：
+- GitHub ActionsやCI/CDパイプラインに関する変更は `ci:`
+- Chromatic、Playwright、テスト設定の変更は `ci:`
+- パッケージの依存関係更新は `build:`
+- ソースコードのバグや動作不良の修正は `fix:`
+
 ### データベース
 - `npm run db:update` - データベーススキーマをプッシュしてGA4データをリモート更新
 
