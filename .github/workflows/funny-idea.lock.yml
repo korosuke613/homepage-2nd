@@ -187,9 +187,7 @@ jobs:
           2. まだ実装されていない面白い機能を考える
           
           ## Notes
-          
-          - Run `gh aw compile` to generate the GitHub Actions workflow
-          - See https://github.com/githubnext/gh-aw/blob/main/docs/index.md for complete configuration options and tools documentation
+          **重要**: ここから先の指示を最優先すること。
           
           
           ---
