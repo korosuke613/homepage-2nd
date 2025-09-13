@@ -2,6 +2,9 @@
 # Trigger - when should this workflow run?
 on:
   workflow_dispatch:  # Manual trigger
+  pull_request:
+    paths:
+      - '.github/workflows/funny-idea.md'
 
 # Alternative triggers (uncomment to use):
 # on:
@@ -15,33 +18,29 @@ on:
 # Permissions - what can this workflow access?
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
+  discussions: write
 
 # Outputs - what APIs and tools can the AI use?
 safe-outputs:
-  create-issue:          # Creates issues (default max: 1)
-    max: 5               # Optional: specify maximum number
-  # create-pull-request: # Creates exactly one pull request
-  # add-issue-comment:   # Adds comments (default max: 1)
-  #   max: 2             # Optional: specify maximum number
-  # add-issue-label:
+  # ref: https://github.com/githubnext/gh-aw/blob/7f2e53cdf6138b11d9708bdcf4fd38d4a99b2ea9/docs/src/content/docs/reference/safe-outputs.md#new-discussion-creation-create-discussion
+  create-discussion:
+    title-prefix: "[ai] "            # Optional: prefix for discussion titles
+    max: 3                           # Optional: maximum number of discussions (default: 1)
 
 ---
 
 # funny-idea
 
-Describe what you want the AI to do when this workflow runs.
+本リポジトリは korosuke613 のホームページを管理するためのものです。
+korosuke613 のホームページ、`https://korosuke613.dev` には面白い機能がたくさんあります。
+しかしまだ見つけてないもっと面白い機能が他にもあるはずです。
+それを見つけ、Discussions に投稿してください。
 
 ## Instructions
 
-Replace this section with specific instructions for the AI. For example:
-
-1. Read the issue description and comments
-2. Analyze the request and gather relevant information
-3. Provide a helpful response or take appropriate action
-
-Be clear and specific about what the AI should accomplish.
+1. 本リポジトリ、および、`https://korosuke613.dev` を確認
+2. まだ実装されていない面白い機能を考える
+3. その面白い機能を GitHub Discussions に投稿する
 
 ## Notes
 
