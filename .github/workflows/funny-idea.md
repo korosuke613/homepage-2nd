@@ -40,13 +40,12 @@ safe-outputs:
 本リポジトリは korosuke613 のホームページを管理するためのものです。
 korosuke613 のホームページ、`https://korosuke613.dev` には面白い機能がたくさんあります。
 しかしまだ見つけてないもっと面白い機能が他にもあるはずです。
-それを見つけ、Discussions に投稿してください。
+それを見つけてください！
 
 ## Instructions
 
 1. 本リポジトリ、および、`https://korosuke613.dev` を確認
 2. まだ実装されていない面白い機能を考える
-3. その面白い機能を GitHub Discussions に投稿する
 
 ## Notes
 
