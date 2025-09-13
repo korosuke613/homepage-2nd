@@ -116,7 +116,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      discussions: write
     outputs:
       output: ${{ steps.collect_output.outputs.output }}
     steps:
