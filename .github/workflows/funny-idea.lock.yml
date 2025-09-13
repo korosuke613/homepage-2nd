@@ -369,7 +369,7 @@ jobs:
         uses: actions/github-script@v7
         env:
           GITHUB_AW_SAFE_OUTPUTS: ${{ env.GITHUB_AW_SAFE_OUTPUTS }}
-          GITHUB_AW_SAFE_OUTPUTS_CONFIG: "{\"create-discussion\":{\"enabled\":true,\"max\":3}}"
+          GITHUB_AW_SAFE_OUTPUTS_CONFIG: "{\"create_discussion\":{\"enabled\":true,\"max\":3}}"
         with:
           script: |
             async function main() {
@@ -531,7 +531,7 @@ jobs:
                     return 1; // Only one issue update allowed
                   case "push-to-pr-branch":
                     return 1; // Only one push to branch allowed
-                  case "create-discussion":
+                  case "create_discussion":
                     return 1; // Only one discussion allowed
                   case "missing-tool":
                     return 1000; // Allow many missing tool reports (default: unlimited)
@@ -966,16 +966,16 @@ jobs:
                         }
                       }
                       break;
-                    case "create-discussion":
+                    case "create_discussion":
                       if (!item.title || typeof item.title !== "string") {
                         errors.push(
-                          `Line ${i + 1}: create-discussion requires a 'title' string field`
+                          `Line ${i + 1}: create_discussion requires a 'title' string field`
                         );
                         continue;
                       }
                       if (!item.body || typeof item.body !== "string") {
                         errors.push(
-                          `Line ${i + 1}: create-discussion requires a 'body' string field`
+                          `Line ${i + 1}: create_discussion requires a 'body' string field`
                         );
                         continue;
                       }
@@ -1576,15 +1576,15 @@ jobs:
                 core.warning("No valid items found in agent output");
                 return;
               }
-              // Find all create-discussion items
+              // Find all create_discussion items
               const createDiscussionItems = validatedOutput.items.filter(
-                /** @param {any} item */ item => item.type === "create-discussion"
+                /** @param {any} item */ item => item.type === "create_discussion"
               );
               if (createDiscussionItems.length === 0) {
-                core.warning("No create-discussion items found in agent output");
+                core.warning("No create_discussion items found in agent output");
                 return;
               }
-              core.debug(`Found ${createDiscussionItems.length} create-discussion item(s)`);
+              core.debug(`Found ${createDiscussionItems.length} create_discussion item(s)`);
               // If in staged mode, emit step summary instead of creating discussions
               if (process.env.GITHUB_AW_SAFE_OUTPUTS_STAGED === "true") {
                 let summaryContent = "## 🎭 Staged Mode: Create Discussions Preview\n\n";
@@ -1679,11 +1679,11 @@ jobs:
                 throw new Error("Repository ID is required but not available");
               }
               const createdDiscussions = [];
-              // Process each create-discussion item
+              // Process each create_discussion item
               for (let i = 0; i < createDiscussionItems.length; i++) {
                 const createDiscussionItem = createDiscussionItems[i];
                 core.info(
-                  `Processing create-discussion item ${i + 1}/${createDiscussionItems.length}: title=${createDiscussionItem.title}, bodyLength=${createDiscussionItem.body.length}`
+                  `Processing create_discussion item ${i + 1}/${createDiscussionItems.length}: title=${createDiscussionItem.title}, bodyLength=${createDiscussionItem.body.length}`
                 );
                 // Extract title and body from the JSON item
                 let title = createDiscussionItem.title
