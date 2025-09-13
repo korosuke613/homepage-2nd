@@ -20,22 +20,18 @@ permissions:
   contents: read
   discussions: write
 
-tools:
+tools: 
   # ref: https://github.com/githubnext/gh-aw/blob/7f2e53cdf6138b11d9708bdcf4fd38d4a99b2ea9/docs/src/content/docs/reference/tools.md
-  github:
-    allowed: 
-      - create_discussion
-      - update_discussion
   web-fetch:    # Web content fetching
   web-search:   # Web search capabilities
 
 # うまく動かなかったので無効化！！！
 # Outputs - what APIs and tools can the AI use?
-# safe-outputs:
-#   # ref: https://github.com/githubnext/gh-aw/blob/7f2e53cdf6138b11d9708bdcf4fd38d4a99b2ea9/docs/src/content/docs/reference/safe-outputs.md#new-discussion-creation-create-discussion
-#   create-discussion:
-#     title-prefix: "[ai] "            # Optional: prefix for discussion titles
-#     max: 3                           # Optional: maximum number of discussions (default: 1)
+safe-outputs:
+  # ref: https://github.com/githubnext/gh-aw/blob/7f2e53cdf6138b11d9708bdcf4fd38d4a99b2ea9/docs/src/content/docs/reference/safe-outputs.md#new-discussion-creation-create-discussion
+  create-discussion:
+    title-prefix: "[ai] "            # Optional: prefix for discussion titles
+    max: 3                           # Optional: maximum number of discussions (default: 1)
 
 ---
 
