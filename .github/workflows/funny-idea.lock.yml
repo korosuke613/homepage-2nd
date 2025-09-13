@@ -180,6 +180,18 @@ jobs:
           しかしまだ見つけてないもっと面白い機能が他にもあるはずです。
           それを見つけてください！
           
+          ## Safe Output Configuration
+          
+          `/tmp/aw_output_` に含むべきフィールドは以下の通りです。
+          
+          - type: "create-discussion"
+          - title
+          - body
+          
+          例：これは safe output の例です。title と body はあなたが考えた面白い機能に関する内容にしてください。
+          
+          `{"type": "create-discussion", "title": "Test Discussion - Safe Output Validation", "body": "# Test Discussion - create-discussion Safe Output\n\nThis discussion was automatically created by the test-safe-output-create-discussion workflow to validate the create-discussion safe output functionality.\n\n## Purpose\nThis discussion serves as a test of the safe output systems ability to create GitHub discussions through custom engine workflows.\n\n## Test Details\n- **Safe Output Type:** create-discussion\n- **Engine Type:** Custom (GitHub Actions steps)\n- **Workflow:** test-safe-output-create-discussion\n- **Created:** '"$(date)"'\n- **Trigger:** {{ github.event_name }}\n- **Repository:** {{ github.repository }}\n- **Run ID:** {{ github.run_id }}\n- **Staged Mode:** true\n\n## Discussion Points\n1. Custom engine successfully executed\n2. Safe output file generation completed\n3. Discussion creation triggered\n4. Staged mode prevents actual GitHub interactions\n\n## Validation Checklist\n- ✅ JSON output properly formatted\n- ✅ Required fields included (title, body)\n- ✅ Test information comprehensive\n- ✅ Safe output file appended correctly\n\nFeel free to participate in this test discussion or archive it after verification (though this should not create actual discussions due to staged mode)."}`
+          
           ## Instructions
           
           1. 本リポジトリ、および、`https://korosuke613.dev` を確認
