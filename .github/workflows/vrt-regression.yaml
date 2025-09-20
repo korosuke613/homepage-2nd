@@ -46,6 +46,9 @@ jobs:
         run: |
           echo ${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+        if: ${{ !inputs.skip }}
 
       - uses: actions/setup-node@v4
         if: ${{ !inputs.skip }}
