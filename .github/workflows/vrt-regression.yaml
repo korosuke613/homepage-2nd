@@ -89,10 +89,10 @@ jobs:
         run: |
           if [[ -z "${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}" ]]; then
             # コンテンツの変更がない
-            pnpm run vrt:regression -- --retries=1 --grep="update dependencies"
+            pnpm run vrt:regression --retries=1 --grep="update dependencies"
           else
             # コンテンツの変更がある
-            pnpm run vrt:regression -- --retries=1 --grep="add contents"
+            pnpm run vrt:regression --retries=1 --grep="add contents"
           fi
 
       - name: Upload failed screenshots

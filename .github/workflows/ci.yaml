@@ -219,7 +219,7 @@ jobs:
         uses: ./.github/actions/setup-playwright
 
       - name: E2E testing
-        run: pnpm run test:playwright-e2e -- --retries=2 --workers=2
+        run: pnpm run test:playwright-e2e --retries=2 --workers=2
   
       - name: Test Summary
         if: always()
