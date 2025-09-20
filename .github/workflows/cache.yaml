@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies of root
         id: npm-install
@@ -84,8 +84,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
-          cache: 'npm'
-          cache-dependency-path: 'tools/package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: 'tools/pnpm-lock.yaml'
 
       - name: Install dependencies of tools
         working-directory: tools

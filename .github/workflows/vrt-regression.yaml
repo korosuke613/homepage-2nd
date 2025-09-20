@@ -55,7 +55,7 @@ jobs:
 
         with:
           node-version-file: '.tool-versions'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies
         if: ${{ !inputs.skip }}
