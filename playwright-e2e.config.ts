@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   },
   testDir: "src/tests/e2e",
   webServer: {
-    command: "npm run dev",
+    command: "pnpm run dev",
     port: 4321,
     reuseExistingServer: !process.env.CI,
   },

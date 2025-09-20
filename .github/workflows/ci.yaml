@@ -31,8 +31,8 @@ jobs:
           node-version-file: '.tool-versions'
           cache: 'pnpm'
       - name: Install dependencies
-        run: npm ci
-      - run: npm run lint
+        run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
 
   build:
     runs-on: ubuntu-latest
@@ -64,10 +64,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Calcurate hash
         id: calcurate-hash
@@ -173,7 +173,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Cache Vitest
         uses: actions/cache@v4
@@ -183,7 +183,7 @@ jobs:
           restore-keys: vitest-
 
       - name: Unit testing
-        run: npm run test:unit
+        run: pnpm run test:unit
 
       - name: Test Summary
         uses: test-summary/action@31493c76ec9e7aa675f1585d3ed6f1da69269a86 # v2.4
@@ -212,14 +212,14 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Playwright
         timeout-minutes: 3
         uses: ./.github/actions/setup-playwright
 
       - name: E2E testing
-        run: npm run test:playwright-e2e -- --retries=2 --workers=2
+        run: pnpm run test:playwright-e2e -- --retries=2 --workers=2
   
       - name: Test Summary
         if: always()
@@ -242,17 +242,17 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Setup Playwright
         timeout-minutes: 3
         uses: ./.github/actions/setup-playwright
 
       - name: Component testing
-        run: npm run test:playwright-ct
+        run: pnpm run test:playwright-ct
 
       - name: Storybook testing
-        run: npm run test:storybook
+        run: pnpm run test:storybook
 
       - uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
         with:
@@ -285,7 +285,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Publish to Chromatic
         uses: chromaui/action@c50adf8eaa8c2878af3263499a73077854de39d4 # v12.2.0
@@ -313,7 +313,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'tools/pnpm-lock.yaml'
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Dry run update zenn.json
         run: |

@@ -46,6 +46,6 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # copilot は playwright mcp を標準搭載しているため、playwright のセットアップは不要

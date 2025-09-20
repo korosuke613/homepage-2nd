@@ -9,7 +9,7 @@ runs:
       id: get-playwright-version
       shell: bash
       run: |
-        PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+        PLAYWRIGHT_VERSION=$(pnpm ls @playwright/test --json | jq -r '.[].devDependencies."@playwright/test".version')
         echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
     - name: Cache playwright binaries

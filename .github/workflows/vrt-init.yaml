@@ -29,7 +29,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       # main ブランチでの実行を前提としており、VRT のオラクルを確実に作りたいため、timeout は設定しない
       - name: Setup Playwright
@@ -37,7 +37,7 @@ jobs:
       
       - name: Run VRT init
         run: |
-          npm run vrt:init
+          pnpm run vrt:init
 
       - name: Cache VRT snapshots
         uses: actions/cache/save@v4

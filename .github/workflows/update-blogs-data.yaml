@@ -41,7 +41,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: '${{ matrix.working_dir }}/pnpm-lock.yaml'
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Update zenn.json
         run: |
