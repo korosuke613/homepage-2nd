@@ -1,0 +1,4 @@
+shamefullyHoist: true
+saveExact: true
+minimumReleaseAge: 10080  # 1 week
+minimumReleaseAgeExclude:

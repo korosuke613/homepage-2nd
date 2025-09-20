@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
   testDir: "src/tests/vrt",
   snapshotPathTemplate: "{snapshotDir}/{testFileDir}/snapshots/{arg}{ext}",
   webServer: {
-    command: "npm run dev",
+    command: "pnpm run dev",
     port: 4321,
     reuseExistingServer: !process.env.CI,
     env: {
