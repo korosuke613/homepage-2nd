@@ -6,6 +6,7 @@
     "name": "Futa Hirakoba",
     "url": "https://github.com/korosuke613"
   },
+  "packageManager": "pnpm@10.17.0",
   "scripts": {
     "build": "astro check && tsc --noEmit && astro build",
     "build-types": "tsc --noEmit --pretty",
@@ -24,7 +25,7 @@
     "vrt:regression": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/regression.spec.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --debug --disable-telemetry",
-    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "pnpm dlx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
@@ -34,13 +35,13 @@
     "@astrojs/react": "4.3.0",
     "@astrojs/rss": "4.0.12",
     "@astrojs/sitemap": "^3.4.1",
-    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/tailwind": "6.0.2",
     "@docsearch/css": "3.9.0",
     "@docsearch/react": "3.9.0",
     "@google-analytics/data": "4.12.1",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.16",
-    "astro": "^5.10.1",
+    "astro": "5.10.1",
     "astro-meta-tags": "0.3.2",
     "astro-robots-txt": "1.0.0",
     "date-fns": "4.1.0",
@@ -60,7 +61,7 @@
     "simple-git": "3.28.0",
     "strip-ansi": "7.1.0",
     "tailwindcss": "3.4.17",
-    "typescript": "^5.2.2",
+    "typescript": "5.2.2",
     "unified": "11.0.5"
   },
   "devDependencies": {
@@ -72,7 +73,7 @@
     "@storybook/addon-a11y": "9.0.14",
     "@storybook/addon-docs": "9.0.14",
     "@storybook/addon-links": "9.0.14",
-    "@storybook/addon-vitest": "^9.0.14",
+    "@storybook/addon-vitest": "9.0.14",
     "@storybook/react-vite": "9.0.14",
     "@types/react": "19.1.11",
     "@vitest/browser": "3.2.4",

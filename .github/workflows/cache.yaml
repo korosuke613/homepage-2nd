@@ -22,17 +22,20 @@ jobs:
           fetch-depth: 0
           filter: blob:none
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
       - name: Cache node_modules of root
         uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install dependencies of root
         id: npm-install
         run: |
-          npm ci
-          PLAYWRIGHT_VERSION=$(npm ls --json @playwright/test | jq --raw-output '.dependencies["@playwright/test"].version')
+          pnpm install --frozen-lockfile
+          PLAYWRIGHT_VERSION=$(pnpm ls @playwright/test --json | jq -r '.[].devDependencies."@playwright/test".version')
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Publish to Chromatic
@@ -65,7 +68,7 @@ jobs:
           restore-keys: astro-build-
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Cache Vitest
         uses: actions/cache@v4
@@ -75,16 +78,16 @@ jobs:
           restore-keys: vitest-
       
       - name: Vitest
-        run: npm run test:unit
+        run: pnpm run test:unit
 
       - name: Cache node_modules of tools
         uses: actions/setup-node@v4
         with:
           node-version-file: '.tool-versions'
-          cache: 'npm'
-          cache-dependency-path: 'tools/package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: 'tools/pnpm-lock.yaml'
 
       - name: Install dependencies of tools
         working-directory: tools
         run: |
-          npm ci
+          pnpm install --frozen-lockfile
