@@ -21,6 +21,7 @@ jobs:
         (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
       )
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     environment: claude-code-action
     steps:
       - name: Checkout repository
@@ -47,18 +48,15 @@ jobs:
           echo "permissions=$(jq -c '.permissions' ${{ runner.temp }}/gh-app-permissions.json)" >> $GITHUB_OUTPUT
 
       - name: Run Claude PR Action
-        uses: anthropics/claude-code-action@v0
+        uses: anthropics/claude-code-action@777ffcbfc9d2e2b07f3cfec41b7c7eadedd1f0dc # v1.0.12
+        env:
+          GH_APP_PERMISSIONS: ${{ steps.get-gh-app-permissions.outputs.permissions }}
         with:
           github_token: ${{ steps.login-gh-app.outputs.token }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          timeout_minutes: "30"
           additional_permissions: |
             actions: read
-          allowed_tools: Bash,WebFetch,WebSearch,mcp__playwright__browser_click,mcp__playwright__browser_close,mcp__playwright__browser_console_messages,mcp__playwright__browser_drag,mcp__playwright__browser_evaluate,mcp__playwright__browser_file_upload,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_hover,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_navigate_forward,mcp__playwright__browser_network_requests,mcp__playwright__browser_press_key,mcp__playwright__browser_resize,mcp__playwright__browser_select_option,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_type,mcp__playwright__browser_wait_for,mcp__playwright__browser_tab_close,mcp__playwright__browser_tab_list,mcp__playwright__browser_tab_new,mcp__playwright__browser_tab_select,mcp__playwright__browser_install,mcp__playwright__browser_mouse_click_xy,mcp__playwright__browser_mouse_drag_xy,mcp__playwright__browser_mouse_move_xy,mcp__playwright__browser_pdf_save
-          mcp_config: '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}'
-          custom_instructions: |
-            あなたは GitHub Actions 上で動作する Claude Code Action です。
-            あなたは GitHub App の権限を持ちます。付与されている権限は以下の通りです。
-            ```json
-            ${{ steps.get-gh-app-permissions.outputs.permissions }}
-            ```
+          claude_args: |
+            --allowedTools Bash,WebFetch,WebSearch,mcp__playwright__browser_click,mcp__playwright__browser_close,mcp__playwright__browser_console_messages,mcp__playwright__browser_drag,mcp__playwright__browser_evaluate,mcp__playwright__browser_file_upload,mcp__playwright__browser_handle_dialog,mcp__playwright__browser_hover,mcp__playwright__browser_navigate,mcp__playwright__browser_navigate_back,mcp__playwright__browser_navigate_forward,mcp__playwright__browser_network_requests,mcp__playwright__browser_press_key,mcp__playwright__browser_resize,mcp__playwright__browser_select_option,mcp__playwright__browser_snapshot,mcp__playwright__browser_take_screenshot,mcp__playwright__browser_type,mcp__playwright__browser_wait_for,mcp__playwright__browser_tab_close,mcp__playwright__browser_tab_list,mcp__playwright__browser_tab_new,mcp__playwright__browser_tab_select,mcp__playwright__browser_install,mcp__playwright__browser_mouse_click_xy,mcp__playwright__browser_mouse_drag_xy,mcp__playwright__browser_mouse_move_xy,mcp__playwright__browser_pdf_save
+            --mcp-config '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}'
+            --system-prompt "あなたは GitHub Actions 上で動作する Claude Code Action です。あなたは GitHub App の権限を持ちます。付与されている権限は ${{ env.GH_APP_PERMISSIONS }} です"
