@@ -31,6 +31,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## コミットタイプガイドライン
 
 コミットメッセージには以下のConventional Commitsに従った適切なプレフィックスを使用すること：
+コミットメッセージは英語で書くこと
 
 - `feat:` - 新機能追加
 - `fix:` - バグ修正
