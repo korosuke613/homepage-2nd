@@ -25,7 +25,7 @@
     "vrt:regression": "playwright test -c playwright-vrt.config.ts ./src/tests/vrt/regression.spec.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build --debug --disable-telemetry",
-    "chromatic": "pnpm dlx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
