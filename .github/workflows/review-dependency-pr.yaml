@@ -23,6 +23,7 @@ jobs:
         with:
           fetch-depth: 0
           filter: "blob:none"
+          ref: ${{ github.event.pull_request.head.sha || format('refs/pull/{0}/head', github.event.inputs.pr_number) }}
 
       - name: Login GitHub App
         id: login-gh-app
@@ -31,9 +32,11 @@ jobs:
           app-id: ${{ vars.KIBA_CLAUDE_CODE_GH_APP_ID }}
           private-key: ${{ secrets.KIBA_CLAUDE_CODE_GH_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: ${{ github.event.repository.name }}
+          repositories: ${{ github.event.repository.name || github.repository }}
           permission-contents: read
           permission-pull-requests: write
+          permission-actions: read
+          permission-issues: read
 
       - name: Get Github App permissions
         id: get-gh-app-permissions
