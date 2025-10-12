@@ -13,6 +13,7 @@ on:
 
 jobs:
   review:
+    if: ${{ github.actor == 'kiba-renovate[bot]' || github.actor == 'dependabot[bot]' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: claude-code-action
@@ -45,6 +46,7 @@ jobs:
       - uses: anthropics/claude-code-action@777ffcbfc9d2e2b07f3cfec41b7c7eadedd1f0dc # v1.0.12
         env:
           GH_TOKEN: ${{ steps.login-gh-app.outputs.token }}
+          GH_APP_PERMISSIONS: ${{ steps.get-gh-app-permissions.outputs.permissions }}
         with:
           github_token: ${{ steps.login-gh-app.outputs.token }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -52,7 +54,7 @@ jobs:
             actions: read
           prompt: |
             REPO: ${{ github.repository }}
-            PR NUMBER: ${{ github.event.pull_request.number }}
+            PR NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
 
             このプルリクエストを以下の点に重点を置いてレビューしてください：
             - コード品質とベストプラクティス
