@@ -12,10 +12,10 @@ importers:
         specifier: 0.9.4
         version: 0.9.4(typescript@5.2.2)
       '@astrojs/db':
-        specifier: ^0.15.0
+        specifier: 0.15.1
         version: 0.15.1(pg@8.16.3)
       '@astrojs/mdx':
-        specifier: ^4.3.0
+        specifier: 4.3.5
         version: 4.3.5(astro@5.10.1(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))
       '@astrojs/partytown':
         specifier: 2.1.4
@@ -27,7 +27,7 @@ importers:
         specifier: 4.0.12
         version: 4.0.12
       '@astrojs/sitemap':
-        specifier: ^3.4.1
+        specifier: 3.6.0
         version: 3.6.0
       '@astrojs/tailwind':
         specifier: 6.0.2

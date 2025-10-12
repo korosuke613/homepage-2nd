@@ -41,7 +41,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `test:` - テストの追加や修正
 - `chore:` - その他の変更（ビルドプロセス、補助ツールなど）
 - `ci:` - CI/CD設定ファイルやスクリプトの変更
-- `build:` - ビルドシステムや外部依存関係に影響する変更
 
 **重要な判断基準**：
 - GitHub ActionsやCI/CDパイプラインに関する変更は `ci:`
