@@ -4,12 +4,15 @@ import { AppConfig } from "@/utils/AppConfig";
 import { getGitHubUrl } from "@/utils/Posts";
 
 type IEditGitHubProps = {
-  id: string;
+  fileId: string;
   collection: string;
 };
 
-export const EditGitHub: React.FC<IEditGitHubProps> = ({ id, collection }) => {
-  const githubUrl = getGitHubUrl(AppConfig.github_url, collection, id);
+export const EditGitHub: React.FC<IEditGitHubProps> = ({
+  fileId,
+  collection,
+}) => {
+  const githubUrl = getGitHubUrl(AppConfig.github_url, collection, fileId);
 
   return (
     <a

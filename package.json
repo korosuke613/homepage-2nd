@@ -13,7 +13,7 @@
     "db:update": "astro db push --remote && astro db execute db/updateGA4Data.ts --remote",
     "dev": "astro dev",
     "lint": "biome ci .",
-    "lint:fix": "biome check --write ./src ./db ./.storybook ./vite.config.mts ./vitest.shims.d.ts",
+    "lint:fix": "biome check --write",
     "preview": "astro preview",
     "start": "astro dev",
     "test": "concurrently -P npm:test:*",
@@ -65,7 +65,7 @@
     "unified": "11.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.1",
+    "@biomejs/biome": "2.2.5",
     "@chromatic-com/storybook": "4.1.1",
     "@playwright/experimental-ct-react": "1.55.0",
     "@playwright/test": "1.55.0",

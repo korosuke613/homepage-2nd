@@ -22,7 +22,7 @@ export class ZennFetcher extends GA4DataFetcher<ZennData> {
       if (!row.dimensionValues[0]?.value || !row.metricValues[0]?.value)
         continue;
       const pagePath = row.dimensionValues[0].value;
-      const screenPageViews = Number.parseInt(row.metricValues[0].value);
+      const screenPageViews = Number.parseInt(row.metricValues[0].value, 10);
       // trailing slash の有無を結合する、?や#以降を丸める、正規化処理
       const normalizedUrl = pagePath
         ?.replace(/\/$/, "")

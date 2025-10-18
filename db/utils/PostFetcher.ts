@@ -19,7 +19,7 @@ export class PostFetcher extends GA4DataFetcher<PostData> {
       if (!row.dimensionValues[0]?.value || !row.metricValues[0]?.value)
         continue;
       const pagePath = row.dimensionValues[0].value;
-      const screenPageViews = Number.parseInt(row.metricValues[0].value);
+      const screenPageViews = Number.parseInt(row.metricValues[0].value, 10);
       const normalizedUrl = pagePath?.replace(/\/$/, "");
       normalizedPosts[normalizedUrl] =
         (normalizedPosts[normalizedUrl] || 0) + screenPageViews;
