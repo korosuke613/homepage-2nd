@@ -191,7 +191,7 @@ jobs:
           paths: "test-results/unit.xml"
         if: always()
 
-      - uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
+      - uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
         with:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -254,7 +254,7 @@ jobs:
       - name: Storybook testing
         run: pnpm run test:storybook
 
-      - uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
+      - uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7 # v5.5.1
         with:
           flags: storybook
           token: ${{ secrets.CODECOV_TOKEN }}
