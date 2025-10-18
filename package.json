@@ -41,7 +41,7 @@
     "@google-analytics/data": "4.12.1",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/typography": "0.5.16",
-    "astro": "5.10.1",
+    "astro": "5.14.3",
     "astro-meta-tags": "0.3.2",
     "astro-robots-txt": "1.0.0",
     "date-fns": "4.1.0",
