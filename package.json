@@ -80,7 +80,7 @@
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
     "chromatic": "11.29.0",
-    "concurrently": "9.2.0",
+    "concurrently": "9.2.1",
     "playwright": "1.55.0",
     "storybook": "9.0.14",
     "textlint": "14.8.4",
