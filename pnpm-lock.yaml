@@ -15,8 +15,8 @@ importers:
         specifier: 0.15.1
         version: 0.15.1(pg@8.16.3)
       '@astrojs/mdx':
-        specifier: 4.3.5
-        version: 4.3.5(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))
+        specifier: 4.3.6
+        version: 4.3.6(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))
       '@astrojs/partytown':
         specifier: 2.1.4
         version: 2.1.4
@@ -31,7 +31,7 @@ importers:
         version: 3.6.0
       '@astrojs/tailwind':
         specifier: 6.0.2
-        version: 6.0.2(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))(tailwindcss@3.4.17)
+        version: 6.0.2(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))(tailwindcss@3.4.18)
       '@docsearch/css':
         specifier: 3.9.0
         version: 3.9.0
@@ -43,10 +43,10 @@ importers:
         version: 4.12.1
       '@tailwindcss/aspect-ratio':
         specifier: 0.4.2
-        version: 0.4.2(tailwindcss@3.4.17)
+        version: 0.4.2(tailwindcss@3.4.18)
       '@tailwindcss/typography':
-        specifier: 0.5.16
-        version: 0.5.16(tailwindcss@3.4.17)
+        specifier: 0.5.19
+        version: 0.5.19(tailwindcss@3.4.18)
       astro:
         specifier: 5.14.3
         version: 5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1)
@@ -105,8 +105,8 @@ importers:
         specifier: 7.1.2
         version: 7.1.2
       tailwindcss:
-        specifier: 3.4.17
-        version: 3.4.17
+        specifier: 3.4.18
+        version: 3.4.18
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -291,8 +291,8 @@ packages:
   '@astrojs/db@0.15.1':
     resolution: {integrity: sha512-P5E6vxO+9s+Aw7eGhfbaYxkKcTvNCYuDnyf0SBie5ATyyrRlUn48Gw06m01jlCt8OERRCEWCR35LVbyhX0kbbg==}
 
-  '@astrojs/internal-helpers@0.7.2':
-    resolution: {integrity: sha512-KCkCqR3Goym79soqEtbtLzJfqhTWMyVaizUi35FLzgGSzBotSw8DB1qwsu7U96ihOJgYhDk2nVPz+3LnXPeX6g==}
+  '@astrojs/internal-helpers@0.7.3':
+    resolution: {integrity: sha512-6Pl0bQEIChuW5wqN7jdKrzWfCscW2rG/Cz+fzt4PhSQX2ivBpnhXgFUCs0M3DCYvjYHnPVG2W36X5rmFjZ62sw==}
 
   '@astrojs/internal-helpers@0.7.4':
     resolution: {integrity: sha512-lDA9MqE8WGi7T/t2BMi+EAXhs4Vcvr94Gqx3q15cFEz8oFZMO4/SFBqYr/UcmNlvW+35alowkVj+w9VhLvs5Cw==}
@@ -309,14 +309,14 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdown-remark@6.3.6':
-    resolution: {integrity: sha512-bwylYktCTsLMVoCOEHbn2GSUA3c5KT/qilekBKA3CBng0bo1TYjNZPr761vxumRk9kJGqTOtU+fgCAp5Vwokug==}
+  '@astrojs/markdown-remark@6.3.7':
+    resolution: {integrity: sha512-KXGdq6/BC18doBCYXp08alHlWChH0hdD2B1qv9wIyOHbvwI5K6I7FhSta8dq1hBQNdun8YkKPR013D/Hm8xd0g==}
 
   '@astrojs/markdown-remark@6.3.8':
     resolution: {integrity: sha512-uFNyFWadnULWK2cOw4n0hLKeu+xaVWeuECdP10cQ3K2fkybtTlhb7J7TcScdjmS8Yps7oje9S/ehYMfZrhrgCg==}
 
-  '@astrojs/mdx@4.3.5':
-    resolution: {integrity: sha512-YB3Hhsvl1BxyY0ARe1OrnVzLNKDPXAz9epYvmL+MQ8A85duSsSLQaO3GHB6/qZJKNoLmP6PptOtCONCKkbhPeQ==}
+  '@astrojs/mdx@4.3.6':
+    resolution: {integrity: sha512-jH04tYgaqLfq3To42+z1oEcXrXUzo3BxZ4fTkb+7BEmOJkQ9/c3iIixFEC+x0GgE8lJb4SuEDGldpAv7+1yY8A==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
       astro: ^5.0.0
@@ -1427,8 +1427,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
 
-  '@tailwindcss/typography@0.5.16':
-    resolution: {integrity: sha512-0wDLwCVF5V3x3b1SGXPCDcdsbDHMBe+lkFzBRaHeLvNi+nrrnZ1lA18u+OTWO8iSWU2GxUOCvlXtDuqftc1oiA==}
+  '@tailwindcss/typography@0.5.19':
+    resolution: {integrity: sha512-w31dd8HOx3k9vPtcQh5QHP9GwKcgbMp87j58qi6xgiBnFFtKEAgCWnDw4qUT8aHwkCp8bKvb/KGKWWHedP0AAg==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1'
 
@@ -3493,15 +3493,6 @@ packages:
   lodash.camelcase@4.3.0:
     resolution: {integrity: sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==}
 
-  lodash.castarray@4.4.0:
-    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
-
-  lodash.isplainobject@4.0.6:
-    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
-
-  lodash.merge@4.6.2:
-    resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-
   lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
 
@@ -5013,8 +5004,8 @@ packages:
     resolution: {integrity: sha512-9kY+CygyYM6j02t5YFHbNz2FN5QmYGv9zAjVp4lCDjlCw7amdckXlEt/bjMhUIfj4ThGRE4gCUH5+yGnNuPo5A==}
     engines: {node: '>=10.0.0'}
 
-  tailwindcss@3.4.17:
-    resolution: {integrity: sha512-w33E2aCvSDP0tW9RZuNXadXlkHXqFzSkQew/aIa2i/Sj8fThxwovwlXHSPXTbAHwEIhBFXAedUhP2tueAKP8Og==}
+  tailwindcss@3.4.18:
+    resolution: {integrity: sha512-6A2rnmW5xZMdw11LYjhcI5846rt9pbLSabY5XPxo+XWdxwZaFEn47Go4NzFiHu9sNNmr/kXivP1vStfvMaK1GQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -6117,7 +6108,7 @@ snapshots:
       - sqlite3
       - utf-8-validate
 
-  '@astrojs/internal-helpers@0.7.2': {}
+  '@astrojs/internal-helpers@0.7.3': {}
 
   '@astrojs/internal-helpers@0.7.4': {}
 
@@ -6144,9 +6135,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@6.3.6':
+  '@astrojs/markdown-remark@6.3.7':
     dependencies:
-      '@astrojs/internal-helpers': 0.7.2
+      '@astrojs/internal-helpers': 0.7.3
       '@astrojs/prism': 3.3.0
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.3
@@ -6160,7 +6151,7 @@ snapshots:
       remark-parse: 11.0.0
       remark-rehype: 11.1.2
       remark-smartypants: 3.0.2
-      shiki: 3.12.2
+      shiki: 3.13.0
       smol-toml: 1.4.2
       unified: 11.0.5
       unist-util-remove-position: 5.0.0
@@ -6196,9 +6187,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.3.5(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))':
+  '@astrojs/mdx@4.3.6(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))':
     dependencies:
-      '@astrojs/markdown-remark': 6.3.6
+      '@astrojs/markdown-remark': 6.3.7
       '@mdx-js/mdx': 3.1.1
       acorn: 8.15.0
       astro: 5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1)
@@ -6264,13 +6255,13 @@ snapshots:
       kleur: 4.1.5
       yocto-spinner: 0.2.3
 
-  '@astrojs/tailwind@6.0.2(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))(tailwindcss@3.4.17)':
+  '@astrojs/tailwind@6.0.2(astro@5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1))(tailwindcss@3.4.18)':
     dependencies:
       astro: 5.14.3(@types/node@24.5.2)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.2.2)(yaml@2.8.1)
       autoprefixer: 10.4.21(postcss@8.5.6)
       postcss: 8.5.6
       postcss-load-config: 4.0.2(postcss@8.5.6)
-      tailwindcss: 3.4.17
+      tailwindcss: 3.4.18
     transitivePeerDependencies:
       - ts-node
 
@@ -7314,17 +7305,14 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.17)':
+  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.18)':
     dependencies:
-      tailwindcss: 3.4.17
+      tailwindcss: 3.4.18
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.17)':
+  '@tailwindcss/typography@0.5.19(tailwindcss@3.4.18)':
     dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.17
+      tailwindcss: 3.4.18
 
   '@testing-library/dom@10.4.1':
     dependencies:
@@ -9851,12 +9839,6 @@ snapshots:
 
   lodash.camelcase@4.3.0: {}
 
-  lodash.castarray@4.4.0: {}
-
-  lodash.isplainobject@4.0.6: {}
-
-  lodash.merge@4.6.2: {}
-
   lodash.sortby@4.7.0: {}
 
   lodash.truncate@4.4.2: {}
@@ -11930,7 +11912,7 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss@3.4.17:
+  tailwindcss@3.4.18:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
