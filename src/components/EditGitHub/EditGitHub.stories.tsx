@@ -10,7 +10,7 @@ export default metaData;
 
 export const Default: StoryObj<typeof EditGitHub> = {
   args: {
-    id: "history.mdx",
+    fileId: "history.mdx",
     collection: "posts",
   },
 };

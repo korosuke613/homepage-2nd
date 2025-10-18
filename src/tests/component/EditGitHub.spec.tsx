@@ -7,7 +7,7 @@ test.use({ viewport: { width: 500, height: 500 } });
 test("should work", async ({ mount }) => {
   const component = await mount(
     <div className="text-gray-100">
-      <EditGitHub id="template.md" collection="posts" />
+      <EditGitHub fileId="template.md" collection="posts" />
     </div>,
   );
 

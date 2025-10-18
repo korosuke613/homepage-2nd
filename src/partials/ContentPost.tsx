@@ -34,6 +34,7 @@ export const ContentPost = (props: IContentPostProps) => {
 
   return (
     <Section>
+      {/* biome-ignore lint/correctness/useUniqueElementIds: Static ID is required for anchor link */}
       <div id="contents">
         <ContentHeader
           content={props.frontmatter}

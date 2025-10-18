@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: Algolia DocSearch requires !important styles */
 :root {
   --bg-slate-800: rgb(30 41 59) !important;
   --bg-indigo-900: rgb(49 46 129) !important;

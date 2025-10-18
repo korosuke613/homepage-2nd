@@ -23,7 +23,7 @@ export class BlogFetcher extends GA4DataFetcher<BlogData> {
           return { linkUrl: "", click: 0 };
         return {
           linkUrl: row.dimensionValues[0].value,
-          click: Number.parseInt(row.metricValues[0].value),
+          click: Number.parseInt(row.metricValues[0].value, 10),
         };
       })
       .filter(({ linkUrl }) => linkUrl.startsWith("https://"));
