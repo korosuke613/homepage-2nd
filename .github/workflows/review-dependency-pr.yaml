@@ -46,7 +46,7 @@ jobs:
           gh api /apps/${{ steps.login-gh-app.outputs.app-slug }} | tee ${{ runner.temp }}/gh-app-permissions.json
           echo "permissions=$(jq -c '.permissions' ${{ runner.temp }}/gh-app-permissions.json)" >> $GITHUB_OUTPUT
 
-      - uses: anthropics/claude-code-action@777ffcbfc9d2e2b07f3cfec41b7c7eadedd1f0dc # v1.0.12
+      - uses: anthropics/claude-code-action@6337623ebba10cf8c8214b507993f8062fd4ccfb # v1.0.22
         env:
           GH_TOKEN: ${{ steps.login-gh-app.outputs.token }}
           GH_APP_PERMISSIONS: ${{ steps.get-gh-app-permissions.outputs.permissions }}
