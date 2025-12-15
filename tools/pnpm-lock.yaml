@@ -13,7 +13,7 @@ importers:
         version: 1.12.2
       fast-xml-parser:
         specifier: ^5.0.0
-        version: 5.2.5
+        version: 5.3.2
       jsdom:
         specifier: ^27.0.0
         version: 27.0.0(postcss@8.5.6)
@@ -210,8 +210,8 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
-  fast-xml-parser@5.2.5:
-    resolution: {integrity: sha512-pfX9uG9Ki0yekDHx2SiuRIyFdyAr1kMIMitPvb0YBo8SUfKvia7w7FIyd/l6av85pFYRhZscS75MwMnbvY+hcQ==}
+  fast-xml-parser@5.3.2:
+    resolution: {integrity: sha512-n8v8b6p4Z1sMgqRmqLJm3awW4NX7NkaKPfb3uJIBTSH7Pdvufi3PQ3/lJLQrvxcMYl7JI2jnDO90siPEpD8JBA==}
     hasBin: true
 
   follow-redirects@1.15.11:
@@ -612,7 +612,7 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.2
 
-  fast-xml-parser@5.2.5:
+  fast-xml-parser@5.3.2:
     dependencies:
       strnum: 2.1.1
 
