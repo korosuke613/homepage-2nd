@@ -14,7 +14,6 @@ type IContentHeaderProps = {
 
 export const ContentHeader = (props: IContentHeaderProps) => (
   <>
-    {/* biome-ignore lint/correctness/useUniqueElementIds: Static ID is required for anchor link */}
     <h1 id="contents_header" className="text-center text-3xl font-bold">
       {props.content.data.title.replace("\\n", "")}
     </h1>

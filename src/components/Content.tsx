@@ -43,7 +43,6 @@ const Content: React.FC<IContentProps> = (props: IContentProps) => {
       <div className="hidden lg:block lg:fixed lg:right-4 lg:top-40 lg:max-w-[200px] lg:z-10 xl:right-10 xl:max-w-xs">
         <Toc headings={props.headings} />
       </div>
-      {/* biome-ignore lint/correctness/useUniqueElementIds: Static ID is required for anchor link and CSS selector */}
       <div
         id="contents_data"
         className={`prose prose-invert mt-8 ${props.maxCharWidth} prose-img:rounded-lg`}
