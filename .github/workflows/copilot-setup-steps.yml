@@ -19,6 +19,9 @@ jobs:
       # コードをチェックアウトしない場合、Copilotが代わりにチェックアウトする
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
 
       - name: Restore Astro build cache
         uses: actions/cache/restore@v4

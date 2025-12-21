@@ -69,6 +69,9 @@ jobs:
           echo "group=$(id -g root)" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
 
       - uses: renovatebot/github-action@ea850436a5fe75c0925d583c7a02c60a5865461d # v43.0.20
         with:
