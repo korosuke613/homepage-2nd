@@ -15,6 +15,26 @@ const waitImagesLoaded = async (page: Page) => {
   }
 };
 
+/**
+ * 編集履歴セクションをDOMから非表示にする
+ * 編集履歴はgit履歴から動的生成されるため、本番とPR環境で高さが異なる
+ * maskでは高さの違いを吸収できないため、セクション自体を非表示にする
+ */
+const hideCommitHistory = async (page: Page) => {
+  await page.evaluate(() => {
+    const headings = document.querySelectorAll("h3");
+    for (const heading of headings) {
+      if (heading.textContent?.includes("編集履歴")) {
+        const container = heading.parentElement;
+        if (container) {
+          container.style.display = "none";
+        }
+        break;
+      }
+    }
+  });
+};
+
 export type Option = {
   matchSnapshot?: {
     maxDiffPixels?: number;
@@ -48,10 +68,10 @@ export const init = async (
   });
   await page.waitForLoadState("networkidle");
   await waitImagesLoaded(page);
+  await hideCommitHistory(page);
   await page.screenshot({
     fullPage: true,
     path: path.join(testInfo.project.snapshotDir, "snapshots", fileName),
-    mask: [page.locator('h3:has-text("編集履歴")').locator("..")],
   });
 };
 
@@ -81,10 +101,10 @@ export const compare = async (
   if (option?.waitForTimeoutBeforeScreenshot)
     await page.waitForTimeout(option.waitForTimeoutBeforeScreenshot);
 
+  await hideCommitHistory(page);
   expect(
     await page.screenshot({
       fullPage: true,
-      mask: [page.locator('h3:has-text("編集履歴")').locator("..")],
     }),
   ).toMatchSnapshot(fileName, {
     maxDiffPixelRatio: 0.02,
