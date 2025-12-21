@@ -51,6 +51,7 @@ export const init = async (
   await page.screenshot({
     fullPage: true,
     path: path.join(testInfo.project.snapshotDir, "snapshots", fileName),
+    mask: [page.locator('h3:has-text("編集履歴")').locator("..")],
   });
 };
 
@@ -80,7 +81,12 @@ export const compare = async (
   if (option?.waitForTimeoutBeforeScreenshot)
     await page.waitForTimeout(option.waitForTimeoutBeforeScreenshot);
 
-  expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(fileName, {
+  expect(
+    await page.screenshot({
+      fullPage: true,
+      mask: [page.locator('h3:has-text("編集履歴")').locator("..")],
+    }),
+  ).toMatchSnapshot(fileName, {
     maxDiffPixelRatio: 0.02,
     ...option?.matchSnapshot,
   });
