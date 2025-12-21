@@ -46,7 +46,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **重要な判断基準**：
 - GitHub ActionsやCI/CDパイプラインに関する変更は `ci:`
 - Chromatic、Playwright、テスト設定の変更は `ci:`
-- パッケージの依存関係更新は `build:`
 - ソースコードのバグや動作不良の修正は `fix:`
 
 ### データベース

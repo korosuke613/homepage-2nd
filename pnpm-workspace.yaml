@@ -2,3 +2,5 @@ shamefullyHoist: true
 saveExact: true
 minimumReleaseAge: 10080  # 1 week
 minimumReleaseAgeExclude:
+  # Security patch for CVE-2025-68429 (.env file exposure vulnerability)
+  - storybook@9.1.17
