@@ -41,6 +41,7 @@ jobs:
       github.event_name != 'issue_comment' ||
       (
         contains(fromJson('["korosuke613"]'), github.event.comment.user.login) &&
+        github.event.issue != null &&
         contains(github.event.comment.body, '/renovate')
       )
     runs-on: ubuntu-latest
