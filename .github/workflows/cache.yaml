@@ -26,7 +26,7 @@ jobs:
         uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
       - name: Cache node_modules of root
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.tool-versions'
           cache: 'pnpm'
@@ -81,7 +81,7 @@ jobs:
         run: pnpm run test:unit
 
       - name: Cache node_modules of tools
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.tool-versions'
           cache: 'pnpm'
