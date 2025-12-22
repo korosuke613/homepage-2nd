@@ -77,7 +77,7 @@ jobs:
           echo "user=$(id -u)" >> $GITHUB_OUTPUT
           echo "group=$(id -g root)" >> $GITHUB_OUTPUT
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
