@@ -15,6 +15,9 @@ on:
           - disabled
           - reset
   
+  issue_comment:
+    types: [created]
+  
   pull_request:
     paths:
       - '.github/workflows/renovate.yaml'
@@ -34,6 +37,12 @@ concurrency:
 
 jobs:
   renovate:
+    if: |
+      github.event_name != 'issue_comment' ||
+      (
+        contains(fromJson('["korosuke613"]'), github.event.comment.user.login) &&
+        contains(github.event.comment.body, '/renovate')
+      )
     runs-on: ubuntu-latest
     env:
       BASE_DIR: /tmp/renovate
