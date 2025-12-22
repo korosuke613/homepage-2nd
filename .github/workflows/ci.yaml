@@ -21,7 +21,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -44,7 +44,7 @@ jobs:
     outputs:
       is_artifacts_changed: ${{ steps.calcurate-hash.outputs.add_label == vars.LABEL_CHANGES }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: 
           fetch-depth: 0
           filter: blob:none
@@ -129,7 +129,7 @@ jobs:
     outputs:
       skip_vrt: ${{ steps.check.outputs.skip_vrt }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -168,7 +168,7 @@ jobs:
     name: "Test [Unit]"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -210,7 +210,7 @@ jobs:
     name: "Test [E2E]"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -243,7 +243,7 @@ jobs:
     name: "Test [Component]"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -286,7 +286,7 @@ jobs:
     needs: [pre-vrt]
     if: needs.pre-vrt.outputs.skip_vrt != 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: 
           fetch-depth: 0
           filter: blob:none
@@ -317,7 +317,7 @@ jobs:
       run:
         working-directory: tools
     steps: 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none

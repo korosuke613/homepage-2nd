@@ -28,7 +28,7 @@ jobs:
           app-id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
 

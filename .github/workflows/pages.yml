@@ -39,7 +39,7 @@ jobs:
       is-change: ${{ steps.cat.outputs.isChange }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: 
           fetch-depth: 0
           filter: blob:none
@@ -78,7 +78,7 @@ jobs:
     outputs:
       artifacts_sha256: ${{ steps.sha256.outputs.artifacts }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: 
           fetch-depth: 0
           filter: blob:none
@@ -147,7 +147,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
