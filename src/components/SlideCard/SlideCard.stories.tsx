@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SlideCard } from ".";
 
-const metaData: Meta = {
+const metaData: Meta<typeof SlideCard> = {
   title: "SlideCard",
   component: SlideCard,
 };
