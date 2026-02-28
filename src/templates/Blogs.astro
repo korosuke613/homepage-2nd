@@ -51,7 +51,7 @@ for (const zenn of zennsDbData) {
 <Base head={{ title, description: contentDescription }}>
   <Section>
     <PaginationHeader title={sectionTitle} description={contentDescription} />
-    <div class="mt-4 flex flex-wrap justify-center gap-2">
+    <div class="mt-4 flex flex-wrap justify-center gap-8">
       {
         Object.keys(tags).map((tagName) => (
           <Tag name={tagName} color={tags[tagName]} contentCategory={"Blogs"} />
