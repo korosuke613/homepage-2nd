@@ -95,28 +95,226 @@ jobs:
             pnpm run vrt:regression --retries=1 --grep="add contents"
           fi
 
-      - name: Upload actual screenshots
+      - name: Prepare VRT failure images
+        if: failure()
+        run: |
+          mkdir -p /tmp/vrt-images
+          find test-results \( -name "*-actual.png" -o -name "*-expected.png" -o -name "*-diff.png" \) -exec cp {} /tmp/vrt-images/ \;
+
+      - name: Upload index actual
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: vrt-failed-actual-${{ github.sha }}
-          path: test-results/**/*-actual.png
+          path: /tmp/vrt-images/index-actual.png
+          archive: false
           if-no-files-found: ignore
 
-      - name: Upload expected screenshots
+      - name: Upload index expected
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: vrt-failed-expected-${{ github.sha }}
-          path: test-results/**/*-expected.png
+          path: /tmp/vrt-images/index-expected.png
+          archive: false
           if-no-files-found: ignore
 
-      - name: Upload diff screenshots
+      - name: Upload index diff
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: vrt-failed-diff-${{ github.sha }}
-          path: test-results/**/*-diff.png
+          path: /tmp/vrt-images/index-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload dormitory-introduction actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/dormitory-introduction-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload dormitory-introduction expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/dormitory-introduction-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload dormitory-introduction diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/dormitory-introduction-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload post actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/post-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload post expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/post-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload post diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/post-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-tag actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-tag-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-tag expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-tag-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-tag diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-tag-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-year actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-year-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-year expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-year-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload posts-year diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/posts-year-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-tag actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-tag-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-tag expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-tag-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-tag diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-tag-diff.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-year actual
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-year-actual.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-year expected
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-year-expected.png
+          archive: false
+          if-no-files-found: ignore
+
+      - name: Upload blogs-year diff
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/blogs-year-diff.png
+          archive: false
           if-no-files-found: ignore
 
       - name: Test Summary
