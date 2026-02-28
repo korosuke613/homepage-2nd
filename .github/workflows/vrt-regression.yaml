@@ -117,7 +117,6 @@ jobs:
         with:
           name: vrt-failure-images-archived
           path: /tmp/vrt-images/
-          retention-days: 1
 
       - name: Test Summary
         if: ${{ !inputs.skip && always() }} 
@@ -133,7 +132,7 @@ jobs:
         run: echo "Skipped"
 
   vrt-upload-individual:
-    name: Upload VRT image (${{ matrix.page }}-${{ matrix.type }})
+    name: Upload VRT diff (${{ matrix.page }})
     needs: vrt-regression-test
     if: failure() && needs.vrt-regression-test.outputs.has-failure-images == 'true'
     runs-on: ubuntu-latest
@@ -144,7 +143,6 @@ jobs:
       matrix:
         # Keep in sync with src/tests/vrt/testdata.ts
         page: [index, dormitory-introduction, post, posts, posts-tag, posts-year, blogs, blogs-tag, blogs-year]
-        type: [actual, expected, diff]
     steps:
       - name: Download archived VRT failure images
         uses: actions/download-artifact@v4
@@ -152,9 +150,9 @@ jobs:
           name: vrt-failure-images-archived
           path: /tmp/vrt-images
 
-      - name: Upload ${{ matrix.page }}-${{ matrix.type }}
+      - name: Upload ${{ matrix.page }}-diff
         uses: actions/upload-artifact@v7
         with:
-          path: /tmp/vrt-images/${{ matrix.page }}-${{ matrix.type }}.png
+          path: /tmp/vrt-images/${{ matrix.page }}-diff.png
           archive: false
           if-no-files-found: ignore
