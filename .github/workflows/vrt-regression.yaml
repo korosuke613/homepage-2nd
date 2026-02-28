@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
+    outputs:
+      has-failure-images: ${{ steps.prepare-images.outputs.has-images }}
     steps:
       - uses: actions/checkout@v6
         if: ${{ !inputs.skip }}
@@ -95,12 +97,27 @@ jobs:
             pnpm run vrt:regression --retries=1 --grep="add contents"
           fi
 
-      - name: Upload failed screenshots
+      - name: Prepare VRT failure images
+        id: prepare-images
         if: failure()
-        uses: actions/upload-artifact@v5
+        run: |
+          mkdir -p /tmp/vrt-images
+          if [ -d test-results ]; then
+            find test-results \( -name "*-actual.png" -o -name "*-expected.png" -o -name "*-diff.png" \) -exec cp {} /tmp/vrt-images/ \;
+          fi
+          if [ -n "$(ls -A /tmp/vrt-images/ 2>/dev/null)" ]; then
+            echo "has-images=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-images=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload VRT failure images (archived)
+        if: failure() && steps.prepare-images.outputs.has-images == 'true'
+        uses: actions/upload-artifact@v7
         with:
-          name: vrt-failed-screenshots-${{ github.sha }}
-          path: test-results
+          name: vrt-failure-images-archived
+          path: /tmp/vrt-images/
+          retention-days: 1
 
       - name: Test Summary
         if: ${{ !inputs.skip && always() }} 
@@ -114,3 +131,30 @@ jobs:
       - name: Skipped
         if: inputs.skip
         run: echo "Skipped"
+
+  vrt-upload-individual:
+    name: Upload VRT image (${{ matrix.page }}-${{ matrix.type }})
+    needs: vrt-regression-test
+    if: failure() && needs.vrt-regression-test.outputs.has-failure-images == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep in sync with src/tests/vrt/testdata.ts
+        page: [index, dormitory-introduction, post, posts, posts-tag, posts-year, blogs, blogs-tag, blogs-year]
+        type: [actual, expected, diff]
+    steps:
+      - name: Download archived VRT failure images
+        uses: actions/download-artifact@v4
+        with:
+          name: vrt-failure-images-archived
+          path: /tmp/vrt-images
+
+      - name: Upload ${{ matrix.page }}-${{ matrix.type }}
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/${{ matrix.page }}-${{ matrix.type }}.png
+          archive: false
+          if-no-files-found: ignore
