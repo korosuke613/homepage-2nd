@@ -97,11 +97,10 @@ jobs:
 
       - name: Upload failed screenshots
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v5
         with:
           name: vrt-failed-screenshots-${{ github.sha }}
           path: test-results
-          archive: false
 
       - name: Test Summary
         if: ${{ !inputs.skip && always() }} 
