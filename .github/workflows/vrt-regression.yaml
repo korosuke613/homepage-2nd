@@ -99,7 +99,9 @@ jobs:
         if: failure()
         run: |
           mkdir -p /tmp/vrt-images
-          find test-results \( -name "*-actual.png" -o -name "*-expected.png" -o -name "*-diff.png" \) -exec cp {} /tmp/vrt-images/ \;
+          if [ -d test-results ]; then
+            find test-results \( -name "*-actual.png" -o -name "*-expected.png" -o -name "*-diff.png" \) -exec cp {} /tmp/vrt-images/ \;
+          fi
 
       - name: Upload index actual
         if: failure()
