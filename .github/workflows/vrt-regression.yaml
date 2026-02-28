@@ -95,12 +95,29 @@ jobs:
             pnpm run vrt:regression --retries=1 --grep="add contents"
           fi
 
-      - name: Upload failed screenshots
+      - name: Upload actual screenshots
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
-          name: vrt-failed-screenshots-${{ github.sha }}
-          path: test-results
+          name: vrt-failed-actual-${{ github.sha }}
+          path: test-results/**/*-actual.png
+          if-no-files-found: ignore
+
+      - name: Upload expected screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vrt-failed-expected-${{ github.sha }}
+          path: test-results/**/*-expected.png
+          if-no-files-found: ignore
+
+      - name: Upload diff screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vrt-failed-diff-${{ github.sha }}
+          path: test-results/**/*-diff.png
+          if-no-files-found: ignore
 
       - name: Test Summary
         if: ${{ !inputs.skip && always() }} 
