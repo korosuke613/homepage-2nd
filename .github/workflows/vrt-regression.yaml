@@ -25,6 +25,7 @@ jobs:
       actions: read
     outputs:
       has-failure-images: ${{ steps.prepare-images.outputs.has-images }}
+      failed-pages: ${{ steps.prepare-images.outputs.failed-pages }}
     steps:
       - uses: actions/checkout@v6
         if: ${{ !inputs.skip }}
@@ -107,8 +108,12 @@ jobs:
           fi
           if [ -n "$(ls -A /tmp/vrt-images/ 2>/dev/null)" ]; then
             echo "has-images=true" >> $GITHUB_OUTPUT
+            # Extract unique page names from diff images for dynamic matrix
+            pages=$(ls /tmp/vrt-images/*-diff.png 2>/dev/null | xargs -I{} basename {} -diff.png | jq -R -s -c 'split("\n") | map(select(length > 0))')
+            echo "failed-pages=${pages}" >> $GITHUB_OUTPUT
           else
             echo "has-images=false" >> $GITHUB_OUTPUT
+            echo "failed-pages=[]" >> $GITHUB_OUTPUT
           fi
 
       - name: Upload VRT failure images (archived)
@@ -141,8 +146,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Keep in sync with src/tests/vrt/testdata.ts
-        page: [index, dormitory-introduction, post, posts, posts-tag, posts-year, blogs, blogs-tag, blogs-year]
+        page: ${{ fromJSON(needs.vrt-regression-test.outputs.failed-pages) }}
     steps:
       - name: Download archived VRT failure images
         uses: actions/download-artifact@v4
@@ -155,4 +159,3 @@ jobs:
         with:
           path: /tmp/vrt-images/${{ matrix.page }}-diff.png
           archive: false
-          if-no-files-found: ignore
