@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
+    outputs:
+      has-failure-images: ${{ steps.prepare-images.outputs.has-images }}
     steps:
       - uses: actions/checkout@v6
         if: ${{ !inputs.skip }}
@@ -96,228 +98,26 @@ jobs:
           fi
 
       - name: Prepare VRT failure images
+        id: prepare-images
         if: failure()
         run: |
           mkdir -p /tmp/vrt-images
           if [ -d test-results ]; then
             find test-results \( -name "*-actual.png" -o -name "*-expected.png" -o -name "*-diff.png" \) -exec cp {} /tmp/vrt-images/ \;
           fi
+          if [ -n "$(ls -A /tmp/vrt-images/ 2>/dev/null)" ]; then
+            echo "has-images=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-images=false" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Upload index actual
-        if: failure()
+      - name: Upload VRT failure images (archived)
+        if: failure() && steps.prepare-images.outputs.has-images == 'true'
         uses: actions/upload-artifact@v7
         with:
-          path: /tmp/vrt-images/index-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload index expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/index-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload index diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/index-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload dormitory-introduction actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/dormitory-introduction-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload dormitory-introduction expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/dormitory-introduction-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload dormitory-introduction diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/dormitory-introduction-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload post actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/post-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload post expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/post-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload post diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/post-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-tag actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-tag-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-tag expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-tag-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-tag diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-tag-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-year actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-year-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-year expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-year-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload posts-year diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/posts-year-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-tag actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-tag-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-tag expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-tag-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-tag diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-tag-diff.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-year actual
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-year-actual.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-year expected
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-year-expected.png
-          archive: false
-          if-no-files-found: ignore
-
-      - name: Upload blogs-year diff
-        if: failure()
-        uses: actions/upload-artifact@v7
-        with:
-          path: /tmp/vrt-images/blogs-year-diff.png
-          archive: false
-          if-no-files-found: ignore
+          name: vrt-failure-images-archived
+          path: /tmp/vrt-images/
+          retention-days: 1
 
       - name: Test Summary
         if: ${{ !inputs.skip && always() }} 
@@ -331,3 +131,28 @@ jobs:
       - name: Skipped
         if: inputs.skip
         run: echo "Skipped"
+
+  vrt-upload-individual:
+    name: Upload VRT image (${{ matrix.page }}-${{ matrix.type }})
+    needs: vrt-regression-test
+    if: failure() && needs.vrt-regression-test.outputs.has-failure-images == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Keep in sync with src/tests/vrt/testdata.ts
+        page: [index, dormitory-introduction, post, posts, posts-tag, posts-year, blogs, blogs-tag, blogs-year]
+        type: [actual, expected, diff]
+    steps:
+      - name: Download archived VRT failure images
+        uses: actions/download-artifact@v4
+        with:
+          name: vrt-failure-images-archived
+          path: /tmp/vrt-images
+
+      - name: Upload ${{ matrix.page }}-${{ matrix.type }}
+        uses: actions/upload-artifact@v7
+        with:
+          path: /tmp/vrt-images/${{ matrix.page }}-${{ matrix.type }}.png
+          archive: false
+          if-no-files-found: ignore
