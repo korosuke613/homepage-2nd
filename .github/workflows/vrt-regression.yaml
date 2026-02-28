@@ -137,6 +137,8 @@ jobs:
     needs: vrt-regression-test
     if: failure() && needs.vrt-regression-test.outputs.has-failure-images == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
     strategy:
       fail-fast: false
       matrix:
