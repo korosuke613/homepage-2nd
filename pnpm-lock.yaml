@@ -119,7 +119,7 @@ importers:
         version: 2.3.8
       '@chromatic-com/storybook':
         specifier: 4.1.3
-        version: 4.1.3(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+        version: 4.1.3(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       '@playwright/experimental-ct-react':
         specifier: 1.55.1
         version: 1.55.1(@types/node@24.5.2)(jiti@1.21.7)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))(yaml@2.8.1)
@@ -131,19 +131,19 @@ importers:
         version: 3.1.2
       '@storybook/addon-a11y':
         specifier: 9.1.16
-        version: 9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+        version: 9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       '@storybook/addon-docs':
         specifier: 9.1.16
-        version: 9.1.16(@types/react@19.1.14)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+        version: 9.1.16(@types/react@19.1.14)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       '@storybook/addon-links':
         specifier: 9.1.16
-        version: 9.1.16(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+        version: 9.1.16(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       '@storybook/addon-vitest':
         specifier: 9.1.16
-        version: 9.1.16(@vitest/browser@3.2.4)(@vitest/runner@3.2.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vitest@3.2.4)
+        version: 9.1.16(@vitest/browser@3.2.4)(@vitest/runner@3.2.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vitest@3.2.4)
       '@storybook/react-vite':
         specifier: 9.1.16
-        version: 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.51.0)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        version: 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.51.0)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       '@types/react':
         specifier: 19.1.14
         version: 19.1.14
@@ -166,8 +166,8 @@ importers:
         specifier: 1.55.1
         version: 1.55.1
       storybook:
-        specifier: 9.1.17
-        version: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+        specifier: 9.1.19
+        version: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       textlint:
         specifier: 14.8.4
         version: 14.8.4
@@ -2336,6 +2336,7 @@ packages:
 
   deep-diff@1.0.2:
     resolution: {integrity: sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
@@ -2936,16 +2937,18 @@ packages:
 
   glob@10.4.5:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
@@ -4752,11 +4755,6 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  semver@7.7.2:
-    resolution: {integrity: sha512-RF0Fw+rO5AMf9MAyaRXI4AV0Ulj5lMHqVxxdSgiVbixSCXoEmmX/jk0CuJw4+3SqroYO9VoUh+HcuJivvtJemA==}
-    engines: {node: '>=10'}
-    hasBin: true
-
   semver@7.7.3:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
     engines: {node: '>=10'}
@@ -4936,8 +4934,8 @@ packages:
     resolution: {integrity: sha512-I6GPS/E0zyieHehMRPQcqkiBMJKGgLta+1hREixhoLPqEA0AlVFiC43dl8uPpmkkeRdDMzYRWFWk5/l9x7nmNg==}
     engines: {node: '>=0.10.0'}
 
-  storybook@9.1.17:
-    resolution: {integrity: sha512-kfr6kxQAjA96ADlH6FMALJwJ+eM80UqXy106yVHNgdsAP/CdzkkicglRAhZAvUycXK9AeadF6KZ00CWLtVMN4w==}
+  storybook@9.1.19:
+    resolution: {integrity: sha512-P7K/b+Pn1sXJzwYCF6hH5Zjdrg4ZlA5Bz9rdOJEdvm6ev27XESDGI+Ql+dfUfUcGOym3Aud4MssJIDEF2ocsyQ==}
     hasBin: true
     peerDependencies:
       prettier: ^2 || ^3
@@ -5863,6 +5861,7 @@ packages:
   whatwg-encoding@2.0.0:
     resolution: {integrity: sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==}
     engines: {node: '>=12'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-url@14.2.0:
     resolution: {integrity: sha512-De72GdQZzNTUBBChsXueQUnPKDkg/5A5zp7pFDuQAj5UFoENpiACU0wlCvzpAGnTkj++ihpKwKyYewn/XNUbKw==}
@@ -6561,13 +6560,13 @@ snapshots:
     dependencies:
       fontkit: 2.0.4
 
-  '@chromatic-com/storybook@4.1.3(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@chromatic-com/storybook@4.1.3(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
       '@neoconfetti/react': 1.0.0
       chromatic: 13.3.4
       filesize: 10.1.6
       jsonfile: 6.2.0
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       strip-ansi: 7.1.2
     transitivePeerDependencies:
       - '@chromatic-com/cypress'
@@ -7310,38 +7309,38 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@storybook/addon-a11y@9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@storybook/addon-a11y@9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
       '@storybook/global': 5.0.0
       axe-core: 4.10.3
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
 
-  '@storybook/addon-docs@9.1.16(@types/react@19.1.14)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@storybook/addon-docs@9.1.16(@types/react@19.1.14)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
       '@mdx-js/react': 3.1.1(@types/react@19.1.14)(react@19.1.1)
-      '@storybook/csf-plugin': 9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+      '@storybook/csf-plugin': 9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       '@storybook/icons': 1.6.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      '@storybook/react-dom-shim': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+      '@storybook/react-dom-shim': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       ts-dedent: 2.2.0
     transitivePeerDependencies:
       - '@types/react'
 
-  '@storybook/addon-links@9.1.16(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@storybook/addon-links@9.1.16(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
     optionalDependencies:
       react: 19.1.1
 
-  '@storybook/addon-vitest@9.1.16(@vitest/browser@3.2.4)(@vitest/runner@3.2.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vitest@3.2.4)':
+  '@storybook/addon-vitest@9.1.16(@vitest/browser@3.2.4)(@vitest/runner@3.2.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vitest@3.2.4)':
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/icons': 1.6.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       prompts: 2.4.2
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       ts-dedent: 2.2.0
     optionalDependencies:
       '@vitest/browser': 3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))(vitest@3.2.4)
@@ -7351,16 +7350,16 @@ snapshots:
       - react
       - react-dom
 
-  '@storybook/builder-vite@9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))':
+  '@storybook/builder-vite@9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))':
     dependencies:
-      '@storybook/csf-plugin': 9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      '@storybook/csf-plugin': 9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       ts-dedent: 2.2.0
       vite: 7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
 
-  '@storybook/csf-plugin@9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@storybook/csf-plugin@9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       unplugin: 1.16.1
 
   '@storybook/global@5.0.0': {}
@@ -7370,25 +7369,25 @@ snapshots:
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
 
-  '@storybook/react-dom-shim@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
+  '@storybook/react-dom-shim@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))':
     dependencies:
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
 
-  '@storybook/react-vite@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.51.0)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))':
+  '@storybook/react-vite@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(rollup@4.51.0)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))':
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.1(typescript@5.9.3)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       '@rollup/pluginutils': 5.3.0(rollup@4.51.0)
-      '@storybook/builder-vite': 9.1.16(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
-      '@storybook/react': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)
+      '@storybook/builder-vite': 9.1.16(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      '@storybook/react': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)
       find-up: 7.0.0
       magic-string: 0.30.19
       react: 19.1.1
       react-docgen: 8.0.1
       react-dom: 19.1.1(react@19.1.1)
       resolve: 1.22.10
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
       tsconfig-paths: 4.2.0
       vite: 7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
     transitivePeerDependencies:
@@ -7396,13 +7395,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@storybook/react@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)':
+  '@storybook/react@9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))(typescript@5.9.3)':
     dependencies:
       '@storybook/global': 5.0.0
-      '@storybook/react-dom-shim': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
+      '@storybook/react-dom-shim': 9.1.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)))
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
-      storybook: 9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
+      storybook: 9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1))
     optionalDependencies:
       typescript: 5.9.3
 
@@ -10001,7 +10000,7 @@ snapshots:
 
   make-dir@4.0.0:
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.3
 
   map-like@2.0.0: {}
 
@@ -11660,8 +11659,6 @@ snapshots:
 
   semver@6.3.1: {}
 
-  semver@7.7.2: {}
-
   semver@7.7.3: {}
 
   send@1.2.0:
@@ -11901,7 +11898,7 @@ snapshots:
 
   stopwords-iso@1.1.0: {}
 
-  storybook@9.1.17(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)):
+  storybook@9.1.19(@testing-library/dom@10.4.1)(vite@7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)):
     dependencies:
       '@storybook/global': 5.0.0
       '@testing-library/jest-dom': 6.8.0
@@ -11913,7 +11910,7 @@ snapshots:
       esbuild: 0.25.10
       esbuild-register: 3.6.0(esbuild@0.25.10)
       recast: 0.23.11
-      semver: 7.7.2
+      semver: 7.7.3
       ws: 8.18.3
     transitivePeerDependencies:
       - '@testing-library/dom'
@@ -12531,7 +12528,7 @@ snapshots:
 
   typescript-auto-import-cache@0.3.6:
     dependencies:
-      semver: 7.7.2
+      semver: 7.7.3
 
   typescript@5.9.3: {}
 
@@ -12912,7 +12909,7 @@ snapshots:
   volar-service-typescript@0.0.62(@volar/language-service@2.4.23):
     dependencies:
       path-browserify: 1.0.1
-      semver: 7.7.2
+      semver: 7.7.3
       typescript-auto-import-cache: 0.3.6
       vscode-languageserver-textdocument: 1.0.12
       vscode-nls: 5.2.0
