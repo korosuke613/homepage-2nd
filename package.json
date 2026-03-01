@@ -6,7 +6,7 @@
     "name": "Futa Hirakoba",
     "url": "https://github.com/korosuke613"
   },
-  "packageManager": "pnpm@10.25.0",
+  "packageManager": "pnpm@10.29.3",
   "scripts": {
     "build": "astro check && tsc --noEmit && astro build",
     "build-types": "tsc --noEmit --pretty",
