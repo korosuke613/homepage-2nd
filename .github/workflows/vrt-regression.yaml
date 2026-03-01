@@ -17,10 +17,15 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: vrt-regression-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   vrt-regression-test:
     name: Visual Regression Testing
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       actions: read
     outputs:
@@ -90,13 +95,13 @@ jobs:
       - name: Visual regression testing
         if: ${{ !inputs.skip }}
         run: |
-          if [[ -z "${{ steps.changed-files.outputs.contents_all_changed_and_modified_files }}" ]]; then
-            # コンテンツの変更がない
-            pnpm run vrt:regression --retries=1 --grep="update dependencies"
-          else
-            # コンテンツの変更がある
-            pnpm run vrt:regression --retries=1 --grep="add contents"
-          fi
+          pnpm run vrt:regression --retries=1 --grep="${{
+            case(
+              steps.changed-files.outputs.contents_all_changed_and_modified_files != '',
+              'add contents',
+              'update dependencies'
+            )
+          }}"
 
       - name: Prepare VRT failure images
         id: prepare-images

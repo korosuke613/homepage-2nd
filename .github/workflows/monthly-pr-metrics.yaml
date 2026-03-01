@@ -9,10 +9,15 @@ permissions:
   pull-requests: read
   actions: read  # required for actions-timeline
 
+concurrency:
+  group: monthly-metrics
+  cancel-in-progress: false
+
 jobs:
   build:
     name: pull request metrics
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: 1 ヶ月前の範囲を取得 # 例: 7 月に実行した場合、2023-06-01..2023-06-30 のようになる
         shell: bash
