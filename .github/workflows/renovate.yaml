@@ -62,7 +62,7 @@ jobs:
           echo "date=$(date --iso-8601)" >> $GITHUB_OUTPUT
 
       - name: Renovate CLI の結果をキャッシュ
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ env.BASE_DIR }}
           # Cache の肥大化を防ぐため、その日初めての実行のみキャッシュする＆前日以前のキャッシュは利用しない
