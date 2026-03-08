@@ -16,8 +16,8 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "axios": "^1.0.0",
-    "fast-xml-parser": "^5.0.0",
+    "axios": "^1.13.6",
+    "fast-xml-parser": "^5.4.1",
     "jsdom": "^27.0.0",
     "rss-parser": "^3.12.0"
   }
