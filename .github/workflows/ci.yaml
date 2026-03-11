@@ -4,14 +4,19 @@ on:
   pull_request:
   workflow_dispatch:
 
-permissions: 
+permissions:
   contents: read
   packages: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   actions-timeline:
     needs: [lint, build, unit-test, e2e-test, ct-test, vrt, tools, chromatic]
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       actions: read
     if: always()  # 他のジョブが失敗してもタイムラインを表示
@@ -20,6 +25,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -39,6 +45,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       pull-requests: write
     outputs:
@@ -72,8 +79,8 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Calcurate hash
-        id: calcurate-hash
+      - name: Calculate SHA256
+        id: sha256
         run: |
           set -x
           SHA256_OUTPUT=$(find ./dist -type f -print0 | \
@@ -84,34 +91,32 @@ jobs:
             cut -d ' ' -f 1)
           set +x
           echo $SHA256_OUTPUT
+          echo "value=$SHA256_OUTPUT" >> $GITHUB_OUTPUT
+
+      - name: Set label outputs
+        id: calcurate-hash
+        env:
+          IS_CHANGED: ${{ vars.RECENT_ARTIFACTS_SHA256 != steps.sha256.outputs.value }}
+        run: |
+          echo "add_label=${{ case(env.IS_CHANGED == 'true', vars.LABEL_CHANGES, vars.LABEL_NO_CHANGES) }}" >> $GITHUB_OUTPUT
+          echo "remove_label=${{ case(env.IS_CHANGED == 'true', vars.LABEL_NO_CHANGES, vars.LABEL_CHANGES) }}" >> $GITHUB_OUTPUT
 
           touch ${{ runner.temp }}/tmp_artifacts_result.txt
-          if [[ ${{ vars.RECENT_ARTIFACTS_SHA256 }} = $SHA256_OUTPUT ]]; then
-            echo "add_label=${{ vars.LABEL_NO_CHANGES }}" >> $GITHUB_OUTPUT
-            echo "remove_label=${{ vars.LABEL_CHANGES }}" >> $GITHUB_OUTPUT
-            echo "### ✅ No changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
-          else
-            echo "add_label=${{ vars.LABEL_CHANGES }}" >> $GITHUB_OUTPUT
-            echo "remove_label=${{ vars.LABEL_NO_CHANGES }}" >> $GITHUB_OUTPUT
-            echo "### 🚨 Changes to the artifacts" >> ${{ runner.temp }}/tmp_artifacts_result.txt
-          fi
+          echo "${{ case(env.IS_CHANGED == 'true', '### 🚨 Changes to the artifacts', '### ✅ No changes to the artifacts') }}" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "building commit: \`${{ github.sha }}\`" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "||SHA256|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "|---|---|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           echo "|Recent deployed|\`${{ vars.RECENT_ARTIFACTS_SHA256 }}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
-          echo "|This build|\`${SHA256_OUTPUT}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
+          echo "|This build|\`${{ steps.sha256.outputs.value }}\`|" >> ${{ runner.temp }}/tmp_artifacts_result.txt
           cat ${{ runner.temp }}/tmp_artifacts_result.txt >> $GITHUB_STEP_SUMMARY
 
       - name: Add label to PR
+        if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            gh pr edit ${{ github.event.number }} --add-label '${{ steps.calcurate-hash.outputs.add_label }}'
-            gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
-          else
-            echo "Skipping label update (not a pull request)"
-          fi
+          gh pr edit ${{ github.event.number }} --add-label '${{ steps.calcurate-hash.outputs.add_label }}'
+          gh pr edit ${{ github.event.number }} --remove-label '${{ steps.calcurate-hash.outputs.remove_label }}'
 
       - name: Comment artifacts hash to pull request
         if: github.event_name == 'pull_request'
@@ -124,6 +129,7 @@ jobs:
     name: "Pre Test [VRT]"
     needs: [build]
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       pull-requests: read
     outputs:
@@ -167,6 +173,7 @@ jobs:
   unit-test:
     name: "Test [Unit]"
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -209,6 +216,7 @@ jobs:
   e2e-test:
     name: "Test [E2E]"
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -242,6 +250,7 @@ jobs:
   ct-test:
     name: "Test [Component]"
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
         with:
@@ -283,6 +292,7 @@ jobs:
 
   chromatic:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: [pre-vrt]
     if: needs.pre-vrt.outputs.skip_vrt != 'true'
     steps:
@@ -313,6 +323,7 @@ jobs:
 
   tools:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: tools

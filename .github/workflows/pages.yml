@@ -23,28 +23,33 @@ jobs:
   actions-timeline:
     needs: [build, deploy, call-scraping-workflow, call-vrt-init]
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: Kesin11/actions-timeline@54d513e0b5ff1158f1cf8321108d666a5a6c1fca # v2.2.5
+      - name: Show actions timeline
+        uses: Kesin11/actions-timeline@54d513e0b5ff1158f1cf8321108d666a5a6c1fca # v2.2.5
 
   update-astro-db:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     permissions:
       contents: 'read'
       id-token: 'write'
 
     environment: google-analytics-4
-    
+
     outputs:
       is-change: ${{ steps.cat.outputs.isChange }}
 
     steps:
-      - uses: actions/checkout@v6
-        with: 
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
           fetch-depth: 0
           filter: blob:none
 
-      - uses: 'google-github-actions/auth@v2'
+      - name: Authenticate to Google Cloud
+        uses: 'google-github-actions/auth@v2'
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_ID }}/locations/global/workloadIdentityPools/github-oidc/providers/github-oidc'
@@ -53,7 +58,8 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
 
-      - uses: actions/setup-node@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.tool-versions'
           cache: 'pnpm'
@@ -75,15 +81,18 @@ jobs:
   build:
     needs: [update-astro-db]
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     outputs:
       artifacts_sha256: ${{ steps.sha256.outputs.artifacts }}
     steps:
-      - uses: actions/checkout@v6
-        with: 
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
           fetch-depth: 0
           filter: blob:none
 
-      - name: Restore astro build cache
+      - name: Restore Astro build cache
+        id: restore-cache
         uses: actions/cache/restore@v4
         with:
           path: .astro/cache
@@ -93,7 +102,8 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4.2.0
 
-      - uses: actions/setup-node@v6
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.tool-versions'
           cache: 'pnpm'
@@ -137,17 +147,26 @@ jobs:
         with:
           path: './dist'
 
+      - name: Save Astro build cache
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .astro/cache
+          key: astro-build-${{ hashFiles('**/astro.config.mjs', '**/package-lock.json') }}
+
   deploy:
     if: (vars.RECENT_ARTIFACTS_SHA256 != needs.build.outputs.artifacts_sha256) || (needs.update-astro-db.outputs.is-change == 'true')
-    needs: 
+    needs:
       - update-astro-db
       - build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           filter: blob:none
@@ -159,8 +178,9 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@main
 
-      - uses: actions/create-github-app-token@v2
+      - name: Create GitHub App token
         id: app-token
+        uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ vars.GH_APP_ID_KOROSUKE613_HOMEPAGE_2ND }}
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY_KOROSUKE613_HOMEPAGE_2ND }}
@@ -179,6 +199,7 @@ jobs:
   call-scraping-workflow:
     needs:
       - deploy
+    timeout-minutes: 20
     uses: ./.github/workflows/scraping.yaml
     secrets: inherit
 
@@ -186,6 +207,7 @@ jobs:
     needs:
       - build
       - deploy
+    timeout-minutes: 20
     uses: ./.github/workflows/vrt-init.yaml
     with:
       sha: ${{ needs.build.outputs.artifacts_sha256 }}
@@ -197,6 +219,7 @@ jobs:
       - call-scraping-workflow
       - call-vrt-init
     if: failure()
+    timeout-minutes: 20
     uses: korosuke613/actions/.github/workflows/notify-to-slack.yaml@main
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

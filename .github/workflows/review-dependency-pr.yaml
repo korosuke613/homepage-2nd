@@ -11,6 +11,10 @@ on:
         required: true
         type: number
 
+concurrency:
+  group: review-pr-${{ github.event.number || github.event.inputs.pr_number }}
+  cancel-in-progress: false
+
 jobs:
   review:
     if: ${{ github.actor == 'kiba-renovate[bot]' || github.actor == 'dependabot[bot]' || github.event_name == 'workflow_dispatch' }}

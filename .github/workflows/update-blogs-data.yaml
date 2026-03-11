@@ -14,9 +14,10 @@ jobs:
       pull-requests: read
       actions: read  # required for actions-timeline
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: true
-      matrix: 
+      matrix:
         working_dir: ["./tools"]
     defaults:
       run:
@@ -105,6 +106,7 @@ jobs:
     needs:
       - update
     if: failure()
+    timeout-minutes: 15
     uses: korosuke613/actions/.github/workflows/notify-to-slack.yaml@main
     secrets:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
