@@ -71,7 +71,7 @@ jobs:
 
       - name: Cache VRT snapshots
         if: ${{ !inputs.skip }}
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: vrt-cache
         with:
           path: src/tests/vrt/snapshots
