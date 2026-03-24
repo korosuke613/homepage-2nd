@@ -90,5 +90,10 @@
     "textlint-rule-spellcheck-tech-word": "5.0.0",
     "vite-plugin-turbosnap": "1.0.3",
     "vitest": "3.2.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "baseline-browser-mapping": "^2.10.8"
+    }
   }
 }
