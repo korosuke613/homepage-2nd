@@ -36,7 +36,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `pnpm run lint:fix` - Biomeでリンティング問題を修正
 - `pnpm run build-types` - ファイル出力なしで型チェック
 
-**重要**: ソースコードを変更した際は、必ず `pnpm run lint:fix` を実行してコードフォーマットとリンティング問題を修正してください。
+**注意**: Edit/Write後にBiomeが自動実行されるPostToolUseフックが設定済み（`.claude/settings.json`）。手動での `pnpm run lint:fix` は通常不要。
 
 ## コミットタイプガイドライン
 
