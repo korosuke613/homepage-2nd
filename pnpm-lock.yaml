@@ -124,11 +124,11 @@ importers:
         specifier: 4.1.3
         version: 4.1.3(storybook@9.1.20(@testing-library/dom@10.4.1)(prettier@3.8.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)))
       '@playwright/experimental-ct-react':
-        specifier: 1.55.1
-        version: 1.55.1(@types/node@24.12.0)(jiti@1.21.7)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(yaml@2.8.2)
+        specifier: 1.58.2
+        version: 1.58.2(@types/node@24.12.0)(jiti@1.21.7)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(yaml@2.8.2)
       '@playwright/test':
-        specifier: 1.55.1
-        version: 1.55.1
+        specifier: 1.58.2
+        version: 1.58.2
       '@proofdict/textlint-rule-proofdict':
         specifier: 3.1.2
         version: 3.1.2
@@ -152,7 +152,7 @@ importers:
         version: 19.1.14
       '@vitest/browser':
         specifier: 3.2.4
-        version: 3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
+        version: 3.2.4(playwright@1.58.2)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
       '@vitest/coverage-v8':
         specifier: 3.2.4
         version: 3.2.4(@vitest/browser@3.2.4)(vitest@3.2.4)
@@ -166,8 +166,8 @@ importers:
         specifier: 9.2.1
         version: 9.2.1
       playwright:
-        specifier: 1.55.1
-        version: 1.55.1
+        specifier: 1.58.2
+        version: 1.58.2
       storybook:
         specifier: 9.1.20
         version: 9.1.20(@testing-library/dom@10.4.1)(prettier@3.8.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))
@@ -1336,17 +1336,17 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@playwright/experimental-ct-core@1.55.1':
-    resolution: {integrity: sha512-Mhdmx3CDlOYi4Nr8N4bzaqhjmdcl+SKdsKWznN6TWZCFZDMZARyZ3Vp5IIS3AAoymzMCcG6bRsKicA79eUBLKA==}
+  '@playwright/experimental-ct-core@1.58.2':
+    resolution: {integrity: sha512-Imif9ggQp6YIblHAX6MvJuqDFrCGHYspoibxLP3+1soXp+1wBNuuSRajv0VWXzFbh//4l29I+xy2tpTgej0vEA==}
     engines: {node: '>=18'}
 
-  '@playwright/experimental-ct-react@1.55.1':
-    resolution: {integrity: sha512-q+qH/J99iV6+99oVT417AA8KsYp3lwxsnxZrLZjIwkEC5+G28QCkr7+UYAOZoNPzelGqHFMLhYMvc6mXuREa2w==}
+  '@playwright/experimental-ct-react@1.58.2':
+    resolution: {integrity: sha512-8IdT7b+c3Wv8RVRKmAkAL2PWJU85Tu0IfqsvsbaS520OOoZJqytIoxdU7gog9gjaONpgw6SOKDykEWup3SeO7g==}
     engines: {node: '>=18'}
     hasBin: true
 
-  '@playwright/test@1.55.1':
-    resolution: {integrity: sha512-IVAh/nOJaw6W9g+RJVlIQJ6gSiER+ae6mKQ5CX1bERzQgbC1VSeBlwdvczT7pxb0GWiyrxH4TGKbMfDb4Sq/ig==}
+  '@playwright/test@1.58.2':
+    resolution: {integrity: sha512-akea+6bHYBBfA9uQqSYmlJXn61cTa+jbO87xVLCWbTqbWadRVmhxlXATaOjOgcBaWU4ePo0wB41KMFv3o35IXA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4652,13 +4652,13 @@ packages:
     resolution: {integrity: sha512-ueGLflrrnvwB3xuo/uGob5pd5FN7l0MsLf0Z87o/UQmRtwjvfylfc9MurIxRAWywCYTgrvpXBcqjV4OfCYGCIQ==}
     engines: {node: '>=16.20.0'}
 
-  playwright-core@1.55.1:
-    resolution: {integrity: sha512-Z6Mh9mkwX+zxSlHqdr5AOcJnfp+xUWLCt9uKV18fhzA8eyxUd8NUWzAjxUh55RZKSYwDGX0cfaySdhZJGMoJ+w==}
+  playwright-core@1.58.2:
+    resolution: {integrity: sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.55.1:
-    resolution: {integrity: sha512-cJW4Xd/G3v5ovXtJJ52MAOclqeac9S/aGGgRzLabuF8TnIb6xHvMzKIa6JmrRzUkeXJgfL1MhukP0NK6l39h3A==}
+  playwright@1.58.2:
+    resolution: {integrity: sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7538,10 +7538,10 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@playwright/experimental-ct-core@1.55.1(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)':
+  '@playwright/experimental-ct-core@1.58.2(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)':
     dependencies:
-      playwright: 1.55.1
-      playwright-core: 1.55.1
+      playwright: 1.58.2
+      playwright-core: 1.58.2
       vite: 6.4.1(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)
     transitivePeerDependencies:
       - '@types/node'
@@ -7556,9 +7556,9 @@ snapshots:
       - tsx
       - yaml
 
-  '@playwright/experimental-ct-react@1.55.1(@types/node@24.12.0)(jiti@1.21.7)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(yaml@2.8.2)':
+  '@playwright/experimental-ct-react@1.58.2(@types/node@24.12.0)(jiti@1.21.7)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(yaml@2.8.2)':
     dependencies:
-      '@playwright/experimental-ct-core': 1.55.1(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)
+      '@playwright/experimental-ct-core': 1.58.2(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2)
       '@vitejs/plugin-react': 4.7.0(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))
     transitivePeerDependencies:
       - '@types/node'
@@ -7575,9 +7575,9 @@ snapshots:
       - vite
       - yaml
 
-  '@playwright/test@1.55.1':
+  '@playwright/test@1.58.2':
     dependencies:
-      playwright: 1.55.1
+      playwright: 1.58.2
 
   '@polka/url@1.0.0-next.29': {}
 
@@ -7797,7 +7797,7 @@ snapshots:
       storybook: 9.1.20(@testing-library/dom@10.4.1)(prettier@3.8.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))
       ts-dedent: 2.2.0
     optionalDependencies:
-      '@vitest/browser': 3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.58.2)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
       '@vitest/runner': 3.2.4
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.12.0)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@1.21.7)(jsdom@27.4.0)(yaml@2.8.2)
     transitivePeerDependencies:
@@ -8315,7 +8315,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/browser@3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)':
+  '@vitest/browser@3.2.4(playwright@1.58.2)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)':
     dependencies:
       '@testing-library/dom': 10.4.1
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
@@ -8327,7 +8327,7 @@ snapshots:
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.12.0)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@1.21.7)(jsdom@27.4.0)(yaml@2.8.2)
       ws: 8.18.3
     optionalDependencies:
-      playwright: 1.55.1
+      playwright: 1.58.2
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -8351,7 +8351,7 @@ snapshots:
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.12.0)(@vitest/browser@3.2.4)(@vitest/ui@3.2.4)(jiti@1.21.7)(jsdom@27.4.0)(yaml@2.8.2)
     optionalDependencies:
-      '@vitest/browser': 3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.58.2)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
     transitivePeerDependencies:
       - supports-color
 
@@ -11679,11 +11679,11 @@ snapshots:
 
   pkce-challenge@5.0.0: {}
 
-  playwright-core@1.55.1: {}
+  playwright-core@1.58.2: {}
 
-  playwright@1.55.1:
+  playwright@1.58.2:
     dependencies:
-      playwright-core: 1.55.1
+      playwright-core: 1.58.2
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -13486,7 +13486,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 24.12.0
-      '@vitest/browser': 3.2.4(playwright@1.55.1)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(playwright@1.58.2)(vite@7.1.6(@types/node@24.12.0)(jiti@1.21.7)(yaml@2.8.2))(vitest@3.2.4)
       '@vitest/ui': 3.2.4(vitest@3.2.4)
       jsdom: 27.4.0
     transitivePeerDependencies:
