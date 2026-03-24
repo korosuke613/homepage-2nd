@@ -7,10 +7,15 @@ on:
     paths:
       - .github/workflows/copilot-setup-steps.yml
 
+concurrency:
+  group: copilot-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # このジョブは必ず `copilot-setup-steps` という名前でなければならない
   copilot-setup-steps:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     permissions:
       contents: read

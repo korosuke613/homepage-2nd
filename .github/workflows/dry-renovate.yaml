@@ -7,9 +7,14 @@ on:
       - .github/workflows/dry-renovate.yaml
       - renovate.json5
 
+concurrency:
+  group: dry-renovate-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   dry-run:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       actions: read  # required for actions-timeline
     steps:
