@@ -24,7 +24,7 @@ jobs:
           filter: blob:none
 
       - name: Restore Astro build cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: .astro/cache
           key: astro-build-${{ hashFiles('**/astro.config.mjs', '**/package-lock.json') }}
@@ -33,7 +33,7 @@ jobs:
             astro-build-
 
       - name: Restore Vitest build cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: .cache/.vitest
           key: vitest-${{ github.sha }}
