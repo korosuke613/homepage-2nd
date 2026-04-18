@@ -48,7 +48,7 @@ jobs:
           echo "permissions=$(jq -c '.permissions' ${{ runner.temp }}/gh-app-permissions.json)" >> $GITHUB_OUTPUT
 
       - name: Run Claude PR Action
-        uses: anthropics/claude-code-action@7145c3e0510bcdbdd29f67cc4a8c1958f1acfa2f # v1.0.27
+        uses: anthropics/claude-code-action@b47fd721da662d48c5680e154ad16a73ed74d2e0 # v1.0.93
         env:
           GH_APP_PERMISSIONS: ${{ steps.get-gh-app-permissions.outputs.permissions }}
         with:
