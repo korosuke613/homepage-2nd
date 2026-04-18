@@ -2,5 +2,29 @@
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
     'github>korosuke613/renovate-config',
-  ]
+  ],
+  // 全ての PR は Dependency Dashboard Issue のチェックボックス承認を必須化する。
+  // 自動 PR 作成はなくなり、人間がチェックを入れた時のみ PR が作られる。
+  dependencyDashboard: true,
+  dependencyDashboardApproval: true,
+  // 自動マージ全廃止（外部プリセットの設定を上書き）。
+  automerge: false,
+  packageRules: [
+    {
+      matchPackagePatterns: ['*'],
+      automerge: false,
+    },
+  ],
+  // npm 公開から 7 日未満のバージョンは候補から除外。
+  // 悪意あるパッケージの多くはこの期間内に検知・削除されるため、cool-off 期間を設ける。
+  minimumReleaseAge: '7 days',
+  // Dashboard 更新は週次で十分。GitHub Actions の cron も緩和済み。
+  schedule: ['before 5am on monday'],
+  // Renovate 側の脆弱性自動 PR 機能は無効化する。
+  // この機能は Dashboard Approval をバイパスして自動 PR を作成する仕様のため、
+  // 「全 PR は人間起点」という原則と両立しない。
+  // 脆弱性は GitHub Dependabot Alerts（通知のみ）で検知し、Dashboard 経由で対応する。
+  vulnerabilityAlerts: {
+    enabled: false,
+  },
 }

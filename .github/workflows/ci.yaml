@@ -35,6 +35,14 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # Sigstore ベースの npm パッケージ署名検証。
+      # 未署名パッケージに対する fail を避けるため当面は continue-on-error で段階導入。
+      # 動作が安定したら fail-fast 化する。
+      - name: Verify package signatures
+        run: pnpm audit signatures
+        continue-on-error: true
+
       - run: pnpm run lint
 
   build:

@@ -2,7 +2,9 @@ name: Renovate
 
 on:
   schedule:
-    - cron: '0/30 * * * *'
+    # Dashboard Approval 運用に切り替えたため、週次で十分。
+    # 毎週月曜 05:00 UTC（JST 14:00）に Dependency Dashboard Issue を更新する。
+    - cron: '0 5 * * 1'
 
   workflow_dispatch:
     inputs:
