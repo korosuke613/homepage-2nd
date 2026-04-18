@@ -28,12 +28,12 @@
     "chromatic": "chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.7",
+    "@astrojs/check": "0.9.8",
     "@astrojs/db": "0.20.0",
     "@astrojs/mdx": "4.3.14",
     "@astrojs/partytown": "2.1.5",
     "@astrojs/react": "4.4.2",
-    "@astrojs/rss": "4.0.17",
+    "@astrojs/rss": "4.0.18",
     "@astrojs/sitemap": "3.7.1",
     "@astrojs/tailwind": "6.0.2",
     "@docsearch/css": "3.9.0",
@@ -47,7 +47,7 @@
     "date-fns": "4.1.0",
     "emoji-regex": "10.4.0",
     "glob": "11.1.0",
-    "natural": "8.1.0",
+    "natural": "8.1.1",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-icons": "5.5.0",
