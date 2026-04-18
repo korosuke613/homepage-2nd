@@ -25,7 +25,6 @@ Renovate 自体は残し、**Dependency Dashboard Approval モード** に切り
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
     'github>korosuke613/renovate-config',
-    ':disableDependencyDashboardAutoclose',
   ],
   // 全 PR は Dashboard Issue でのチェック承認を必須化（自動 PR 作成停止）
   dependencyDashboard: true,

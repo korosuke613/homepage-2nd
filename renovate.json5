@@ -2,7 +2,6 @@
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   extends: [
     'github>korosuke613/renovate-config',
-    ':disableDependencyDashboardAutoclose',
   ],
   // 全ての PR は Dependency Dashboard Issue のチェックボックス承認を必須化する。
   // 自動 PR 作成はなくなり、人間がチェックを入れた時のみ PR が作られる。
