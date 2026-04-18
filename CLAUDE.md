@@ -10,6 +10,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - pnpm 10+（`packageManager` フィールドで `pnpm@10.32.0` を指定）
 - **重要**: このプロジェクトではパッケージマネージャーに **pnpm** を使用する。`npm` ではなく `pnpm` コマンドを使うこと
 
+## 依存関係管理ポリシー
+
+本リポジトリはサプライチェーン攻撃対策として、依存関係更新に Renovate Dependency Dashboard Approval 方式を採用しています（自動 PR 作成・自動マージは全廃止）。詳細:
+
+- 内部ポリシー: [docs/DEPENDENCY_POLICY.md](./docs/DEPENDENCY_POLICY.md)
+- 公開記事: [src/content/posts/20260418_dependency_update_strategy.md](./src/content/posts/20260418_dependency_update_strategy.md)
+
+依存関係を追加・更新する場合はポリシーに従うこと。
+
 ## コマンド
 
 ### 開発

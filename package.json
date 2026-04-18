@@ -94,6 +94,7 @@
   "pnpm": {
     "overrides": {
       "baseline-browser-mapping": "^2.10.8"
-    }
+    },
+    "onlyBuiltDependencies": []
   }
 }
