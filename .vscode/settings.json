@@ -27,10 +27,15 @@
     "editor.defaultFormatter": "redhat.vscode-xml"
   },
   "cSpell.words": [
+    "astrojs",
+    "axios",
+    "biomejs",
     "cobertura",
-    "speakerdeck",
+    "frontmatter",
+    "GHSA",
     "slideshare",
-    "frontmatter"
+    "speakerdeck",
+    "vitest"
   ],
   "files.autoSave": "afterDelay",
   "[html]": {
