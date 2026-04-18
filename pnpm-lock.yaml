@@ -15,14 +15,14 @@ importers:
         specifier: 0.9.8
         version: 0.9.8(prettier@3.8.1)(typescript@5.9.3)
       '@astrojs/db':
-        specifier: 0.20.0
-        version: 0.20.0(pg@8.20.0)
+        specifier: 0.20.1
+        version: 0.20.1(pg@8.20.0)
       '@astrojs/mdx':
         specifier: 4.3.14
         version: 4.3.14(astro@5.18.1(@types/node@24.12.0)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.9.3)(yaml@2.8.2))
       '@astrojs/partytown':
-        specifier: 2.1.5
-        version: 2.1.5
+        specifier: 2.1.6
+        version: 2.1.6
       '@astrojs/react':
         specifier: 4.4.2
         version: 4.4.2(@types/node@24.12.0)(@types/react-dom@19.1.9(@types/react@19.1.14))(@types/react@19.1.14)(jiti@1.21.7)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(yaml@2.8.2)
@@ -30,8 +30,8 @@ importers:
         specifier: 4.0.18
         version: 4.0.18
       '@astrojs/sitemap':
-        specifier: 3.7.1
-        version: 3.7.1
+        specifier: 3.7.2
+        version: 3.7.2
       '@astrojs/tailwind':
         specifier: 6.0.2
         version: 6.0.2(astro@5.18.1(@types/node@24.12.0)(jiti@1.21.7)(rollup@4.51.0)(typescript@5.9.3)(yaml@2.8.2))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.12.0)(typescript@5.9.3)))(ts-node@10.9.2(@types/node@24.12.0)(typescript@5.9.3))
@@ -331,8 +331,8 @@ packages:
   '@astrojs/compiler@2.13.1':
     resolution: {integrity: sha512-f3FN83d2G/v32ipNClRKgYv30onQlMZX1vCeZMjPsMMPl1mDpmbl0+N5BYo4S/ofzqJyS5hvwacEo0CCVDn/Qg==}
 
-  '@astrojs/db@0.20.0':
-    resolution: {integrity: sha512-NnVkcdPg6E4G4MyOT6qJKChRjKSB5lQWEkw/0PYP21Oxqd5Tk4/kbd/CtO6QziSkalMyiKd808yHHck2Lt0lkw==}
+  '@astrojs/db@0.20.1':
+    resolution: {integrity: sha512-WmV1nKMdATOP3DDphRiD4cAFeL0K/gaaoPcHUYpODS8Id/DoiTkLzcr1rjWBAbBEVa1XTBAPTMdA1H0PdUgiHA==}
 
   '@astrojs/internal-helpers@0.7.6':
     resolution: {integrity: sha512-GOle7smBWKfMSP8osUIGOlB5kaHdQLV3foCsf+5Q9Wsuu+C6Fs3Ez/ttXmhjZ1HkSgsogcM1RXSjjOVieHq16Q==}
@@ -358,8 +358,8 @@ packages:
     peerDependencies:
       astro: ^5.0.0
 
-  '@astrojs/partytown@2.1.5':
-    resolution: {integrity: sha512-Uo2Uqmvjh/5w08wGoVAspdj14hUoE28uQH8SkzaBMw9bTBNIviEkPi3VkJi+tj1ZYAY9oX7OSkRDJ48QRtMhlw==}
+  '@astrojs/partytown@2.1.6':
+    resolution: {integrity: sha512-pS95OSnPkSmuOHzwLXCea8p4P8bqmA2fm3BUBW6/egzSTaWYte/Gp1jiAoPmCZ6FV7jGx4GHduO2CUltUXc3Og==}
 
   '@astrojs/prism@3.3.0':
     resolution: {integrity: sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ==}
@@ -377,8 +377,8 @@ packages:
   '@astrojs/rss@4.0.18':
     resolution: {integrity: sha512-wc5DwKlbTEdgVAWnHy8krFTeQ42t1v/DJqeq5HtulYK3FYHE4krtRGjoyhS3eXXgfdV6Raoz2RU3wrMTFAitRg==}
 
-  '@astrojs/sitemap@3.7.1':
-    resolution: {integrity: sha512-IzQqdTeskaMX+QDZCzMuJIp8A8C1vgzMBp/NmHNnadepHYNHcxQdGLQZYfkbd2EbRXUfOS+UDIKx8sKg0oWVdw==}
+  '@astrojs/sitemap@3.7.2':
+    resolution: {integrity: sha512-PqkzkcZTb5ICiyIR8VoKbIAP/laNRXi5tw616N1Ckk+40oNB8Can1AzVV56lrbC5GKSZFCyJYUVYqVivMisvpA==}
 
   '@astrojs/tailwind@6.0.2':
     resolution: {integrity: sha512-j3mhLNeugZq6A8dMNXVarUa8K6X9AW+QHU9u3lKNrPLMHhOQ0S7VeWhHwEeJFpEK1BTKEUY1U78VQv2gN6hNGg==}
@@ -2608,10 +2608,6 @@ packages:
   decode-named-character-reference@1.2.0:
     resolution: {integrity: sha512-c6fcElNV6ShtZXmsgNgFFV5tVX2PaV4g+MOAkb8eXHvn6sryJBrZa9r0zV6+dtTyoCKxtDy5tyQ5ZwQuidtd+Q==}
 
-  deep-diff@1.0.2:
-    resolution: {integrity: sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
@@ -4021,6 +4017,9 @@ packages:
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
     engines: {node: '>= 8'}
+
+  microdiff@1.5.0:
+    resolution: {integrity: sha512-Drq+/THMvDdzRYrK0oxJmOKiC24ayUV8ahrt8l3oRK51PWt6gdtrIGrlIH3pT/lFh1z93FbAcidtsHcWbnRz8Q==}
 
   micromark-core-commonmark@2.0.3:
     resolution: {integrity: sha512-RDBrHEMSxVFLg6xvnXmb1Ayr2WzLAWjeSATAoxwKYJV94TeNavgoIdA0a9ytzDSVzBy2YKFK+emCPOEibLeCrg==}
@@ -6505,12 +6504,12 @@ snapshots:
 
   '@astrojs/compiler@2.13.1': {}
 
-  '@astrojs/db@0.20.0(pg@8.20.0)':
+  '@astrojs/db@0.20.1(pg@8.20.0)':
     dependencies:
       '@clack/prompts': 1.1.0
       '@libsql/client': 0.17.0
-      deep-diff: 1.0.2
       drizzle-orm: 0.42.0(@libsql/client@0.17.0)(pg@8.20.0)
+      microdiff: 1.5.0
       nanoid: 5.1.7
       piccolore: 0.1.3
       yargs-parser: 22.0.0
@@ -6619,7 +6618,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/partytown@2.1.5':
+  '@astrojs/partytown@2.1.6':
     dependencies:
       '@qwik.dev/partytown': 0.11.2
       mrmime: 2.0.1
@@ -6657,7 +6656,7 @@ snapshots:
       piccolore: 0.1.3
       zod: 4.3.6
 
-  '@astrojs/sitemap@3.7.1':
+  '@astrojs/sitemap@3.7.2':
     dependencies:
       sitemap: 9.0.1
       stream-replace-string: 2.0.0
@@ -8156,7 +8155,7 @@ snapshots:
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 6.0.0
-      '@types/node': 24.5.2
+      '@types/node': 24.12.0
 
   '@types/hast@3.0.4':
     dependencies:
@@ -8209,7 +8208,7 @@ snapshots:
   '@types/request@2.48.13':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 24.5.2
+      '@types/node': 24.12.0
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.5
 
@@ -8233,7 +8232,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 24.5.2
+      '@types/node': 24.12.0
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -9050,8 +9049,6 @@ snapshots:
   decode-named-character-reference@1.2.0:
     dependencies:
       character-entities: 2.0.2
-
-  deep-diff@1.0.2: {}
 
   deep-eql@5.0.2: {}
 
@@ -10810,6 +10807,8 @@ snapshots:
 
   merge2@1.4.1: {}
 
+  microdiff@1.5.0: {}
+
   micromark-core-commonmark@2.0.3:
     dependencies:
       decode-named-character-reference: 1.2.0
@@ -11687,7 +11686,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 24.5.2
+      '@types/node': 24.12.0
       long: 5.3.2
 
   proxy-addr@2.0.7:
@@ -12324,7 +12323,7 @@ snapshots:
       '@types/node': 24.12.0
       '@types/sax': 1.2.7
       arg: 5.0.2
-      sax: 1.4.1
+      sax: 1.6.0
 
   slash@3.0.0: {}
 
