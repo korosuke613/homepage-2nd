@@ -53,7 +53,7 @@ jobs:
         with:
           github_token: ${{ steps.login-gh-app.outputs.token }}
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          allowed_bots: kiba-renovate,dependabot[bot]
+          allowed_bots: kiba-renovate[bot],dependabot[bot]
           additional_permissions: |
             actions: read
           prompt: |
