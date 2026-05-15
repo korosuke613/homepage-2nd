@@ -45,7 +45,7 @@
     "astro-meta-tags": "0.4.1",
     "astro-robots-txt": "1.0.0",
     "date-fns": "4.1.0",
-    "emoji-regex": "10.4.0",
+    "emoji-regex": "10.6.0",
     "glob": "11.1.0",
     "natural": "8.1.1",
     "react": "19.1.1",
