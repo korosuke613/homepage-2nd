@@ -18,7 +18,7 @@ type IContentProps = {
 
 const Content: React.FC<IContentProps> = (props: IContentProps) => {
   const contentUrl = new URL(
-    `${props.content.collection}/${props.content.slug}`,
+    `${props.content.collection}/${props.content.id}`,
     `https://${AppConfig.publish_domain}`,
   ).href;
 

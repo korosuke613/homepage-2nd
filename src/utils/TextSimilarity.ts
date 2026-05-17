@@ -24,11 +24,11 @@ export const listSimilarities = <T>(
 };
 
 export const getSimilarPosts = (
-  base: { slug: string; data: { title: string; tags: string[] }; body: string },
+  base: { id: string; data: { title: string; tags: string[] }; body?: string },
   collections: CollectionEntry<"posts">[],
 ) => {
   const unionBase = `${base.data.title}\n\n${base.data.tags.join(" ")}\n\n${
-    base.body
+    base.body ?? ""
   }`;
 
   type Meta = {
@@ -39,10 +39,10 @@ export const getSimilarPosts = (
   type List = { meta: Meta; content: string }[];
 
   const postList: List = collections
-    .filter((c) => c.slug !== base.slug)
+    .filter((c) => c.id !== base.id)
     .map((c) => ({
       meta: {
-        url: `/${c.collection}/${c.slug}`,
+        url: `/${c.collection}/${c.id}`,
         urlType: "internal",
         title: c.data.title.replaceAll("\\n", ""),
       },

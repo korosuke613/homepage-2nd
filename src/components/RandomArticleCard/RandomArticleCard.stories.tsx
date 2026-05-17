@@ -19,7 +19,6 @@ type Story = StoryObj<typeof RandomArticleCard>;
 // モックの記事データを作成
 const samplePost: IPost = {
   id: "sample-post",
-  slug: "sample-post",
   collection: "posts",
   url: "",
   data: {
@@ -36,7 +35,6 @@ const samplePost: IPost = {
 
 const noImagePost: IPost = {
   id: "no-image-post",
-  slug: "no-image",
   collection: "posts",
   url: "",
   data: {

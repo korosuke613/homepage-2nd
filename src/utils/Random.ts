@@ -30,7 +30,6 @@ export const getRandomArticle = (
   // Postsのデータを取得
   const postsData: IPostOmitUrl[] = posts.map((post) => ({
     data: post.data,
-    slug: post.slug,
     collection: post.collection,
     id: post.id,
   }));
@@ -70,8 +69,8 @@ export const getRandomArticle = (
   // 型ガード関数
   function isPostArticle(
     article: IPostOmitUrl | BlogData | SlideData,
-  ): article is IPost {
-    return "slug" in article && "data" in article;
+  ): article is IPostOmitUrl {
+    return "id" in article && "data" in article && "collection" in article;
   }
 
   function isBlogArticle(
@@ -97,7 +96,7 @@ export const getRandomArticle = (
     return {
       title: post.data.title,
       description: post.data.description || "",
-      url: joinPaths(AppConfig.base, "posts", post.slug),
+      url: joinPaths(AppConfig.base, "posts", post.id),
       type: "post",
       imageSrc: post.data.imgSrc,
       totalCount: totalArticleCount,

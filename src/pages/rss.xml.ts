@@ -24,7 +24,7 @@ export const GET = async (context: APIContext) => {
     // see "Generating items" section for required frontmatter and advanced use cases
     items: posts.map((post) => ({
       ...post.data,
-      link: `/posts/${post.slug}`,
+      link: `/posts/${post.id}`,
     })),
     // (optional) inject custom xml
     customData: "<language>ja-jp</language>",
