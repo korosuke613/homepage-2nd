@@ -6,13 +6,11 @@ export type StaticPost = {
   data: CollectionEntry<"posts">["data"];
   collection: string;
   id: string;
-  slug: string;
   url: string;
 };
 
 export const DormitoryIntroduction: StaticPost = {
   collection: "posts",
-  slug: "dormitory_introduction",
   id: "dormitory_introduction",
   data: {
     title: "宮崎大学国際交流宿舎の紹介（２０１７年版）",
@@ -29,7 +27,6 @@ export const DormitoryIntroduction: StaticPost = {
 
 export const History: StaticPost = {
   collection: "posts",
-  slug: "history",
   id: "history",
   data: {
     title: "自己紹介",
@@ -44,7 +41,6 @@ export const History: StaticPost = {
 
 export const Ranking: StaticPost = {
   collection: "posts",
-  slug: "ranking",
   id: "ranking",
   data: {
     title: "人気記事 👑",

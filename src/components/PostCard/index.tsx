@@ -10,7 +10,7 @@ type IPostCardProps = {
 };
 
 export const PostCard = (props: IPostCardProps) => {
-  const contentPath = `/${props.instance.collection}/${props.instance.slug}`;
+  const contentPath = `/${props.instance.collection}/${props.instance.id}`;
 
   return (
     <div className="relative overflow-hidden rounded-md bg-slate-800">
