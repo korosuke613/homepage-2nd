@@ -69,7 +69,7 @@ export const getRandomArticle = (
   // 型ガード関数
   function isPostArticle(
     article: IPostOmitUrl | BlogData | SlideData,
-  ): article is IPost {
+  ): article is IPostOmitUrl {
     return "id" in article && "data" in article && "collection" in article;
   }
 
