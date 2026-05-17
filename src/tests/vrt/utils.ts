@@ -6,12 +6,16 @@ const waitImagesLoaded = async (page: Page) => {
   const locators = page.locator("img");
   for (const locator of await locators.all()) {
     await locator.evaluate((e) => e.scrollIntoView());
-    await locator.evaluate(
-      (image: HTMLImageElement) =>
-        image.complete ||
-        new Promise((resolve) => image.addEventListener("load", resolve)),
-      { timeout: 60000 },
-    );
+    await locator.evaluate((image: HTMLImageElement) => {
+      if (image.complete) return;
+      return Promise.race([
+        new Promise<void>((resolve) => {
+          image.addEventListener("load", () => resolve(), { once: true });
+          image.addEventListener("error", () => resolve(), { once: true });
+        }),
+        new Promise<void>((resolve) => setTimeout(resolve, 10000)),
+      ]);
+    });
   }
 };
 

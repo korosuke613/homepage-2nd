@@ -80,6 +80,13 @@ jobs:
       - name: Vitest
         run: pnpm run test:unit
 
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5.5.4
+        with:
+          flags: unittests
+          token: ${{ secrets.CODECOV_TOKEN }}
+        if: always()
+
       - name: Cache node_modules of tools
         uses: actions/setup-node@v6
         with:
