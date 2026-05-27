@@ -5,9 +5,10 @@ on:
     branches:
       - main
 
-permissions: 
+permissions:
   contents: read
   packages: read
+  code-quality: write
 
 concurrency:
   group: "cache"
@@ -85,6 +86,27 @@ jobs:
         with:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
+        if: always()
+
+      - name: Upload unit coverage to GitHub
+        uses: actions/upload-code-coverage@b51da2c3c1b23e04d2d6477cfc34350b1f5cd3e9 # v1.2.0
+        with:
+          file: coverage/unit/cobertura-coverage.xml
+          language: TypeScript
+          label: unit
+          fail-on-error: false
+        if: always()
+
+      - name: Storybook testing
+        run: pnpm run test:storybook
+
+      - name: Upload storybook coverage to GitHub
+        uses: actions/upload-code-coverage@b51da2c3c1b23e04d2d6477cfc34350b1f5cd3e9 # v1.2.0
+        with:
+          file: coverage/unit/cobertura-coverage.xml
+          language: TypeScript
+          label: storybook
+          fail-on-error: false
         if: always()
 
       - name: Cache node_modules of tools

@@ -175,6 +175,10 @@ jobs:
   unit-test:
     name: "Test [Unit]"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      code-quality: write
     steps:
       - uses: actions/checkout@v6
         with:
@@ -214,6 +218,14 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
         if: always()
 
+      - uses: actions/upload-code-coverage@b51da2c3c1b23e04d2d6477cfc34350b1f5cd3e9 # v1.2.0
+        with:
+          file: coverage/unit/cobertura-coverage.xml
+          language: TypeScript
+          label: unit
+          fail-on-error: false
+        if: always()
+
   e2e-test:
     name: "Test [E2E]"
     runs-on: ubuntu-latest
@@ -250,6 +262,10 @@ jobs:
   ct-test:
     name: "Test [Component]"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      code-quality: write
     steps:
       - uses: actions/checkout@v6
         with:
@@ -281,6 +297,14 @@ jobs:
         with:
           flags: storybook
           token: ${{ secrets.CODECOV_TOKEN }}
+        if: always()
+
+      - uses: actions/upload-code-coverage@b51da2c3c1b23e04d2d6477cfc34350b1f5cd3e9 # v1.2.0
+        with:
+          file: coverage/unit/cobertura-coverage.xml
+          language: TypeScript
+          label: storybook
+          fail-on-error: false
         if: always()
 
       - name: Test Summary
