@@ -4,8 +4,7 @@ import { getRandomArticle } from "@/utils/Random";
 describe("getRandomArticle", () => {
   const mockPosts = [
     {
-      id: "post1",
-      slug: "test-post",
+      id: "test-post",
       collection: "posts",
       url: "posts/test-post",
       data: {

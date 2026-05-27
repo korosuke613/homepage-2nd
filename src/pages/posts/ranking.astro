@@ -68,7 +68,7 @@ const postsRanking: RankingItem[] = [];
 let index = 1;
 for (const p of postsData) {
   const pageTitle = [...postsCollection, ...StaticPages].find(
-    (post) => post.slug === p.pagePath.replace("/posts/", ""),
+    (post) => post.id === p.pagePath.replace("/posts/", ""),
   )?.data.title;
   if (!pageTitle) {
     continue;
