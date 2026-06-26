@@ -43,17 +43,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # 3つの取得は独立した外部 API へのアクセスで相互依存がないため、
+      # background: true で並行起動し、wait-all で全完了を待つ。
       - name: Update zenn.json
+        background: true
         run: |
-          npx ts-node updateZennJson.ts
+          pnpm exec ts-node updateZennJson.ts
 
       - name: Update zenn_scrap.json
+        background: true
         run: |
-          npx ts-node updateZennScrapJson.ts
+          pnpm exec ts-node updateZennScrapJson.ts
 
       - name: Update hatena_blog.json
+        background: true
         run: |
-          npx ts-node updateHatenaBlogJson.ts
+          pnpm exec ts-node updateHatenaBlogJson.ts
+
+      - name: Wait for all blog data updates
+        wait-all: true
 
       - name: Check files changed
         run: |

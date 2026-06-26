@@ -341,10 +341,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # 2つの dry-run は独立した外部 API へのアクセスのため並行起動し、wait-all で待つ。
       - name: Dry run update zenn.json
+        background: true
         run: |
-          npx ts-node updateZennJson.ts
+          pnpm exec ts-node updateZennJson.ts
 
       - name: Dry run update hatena_blog.json
+        background: true
         run: |
-          npx ts-node updateHatenaBlogJson.ts
+          pnpm exec ts-node updateHatenaBlogJson.ts
+
+      - name: Wait for all dry runs
+        wait-all: true
