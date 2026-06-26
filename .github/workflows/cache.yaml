@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-permissions: 
+permissions:
   contents: read
   packages: read
 
@@ -38,7 +38,40 @@ jobs:
           PLAYWRIGHT_VERSION=$(pnpm ls @playwright/test --json | jq -r '.[].devDependencies."@playwright/test".version')
           echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_OUTPUT
 
+      # 並行起動するステップが依存するキャッシュ復元・setup を先に foreground で済ませる。
+      - name: Cache playwright binaries
+        uses: actions/cache@v5
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
+          restore-keys: playwright-
+
+      - name: Cache astro build
+        uses: actions/cache@v5
+        with:
+          path: .astro/cache
+          key: astro-build-${{ github.sha }}
+          restore-keys: astro-build-
+
+      - name: Cache Vitest
+        uses: actions/cache@v5
+        with:
+          path: .cache/.vitest
+          key: vitest-${{ github.sha }}
+          restore-keys: vitest-
+
+      - name: Cache node_modules of tools
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'pnpm'
+          cache-dependency-path: 'tools/pnpm-lock.yaml'
+
+      # ネットワーク/IO 律速の処理を background で並走させ、その裏で
+      # CPU 律速の Build / Vitest を進めることで待ち時間を重ねる。
       - name: Publish to Chromatic
+        background: true
         uses: chromaui/action@1bbb5819252d9782cb7d77122d9becae467def18 # v16.10.1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
@@ -48,37 +81,27 @@ jobs:
           traceChanged: true
           debug: true
 
-      - name: Cache playwright binaries
-        uses: actions/cache@v5
-        id: playwright-cache
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ steps.npm-install.outputs.PLAYWRIGHT_VERSION }}
-          restore-keys: playwright-
-
       - name: Install playwright
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install chromium --with-deps
+        background: true
+        run: pnpm exec playwright install chromium --with-deps
 
-      - name: Cache astro build
-        uses: actions/cache@v5
-        with:
-          path: .astro/cache
-          key: astro-build-${{ github.sha }}
-          restore-keys: astro-build-
+      - name: Install dependencies of tools
+        background: true
+        working-directory: tools
+        run: |
+          pnpm install --frozen-lockfile
 
+      # CPU 律速の処理（同士の競合を避けるため Build → Vitest は直列のまま）。
       - name: Build
         run: pnpm run build
 
-      - name: Cache Vitest
-        uses: actions/cache@v5
-        with:
-          path: .cache/.vitest
-          key: vitest-${{ github.sha }}
-          restore-keys: vitest-
-      
       - name: Vitest
         run: pnpm run test:unit
+
+      # background のネットワーク処理（Chromatic / playwright / tools install）の完了を待つ。
+      - name: Wait for background tasks
+        wait-all: true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@75cd11691c0faa626561e295848008c8a7dddffe # v5.5.4
@@ -86,15 +109,3 @@ jobs:
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
         if: always()
-
-      - name: Cache node_modules of tools
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: '.tool-versions'
-          cache: 'pnpm'
-          cache-dependency-path: 'tools/pnpm-lock.yaml'
-
-      - name: Install dependencies of tools
-        working-directory: tools
-        run: |
-          pnpm install --frozen-lockfile
