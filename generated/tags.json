@@ -18,6 +18,8 @@
     "Renovate": "bg-indigo-400 text-indigo-900",
     "GitHub Actions": "bg-sky-400 text-sky-900",
     "ホムペ": "bg-neutral-400 text-neutral-900",
+    "Security": "bg-zinc-400 text-zinc-900",
+    "pnpm": "bg-lime-400 text-lime-900",
     "Astro": "bg-rose-400 text-rose-900",
     "AI": "bg-cyan-400 text-cyan-900",
     "Docswell": "bg-neutral-400 text-neutral-900",
