@@ -1,15 +1,9 @@
-import { expect, test } from "@playwright/experimental-ct-react";
-
-import { EditGitHub } from "@/components/EditGitHub";
+import { expect, test } from "@playwright/test";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
 test("should work", async ({ mount }) => {
-  const component = await mount(
-    <div className="text-gray-100">
-      <EditGitHub fileId="template.md" collection="posts" />
-    </div>,
-  );
+  const component = await mount("EditGitHub/Default");
 
   const a = component.locator("a");
 

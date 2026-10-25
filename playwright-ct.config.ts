@@ -1,6 +1,6 @@
-import { resolve } from "node:path";
+import { defineConfig, devices } from "@playwright/test";
 
-import { defineConfig, devices } from "@playwright/experimental-ct-react";
+const galleryURL = "http://localhost:3100/playwright/gallery/index.html";
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -26,18 +26,16 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
 
-    /* Port to use for Playwright component endpoint. */
-    ctPort: 3100,
+    /* mount() navigates to the story gallery. See https://playwright.dev/docs/test-components */
+    baseURL: galleryURL,
+    serviceWorkers: "block",
+    reuseContext: true,
+  },
 
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: "http://localhost:3000/",
-    ctViteConfig: {
-      resolve: {
-        alias: {
-          "@": resolve("src"),
-        },
-      },
-    },
+  webServer: {
+    command: "vite --config playwright/vite.config.ts",
+    url: galleryURL,
+    reuseExistingServer: !process.env.CI,
   },
 
   /* Configure projects for major browsers */

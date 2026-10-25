@@ -1,15 +1,9 @@
-import { expect, test } from "@playwright/experimental-ct-react";
-
-import { TweetButton } from "@/components/TweetButton";
+import { expect, test } from "@playwright/test";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
 test("should work", async ({ mount }) => {
-  const component = await mount(
-    <div className="text-gray-100">
-      <TweetButton text="this_is_text" url="https://korosuke613.dev/hoge" />
-    </div>,
-  );
+  const component = await mount("TweetButton/Default");
 
   const a = component.locator("a");
 

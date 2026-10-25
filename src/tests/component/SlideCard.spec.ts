@@ -1,6 +1,6 @@
-import { expect, test } from "@playwright/experimental-ct-react";
+import { expect, test } from "@playwright/test";
 
-import { SlideCard } from "@/components/SlideCard";
+import type { WithProps } from "@/components/SlideCard/SlideCard.story";
 import type { SlideData } from "@/types/ISlide";
 import type { Tags } from "@/utils/Tag";
 
@@ -23,9 +23,10 @@ const mockTags: Tags = {
 };
 
 test("should render slide card with correct information", async ({ mount }) => {
-  const component = await mount(
-    <SlideCard elt={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check title
   await expect(component.getByText("Test Slide Title")).toBeVisible();
@@ -52,9 +53,10 @@ test("should handle default thumbnail when thumbnailUrl is not provided", async 
     thumbnailUrl: undefined,
   };
 
-  const component = await mount(
-    <SlideCard elt={slideWithoutThumbnail} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: slideWithoutThumbnail,
+    tags: mockTags,
+  });
 
   const img = component.locator("img");
   await expect(img).toHaveAttribute(
@@ -64,9 +66,10 @@ test("should handle default thumbnail when thumbnailUrl is not provided", async 
 });
 
 test("should render tags correctly", async ({ mount }) => {
-  const component = await mount(
-    <SlideCard elt={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check that relevant tags are displayed as tag components
   const tagComponents = component.locator(".contents_tag");
@@ -75,9 +78,10 @@ test("should render tags correctly", async ({ mount }) => {
 });
 
 test("should have correct external link to slide URL", async ({ mount }) => {
-  const component = await mount(
-    <SlideCard elt={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check the main slide links (image and title area) - not the tag links
   const slideImageLink = component.locator("img").locator("..");
@@ -97,9 +101,10 @@ test("should handle SpeakerDeck slide type", async ({ mount }) => {
     category: ["SpeakerDeck"],
   };
 
-  const component = await mount(
-    <SlideCard elt={speakerDeckSlide} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: speakerDeckSlide,
+    tags: mockTags,
+  });
 
   await expect(component.getByText("SpeakerDeck Presentation")).toBeVisible();
   await expect(component.getByText("Feb 15, 2023")).toBeVisible();
@@ -128,9 +133,10 @@ test("should handle SlideShare slide type", async ({ mount }) => {
     SlideShare: "red",
   };
 
-  const component = await mount(
-    <SlideCard elt={slideShareSlide} tags={tagsWithSlideShare} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: slideShareSlide,
+    tags: tagsWithSlideShare,
+  });
 
   await expect(component.getByText("SlideShare Presentation")).toBeVisible();
   await expect(component.getByText("Mar 20, 2023")).toBeVisible();
@@ -150,9 +156,10 @@ test("should handle long title with proper truncation", async ({ mount }) => {
       "This is a very long slide title that should be truncated when displayed in the slide card component",
   };
 
-  const component = await mount(
-    <SlideCard elt={longTitleSlide} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: longTitleSlide,
+    tags: mockTags,
+  });
 
   const titleElement = component.locator("p", {
     hasText: longTitleSlide.title,
@@ -167,9 +174,10 @@ test("should handle empty category array", async ({ mount }) => {
     category: [],
   };
 
-  const component = await mount(
-    <SlideCard elt={noCategorySlide} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideCard/WithProps", {
+    elt: noCategorySlide,
+    tags: mockTags,
+  });
 
   // Basic slide information should still be visible
   await expect(component.getByText("Test Slide Title")).toBeVisible();

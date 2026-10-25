@@ -1,6 +1,6 @@
-import { expect, test } from "@playwright/experimental-ct-react";
+import { expect, test } from "@playwright/test";
 
-import { SlideGallery } from "@/components/SlideGallery";
+import type { WithProps } from "@/components/SlideGallery.story";
 import type { SlideData } from "@/types/ISlide";
 import type { Tags } from "@/utils/Tag";
 
@@ -43,9 +43,10 @@ const mockTags: Tags = {
 };
 
 test("should render all slides in gallery", async ({ mount }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check that all slide titles are visible
   await expect(component.getByText("First Slide")).toBeVisible();
@@ -53,15 +54,18 @@ test("should render all slides in gallery", async ({ mount }) => {
   await expect(component.getByText("Third Slide")).toBeVisible();
 
   // Check grid layout exists
-  await expect(component).toHaveClass(/grid/);
+  await expect(component.locator(":scope > div")).toHaveClass(/grid/);
 });
 
 test("should render empty gallery when no slides provided", async ({
   mount,
 }) => {
-  const component = await mount(<SlideGallery postList={[]} tags={mockTags} />);
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: [],
+    tags: mockTags,
+  });
 
-  await expect(component).toHaveClass(/grid/);
+  await expect(component.locator(":scope > div")).toHaveClass(/grid/);
 
   // Grid should exist but have no slide cards
   const slideCards = component.locator(".relative.overflow-hidden.rounded-md");
@@ -69,9 +73,10 @@ test("should render empty gallery when no slides provided", async ({
 });
 
 test("should render correct number of slide cards", async ({ mount }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check that correct number of cards are rendered
   const slideCards = component.locator(".relative.overflow-hidden.rounded-md");
@@ -81,9 +86,10 @@ test("should render correct number of slide cards", async ({ mount }) => {
 test("should handle single slide", async ({ mount }) => {
   const singleSlide = mockSlideData.slice(0, 1);
 
-  const component = await mount(
-    <SlideGallery postList={singleSlide} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: singleSlide,
+    tags: mockTags,
+  });
 
   await expect(component.getByText("First Slide")).toBeVisible();
 
@@ -92,17 +98,19 @@ test("should handle single slide", async ({ mount }) => {
 });
 
 test("should render slide cards with proper spacing", async ({ mount }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: mockTags,
+  });
 
-  await expect(component).toHaveClass(/gap-6/);
+  await expect(component.locator(":scope > div")).toHaveClass(/gap-6/);
 });
 
 test("should handle empty tags object", async ({ mount }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={{}} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: {},
+  });
 
   // Component should render slides but without any tag styling
   await expect(component.getByText("First Slide")).toBeVisible();
@@ -113,9 +121,10 @@ test("should handle empty tags object", async ({ mount }) => {
 test("should render slides with different types correctly", async ({
   mount,
 }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check that different slide types are rendered - use more specific selectors
   await expect(
@@ -130,14 +139,15 @@ test("should render slides with different types correctly", async ({
 });
 
 test("should maintain responsive grid layout", async ({ mount }) => {
-  const component = await mount(
-    <SlideGallery postList={mockSlideData} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: mockSlideData,
+    tags: mockTags,
+  });
 
   // Check responsive classes
-  await expect(component).toHaveClass(/grid-cols-1/); // Mobile
-  await expect(component).toHaveClass(/sm:grid-cols-2/); // Small screens
-  await expect(component).toHaveClass(/md:grid-cols-3/); // Medium+ screens
+  await expect(component.locator(":scope > div")).toHaveClass(/grid-cols-1/); // Mobile
+  await expect(component.locator(":scope > div")).toHaveClass(/sm:grid-cols-2/); // Small screens
+  await expect(component.locator(":scope > div")).toHaveClass(/md:grid-cols-3/); // Medium+ screens
 });
 
 test("should handle large number of slides", async ({ mount }) => {
@@ -154,9 +164,10 @@ test("should handle large number of slides", async ({ mount }) => {
     }),
   );
 
-  const component = await mount(
-    <SlideGallery postList={largeSlideList} tags={mockTags} />,
-  );
+  const component = await mount<typeof WithProps>("SlideGallery/WithProps", {
+    postList: largeSlideList,
+    tags: mockTags,
+  });
 
   // Check that all slides are rendered
   const slideCards = component.locator(".relative.overflow-hidden.rounded-md");
