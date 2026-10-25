@@ -29,7 +29,12 @@ export default defineConfig({
         "src/components/**/*.{js,ts,tsx}",
         "db/utils/*.ts",
       ],
-      exclude: ["src/tests/**", "src/**/*.stories.tsx", "src/types/**"],
+      exclude: [
+        "src/tests/**",
+        "src/**/*.stories.tsx",
+        "src/**/*.story.tsx",
+        "src/types/**",
+      ],
       reporter: ["text", "cobertura"],
       reportsDirectory: new URL("./coverage/unit", import.meta.url).pathname,
     },

@@ -1,15 +1,9 @@
-import { expect, test } from "@playwright/experimental-ct-react";
-
-import { ExternalLink } from "@/components/ExternalLink";
+import { expect, test } from "@playwright/test";
 
 test.use({ viewport: { width: 500, height: 500 } });
 
 test("should work", async ({ mount }) => {
-  const component = await mount(
-    <div className="text-gray-100">
-      <ExternalLink url="https://korosuke613.dev">homepage</ExternalLink>
-    </div>,
-  );
+  const component = await mount("ExternalLink/Default");
 
   const a = component.locator("a");
 

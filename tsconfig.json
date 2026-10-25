@@ -16,7 +16,7 @@
     "db/**/*.d.ts",
     "db/**/*.ts",
     "playwright-*.ts",
-    "playwright/*.ts",
-    "playwright/index.tsx"
+    "playwright/**/*.ts",
+    "playwright/**/*.tsx"
   ]
 }
