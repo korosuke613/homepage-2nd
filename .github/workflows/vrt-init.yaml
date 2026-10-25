@@ -13,7 +13,8 @@ permissions:
 
 jobs:
   vrt-init:
-    runs-on: ubuntu-latest
+    # Playwright 1.59.1 が Ubuntu 26.04 (ubuntu-latest) に未対応のため固定 (#1300)
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
         with: 

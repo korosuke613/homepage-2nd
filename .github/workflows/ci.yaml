@@ -216,7 +216,8 @@ jobs:
 
   e2e-test:
     name: "Test [E2E]"
-    runs-on: ubuntu-latest
+    # Playwright 1.59.1 が Ubuntu 26.04 (ubuntu-latest) に未対応のため固定 (#1300)
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
         with:
@@ -249,7 +250,8 @@ jobs:
 
   ct-test:
     name: "Test [Component]"
-    runs-on: ubuntu-latest
+    # Playwright 1.59.1 が Ubuntu 26.04 (ubuntu-latest) に未対応のため固定 (#1300)
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
         with:
